@@ -1,7 +1,0 @@
-C:\iGL\iGL\iGL.Engine\bin\Debug\iGL.Engine.dll
-C:\iGL\iGL\iGL.Engine\bin\Debug\iGL.Engine.pdb
-C:\iGL\iGL\iGL.Engine\bin\Debug\OpenTK.dll
-C:\iGL\iGL\iGL.Engine\bin\Debug\OpenTK.xml
-C:\iGL\iGL\iGL.Engine\obj\Debug\ResolveAssemblyReference.cache
-C:\iGL\iGL\iGL.Engine\obj\Debug\iGL.Engine.dll
-C:\iGL\iGL\iGL.Engine\obj\Debug\iGL.Engine.pdb

@@ -1,9 +1,0 @@
-C:\iGL\iGL\iGL.TestGame\obj\Debug\ResolveAssemblyReference.cache
-C:\iGL\iGL\iGL.TestGame\bin\Debug\iGL.TestGame.dll
-C:\iGL\iGL\iGL.TestGame\bin\Debug\iGL.TestGame.pdb
-C:\iGL\iGL\iGL.TestGame\bin\Debug\iGL.Engine.dll
-C:\iGL\iGL\iGL.TestGame\bin\Debug\OpenTK.dll
-C:\iGL\iGL\iGL.TestGame\bin\Debug\iGL.Engine.pdb
-C:\iGL\iGL\iGL.TestGame\bin\Debug\OpenTK.xml
-C:\iGL\iGL\iGL.TestGame\obj\Debug\iGL.TestGame.dll
-C:\iGL\iGL\iGL.TestGame\obj\Debug\iGL.TestGame.pdb
