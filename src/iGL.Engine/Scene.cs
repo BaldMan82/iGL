@@ -68,24 +68,26 @@ namespace iGL.Engine
             }
         }
 
-        public void SetCurrentCamera(CameraComponent cameraComponent)
+        public void SetCurrentCamera(GameObject camera)
         {
-            if (!_gameObjects.Any(g => g.Components.Contains(cameraComponent)))
-            {
-                throw new Exception("Camera is not part of this scene");
-            }
+            if (!_gameObjects.Contains(camera)) throw new Exception("Camera is not part of this scene");           
 
-            CurrentCamera = cameraComponent;
+            var component = camera.Components.FirstOrDefault(c => c is CameraComponent) as CameraComponent;
+
+            if (component == null) throw new Exception("GameObject does not have a camera component");
+
+            CurrentCamera = component;
         }
 
-        public void SetCurrentLight(LightComponent lightComponent)
-        {          
-           if (!_gameObjects.Any(g => g.Components.Contains(lightComponent)))
-            {
-                throw new Exception("Light is not part of this scene");
-            }
+        public void SetCurrentLight(GameObject light)
+        {
+            if (!_gameObjects.Contains(light)) throw new Exception("Light is not part of this scene");
 
-            CurrentLight = lightComponent;           
+            var component = light.Components.FirstOrDefault(c => c is LightComponent) as LightComponent;
+
+            if (component == null) throw new Exception("GameObject does not have a light component");
+
+            CurrentLight = component;           
         }
 
         public abstract void Load();

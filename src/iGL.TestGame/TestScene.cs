@@ -37,7 +37,7 @@ namespace iGL.TestGame
             _testCamera.Position = new Vector3(0.0f, 10.0f, 10.0f);
 
             AddGameObject(_testCamera);
-            SetCurrentCamera(_testCamera.CameraComponent);
+            SetCurrentCamera(_testCamera);
 
             ShaderProgram.SetAmbientColor(new Vector4(0.5f, 0.5f, 0.5f, 1.0f));
             
@@ -51,7 +51,7 @@ namespace iGL.TestGame
             _testLight.Position = new Vector3(0, 500, 0);
             AddGameObject(_testLight);
 
-            SetCurrentLight(_testLight.LightComponent);
+            SetCurrentLight(_testLight);
 
             /* add some test cubes */
 
