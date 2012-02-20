@@ -4,8 +4,7 @@ precision highp float;
 precision highp int;
 
 // Attributes
-attribute vec4 a_position;
-attribute vec4 a_color;
+attribute vec3 a_position;
 attribute vec3 a_normal;
 
 // Shader variables
@@ -48,18 +47,17 @@ void calcLightning();
 
 void main() 
 {
-	gl_Position = u_modelViewProjectionMatrix * a_position;
-	normal =  u_modelViewMatrix * vec4(a_normal.x, a_normal.y, a_normal.z, 1);
-	v_normal = vec3(normal.x, normal.y, normal.z);
+	gl_Position =  u_modelViewProjectionMatrix * vec4(a_position.x, a_position.y, a_position.z, 1);
+	v_normal =  vec3(u_transposeAdjointModelViewMatrix * vec4(a_normal.x, a_normal.y, a_normal.z, 1));	
 
 	calcLightning();	
 }
 
 void calcLightning()
 {	
-	vec4 lightDir = u_light.position - u_modelViewMatrix*a_position;
+	vec4 lightDir = u_light.position - u_modelViewMatrix*vec4(a_position.x, a_position.y, a_position.z, 1);
 	
-	v_lightVector = vec3(lightDir.x, lightDir.y, lightDir.z);
+	v_lightVector = vec3(lightDir);
 
 	v_ambientColor = u_material.ambient * u_globalAmbientColor + u_material.ambient*u_light.ambient;
 

@@ -31,14 +31,14 @@ namespace iGL.Engine
 
             /* create buffers to store vertex data */
 
-            GL.GenBuffers(4, _bufferIds);
+            GL.GenBuffers(3, _bufferIds);
             GL.BindBuffer(BufferTarget.ArrayBuffer, _bufferIds[0]);
             GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(_meshComponent.Vertices.Length * (Vector3.SizeInBytes)),
                           _meshComponent.Vertices.ToArray(), BufferUsage.StaticDraw);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, _bufferIds[1]);
             GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(_meshComponent.Normals.Length * (Vector3.SizeInBytes)),
-                          _meshComponent.Vertices.ToArray(), BufferUsage.StaticDraw);
+                          _meshComponent.Normals.ToArray(), BufferUsage.StaticDraw);
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, _bufferIds[2]);
             GL.BufferData(BufferTarget.ElementArrayBuffer, new IntPtr(_meshComponent.Indices.Length * sizeof(short)),
@@ -48,7 +48,7 @@ namespace iGL.Engine
 
         public override void Render()
         {            
-            var locationInverse = GameObject.Location;         
+            var locationInverse = GameObject.Location;
 
             locationInverse.Invert();
             locationInverse.Transpose();
@@ -64,14 +64,13 @@ namespace iGL.Engine
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, _bufferIds[0]);
             GL.EnableVertexAttribArray(vertexAttrib);
-           
+            GL.VertexAttribPointer(vertexAttrib, 3, VertexAttribPointerType.Float, false, 0, 0);        
+
             GL.BindBuffer(BufferTarget.ArrayBuffer, _bufferIds[1]);
             GL.EnableVertexAttribArray(normalAttrib);
-
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, _bufferIds[2]);
-
-            GL.VertexAttribPointer(vertexAttrib, 3, VertexAttribPointerType.Float, false, 0, 0);        
             GL.VertexAttribPointer(normalAttrib, 3, VertexAttribPointerType.Float, false, 0, 0);
+
+            //GL.BindBuffer(BufferTarget.ElementArrayBuffer, _bufferIds[1]);                        
 
             GL.DrawElements(BeginMode.Triangles, _meshComponent.Indices.Length, DrawElementsType.UnsignedShort, 0);
         }

@@ -31,14 +31,14 @@ namespace iGL.Engine
 
         void _wnd_Load(object sender, EventArgs e)
         {
-            Color4 color = Color4.MidnightBlue;
+            Color4 color = Color4.White;
             GL.ClearColor(color.R, color.G, color.B, color.A);
             GL.Enable(EnableCap.DepthTest);
         }
 
         public void Start()
         {
-            _wnd.Run(30, 30);
+            _wnd.Run(60);
 
         }
 

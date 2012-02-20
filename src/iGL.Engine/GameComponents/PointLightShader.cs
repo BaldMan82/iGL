@@ -23,7 +23,8 @@ namespace iGL.Engine
         }      
       
         public void SetLight(ILight light, Vector4 position)
-        {
+        {            
+
             if (!(light is PointLight)) throw new NotSupportedException("Only pointlights supported in this shader");
 
             var baseLight = light as PointLight;

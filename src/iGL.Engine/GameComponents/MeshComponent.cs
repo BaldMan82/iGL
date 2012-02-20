@@ -26,29 +26,28 @@ namespace iGL.Engine
             if (Indices.Length % 3 != 0)
                 throw new NotSupportedException("Invalid indices count for normal calc");
 
-            Normals = new Vector3[Vertices.Length];           
+            Normals = new Vector3[Vertices.Length];                      
 
             for (int i = 0; i < Indices.Length; i += 3)
             {
-                int v1 = Indices[i];
-                int v2 = Indices[i + 1];
-                int v3 = Indices[i + 2];
+                Vector3[] v = new Vector3[3] { Vertices[Indices[i]], Vertices[Indices[i + 1]], Vertices[Indices[i + 2]] };
 
-                Vector3 edge1 = Vertices[v2] - Vertices[v1];
-                Vector3 edge2 = Vertices[v3] - Vertices[v1];
+                var norm = Vector3.Cross(v[1] - v[0], v[2] - v[0]);
 
-                var norm = Vector3.Cross(edge2, edge1);
-                norm.Normalize();
+                for (int j = 0; j < 3; j++)
+                {
+                    Vector3 a = v[(j + 1) % 3] - v[j];
+                    Vector3 b = v[(j + 2) % 3] - v[j];
 
-                Normals[v1] += norm;
-                Normals[v1].Normalize();
-
-                Normals[v2] += norm;
-                Normals[v2].Normalize();
-
-                Normals[v3] += norm;
-                Normals[v3].Normalize();                
+                    float weight = (float)Math.Acos(Vector3.Dot(a, b) / (a.Length * b.Length));
+                    Normals[Indices[i + j]] += weight * norm;
+                }              
             }
+
+            for (int i = 0; i < Normals.Length; i++)
+            {
+                Normals[i].Normalize();               
+            }            
 
         }
 
