@@ -12,7 +12,7 @@ namespace iGL.Engine
         public Vector3 Scale { get; set; }
         public Vector3 Rotation { get; set; }
 
-        public Matrix4 Location { get; private set; }
+        public Matrix4 Location { get; internal set; }
 
         public Scene Scene { get; internal set; }
 
@@ -48,6 +48,13 @@ namespace iGL.Engine
 
         public void Render()
         {
+            /* update location matrix before rendering */
+
+            if (!Components.Any(c => c is RigidBodyComponent))
+            {
+                UpdateLocation();
+            }
+
             var renderComponents = Components.Where(c => c is RenderComponent)
                                              .Select(c => c as RenderComponent);
 
@@ -58,15 +65,20 @@ namespace iGL.Engine
             
         }
 
-        public void Tick(double timeElapsed)
+        private void UpdateLocation()
         {
             var mPos = Matrix4.Translation(Position);
             var mRotationX = Matrix4.Rotate(new Vector3(1.0f, 0.0f, 0.0f), Rotation.X);
             var mRotationY = Matrix4.Rotate(new Vector3(0.0f, 1.0f, 0.0f), Rotation.Y);
             var mRotationZ = Matrix4.Rotate(new Vector3(0.0f, 0.0f, 1.0f), Rotation.Z);
-            var scale = Matrix4.Scale(Scale);            
+            var scale = Matrix4.Scale(Scale);
 
-            Location =  scale * mRotationX * mRotationY * mRotationZ * mPos * Matrix4.Identity;
+            Location = scale * mRotationX * mRotationY * mRotationZ * mPos * Matrix4.Identity;
+        }
+
+        public void Tick(float timeElapsed)
+        {
+           
 
             _components.ForEach(gc => gc.Tick(timeElapsed));
         }

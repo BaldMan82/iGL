@@ -8,16 +8,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iGL.TestGame", "iGL.TestGame\iGL.TestGame.csproj", "{F4324499-1FD3-4DE4-B4F6-C16951162199}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Working Folder", "Working Folder", "{4B389517-0281-48C4-BC6D-C9C07643ECFE}"
-	ProjectSection(SolutionItems) = preProject
-		Working Folder\libEGL.dll = Working Folder\libEGL.dll
-		Working Folder\libEGL.lib = Working Folder\libEGL.lib
-		Working Folder\libGLESv1_CM.dll = Working Folder\libGLESv1_CM.dll
-		Working Folder\libGLESv2.dll = Working Folder\libGLESv2.dll
-		Working Folder\libGLESv2.lib = Working Folder\libGLESv2.lib
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "References", "References", "{D1C4000D-B90D-449B-B975-07B199A09FA1}"
 	ProjectSection(SolutionItems) = preProject
+		References\BulletNoXna.dll = References\BulletNoXna.dll
 		References\OpenTK.dll = References\OpenTK.dll
 		References\OpenTK.xml = References\OpenTK.xml
 	EndProjectSection

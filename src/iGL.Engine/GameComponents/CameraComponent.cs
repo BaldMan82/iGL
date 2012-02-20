@@ -39,7 +39,7 @@ namespace iGL.Engine
           
         }
 
-        public override void Tick(double timeElapsed)
+        public override void Tick(float timeElapsed)
         {
             /* must be sure Target has ticked first ? */
 

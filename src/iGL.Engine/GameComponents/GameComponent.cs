@@ -16,7 +16,7 @@ namespace iGL.Engine
         }
 
         public abstract void InternalLoad();
-        public abstract void Tick(double timeElapsed);
+        public abstract void Tick(float timeElapsed);
 
         public void Load()
         {

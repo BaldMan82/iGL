@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BulletNoXna">
+      <HintPath>..\References\BulletNoXna.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\References\OpenTK.dll</HintPath>
@@ -47,12 +50,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Events\TickEvent.cs" />
+    <Compile Include="GameComponents\BoxColliderComponent.cs" />
+    <Compile Include="GameComponents\ColliderComponent.cs" />
     <Compile Include="GameComponents\Color.cs" />
     <Compile Include="GameComponents\PointLightShader.cs" />
     <Compile Include="GameComponents\Lights.cs" />
     <Compile Include="GameComponents\LightComponent.cs" />
     <Compile Include="GameComponents\Material.cs" />
     <Compile Include="GameComponents\RenderComponent.cs" />
+    <Compile Include="GameComponents\RigidBodyComponent.cs" />
     <Compile Include="GameComponents\Shader.cs" />
     <Compile Include="GameComponents\ShaderProgram.cs" />
     <Compile Include="GameObjects\Camera.cs" />
@@ -64,8 +70,10 @@
     <Compile Include="GameComponents\MeshComponent.cs" />
     <Compile Include="GameComponents\MeshRenderComponent.cs" />
     <Compile Include="GameObjects\LightObject.cs" />
+    <Compile Include="Physics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scene.cs" />
+    <Compile Include="Utilities\Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Shaders\VS_POINTLIGHT.c" />

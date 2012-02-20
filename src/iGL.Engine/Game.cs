@@ -49,7 +49,7 @@ namespace iGL.Engine
 
         void _wnd_UpdateFrame(object sender, FrameEventArgs e)
         {
-            this.Tick(e.Time);
+            this.Tick((float)e.Time);
         }
 
         public void Render()
@@ -61,7 +61,7 @@ namespace iGL.Engine
             _wnd.SwapBuffers();
         }
 
-        public void Tick(double timeElapsed)
+        public void Tick(float timeElapsed)
         {
             _scene.Tick(timeElapsed);
         

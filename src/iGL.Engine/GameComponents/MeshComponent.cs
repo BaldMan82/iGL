@@ -57,7 +57,7 @@ namespace iGL.Engine
 
         }
 
-        public override void Tick(double timeElapsed)
+        public override void Tick(float timeElapsed)
         {
            
         }

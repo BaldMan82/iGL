@@ -49,6 +49,7 @@ namespace iGL.TestGame
             
             _testLight = new LightObject(pointlight);
             _testLight.Position = new Vector3(0, 500, 0);
+
             AddGameObject(_testLight);
 
             SetCurrentLight(_testLight);
@@ -59,6 +60,11 @@ namespace iGL.TestGame
             _testCube.Material.Ambient = new Vector4(0.1f, 0.1f, 0.1f, 0.0f);
             _testCube.Material.Diffuse = new Vector4(1.0f, 0.0f, 0.0f, 0.0f);     
             _testCube.Position = new Vector3(0.0f, 0.0f, 0.0f);
+
+            /* add box collider to cube */
+
+            _testCube.AddComponent(new BoxColliderComponent(_testCube));
+            _testCube.AddComponent(new RigidBodyComponent(_testCube));
 
             AddGameObject(_testCube);
             

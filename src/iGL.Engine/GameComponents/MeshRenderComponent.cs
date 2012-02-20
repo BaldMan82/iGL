@@ -76,7 +76,7 @@ namespace iGL.Engine
             GL.DrawElements(BeginMode.Triangles, _meshComponent.Indices.Length, DrawElementsType.UnsignedShort, 0);
         }
 
-        public override void Tick(double timeElapsed)
+        public override void Tick(float timeElapsed)
         {
            
         }

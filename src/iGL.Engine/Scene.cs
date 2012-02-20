@@ -16,6 +16,7 @@ namespace iGL.Engine
         public Game Game { get; internal set; }
         public ShaderProgram ShaderProgram { get; internal set; }
 
+        internal Physics Physics { get; private set; }
         private event EventHandler<TickEvent> OnTickEvent;
 
         public Scene()
@@ -26,6 +27,8 @@ namespace iGL.Engine
 
             ShaderProgram.Load();
             ShaderProgram.Use();
+
+            Physics = new Physics();
         }
 
         public void Render()
@@ -49,9 +52,15 @@ namespace iGL.Engine
             
         }
 
-        public void Tick(double timeElapsed)
-        {
-            OnTickEvent(this, new TickEvent());                                 
+        public void Tick(float timeElapsed)
+        {            
+            OnTickEvent(this, new TickEvent());
+            
+            try
+            {
+                Physics.World.StepSimulation(timeElapsed, 1);
+            }
+            catch { }
 
             _gameObjects.ForEach(g => g.Tick(timeElapsed));
         }
