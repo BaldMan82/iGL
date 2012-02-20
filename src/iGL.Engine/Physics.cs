@@ -18,7 +18,7 @@ namespace iGL.Engine
             var dispatcher = new CollisionDispatcher(collisionConf);
 
             World = new DiscreteDynamicsWorld(dispatcher, new DbvtBroadphase(), null, collisionConf);
-            var grav = new Vector3(0f, 1.0f, 0f);
+            var grav = new Vector3(0f, -9.81f, 0f);
 
             World.SetGravity(ref grav);                       
         }

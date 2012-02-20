@@ -10,6 +10,22 @@ namespace iGL.Engine
 {
     public class RigidBodyComponent : GameComponent
     {
+        private float _mass { get; set; }
+
+        public float Mass
+        {
+            get
+            {
+                return _mass;
+            }
+
+            set
+            {
+                _mass = value;
+                UpdateRigidBody();
+            }
+        }
+
         public ColliderComponent ColliderComponent { get; private set; }
 
         internal RigidBody RigidBody { get; private set; }
@@ -31,18 +47,25 @@ namespace iGL.Engine
 
             var motionState = new DefaultMotionState(GameObject.Location.ToBullet(), Matrix.Identity);
             
-            Vector3 intertia;
-            ColliderComponent.CollisionShape.CalculateLocalInertia(1.0f, out intertia);
+            Vector3 inertia;
+            ColliderComponent.CollisionShape.CalculateLocalInertia(_mass, out inertia);
 
-            RigidBody = new RigidBody(1.0f, motionState, ColliderComponent.CollisionShape, intertia);
+            RigidBody = new RigidBody(_mass, motionState, ColliderComponent.CollisionShape, inertia);           
 
-            var m = Matrix.Identity;
-            m.Translation = new Vector3(1, 2, 3);
-
-            var m2 = m.ToOpenTK();
+            RigidBody.SetWorldTransform(GameObject.Location.ToBullet());
 
             GameObject.Scene.Physics.World.AddRigidBody(RigidBody);
             
+        }
+
+        private void UpdateRigidBody()
+        {
+            if (!IsLoaded) return;
+
+            Vector3 inertia;
+            ColliderComponent.CollisionShape.CalculateLocalInertia(_mass, out inertia);
+
+            RigidBody.SetMassProps(_mass, inertia);
         }
 
         public override void Tick(float timeElapsed)

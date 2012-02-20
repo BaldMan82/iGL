@@ -40,7 +40,7 @@ namespace iGL.Engine
                 if (vertex.Z > vMax.Z) vMax.Z = vertex.Z;
             }
 
-            CollisionShape = new BoxShape(vMax - vMin);
+            CollisionShape = new BoxShape((vMax - vMin) / 2.0f);
         }
 
         public override void Tick(float timeElapsed)

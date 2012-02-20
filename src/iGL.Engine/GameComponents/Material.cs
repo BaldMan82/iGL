@@ -11,6 +11,6 @@ namespace iGL.Engine
         public Vector4 Ambient { get; set; }
         public Vector4 Diffuse { get; set; }
         public Vector4 Specular { get; set; }  
-        public float Shininess { get; set; }
+        public float Shininess { get; set; }        
     }
 }

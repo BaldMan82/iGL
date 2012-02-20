@@ -8,9 +8,51 @@ namespace iGL.Engine
 {
     public class GameObject
     {
-        public Vector3 Position { get; set; }
-        public Vector3 Scale { get; set; }
-        public Vector3 Rotation { get; set; }
+        internal Vector3 _position { get; set; }
+        internal Vector3 _scale { get; set; }
+        internal Vector3 _rotation { get; set; }
+
+        public Vector3 Position 
+        { 
+            get
+            {
+                return _position;
+            }
+            set
+            {
+                _position = value;
+                UpdateLocation();
+                UpdateRigidBody();
+            }
+        }
+
+        public Vector3 Scale
+        {
+            get
+            {
+                return _scale;
+            }
+            set
+            {
+                _scale = value;
+                UpdateLocation();
+                UpdateRigidBody();
+            }
+        }
+
+        public Vector3 Rotation
+        {
+            get
+            {
+                return _rotation;
+            }
+            set
+            {
+                _rotation = value;
+                UpdateLocation();
+                UpdateRigidBody();
+            }
+        }
 
         public Matrix4 Location { get; internal set; }
 
@@ -47,14 +89,7 @@ namespace iGL.Engine
         }
 
         public void Render()
-        {
-            /* update location matrix before rendering */
-
-            if (!Components.Any(c => c is RigidBodyComponent))
-            {
-                UpdateLocation();
-            }
-
+        {           
             var renderComponents = Components.Where(c => c is RenderComponent)
                                              .Select(c => c as RenderComponent);
 
@@ -63,6 +98,13 @@ namespace iGL.Engine
                 renderComponent.Render();
             }
             
+        }
+
+        private void UpdateRigidBody()
+        {
+            if (!this.IsLoaded) return;
+
+
         }
 
         private void UpdateLocation()
@@ -77,9 +119,7 @@ namespace iGL.Engine
         }
 
         public void Tick(float timeElapsed)
-        {
-           
-
+        {           
             _components.ForEach(gc => gc.Tick(timeElapsed));
         }
     }
