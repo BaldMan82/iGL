@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using OpenTK.Graphics.ES20;
-using OpenTK;
 using System.Diagnostics;
+using iGL.Engine.Math;
+using iGL.Engine.GL;
 
 namespace iGL.Engine
 {
     public class PointLightShader : ShaderProgram
-    {
+    {       
         public PointLightShader()
             : base(
             new List<Shader>() {                   

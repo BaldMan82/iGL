@@ -61,6 +61,10 @@
       <Project>{F4324499-1FD3-4DE4-B4F6-C16951162199}</Project>
       <Name>iGL.TestGame</Name>
     </ProjectReference>
+    <ProjectReference Include="..\iGL.WinGL\iGL.WinGL.csproj">
+      <Project>{BC65B5B5-0897-4D4C-8B93-FEC3FE1ADE00}</Project>
+      <Name>iGL.WinGL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

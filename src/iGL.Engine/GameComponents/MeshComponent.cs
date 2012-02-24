@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using OpenTK;
+
+using iGL.Engine.Math;
 
 namespace iGL.Engine
 {
@@ -39,7 +40,7 @@ namespace iGL.Engine
                     Vector3 a = v[(j + 1) % 3] - v[j];
                     Vector3 b = v[(j + 2) % 3] - v[j];
 
-                    float weight = (float)Math.Acos(Vector3.Dot(a, b) / (a.Length * b.Length));
+                    float weight = (float)System.Math.Acos(Vector3.Dot(a, b) / (a.Length * b.Length));
                     Normals[Indices[i + j]] += weight * norm;
                 }              
             }

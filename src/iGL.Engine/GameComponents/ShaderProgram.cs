@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-using OpenTK;
-using OpenTK.Graphics;
-using OpenTK.Graphics.ES20;
+using iGL.Engine.GL;
+using iGL.Engine.Math;
 
 namespace iGL.Engine
 {
@@ -13,6 +11,9 @@ namespace iGL.Engine
     {        
         private List<Shader> _vertexShaders;
         private List<Shader> _fragmentShaders;
+
+        public IGL GL { get { return Game.GL; } }
+
         public int ProgramId { get; private set; }
 
         public ShaderProgram(Shader vertexShader, Shader fragmentShader) : 
@@ -79,7 +80,7 @@ namespace iGL.Engine
 
             GL.AttachShader(ProgramId, fs);
 
-            GL.BindAttribLocation(ProgramId, 0, "a_position");            
+            GL.BindAttribLocation(ProgramId, 0, "a_position");
             GL.BindAttribLocation(ProgramId, 1, "a_normal");
 
             GL.LinkProgram(ProgramId);
@@ -118,24 +119,24 @@ namespace iGL.Engine
         public void SetModelViewMatrix(Matrix4 modelView)
         {
             var loc = GetUniformLocation("u_modelViewMatrix");
-            GL.UniformMatrix4(loc, false, ref modelView);
+            GL.UniformMatrix4(loc, false, modelView);
         }
 
         public void SetModelViewProjectionMatrix(Matrix4 modelViewProjection)
         {
             var loc = GetUniformLocation("u_modelViewProjectionMatrix");
-            GL.UniformMatrix4(loc, false, ref modelViewProjection);
+            GL.UniformMatrix4(loc, false, modelViewProjection);
         }
 
         public void SetTransposeAdjointModelViewMatrix(Matrix4 modelViewTransposeInverse)
         {
             var loc = GetUniformLocation("u_transposeAdjointModelViewMatrix");
-            GL.UniformMatrix4(loc, false, ref modelViewTransposeInverse);
+            GL.UniformMatrix4(loc, false, modelViewTransposeInverse);
         }
 
         public void SetAmbientColor(Vector4 color)
         {
-            var loc = GetUniformLocation("u_globalAmbientColor");           
+            var loc = GetUniformLocation("u_globalAmbientColor");
 
             GL.Uniform4(loc, color);
         }

@@ -73,7 +73,9 @@ namespace iGL.Engine
             /* update game object position */
 
             GameObject.Location = RigidBody.GetWorldTransform().ToOpenTK();
-            GameObject._position = new OpenTK.Vector3(RigidBody.GetWorldTransform().Translation.X, RigidBody.GetWorldTransform().Translation.Y, RigidBody.GetWorldTransform().Translation.Z);
+            GameObject._position = new iGL.Engine.Math.Vector3(RigidBody.GetWorldTransform().Translation.X, 
+                                                      RigidBody.GetWorldTransform().Translation.Y, 
+                                                      RigidBody.GetWorldTransform().Translation.Z);
         }
     }
 }

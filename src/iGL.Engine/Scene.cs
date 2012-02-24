@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using iGL.Engine.Events;
+using iGL.Engine.Math;
 
 namespace iGL.Engine
 {
@@ -38,7 +39,7 @@ namespace iGL.Engine
             /* update shader's light parameters */
 
             var pointLightShader = ShaderProgram as PointLightShader;
-            pointLightShader.SetLight(CurrentLight.Light, new OpenTK.Vector4(CurrentLight.GameObject.Position));        
+            pointLightShader.SetLight(CurrentLight.Light, new Vector4(CurrentLight.GameObject.Position));        
 
             /* load the current camera projection matrix in the shader program */
             

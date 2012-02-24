@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using iGL.Engine.GL;
 
 namespace iGL.Engine
 {
@@ -14,6 +15,8 @@ namespace iGL.Engine
         {
             GameObject = gameObject;
         }
+
+        public IGL GL { get { return Game.GL; } }
 
         public abstract void InternalLoad();
         public abstract void Tick(float timeElapsed);

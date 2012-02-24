@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-using OpenTK;
-using OpenTK.Graphics;
-using OpenTK.Graphics.ES20;
+using iGL.Engine.GL;
+using iGL.Engine.Math;
 
 namespace iGL.Engine
 {
@@ -16,7 +14,7 @@ namespace iGL.Engine
 
         public MeshRenderComponent(GameObject gameObject)
             : base(gameObject)
-        {           
+        {
             _bufferIds = new int[3];
         }
 
@@ -34,37 +32,37 @@ namespace iGL.Engine
             GL.GenBuffers(3, _bufferIds);
             GL.BindBuffer(BufferTarget.ArrayBuffer, _bufferIds[0]);
             GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(_meshComponent.Vertices.Length * (Vector3.SizeInBytes)),
-                          _meshComponent.Vertices.ToArray(), BufferUsage.StaticDraw);
+                       _meshComponent.Vertices.ToArray(), BufferUsage.StaticDraw);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, _bufferIds[1]);
             GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(_meshComponent.Normals.Length * (Vector3.SizeInBytes)),
-                          _meshComponent.Normals.ToArray(), BufferUsage.StaticDraw);
+                     _meshComponent.Normals.ToArray(), BufferUsage.StaticDraw);
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, _bufferIds[2]);
             GL.BufferData(BufferTarget.ElementArrayBuffer, new IntPtr(_meshComponent.Indices.Length * sizeof(short)),
                           _meshComponent.Indices.ToArray(), BufferUsage.StaticDraw);
-                    
+
         }
 
         public override void Render()
-        {            
+        {
             var locationInverse = GameObject.Location;
 
             locationInverse.Invert();
             locationInverse.Transpose();
 
             var shader = GameObject.Scene.ShaderProgram;
-               
+
             shader.SetTransposeAdjointModelViewMatrix(locationInverse);
             shader.SetModelViewMatrix(GameObject.Location);
             shader.SetMaterial(_meshComponent.Material);
 
-            int vertexAttrib = shader.GetVertexAttributeLocation();         
+            int vertexAttrib = shader.GetVertexAttributeLocation();
             int normalAttrib = shader.GetNormalAttributeLocation();
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, _bufferIds[0]);
             GL.EnableVertexAttribArray(vertexAttrib);
-            GL.VertexAttribPointer(vertexAttrib, 3, VertexAttribPointerType.Float, false, 0, 0);        
+            GL.VertexAttribPointer(vertexAttrib, 3, VertexAttribPointerType.Float, false, 0, 0);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, _bufferIds[1]);
             GL.EnableVertexAttribArray(normalAttrib);
@@ -77,7 +75,7 @@ namespace iGL.Engine
 
         public override void Tick(float timeElapsed)
         {
-           
+
         }
     }
 }

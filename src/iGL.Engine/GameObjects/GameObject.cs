@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using OpenTK;
+using iGL.Engine.Math;
+using iGL.Engine.GL;
 
 namespace iGL.Engine
 {
@@ -11,6 +12,8 @@ namespace iGL.Engine
         internal Vector3 _position { get; set; }
         internal Vector3 _scale { get; set; }
         internal Vector3 _rotation { get; set; }
+
+        public IGL GL { get { return Game.GL; } }
 
         public Vector3 Position 
         { 

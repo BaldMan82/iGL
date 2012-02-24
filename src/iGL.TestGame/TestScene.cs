@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using iGL.Engine;
-using OpenTK;
+using iGL.Engine.Math;
 
 namespace iGL.TestGame
 {
@@ -77,7 +77,7 @@ namespace iGL.TestGame
             _testCube = floor;
             AddGameObject(floor);           
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 50; i++)
             {
                 var cube = new Cube(1.0f, 1.0f, 1.0f);
 
