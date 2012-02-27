@@ -45,14 +45,24 @@ namespace iGL.Engine
             /* load the collider first */
             if (!ColliderComponent.IsLoaded) ColliderComponent.Load();
 
-            var motionState = new DefaultMotionState(GameObject.Location.ToBullet(), Matrix.Identity);
+            var motionState = new DefaultMotionState(GameObject.Transform.ToBullet(), Matrix.Identity);
             
             Vector3 inertia;
             ColliderComponent.CollisionShape.CalculateLocalInertia(_mass, out inertia);
 
             RigidBody = new RigidBody(_mass, motionState, ColliderComponent.CollisionShape, inertia);           
+           
+            /* set initalial position / rotation of object 
+             * do not incorporate scale matrix */          
+            
+            var mRotationX = Matrix.CreateRotationX(GameObject.Rotation.X);
+            var mRotationY = Matrix.CreateRotationX(GameObject.Rotation.Y);
+            var mRotationZ = Matrix.CreateRotationX(GameObject.Rotation.Z);            
 
-            RigidBody.SetWorldTransform(GameObject.Location.ToBullet());
+            var transform = mRotationX * mRotationY * mRotationZ * Matrix.Identity;
+            transform.Translation = new Vector3(GameObject._position.X, GameObject._position.Y, GameObject._position.Z);         
+
+            RigidBody.SetWorldTransform(transform);
 
             GameObject.Scene.Physics.World.AddRigidBody(RigidBody);
             
@@ -70,9 +80,14 @@ namespace iGL.Engine
 
         public override void Tick(float timeElapsed)
         {
-            /* update game object position */
+            /* update game object position */            
+                        
+            var transform = RigidBody.GetWorldTransform().ToOpenTK();
 
-            GameObject.Location = RigidBody.GetWorldTransform().ToOpenTK();
+            /* scale must be taking into account */
+
+            GameObject.Transform = Math.Matrix4.Scale(GameObject.Scale) * transform;
+
             GameObject._position = new iGL.Engine.Math.Vector3(RigidBody.GetWorldTransform().Translation.X, 
                                                       RigidBody.GetWorldTransform().Translation.Y, 
                                                       RigidBody.GetWorldTransform().Translation.Z);

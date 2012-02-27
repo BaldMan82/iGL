@@ -24,7 +24,7 @@ namespace iGL.Engine
             set
             {
                 _position = value;
-                UpdateLocation();
+                UpdateTransform();
                 UpdateRigidBody();
             }
         }
@@ -38,7 +38,7 @@ namespace iGL.Engine
             set
             {
                 _scale = value;
-                UpdateLocation();
+                UpdateTransform();
                 UpdateRigidBody();
             }
         }
@@ -52,12 +52,12 @@ namespace iGL.Engine
             set
             {
                 _rotation = value;
-                UpdateLocation();
+                UpdateTransform();
                 UpdateRigidBody();
             }
         }
 
-        public Matrix4 Location { get; internal set; }
+        public Matrix4 Transform { get; internal set; }
 
         public Scene Scene { get; internal set; }
 
@@ -110,15 +110,16 @@ namespace iGL.Engine
 
         }
 
-        private void UpdateLocation()
+        private void UpdateTransform()
         {
-            var mPos = Matrix4.Translation(Position);
-            var mRotationX = Matrix4.Rotate(new Vector3(1.0f, 0.0f, 0.0f), Rotation.X);
-            var mRotationY = Matrix4.Rotate(new Vector3(0.0f, 1.0f, 0.0f), Rotation.Y);
-            var mRotationZ = Matrix4.Rotate(new Vector3(0.0f, 0.0f, 1.0f), Rotation.Z);
-            var scale = Matrix4.Scale(Scale);
+            var mPos = Matrix4.CreateTranslation(Position);
+            var mRotationX = Matrix4.CreateRotationX(Rotation.X);
+            var mRotationY = Matrix4.CreateRotationY(Rotation.Y);
+            var mRotationZ = Matrix4.CreateRotationZ(Rotation.Z);
+            
+            var scale = Matrix4.Scale(Scale);            
 
-            Location = scale * mRotationX * mRotationY * mRotationZ * mPos * Matrix4.Identity;
+            Transform = scale * mRotationX * mRotationY * mRotationZ * mPos * Matrix4.Identity;
         }
 
         public void Tick(float timeElapsed)

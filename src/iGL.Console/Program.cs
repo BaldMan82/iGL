@@ -11,7 +11,7 @@ namespace iGL.Console
     class Program
     {
         private static TestGame.TestGame game;
-
+    
         static void Main(string[] args)
         {                    
             System.Console.WriteLine("Starting...");
@@ -25,14 +25,21 @@ namespace iGL.Console
             gameWnd.Load += new EventHandler<EventArgs>(gameWnd_Load);
             gameWnd.RenderFrame += new EventHandler<FrameEventArgs>(gameWnd_RenderFrame);
             gameWnd.UpdateFrame += new EventHandler<FrameEventArgs>(gameWnd_UpdateFrame);
+            gameWnd.Resize += new EventHandler<EventArgs>(gameWnd_Resize);
             gameWnd.Run();          
 
             System.Console.ReadLine();                      
         }
 
-        static void gameWnd_UpdateFrame(object sender, FrameEventArgs e)
+        static void gameWnd_Resize(object sender, EventArgs e)
         {
-            game.Tick((float)e.Time);
+            var size = ((GameWindow)sender).Size;
+            game.Resize(size.Width, size.Height);
+        }
+
+        static void gameWnd_UpdateFrame(object sender, FrameEventArgs e)
+        {           
+            game.Tick((float)e.Time);                       
         }
 
         static void gameWnd_RenderFrame(object sender, FrameEventArgs e)

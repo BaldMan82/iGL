@@ -7,6 +7,6 @@ namespace iGL.Engine.Events
 {
     public class TickEvent : EventArgs
     {
-
+        public float Elapsed { get; set; }
     }
 }

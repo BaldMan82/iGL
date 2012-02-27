@@ -21,8 +21,8 @@ namespace iGL.TestGame
         void TestScene_OnTick(object sender, Engine.Events.TickEvent e)
         {
             _testCamera.Position = new Vector3((float)(Math.Cos(alpha / 2.0f) * 20.0f), (float)(Math.Sin(alpha / 2.0f) * 10.0f) + 10.0f, (float)(Math.Sin(alpha / 2.0f) * 20.0f));
-          
-            alpha += 0.02f;
+
+            alpha += e.Elapsed * 2.0f;
         }
         
         public override void Load()
@@ -30,7 +30,7 @@ namespace iGL.TestGame
             /* create camera */
 
             _testCamera = new Camera(MathHelper.DegreesToRadians(45.0f), 3.0f / 2.0f, 1.00f, 1000.0f);
-            _testCamera.Position = new Vector3(0.0f, 10.0f, 20.0f);
+            _testCamera.Position = new Vector3(0.0f, 0.0f, 10.0f);
 
             AddGameObject(_testCamera);
             SetCurrentCamera(_testCamera);
@@ -48,7 +48,7 @@ namespace iGL.TestGame
             _testCube = new Cube(2.0f, 2.0f, 2.0f);
             _testCube.Material.Ambient = new Vector4(0.1f, 0.1f, 0.1f, 0.0f);
             _testCube.Material.Diffuse = new Vector4(0.0f, 1.0f, 0.0f, 0.0f);
-            _testCube.Position = new Vector3(0.0f, 60.0f, 0.0f);
+            _testCube.Position = new Vector3(0.0f, 20.0f, 0.0f);           
 
             _testCube.AddComponent(new LightComponent(_testCube, pointlight));
 
@@ -75,15 +75,15 @@ namespace iGL.TestGame
             floor.AddComponent(rigidBody);
 
             _testCube = floor;
-            AddGameObject(floor);           
+            AddGameObject(floor);
 
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 100; i++)
             {
                 var cube = new Cube(1.0f, 1.0f, 1.0f);
 
                 cube.Material.Ambient = new Vector4(0.1f, 0.1f, 0.1f, 0.0f);
                 cube.Material.Diffuse = new Vector4(1.0f, 0.0f, 0.0f, 1.0f);
-              
+
                 cube.Position = new Vector3(0, 1.0f + i, i / 10.0f);
 
                 cube.AddComponent(new BoxColliderComponent(cube));
@@ -94,6 +94,22 @@ namespace iGL.TestGame
                 cube.AddComponent(rigidBody);
 
                 AddGameObject(cube);
+
+                var sphere = new Sphere(0.5f);
+
+                sphere.Material.Ambient = new Vector4(0.1f, 0.1f, 0.1f, 0.0f);
+                sphere.Material.Diffuse = new Vector4(1.0f, 1.0f, 0.0f, 1.0f);
+
+                sphere.Position = new Vector3(2.0f, 1.0f + i, i / 10.0f);
+
+                sphere.AddComponent(new SphereColliderComponent(sphere));
+
+                rigidBody = new RigidBodyComponent(sphere);
+                rigidBody.Mass = 5.0f;
+
+                sphere.AddComponent(rigidBody);
+
+                AddGameObject(sphere);
             }                           
         }
     }

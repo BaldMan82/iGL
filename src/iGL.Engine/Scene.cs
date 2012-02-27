@@ -45,7 +45,7 @@ namespace iGL.Engine
             
             foreach (var gameObject in _gameObjects)
             {
-                var modelviewProjection = gameObject.Location * CurrentCamera.ModelViewProjectionMatrix;
+                var modelviewProjection = gameObject.Transform * CurrentCamera.ModelViewProjectionMatrix;
                 ShaderProgram.SetModelViewProjectionMatrix(modelviewProjection);
 
                 gameObject.Render();
@@ -55,7 +55,7 @@ namespace iGL.Engine
 
         public void Tick(float timeElapsed)
         {            
-            OnTickEvent(this, new TickEvent());
+            OnTickEvent(this, new TickEvent() { Elapsed = timeElapsed });
             
             try
             {

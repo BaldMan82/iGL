@@ -17,7 +17,7 @@ namespace iGL.Engine
             GL = gl;
         }        
 
-        void Resize(int width, int height)
+        public void Resize(int width, int height)
         {
             GL.Viewport(0, 0, width, height);
         }

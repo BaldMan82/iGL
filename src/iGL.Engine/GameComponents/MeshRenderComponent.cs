@@ -44,9 +44,19 @@ namespace iGL.Engine
 
         }
 
+        public MeshRenderComponent CloneForReuse(GameObject gameObject)
+        {
+            if (!IsLoaded) throw new InvalidOperationException("Can only clone loaded mesh render component");
+
+            var meshRenderComponent = new MeshRenderComponent(gameObject);
+            meshRenderComponent._bufferIds = _bufferIds;
+
+            return meshRenderComponent;
+        }
+
         public override void Render()
         {
-            var locationInverse = GameObject.Location;
+            var locationInverse = GameObject.Transform;
 
             locationInverse.Invert();
             locationInverse.Transpose();
@@ -54,7 +64,7 @@ namespace iGL.Engine
             var shader = GameObject.Scene.ShaderProgram;
 
             shader.SetTransposeAdjointModelViewMatrix(locationInverse);
-            shader.SetModelViewMatrix(GameObject.Location);
+            shader.SetModelViewMatrix(GameObject.Transform);
             shader.SetMaterial(_meshComponent.Material);
 
             int vertexAttrib = shader.GetVertexAttributeLocation();
@@ -68,7 +78,7 @@ namespace iGL.Engine
             GL.EnableVertexAttribArray(normalAttrib);
             GL.VertexAttribPointer(normalAttrib, 3, VertexAttribPointerType.Float, false, 0, 0);
 
-            //GL.BindBuffer(BufferTarget.ElementArrayBuffer, _bufferIds[1]);                        
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, _bufferIds[2]);                        
 
             GL.DrawElements(BeginMode.Triangles, _meshComponent.Indices.Length, DrawElementsType.UnsignedShort, 0);
         }
