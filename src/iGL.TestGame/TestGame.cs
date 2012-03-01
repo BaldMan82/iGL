@@ -15,7 +15,8 @@ namespace iGL.TestGame
         {
             base.Load();
 
-            TestScene scene = new TestScene();
+            CastleScene scene = new CastleScene();
+            //TestScene scene = new TestScene();
             SetScene(scene);
 
             LoadScene();

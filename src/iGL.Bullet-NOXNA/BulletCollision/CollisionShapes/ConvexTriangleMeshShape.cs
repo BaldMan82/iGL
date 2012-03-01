@@ -182,7 +182,7 @@ namespace BulletXNA.BulletCollision
             m_stridingMesh.InternalProcessAllTriangles(inertiaCallback, ref aabbMax, ref aabbMax);
 
             IndexedBasisMatrix i = inertiaCallback.GetInertia();
-            i.Diagonalize(out principal, 0.00001f, 20);
+            i.Diagonalize(ref principal, 0.00001f, 20);
             //i.diagonalize(principal.getBasis(), 0.00001f, 20);
             inertia = new Vector3(i[0,0],i[1,1],i[2,2]);
             inertia /= volume;

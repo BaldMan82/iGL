@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using iGL.Engine.Events;
 using iGL.Engine.Math;
+using BulletXNA.BulletCollision;
 
 namespace iGL.Engine
 {
@@ -36,25 +37,25 @@ namespace iGL.Engine
         {
             if (CurrentCamera == null) return;
 
-            /* update shader's light parameters */
+            if (CurrentLight != null)
+            {
+                /* update shader's light parameters */
 
-            var pointLightShader = ShaderProgram as PointLightShader;
-            pointLightShader.SetLight(CurrentLight.Light, new Vector4(CurrentLight.GameObject.Position));        
+                var pointLightShader = ShaderProgram as PointLightShader;
+                pointLightShader.SetLight(CurrentLight.Light, new Vector4(CurrentLight.GameObject.Position));
+            }
 
             /* load the current camera projection matrix in the shader program */
             
             foreach (var gameObject in _gameObjects)
-            {
-                var modelviewProjection = gameObject.Transform * CurrentCamera.ModelViewProjectionMatrix;
-                ShaderProgram.SetModelViewProjectionMatrix(modelviewProjection);
-
-                gameObject.Render();
+            {               
+                gameObject.Render(Matrix4.Identity);
             }
             
         }
 
         public void Tick(float timeElapsed)
-        {            
+        {
             OnTickEvent(this, new TickEvent() { Elapsed = timeElapsed });
             
             try
@@ -66,7 +67,7 @@ namespace iGL.Engine
             _gameObjects.ForEach(g => g.Tick(timeElapsed));
         }
 
-        public event EventHandler<TickEvent> TickEvent
+        public event EventHandler<TickEvent> OnTick
         {
             add
             {
@@ -108,6 +109,48 @@ namespace iGL.Engine
             gameObject.Load();
 
             _gameObjects.Add(gameObject);
+        }
+
+        public void MouseMove(float x, float y)
+        {           
+            var cam = CurrentCamera;
+
+            var pmv = cam.ModelViewMatrix * cam.ProjectionMatrix;
+            pmv.Invert();
+
+            var nearPlane = Vector4.Transform(new Vector4(x, y, -1, 1), pmv);
+            var farPlane = Vector4.Transform(new Vector4(x, y, 1, 1), pmv);
+
+            nearPlane.W = 1.0f / nearPlane.W;
+            nearPlane.X *= nearPlane.W;
+            nearPlane.Y *= nearPlane.W;
+            nearPlane.Z *= nearPlane.W;
+
+            farPlane.W = 1.0f / farPlane.W;
+            farPlane.X *= farPlane.W;
+            farPlane.Y *= farPlane.W;
+            farPlane.Z *= farPlane.W;
+
+            var ray = new Vector4(farPlane - nearPlane);
+            ray.Normalize();           
+
+            var worldIn = new BulletXNA.LinearMath.Vector3(nearPlane.X, nearPlane.Y, nearPlane.Z);
+            var worldOut = new BulletXNA.LinearMath.Vector3(farPlane.X, farPlane.Y, farPlane.Z);
+
+            ClosestRayResultCallback resultCallback = new ClosestRayResultCallback(worldIn, worldOut);
+            Physics.World.RayTest(ref worldIn, ref worldOut, resultCallback);
+
+            if (resultCallback.HasHit)
+            {
+                var gameObject = _gameObjects.Single(g => g.Components.Contains(resultCallback.m_collisionObject.UserObject));
+
+                var rigidBody = gameObject.Components.First(c => c is RigidBodyComponent) as RigidBodyComponent;
+                rigidBody.RigidBody.Activate();
+
+                var force = new BulletXNA.LinearMath.Vector3(ray.X * 10.0f, ray.Y * 10.0f, ray.Z * 10.0f) * 10000.0f;
+                var pos = new BulletXNA.LinearMath.Vector3();
+                rigidBody.RigidBody.ApplyForce(ref force, ref pos); 
+            }
         }
     }
 }

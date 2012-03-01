@@ -362,9 +362,11 @@ namespace BulletXNA.BulletCollision
                 tensor[1] += masses[k] * j[1];
                 tensor[2] += masses[k] * j[2];
             }
-            tensor.Diagonalize(out principal, 0.00001f, 20);
+            
+            //var rot = principal;
+            tensor.Diagonalize(ref principal, 0.00001f, 20);
             inertia = new Vector3(tensor._Row0.X, tensor._Row1.Y, tensor._Row2.Z);
-        }
+        }    
 
         public int GetUpdateRevision()
         {

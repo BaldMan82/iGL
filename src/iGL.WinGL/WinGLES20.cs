@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using iGL.Engine.GL;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.ES20;
 using OpenTK;
 
 namespace iGL
 {
-    public class WinGL : IGL
+    public class WinGLES20 : IGL
     {
         public int CreateProgram()
-        {
+        {            
             return GL.CreateProgram();
         }
 
         public int CreateShader(Engine.ShaderType shaderType)
         {
             ShaderType glShaderType = ShaderType.VertexShader;
-
+            
             switch (shaderType)
             {
                 case Engine.ShaderType.FragmentShader:
@@ -110,7 +110,7 @@ namespace iGL
             BufferTarget target = ToBufferTarget(bufferTarget);
 
             GL.BindBuffer(target, p);
-        }
+        }       
 
         public void BufferData<T>(Engine.BufferTarget bufferTarget, IntPtr size, T[] data, Engine.BufferUsage bufferUsage) where T : struct
         {
@@ -135,8 +135,8 @@ namespace iGL
 
         public void VertexAttribPointer(int index, int size, Engine.VertexAttribPointerType vertexAttribPointerType, bool normalized, int stride, int offset)
         {
-            var vertexPointerType = ToVertexAttribPointerType(vertexAttribPointerType);
-            GL.VertexAttribPointer(index, size, vertexPointerType, normalized, stride, offset);
+           var vertexPointerType = ToVertexAttribPointerType(vertexAttribPointerType);
+           GL.VertexAttribPointer(index, size, vertexPointerType, normalized, stride, offset);
         }
 
         public void Viewport(int x, int y, int width, int height)
@@ -184,14 +184,14 @@ namespace iGL
             return target;
         }
 
-        private static BufferUsageHint ToBufferUsage(Engine.BufferUsage bufferUsage)
+        private static BufferUsage ToBufferUsage(Engine.BufferUsage bufferUsage)
         {
-            BufferUsageHint usage = BufferUsageHint.StaticDraw;
+            BufferUsage usage = BufferUsage.DynamicDraw;
 
             switch (bufferUsage)
             {
                 case Engine.BufferUsage.StaticDraw:
-                    usage = BufferUsageHint.StaticDraw;
+                    usage = BufferUsage.StaticDraw;
                     break;
             }
 

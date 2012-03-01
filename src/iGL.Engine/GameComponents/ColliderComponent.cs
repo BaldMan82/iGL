@@ -22,9 +22,9 @@ namespace iGL.Engine
         public override void InternalLoad()
         {
             /* game object must have a rigid body component */
-            AttachedRigidBody = GameObject.Components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
+            //AttachedRigidBody = GameObject.Components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
 
-            if (AttachedRigidBody == null) throw new NotSupportedException("Collider must have a rigid body component");
+            //if (AttachedRigidBody == null) throw new NotSupportedException("Collider must have a rigid body component");
         }
 
         public override void Tick(float timeElapsed)

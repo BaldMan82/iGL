@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using iGL.Engine.Math;
 
 namespace iGL.Engine
 {
@@ -13,6 +14,6 @@ namespace iGL.Engine
             
         }
 
-        public abstract void Render();
+        public abstract void Render(Matrix4 transform);
     }
 }

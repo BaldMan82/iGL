@@ -11,10 +11,13 @@ namespace iGL.Engine
     {        
         private List<Shader> _vertexShaders;
         private List<Shader> _fragmentShaders;
+        private Dictionary<string, int> _uniformLocations = new Dictionary<string, int>();
 
         public IGL GL { get { return Game.GL; } }
 
         public int ProgramId { get; private set; }
+
+
 
         public ShaderProgram(Shader vertexShader, Shader fragmentShader) : 
             this(new List<Shader>() { vertexShader }, new List<Shader>() { fragmentShader }) {}
@@ -143,7 +146,17 @@ namespace iGL.Engine
 
         protected int GetUniformLocation(string uniform)
         {
-            var loc = GL.GetUniformLocation(this.ProgramId, uniform);
+            int loc;
+            if (_uniformLocations.TryGetValue(uniform,out loc))
+            {
+                return loc;
+            }
+            else
+            {
+                loc = GL.GetUniformLocation(this.ProgramId, uniform);
+                _uniformLocations.Add(uniform, loc);
+            }
+
             //if (loc == -1) throw new InvalidOperationException(uniform);
 
             return loc;

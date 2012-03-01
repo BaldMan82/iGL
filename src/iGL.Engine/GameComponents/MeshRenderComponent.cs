@@ -46,7 +46,7 @@ namespace iGL.Engine
 
         public MeshRenderComponent CloneForReuse(GameObject gameObject)
         {
-            if (!IsLoaded) throw new InvalidOperationException("Can only clone loaded mesh render component");
+            if (!IsLoaded) Load();
 
             var meshRenderComponent = new MeshRenderComponent(gameObject);
             meshRenderComponent._bufferIds = _bufferIds;
@@ -54,9 +54,9 @@ namespace iGL.Engine
             return meshRenderComponent;
         }
 
-        public override void Render()
+        public override void Render(Matrix4 transform)
         {
-            var locationInverse = GameObject.Transform;
+            var locationInverse = transform;
 
             locationInverse.Invert();
             locationInverse.Transpose();
@@ -64,7 +64,7 @@ namespace iGL.Engine
             var shader = GameObject.Scene.ShaderProgram;
 
             shader.SetTransposeAdjointModelViewMatrix(locationInverse);
-            shader.SetModelViewMatrix(GameObject.Transform);
+            shader.SetModelViewMatrix(transform);
             shader.SetMaterial(_meshComponent.Material);
 
             int vertexAttrib = shader.GetVertexAttributeLocation();

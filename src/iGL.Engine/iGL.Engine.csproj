@@ -57,8 +57,11 @@
     <Compile Include="GameComponents\RigidBodyComponent.cs" />
     <Compile Include="GameComponents\Shader.cs" />
     <Compile Include="GameComponents\ShaderProgram.cs" />
+    <Compile Include="GameComponents\CompoundColliderComponent.cs" />
     <Compile Include="GameObjects\Camera.cs" />
     <Compile Include="GameComponents\CameraComponent.cs" />
+    <Compile Include="Events\MouseMoveEvent.cs" />
+    <Compile Include="GameObjects\CompoundObject.cs" />
     <Compile Include="GameObjects\Sphere.cs" />
     <Compile Include="GameObjects\Cube.cs" />
     <Compile Include="Game.cs" />

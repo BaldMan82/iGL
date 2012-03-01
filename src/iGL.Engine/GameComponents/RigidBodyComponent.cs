@@ -5,6 +5,7 @@ using System.Text;
 using BulletXNA.BulletDynamics;
 using BulletXNA;
 using BulletXNA.LinearMath;
+using BulletXNA.BulletCollision;
 
 namespace iGL.Engine
 {
@@ -45,24 +46,60 @@ namespace iGL.Engine
             /* load the collider first */
             if (!ColliderComponent.IsLoaded) ColliderComponent.Load();
 
-            var motionState = new DefaultMotionState(GameObject.Transform.ToBullet(), Matrix.Identity);
-            
-            Vector3 inertia;
-            ColliderComponent.CollisionShape.CalculateLocalInertia(_mass, out inertia);
+            DefaultMotionState motionState;
 
-            RigidBody = new RigidBody(_mass, motionState, ColliderComponent.CollisionShape, inertia);           
-           
             /* set initalial position / rotation of object 
-             * do not incorporate scale matrix */          
-            
+               * do not incorporate scale matrix */
+
             var mRotationX = Matrix.CreateRotationX(GameObject.Rotation.X);
-            var mRotationY = Matrix.CreateRotationX(GameObject.Rotation.Y);
-            var mRotationZ = Matrix.CreateRotationX(GameObject.Rotation.Z);            
+            var mRotationY = Matrix.CreateRotationY(GameObject.Rotation.Y);
+            var mRotationZ = Matrix.CreateRotationZ(GameObject.Rotation.Z);
 
             var transform = mRotationX * mRotationY * mRotationZ * Matrix.Identity;
-            transform.Translation = new Vector3(GameObject._position.X, GameObject._position.Y, GameObject._position.Z);         
+            transform.Translation = new Vector3(GameObject._position.X, GameObject._position.Y, GameObject._position.Z);          
 
-            RigidBody.SetWorldTransform(transform);
+            if (ColliderComponent is CompoundColliderComponent)
+            {
+                var compoundShape = ((CompoundColliderComponent)ColliderComponent).CollisionShape as CompoundShape;
+
+                var masses = new float[compoundShape.GetNumChildShapes()];
+                for (int i = 0; i < compoundShape.GetNumChildShapes(); i++)
+                {
+                    masses[i] = _mass / compoundShape.GetNumChildShapes();
+                }
+
+                var principal = Matrix.Identity;
+                Vector3 compoundInertia;
+                compoundShape.CalculatePrincipalAxisTransform(masses.ToList(), ref principal, out compoundInertia);
+
+                var newBoxCompound = new CompoundShape();
+                for (int i = 0; i < compoundShape.GetNumChildShapes(); i++)
+                {
+                    var newChildTransform = principal.Inverse() * compoundShape.GetChildTransform(i);          
+                    newBoxCompound.AddChildShape(ref newChildTransform, compoundShape.GetChildShape(i));
+                }
+
+                ColliderComponent.CollisionShape = newBoxCompound;
+
+                motionState = new DefaultMotionState(transform * principal, Matrix.Identity);
+                newBoxCompound.CalculateLocalInertia(_mass, out compoundInertia);
+
+                RigidBody = new RigidBody(_mass, motionState, ColliderComponent.CollisionShape, compoundInertia);
+            
+            }
+            else
+            {
+                motionState = new DefaultMotionState(transform, Matrix.Identity);
+                
+                Vector3 inertia;
+                ColliderComponent.CollisionShape.CalculateLocalInertia(_mass, out inertia);
+
+                RigidBody = new RigidBody(_mass, motionState, ColliderComponent.CollisionShape, inertia);
+                             
+            }                     
+
+            
+            RigidBody.UserObject = this;         
 
             GameObject.Scene.Physics.World.AddRigidBody(RigidBody);
             
@@ -70,12 +107,31 @@ namespace iGL.Engine
 
         private void UpdateRigidBody()
         {
-            if (!IsLoaded) return;
+            if (!IsLoaded) return;          
 
-            Vector3 inertia;
-            ColliderComponent.CollisionShape.CalculateLocalInertia(_mass, out inertia);
+            //GameObject.Scene.Physics.World.RemoveRigidBody(RigidBody);
 
-            RigidBody.SetMassProps(_mass, inertia);
+            //var motionState = new DefaultMotionState(GameObject.Transform.ToBullet(), Matrix.Identity);
+
+            //Vector3 inertia;
+            //ColliderComponent.CollisionShape.CalculateLocalInertia(_mass, out inertia);
+
+            //RigidBody = new RigidBody(_mass, motionState, ColliderComponent.CollisionShape, inertia);
+            //RigidBody.UserObject = this;
+
+            ///* set initalial position / rotation of object 
+            // * do not incorporate scale matrix */
+
+            //var mRotationX = Matrix.CreateRotationX(GameObject.Rotation.X);
+            //var mRotationY = Matrix.CreateRotationX(GameObject.Rotation.Y);
+            //var mRotationZ = Matrix.CreateRotationX(GameObject.Rotation.Z);
+
+            //var transform = mRotationX * mRotationY * mRotationZ * Matrix.Identity;
+            //transform.Translation = new Vector3(GameObject._position.X, GameObject._position.Y, GameObject._position.Z);
+
+            //RigidBody.SetWorldTransform(transform);
+
+            //GameObject.Scene.Physics.World.AddRigidBody(RigidBody);
         }
 
         public override void Tick(float timeElapsed)
@@ -88,8 +144,8 @@ namespace iGL.Engine
 
             GameObject.Transform = Math.Matrix4.Scale(GameObject.Scale) * transform;
 
-            GameObject._position = new iGL.Engine.Math.Vector3(RigidBody.GetWorldTransform().Translation.X, 
-                                                      RigidBody.GetWorldTransform().Translation.Y, 
+            GameObject._position = new iGL.Engine.Math.Vector3(RigidBody.GetWorldTransform().Translation.X,
+                                                      RigidBody.GetWorldTransform().Translation.Y,
                                                       RigidBody.GetWorldTransform().Translation.Z);
         }
     }

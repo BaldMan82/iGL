@@ -498,10 +498,12 @@ namespace BulletXNA.LinearMath
        * 
        * Note that this matrix is assumed to be symmetric. 
        */
-        public void Diagonalize(out Matrix rot, float threshold, int maxSteps)
+        public void Diagonalize(ref Matrix rot, float threshold, int maxSteps)
         {
-
+            var trans = rot.Translation;
             rot = Matrix.Identity;
+            rot.Translation = trans;
+
             for (int step = maxSteps; step > 0; step--)
             {
                 // find off-diagonal element [p][q] with largest magnitude

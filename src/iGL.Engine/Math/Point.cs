@@ -31,7 +31,7 @@ using System.Text;
 
 namespace iGL.Engine.Math
 {
-#if NO_SYSDRAWING
+
     /// <summary>
     /// Defines a point on a two-dimensional plane.
     /// </summary>
@@ -141,49 +141,7 @@ namespace iGL.Engine.Math
         {
             return !left.Equals(right);
         }
-
-        /// <summary>
-        /// Converts an OpenTK.Point instance to a System.Drawing.Point.
-        /// </summary>
-        /// <param name="point">
-        /// The <see cref="Point"/> instance to convert.
-        /// </param>
-        /// <returns>
-        /// A <see cref="System.Drawing.Point"/> instance equivalent to point.
-        /// </returns>
-        public static implicit operator System.Drawing.Point(Point point)
-        {
-            return new System.Drawing.Point(point.X, point.Y);
-        }
-
-        /// <summary>
-        /// Converts a System.Drawing.Point instance to an OpenTK.Point.
-        /// </summary>
-        /// <param name="point">
-        /// The <see cref="System.Drawing.Point"/> instance to convert.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Point"/> instance equivalent to point.
-        /// </returns>
-        public static implicit operator Point(System.Drawing.Point point)
-        {
-            return new Point(point.X, point.Y);
-        }
-
-        /// <summary>
-        /// Converts an OpenTK.Point instance to a System.Drawing.PointF.
-        /// </summary>
-        /// <param name="point">
-        /// The <see cref="Point"/> instance to convert.
-        /// </param>
-        /// <returns>
-        /// A <see cref="System.Drawing.PointF"/> instance equivalent to point.
-        /// </returns>
-        public static implicit operator System.Drawing.PointF(Point point)
-        {
-            return new System.Drawing.PointF(point.X, point.Y);
-        }
-
+      
         /// <summary>
         /// Indicates whether this instance is equal to the specified object.
         /// </summary>
@@ -231,5 +189,4 @@ namespace iGL.Engine.Math
 
         #endregion
     }
-#endif
 }

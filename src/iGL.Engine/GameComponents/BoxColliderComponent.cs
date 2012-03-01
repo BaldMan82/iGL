@@ -39,8 +39,9 @@ namespace iGL.Engine
                 if (vertex.Z * GameObject.Scale.Z < vMin.Z) vMin.Z = vertex.Z * GameObject.Scale.Z;
                 if (vertex.Z * GameObject.Scale.Z > vMax.Z) vMax.Z = vertex.Z * GameObject.Scale.Z;
             }
-            
-            CollisionShape = new BoxShape((vMax - vMin) / 2.0f);
+
+            var halfSize = (vMax - vMin) / 2.0f;
+            CollisionShape = new BoxShape(halfSize);           
         }
 
         public override void Tick(float timeElapsed)
