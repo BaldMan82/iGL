@@ -1,7 +1,7 @@
 
 
-precision highp float;
-precision highp int;
+precision mediump float;
+precision mediump int;
 
 // Attributes
 attribute vec3 a_position;

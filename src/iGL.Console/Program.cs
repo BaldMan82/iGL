@@ -13,6 +13,7 @@ namespace iGL.Console
     {
         private static TestGame.TestGame game;
         private static GameWindow gameWnd;
+      
 
         static void Main(string[] args)
         {                    
@@ -24,11 +25,14 @@ namespace iGL.Console
             gameWnd = new GameWindow(960, 640, new GraphicsMode(16, 16), "", GameWindowFlags.Default, DisplayDevice.Default,
                                   2, 0, GraphicsContextFlags.Default);
 
+         
+
             gameWnd.Load += new EventHandler<EventArgs>(gameWnd_Load);
             gameWnd.RenderFrame += new EventHandler<FrameEventArgs>(gameWnd_RenderFrame);
             gameWnd.UpdateFrame += new EventHandler<FrameEventArgs>(gameWnd_UpdateFrame);
             gameWnd.Resize += new EventHandler<EventArgs>(gameWnd_Resize);
-            gameWnd.Mouse.Move += new EventHandler<OpenTK.Input.MouseMoveEventArgs>(Mouse_Move);
+            gameWnd.Mouse.Move += new EventHandler<OpenTK.Input.MouseMoveEventArgs>(Mouse_Move);            
+
             gameWnd.Run();       
 
             System.Console.ReadLine();                      
@@ -47,7 +51,8 @@ namespace iGL.Console
 
         static void gameWnd_UpdateFrame(object sender, FrameEventArgs e)
         {           
-            game.Tick((float)e.Time);                       
+            //game.Tick(1.0f / 100.0f);                       
+            game.Tick((float)e.Time);
         }
 
         static void gameWnd_RenderFrame(object sender, FrameEventArgs e)
@@ -63,7 +68,7 @@ namespace iGL.Console
             {
                 int fps = 1000 / (int)renderTime.Milliseconds;
 
-                System.Console.WriteLine("FPS: " + fps.ToString());
+                //System.Console.WriteLine("FPS: " + fps.ToString());
             }
         }
 

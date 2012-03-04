@@ -130,7 +130,7 @@ namespace iGL
             var drawType = ToDrawElemensType(drawElementsType);
             var mode = ToBeginMode(beginMode);
 
-            GL.DrawElements(mode, p, drawType, offset);
+            GL.DrawElements(mode, p, drawType, (IntPtr)offset);
         }
 
         public void VertexAttribPointer(int index, int size, Engine.VertexAttribPointerType vertexAttribPointerType, bool normalized, int stride, int offset)
@@ -153,6 +153,7 @@ namespace iGL
         {
             var cap = ToEnableCap(enableCap);
             GL.Enable(cap);
+            
         }
 
         public void UseProgram(int programId)

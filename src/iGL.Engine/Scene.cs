@@ -79,6 +79,8 @@ namespace iGL.Engine
             }
         }
 
+        
+
         public void SetCurrentCamera(GameObject camera)
         {
             if (!_gameObjects.Contains(camera)) throw new Exception("Camera is not part of this scene");           

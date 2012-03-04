@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OpenGL.cs" />
     <Compile Include="WinGL.cs" />
     <Compile Include="WinGLES20.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

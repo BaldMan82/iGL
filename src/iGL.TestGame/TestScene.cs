@@ -44,14 +44,37 @@ namespace iGL.TestGame
             pointlight.Ambient = new Vector4(1.0f, 1.0f, 1.0f, 1.0f);
             pointlight.Diffuse = new Vector4(1.0f, 1.0f, 0.8f, 1.0f);
 
-            var lightObj = new GameObject();
-            lightObj.Position = new Vector3(0, 10, 0);
-            lightObj.AddComponent(new LightComponent(lightObj, pointlight));
+            //var lightObj = new GameObject();
+            //lightObj.Position = new Vector3(0, 100, 0);
+            //lightObj.AddComponent(new LightComponent(lightObj, pointlight));
 
-            AddGameObject(lightObj);
-            SetCurrentLight(lightObj);
+            //AddGameObject(lightObj);
+            //SetCurrentLight(lightObj);
+            
+            for (int i = 0; i < 20; i++)
+            {
+                //TestCompound(new Vector3(0, 10 + i *5, 0), new Vector3(0, (float)((Math.PI*20) / (i+1)), 0));              
 
-            var floor = new Cube(50.0f, 0.01f, 50.0f);
+                var cube = new Cube(1.0f, 1.0f, 1.0f);
+                cube.Position = new Vector3(0, i*2 + 5, 0);
+                cube.AddComponent(new BoxColliderComponent(cube));
+                cube.Material.Ambient = new Vector4(0.1f, 0.1f, 0.1f, 0.0f);
+                cube.Material.Diffuse = new Vector4(1.0f, 0.0f, 0.0f, 1.0f);
+
+                var body = new RigidBodyComponent(cube);
+                body.Mass = 10.0f;
+                cube.AddComponent(body);
+
+                AddGameObject(cube);
+
+                if (i + 1 == 20)
+                {
+                    cube.AddComponent(new LightComponent(cube, pointlight));
+                    SetCurrentLight(cube);
+                }
+            }
+
+            var floor = new Cube(50.0f, 1.01f, 50.0f);
        
             floor.Material.Ambient = new Vector4(0.1f, 0.1f, 0.1f, 0.0f);
             floor.Material.Diffuse = new Vector4(0.5f, 0.5f, 0.5f, 1.0f);
@@ -64,10 +87,7 @@ namespace iGL.TestGame
          
             AddGameObject(floor);
 
-            for (int i = 0; i < 10; i++)
-            {
-                TestCompound(new Vector3(0, 10 + i *5, 0), new Vector3(0, (float)((Math.PI*20) / (i+1)), 0));              
-            }
+          
         }
 
         private GameObject TestCompound(Vector3 position, Vector3 rotation)
