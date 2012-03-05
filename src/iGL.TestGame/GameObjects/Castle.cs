@@ -9,9 +9,9 @@ namespace iGL.TestGame.GameObjects
 {
     public class Castle : GameObject
     {
-        public const int LandSizeX = 17;
-        public const int LandSizeY = 3;
-        public const int LandSizeZ = 17;
+        public const int LandSizeX = 27;
+        public const int LandSizeY = 20;
+        public const int LandSizeZ = 27;
 
         public const float StoneMass = 10.0f;
 
@@ -116,8 +116,8 @@ namespace iGL.TestGame.GameObjects
 
         public void Build(Vector3 offset)
         {
-            _offset = offset;
-            _floor = new Cube(LandSizeZ + 1.0f, 1.0f, LandSizeX + 1.0f);
+            //_offset = offset;
+            _floor = new Cube(LandSizeZ + 10.0f, 1.0f, LandSizeX + 10.0f);
             _floor.Position = new Vector3(0, -1.0f, 0) + _offset;
             //_floor.Rotation = new Vector3(0.5f, 0, 0);
 
@@ -126,8 +126,7 @@ namespace iGL.TestGame.GameObjects
 
             _floor.AddComponent(new BoxColliderComponent(_floor));
 
-            var floorBody = new RigidBodyComponent(_floor);
-            floorBody.Mass = 0.0f;
+            var floorBody = new RigidBodyComponent(_floor, isStatic: true);          
             
             _floor.AddComponent(floorBody);
 
@@ -155,10 +154,13 @@ namespace iGL.TestGame.GameObjects
                             stone.Cube.Material.Ambient = new Vector4(0.1f, 0.1f, 0.1f, 0.0f);
                             stone.Cube.Material.Diffuse = new Vector4(1.0f, 0.0f, 0.0f, 1.0f);
                             stone.Cube.AddComponent(new BoxColliderComponent(stone.Cube));
-                            
+                            stone.Cube.AddComponent(new RigidBodyComponent(stone.Cube));
+
                             var pos = new Vector3(-(LandSizeX / 2.0f) + i + 0.5f, j, -(LandSizeZ / 2.0f) + k + 0.5f);
                             stone.Cube.Position = pos;
-                            stone.Position = new StonePosition(i, j, k, stone);                        
+                            stone.Position = new StonePosition(i, j, k, stone);
+
+                            Scene.AddGameObject(stone.Cube);
                         }
                     }
                 }
@@ -192,19 +194,19 @@ namespace iGL.TestGame.GameObjects
                 }
             }
 
-            foreach (var body in bodies)
-            {               
-                var children = new List<GameObject>();
+            //foreach (var body in bodies)
+            //{               
+            //    var children = new List<GameObject>();
 
-                foreach (var stone in body)
-                {                                       
-                    children.Add(stone.Cube);
-                }
+            //    foreach (var stone in body)
+            //    {                                       
+            //        children.Add(stone.Cube);
+            //    }
 
-                var compoundObject = new CompoundObject(children, StoneMass * children.Count);
-                compoundObject.Position = compoundObject.Position + _offset;
-                Scene.AddGameObject(compoundObject);
-            }
+            //    var compoundObject = new CompoundObject(children, StoneMass * children.Count);
+            //    compoundObject.Position = compoundObject.Position + _offset;
+            //    Scene.AddGameObject(compoundObject);
+            //}
         }
 
         private IEnumerable<Stone> GetNeighbours(Stone stone)

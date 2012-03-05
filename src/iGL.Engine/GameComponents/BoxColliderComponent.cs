@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BulletXNA.BulletCollision;
-using BulletXNA.LinearMath;
+using Jitter.Collision.Shapes;
+using Jitter.LinearMath;
+
 
 namespace iGL.Engine
 {
@@ -25,8 +26,8 @@ namespace iGL.Engine
 
             if (!meshComponent.IsLoaded) meshComponent.Load();
 
-            Vector3 vMin = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
-            Vector3 vMax = new Vector3(float.MinValue, float.MinValue, float.MinValue);
+            JVector vMin = new JVector(float.MaxValue, float.MaxValue, float.MaxValue);
+            JVector vMax = new JVector(float.MinValue, float.MinValue, float.MinValue);
 
             foreach (var vertex in meshComponent.Vertices)
             {
@@ -39,9 +40,8 @@ namespace iGL.Engine
                 if (vertex.Z * GameObject.Scale.Z < vMin.Z) vMin.Z = vertex.Z * GameObject.Scale.Z;
                 if (vertex.Z * GameObject.Scale.Z > vMax.Z) vMax.Z = vertex.Z * GameObject.Scale.Z;
             }
-
-            var halfSize = (vMax - vMin) / 2.0f;
-            CollisionShape = new BoxShape(halfSize);           
+         
+            CollisionShape = new BoxShape(vMax - vMin);           
         }
 
         public override void Tick(float timeElapsed)

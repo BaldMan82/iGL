@@ -106,13 +106,13 @@
     <EmbeddedResource Include="Shaders\FS_POINTLIGHT.c" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\iGL.Bullet-NOXNA\BulletNoXna.csproj">
-      <Project>{9A5FC26B-5C96-4300-8E09-4070F071C957}</Project>
-      <Name>BulletNoXna</Name>
-    </ProjectReference>
+    <Folder Include="Tests\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Tests\" />
+    <ProjectReference Include="..\iGL.Jitter\Jitter.csproj">
+      <Project>{AA03EF1A-94F7-4D30-AB14-2092863FF923}</Project>
+      <Name>Jitter</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

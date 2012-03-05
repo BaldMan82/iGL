@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using iGL.Engine.Events;
 using iGL.Engine.Math;
-using BulletXNA.BulletCollision;
 
 namespace iGL.Engine
 {
@@ -60,7 +59,9 @@ namespace iGL.Engine
             
             try
             {
-                Physics.World.StepSimulation(timeElapsed, 1);
+                //float step = timeElapsed;
+                //if (step > 1.0f / 100.0f) step = 1.0f / 100.0f;
+                Physics.World.Step(timeElapsed, false);
             }
             catch { }
 
@@ -115,44 +116,44 @@ namespace iGL.Engine
 
         public void MouseMove(float x, float y)
         {           
-            var cam = CurrentCamera;
+            //var cam = CurrentCamera;
 
-            var pmv = cam.ModelViewMatrix * cam.ProjectionMatrix;
-            pmv.Invert();
+            //var pmv = cam.ModelViewMatrix * cam.ProjectionMatrix;
+            //pmv.Invert();
 
-            var nearPlane = Vector4.Transform(new Vector4(x, y, -1, 1), pmv);
-            var farPlane = Vector4.Transform(new Vector4(x, y, 1, 1), pmv);
+            //var nearPlane = Vector4.Transform(new Vector4(x, y, -1, 1), pmv);
+            //var farPlane = Vector4.Transform(new Vector4(x, y, 1, 1), pmv);
 
-            nearPlane.W = 1.0f / nearPlane.W;
-            nearPlane.X *= nearPlane.W;
-            nearPlane.Y *= nearPlane.W;
-            nearPlane.Z *= nearPlane.W;
+            //nearPlane.W = 1.0f / nearPlane.W;
+            //nearPlane.X *= nearPlane.W;
+            //nearPlane.Y *= nearPlane.W;
+            //nearPlane.Z *= nearPlane.W;
 
-            farPlane.W = 1.0f / farPlane.W;
-            farPlane.X *= farPlane.W;
-            farPlane.Y *= farPlane.W;
-            farPlane.Z *= farPlane.W;
+            //farPlane.W = 1.0f / farPlane.W;
+            //farPlane.X *= farPlane.W;
+            //farPlane.Y *= farPlane.W;
+            //farPlane.Z *= farPlane.W;
 
-            var ray = new Vector4(farPlane - nearPlane);
-            ray.Normalize();           
+            //var ray = new Vector4(farPlane - nearPlane);
+            //ray.Normalize();           
 
-            var worldIn = new BulletXNA.LinearMath.Vector3(nearPlane.X, nearPlane.Y, nearPlane.Z);
-            var worldOut = new BulletXNA.LinearMath.Vector3(farPlane.X, farPlane.Y, farPlane.Z);
+            //var worldIn = new BulletXNA.LinearMath.Vector3(nearPlane.X, nearPlane.Y, nearPlane.Z);
+            //var worldOut = new BulletXNA.LinearMath.Vector3(farPlane.X, farPlane.Y, farPlane.Z);
 
-            ClosestRayResultCallback resultCallback = new ClosestRayResultCallback(worldIn, worldOut);
-            Physics.World.RayTest(ref worldIn, ref worldOut, resultCallback);
+            //ClosestRayResultCallback resultCallback = new ClosestRayResultCallback(worldIn, worldOut);
+            //Physics.World.RayTest(ref worldIn, ref worldOut, resultCallback);
 
-            if (resultCallback.HasHit)
-            {
-                var gameObject = _gameObjects.Single(g => g.Components.Contains(resultCallback.m_collisionObject.UserObject));
+            //if (resultCallback.HasHit)
+            //{
+            //    var gameObject = _gameObjects.Single(g => g.Components.Contains(resultCallback.m_collisionObject.UserObject));
 
-                var rigidBody = gameObject.Components.First(c => c is RigidBodyComponent) as RigidBodyComponent;
-                rigidBody.RigidBody.Activate();
+            //    var rigidBody = gameObject.Components.First(c => c is RigidBodyComponent) as RigidBodyComponent;
+            //    rigidBody.RigidBody.Activate();
 
-                var force = new BulletXNA.LinearMath.Vector3(ray.X * 10.0f, ray.Y * 10.0f, ray.Z * 10.0f) * 10000.0f;
-                var pos = new BulletXNA.LinearMath.Vector3();
-                rigidBody.RigidBody.ApplyForce(ref force, ref pos); 
-            }
+            //    var force = new BulletXNA.LinearMath.Vector3(ray.X * 10.0f, ray.Y * 10.0f, ray.Z * 10.0f) * 10000.0f;
+            //    var pos = new BulletXNA.LinearMath.Vector3();
+            //    rigidBody.RigidBody.ApplyForce(ref force, ref pos); 
+            //}
         }
     }
 }

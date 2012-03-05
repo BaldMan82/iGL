@@ -62,57 +62,57 @@ namespace iGL.TestGame
             AddGameObject(_castle);
             _castle.Build( new Vector3(-10, 0, -10));
 
-            _castle = new Castle();
-            _castle.SetDefaultStones();
+            //_castle = new Castle();
+            //_castle.SetDefaultStones();
 
-            AddGameObject(_castle);
-            _castle.Build(new Vector3(10, 0, 10));
+            //AddGameObject(_castle);
+            //_castle.Build(new Vector3(10, 0, 10));
 
-            _castle = new Castle();
-            _castle.SetDefaultStones();
+            //_castle = new Castle();
+            //_castle.SetDefaultStones();
 
-            AddGameObject(_castle);
-            _castle.Build(new Vector3(-10, 0, 10));
+            //AddGameObject(_castle);
+            //_castle.Build(new Vector3(-10, 0, 10));
 
-            _castle = new Castle();
-            _castle.SetDefaultStones();
+            //_castle = new Castle();
+            //_castle.SetDefaultStones();
 
-            AddGameObject(_castle);
-            _castle.Build(new Vector3(10, 0, -10));
+            //AddGameObject(_castle);
+            //_castle.Build(new Vector3(10, 0, -10));
 
-            for (int i = 0; i < 50; i++)
-            {
-                if (i % 2 == 0)
-                {
-                    var sphere = new Sphere(1.0f);
-                    sphere.AddComponent(new SphereColliderComponent(sphere));
+            //for (int i = 0; i < 50; i++)
+            //{
+            //    if (i % 2 == 0)
+            //    {
+            //        var sphere = new Sphere(1.0f);
+            //        sphere.AddComponent(new SphereColliderComponent(sphere));
 
-                    var rigidBody = new RigidBodyComponent(sphere);
-                    rigidBody.Mass = 50.0f;
+            //        var rigidBody = new RigidBodyComponent(sphere);
+            //        rigidBody.Mass = 50.0f;
 
-                    sphere.AddComponent(rigidBody);
-                    sphere.Material.Ambient = new Vector4(0.1f, 0.1f, 0.1f, 0.0f);
-                    sphere.Material.Diffuse = new Vector4(0.0f, 0.0f, 1.0f, 0.0f);
-                    sphere.Position = new Vector3(-i, 5 + i * 2, -i);
+            //        sphere.AddComponent(rigidBody);
+            //        sphere.Material.Ambient = new Vector4(0.1f, 0.1f, 0.1f, 0.0f);
+            //        sphere.Material.Diffuse = new Vector4(0.0f, 0.0f, 1.0f, 0.0f);
+            //        sphere.Position = new Vector3(-i, 5 + i * 2, -i);
 
-                    AddGameObject(sphere);
-                }
-                else
-                {
-                    var cube = new Cube(2.0f, 2.0f, 2.0f);
-                    cube.AddComponent(new BoxColliderComponent(cube));
+            //        AddGameObject(sphere);
+            //    }
+            //    else
+            //    {
+            //        var cube = new Cube(2.0f, 2.0f, 2.0f);
+            //        cube.AddComponent(new BoxColliderComponent(cube));
 
-                    var rigidBody = new RigidBodyComponent(cube);
-                    rigidBody.Mass = 50.0f;
+            //        var rigidBody = new RigidBodyComponent(cube);
+            //        rigidBody.Mass = 50.0f;
 
-                    cube.AddComponent(rigidBody);
-                    cube.Material.Ambient = new Vector4(0.1f, 0.1f, 0.1f, 0.0f);
-                    cube.Material.Diffuse = new Vector4(0.0f, 0.5f, 1.0f, 0.0f);
-                    cube.Position = new Vector3(i, 5 + i * 2, i);
+            //        cube.AddComponent(rigidBody);
+            //        cube.Material.Ambient = new Vector4(0.1f, 0.1f, 0.1f, 0.0f);
+            //        cube.Material.Diffuse = new Vector4(0.0f, 0.5f, 1.0f, 0.0f);
+            //        cube.Position = new Vector3(i, 5 + i * 2, i);
 
-                    AddGameObject(cube);
-                }
-            }
+            //        AddGameObject(cube);
+            //    }
+            //}
         }
     }
 }

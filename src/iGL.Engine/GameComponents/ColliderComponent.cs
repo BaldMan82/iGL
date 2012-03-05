@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BulletXNA.BulletCollision;
+using Jitter.Collision.Shapes;
 
 namespace iGL.Engine
 {
@@ -11,7 +11,7 @@ namespace iGL.Engine
         public bool Enabled { get; set; }
         public RigidBodyComponent AttachedRigidBody { get; set; }
 
-        internal CollisionShape CollisionShape { get; set; }
+        internal Shape CollisionShape { get; set; }
 
         public ColliderComponent(GameObject gameObject)
             : base(gameObject)
