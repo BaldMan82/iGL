@@ -40,7 +40,7 @@ namespace iGL.Engine
                 var halfHeight = 0.5f;
                 var halfDepth = 0.5f;                             
 
-                _meshComponent = new MeshComponent(this);
+                _meshComponent = new MeshComponent();
 
                 var vertices = new Vector3[36];
                 // top (+z)
@@ -119,7 +119,7 @@ namespace iGL.Engine
 
                 AddComponent(_meshComponent);
 
-                _meshRenderComponent = new MeshRenderComponent(this);
+                _meshRenderComponent = new MeshRenderComponent();
 
                 AddComponent(_meshRenderComponent);
 
@@ -129,12 +129,12 @@ namespace iGL.Engine
             else
             {
                 /* reuse vertex buffers */
-                _meshComponent = new MeshComponent(this);
+                _meshComponent = new MeshComponent();
                 _meshComponent.Vertices = _staticMeshComponent.Vertices;
                 _meshComponent.Normals = _staticMeshComponent.Normals;
                 _meshComponent.Indices = _staticMeshComponent.Indices;
 
-                _meshRenderComponent = _staticMeshRenderComponent.CloneForReuse(this);
+                _meshRenderComponent = _staticMeshRenderComponent.CloneForReuse();
 
                 AddComponent(_meshComponent);
                 AddComponent(_meshRenderComponent);

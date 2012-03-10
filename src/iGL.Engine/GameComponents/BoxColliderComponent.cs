@@ -9,13 +9,7 @@ using Jitter.LinearMath;
 namespace iGL.Engine
 {
     public class BoxColliderComponent : ColliderComponent
-    {       
-        public BoxColliderComponent(GameObject gameObject)
-            : base(gameObject)
-        {
-            
-        }
-
+    {              
         public override void InternalLoad()
         {
             base.InternalLoad();
@@ -41,7 +35,8 @@ namespace iGL.Engine
                 if (vertex.Z * GameObject.Scale.Z > vMax.Z) vMax.Z = vertex.Z * GameObject.Scale.Z;
             }
          
-            CollisionShape = new BoxShape(vMax - vMin);           
+            CollisionShape = new BoxShape(vMax - vMin);
+            CollisionShape.Tag = GameObject;
         }
 
         public override void Tick(float timeElapsed)

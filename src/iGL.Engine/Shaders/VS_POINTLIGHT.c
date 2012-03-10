@@ -1,7 +1,7 @@
 
 
-precision mediump float;
-precision mediump int;
+//precision mediump float;
+//precision mediump int;
 
 // Attributes
 attribute vec3 a_position;
@@ -49,7 +49,7 @@ void main()
 {
 	gl_Position =  u_modelViewProjectionMatrix * vec4(a_position.x, a_position.y, a_position.z, 1);
 	v_normal =  vec3(u_transposeAdjointModelViewMatrix * vec4(a_normal.x, a_normal.y, a_normal.z, 1));	
-
+	
 	calcLightning();	
 }
 

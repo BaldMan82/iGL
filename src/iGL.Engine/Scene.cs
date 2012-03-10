@@ -4,13 +4,17 @@ using System.Linq;
 using System.Text;
 using iGL.Engine.Events;
 using iGL.Engine.Math;
+using Jitter.Dynamics;
+using Jitter.LinearMath;
+using Jitter.Collision;
 
 namespace iGL.Engine
 {
     public abstract class Scene
     {
         private List<GameObject> _gameObjects { get; set; }
-        
+        private List<Timer> _timers = new List<Timer>();
+
         public CameraComponent CurrentCamera { get; private set; }
         public LightComponent CurrentLight { get; private set; }
 
@@ -19,6 +23,9 @@ namespace iGL.Engine
 
         internal Physics Physics { get; private set; }
         private event EventHandler<TickEvent> OnTickEvent;
+        private bool _tickedOnce = false;
+
+        private Point? _mousePosition = null;
 
         public Scene()
         {
@@ -55,6 +62,8 @@ namespace iGL.Engine
 
         public void Tick(float timeElapsed)
         {
+            _tickedOnce = true;
+
             OnTickEvent(this, new TickEvent() { Elapsed = timeElapsed });
             
             try
@@ -66,6 +75,23 @@ namespace iGL.Engine
             catch { }
 
             _gameObjects.ForEach(g => g.Tick(timeElapsed));
+
+            foreach (var timer in _timers)
+            {
+                if (timer.LastTick.Add(timer.Interval) < DateTime.UtcNow)
+                {
+                    timer.Action.Invoke();
+                    timer.LastTick = DateTime.UtcNow;
+                }
+            }
+
+        }
+
+        public void AddTimer(Timer timer)
+        {
+            if (_timers.Contains(timer)) throw new InvalidOperationException();
+
+            _timers.Add(timer);
         }
 
         public event EventHandler<TickEvent> OnTick
@@ -114,28 +140,45 @@ namespace iGL.Engine
             _gameObjects.Add(gameObject);
         }
 
-        public void MouseMove(float x, float y)
-        {           
-            //var cam = CurrentCamera;
+        private void ProcessInteractiviy()
+        {
+            if (_mousePosition == null) return;
 
-            //var pmv = cam.ModelViewMatrix * cam.ProjectionMatrix;
-            //pmv.Invert();
+            float planeX = (float)(2 * (_mousePosition.Value.X + 1) - Game.WindowSize.Width) / (float)Game.WindowSize.Width;
+            float planeY = (float)(Game.WindowSize.Height - 2 * (_mousePosition.Value.Y + 1)) / (float)Game.WindowSize.Height;
 
-            //var nearPlane = Vector4.Transform(new Vector4(x, y, -1, 1), pmv);
-            //var farPlane = Vector4.Transform(new Vector4(x, y, 1, 1), pmv);
+            var cam = CurrentCamera;
 
-            //nearPlane.W = 1.0f / nearPlane.W;
-            //nearPlane.X *= nearPlane.W;
-            //nearPlane.Y *= nearPlane.W;
-            //nearPlane.Z *= nearPlane.W;
+            var pmv = cam.ModelViewMatrix * cam.ProjectionMatrix;
+            pmv.Invert();
 
-            //farPlane.W = 1.0f / farPlane.W;
-            //farPlane.X *= farPlane.W;
-            //farPlane.Y *= farPlane.W;
-            //farPlane.Z *= farPlane.W;
+            var nearPlane = Vector4.Transform(new Vector4(planeX, planeY, -1, 1), pmv);
+            var farPlane = Vector4.Transform(new Vector4(planeX, planeY, 1, 1), pmv);
 
-            //var ray = new Vector4(farPlane - nearPlane);
-            //ray.Normalize();           
+            nearPlane.W = 1.0f / nearPlane.W;
+            nearPlane.X *= nearPlane.W;
+            nearPlane.Y *= nearPlane.W;
+            nearPlane.Z *= nearPlane.W;
+
+            farPlane.W = 1.0f / farPlane.W;
+            farPlane.X *= farPlane.W;
+            farPlane.Y *= farPlane.W;
+            farPlane.Z *= farPlane.W;
+
+            var ray = new Vector4(farPlane - nearPlane);         
+        }
+
+        internal void MouseMove(int x, int y)
+        {
+            //_mousePosition = new Point(x, y);
+
+                              
+            
+            //RigidBody body;
+            //JVector normal;
+            //float fraction;          
+
+            //Physics.World.CollisionSystem.Raycast(nearPlane.ToJitter(), ray.ToJitter(), RaycastCallback, out body, out normal, out fraction);
 
             //var worldIn = new BulletXNA.LinearMath.Vector3(nearPlane.X, nearPlane.Y, nearPlane.Z);
             //var worldOut = new BulletXNA.LinearMath.Vector3(farPlane.X, farPlane.Y, farPlane.Z);
@@ -154,6 +197,15 @@ namespace iGL.Engine
             //    var pos = new BulletXNA.LinearMath.Vector3();
             //    rigidBody.RigidBody.ApplyForce(ref force, ref pos); 
             //}
+        }
+
+        private bool RaycastCallback(RigidBody body, JVector normal, float fraction)
+        {
+            if (body.Shape.Tag != null && body.IsStatic == false)
+            {
+                int a = 0;
+            }
+            return false;
         }
     }
 }

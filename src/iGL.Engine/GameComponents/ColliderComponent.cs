@@ -13,8 +13,7 @@ namespace iGL.Engine
 
         internal Shape CollisionShape { get; set; }
 
-        public ColliderComponent(GameObject gameObject)
-            : base(gameObject)
+        public ColliderComponent()          
         {
             
         }

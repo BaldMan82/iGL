@@ -6,28 +6,60 @@ using iGL.Engine.Math;
 
 namespace iGL.Engine
 {
-    public class CameraComponent : GameComponent
+    public interface CameraProperties { };
+
+    public class PerspectiveProperties : CameraProperties
     {
         public float FieldOfViewRadians { get; set; }
         public float AspectRatio { get; set; }
         public float ZNear { get; set; }
         public float ZFar { get; set; }
+    }
+
+
+    public class OrtographicProperties : CameraProperties
+    {
+        public float Width { get; set; }
+        public float Height { get; set; }
+        public float ZNear { get; set; }
+        public float ZFar { get; set; }
+    }
+
+    public class CameraComponent : GameComponent
+    {
+        public enum Type
+        {
+            Perspective,
+            Orthographic
+        }       
+       
         public Vector3 Target { get; set; }
         public Vector3 Up { get; set; }
         public Matrix4 ProjectionMatrix { get; private set; }
         public Matrix4 ModelViewMatrix { get; private set; }
         public Matrix4 ModelViewProjectionMatrix { get; private set; }
+        
+        private CameraProperties _properties;
 
-        public CameraComponent(GameObject gameObject, float fieldOfViewRadians, float aspectRatio, float zNear, float zFar) : base(gameObject)
+        public CameraComponent(CameraProperties properties)
         {
-            FieldOfViewRadians = fieldOfViewRadians;
-            AspectRatio = aspectRatio;
-            ZNear = zNear;
-            ZFar = zFar;
+            _properties = properties;
 
-            Up = new Vector3(0.0f, 1.0f, 0.0f);
+            if (_properties is PerspectiveProperties){
+                var perspective = _properties as PerspectiveProperties;
+                ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(perspective.FieldOfViewRadians, perspective.AspectRatio, perspective.ZNear, perspective.ZFar);
+            }
+            else if (_properties is OrtographicProperties)
+            {
+                var orthograpgic = _properties as OrtographicProperties;
+                ProjectionMatrix = Matrix4.CreateOrthographic(orthograpgic.Width, orthograpgic.Height, orthograpgic.ZNear, orthograpgic.ZFar);
+            }
+            else
+            {
+                throw new NotSupportedException(properties.GetType().ToString());
+            }
 
-            ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(FieldOfViewRadians, AspectRatio, ZNear, ZFar);          
+            Up = new Vector3(0.0f, 1.0f, 0.0f);                                               
         }       
 
         public override void InternalLoad()
@@ -38,11 +70,9 @@ namespace iGL.Engine
         public override void Tick(float timeElapsed)
         {
             /* must be sure Target has ticked first ? */
-
-            var projectionMatrix = ProjectionMatrix;
+          
             ModelViewMatrix = Matrix4.LookAt(GameObject.Position, Target, Up);
-
-            ModelViewProjectionMatrix = ModelViewMatrix * projectionMatrix;           
+            ModelViewProjectionMatrix = ModelViewMatrix * ProjectionMatrix;           
         }
     }
 }

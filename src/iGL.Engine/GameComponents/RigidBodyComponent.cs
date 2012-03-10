@@ -5,6 +5,7 @@ using System.Text;
 using Jitter.Dynamics;
 using Jitter.LinearMath;
 using iGL.Engine.Math;
+using Jitter.Collision.Shapes;
 
 namespace iGL.Engine
 {
@@ -31,7 +32,7 @@ namespace iGL.Engine
 
         internal RigidBody RigidBody { get; private set; }
 
-        public RigidBodyComponent(GameObject gameObject, float mass = 10.0f, bool isStatic = false) : base(gameObject)
+        public RigidBodyComponent(float mass = 10.0f, bool isStatic = false)
         {
             _mass = mass;
             _isStatic = isStatic;
@@ -45,56 +46,58 @@ namespace iGL.Engine
             if (ColliderComponent == null) throw new NotSupportedException("Rigid body must have a collider component");
 
             /* load the collider first */
-            if (!ColliderComponent.IsLoaded) ColliderComponent.Load();                  
+            if (!ColliderComponent.IsLoaded) ColliderComponent.Load();
 
-            //if (ColliderComponent is CompoundColliderComponent)
-            //{
-            //    //var compoundShape = ((CompoundColliderComponent)ColliderComponent).CollisionShape as CompoundShape;
+            var mRotationX = JMatrix.CreateRotationX(GameObject.Rotation.X);
+            var mRotationY = JMatrix.CreateRotationY(GameObject.Rotation.Y);
+            var mRotationZ = JMatrix.CreateRotationZ(GameObject.Rotation.Z);
 
-            //    //var masses = new float[compoundShape.GetNumChildShapes()];
-            //    //for (int i = 0; i < compoundShape.GetNumChildShapes(); i++)
-            //    //{
-            //    //    masses[i] = _mass / compoundShape.GetNumChildShapes();
-            //    //}
+            var transform = mRotationX * mRotationY * mRotationZ * JMatrix.Identity;
 
-            //    //var principal = Matrix.Identity;
-            //    //Vector3 compoundInertia;
-            //    //compoundShape.CalculatePrincipalAxisTransform(masses.ToList(), ref principal, out compoundInertia);
-
-            //    //var newBoxCompound = new CompoundShape();
-            //    //for (int i = 0; i < compoundShape.GetNumChildShapes(); i++)
-            //    //{
-            //    //    var newChildTransform = principal.Inverse() * compoundShape.GetChildTransform(i);          
-            //    //    newBoxCompound.AddChildShape(ref newChildTransform, compoundShape.GetChildShape(i));
-            //    //}
-
-            //    //ColliderComponent.CollisionShape = newBoxCompound;
-
-            //    //motionState = new DefaultMotionState(transform * principal, Matrix.Identity);
-            //    //newBoxCompound.CalculateLocalInertia(_mass, out compoundInertia);
-
-            //    //RigidBody = new RigidBody(_mass, motionState, ColliderComponent.CollisionShape, compoundInertia);
             
-            //}
-            //else
+
+            if (ColliderComponent is CompoundColliderComponent)
+            {
+                var compoundCollider = ColliderComponent as CompoundColliderComponent;
+                var compoundShape = compoundCollider.CollisionShape as CompoundShape;
+             
+                RigidBody = new RigidBody(compoundShape);
+                RigidBody.Orientation = transform;
+                RigidBody.Position = GameObject.Position.ToJitter();                
+
+                RigidBody.Mass = _mass;
+                RigidBody.SetMassProperties();
+                               
+                RigidBody.IsStatic = _isStatic;
+            }
+            else
             {
                 RigidBody = new RigidBody(ColliderComponent.CollisionShape);
-                //RigidBody.Mass = _mass;
-                
+                RigidBody.Mass = _mass;
 
-                //RigidBody.SetMassProperties();
+                //RigidBody.SetMassProperties();            
 
-                var mRotationX = JMatrix.CreateRotationX(GameObject.Rotation.X);
-                var mRotationY = JMatrix.CreateRotationY(GameObject.Rotation.Y);
-                var mRotationZ = JMatrix.CreateRotationZ(GameObject.Rotation.Z);
+                RigidBody.Orientation = transform;
+                RigidBody.Position = new JVector(GameObject._position.X, GameObject._position.Y, GameObject._position.Z);
 
-                var transform = mRotationX * mRotationY * mRotationZ * JMatrix.Identity;
+               
+                if (_isStatic)
+                {
+                    RigidBody.IsStatic = true;
+                    RigidBody.Material.StaticFriction = 1.0f;
+                    RigidBody.Material.KineticFriction = 1.0f;
 
-                //RigidBody.Orientation = transform;
-                RigidBody.Position = new JVector(GameObject._position.X, GameObject._position.Y, GameObject._position.Z);              
-                RigidBody.IsStatic = _isStatic;
-            }                     
-                          
+                }
+            }
+
+            if (!_isStatic)
+            {
+                GameObject.Scene.Physics.World.AddConstraint(new iGL.Engine.Physics.Constraint2D(RigidBody));
+            }
+
+            //RigidBody.Material.KineticFriction = 0.0f;
+            //RigidBody.Material.StaticFriction = 0.0f;
+            //RigidBody.Material.Restitution = 0.0f;
 
             GameObject.Scene.Physics.World.AddBody(RigidBody);
             
@@ -113,15 +116,9 @@ namespace iGL.Engine
 
         public override void Tick(float timeElapsed)
         {          
-            /* update game object position */
-
-            var transform = RigidBody.Orientation.ToOpenTK();
-            var trans = Matrix4.CreateTranslation(new Vector3(RigidBody.Position.X, RigidBody.Position.Y, RigidBody.Position.Z));
-
             /* scale must be taking into account */
 
-            GameObject.Transform = Math.Matrix4.Scale(GameObject.Scale) * transform * trans ;
-
+            GameObject.Transform = Math.Matrix4.Scale(GameObject.Scale) * RigidBody.Orientation.ToOpenTK(RigidBody.Position); ;
             GameObject._position = new iGL.Engine.Math.Vector3(RigidBody.Position.X, RigidBody.Position.Y, RigidBody.Position.Z);
         }
     }

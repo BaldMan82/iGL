@@ -12,7 +12,7 @@
     <AssemblyName>iGL.Engine</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Mono</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -50,7 +51,6 @@
     <Compile Include="GameComponents\GL\IGL.cs" />
     <Compile Include="GameComponents\GL\Enums.cs" />
     <Compile Include="GameComponents\PointLightShader.cs" />
-    <Compile Include="GameComponents\Lights.cs" />
     <Compile Include="GameComponents\LightComponent.cs" />
     <Compile Include="GameComponents\Material.cs" />
     <Compile Include="GameComponents\RenderComponent.cs" />
@@ -98,6 +98,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Utilities\Extensions.cs" />
+    <Compile Include="Utilities\Timer.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Shaders\VS_POINTLIGHT.c" />

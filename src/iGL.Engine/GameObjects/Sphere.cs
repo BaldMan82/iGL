@@ -25,7 +25,7 @@ namespace iGL.Engine
 
         public Sphere(float r, int rings = 16, int segments = 16)
         {
-            _meshComponent = new MeshComponent(this);
+            _meshComponent = new MeshComponent();
 
             // code: http://www.ogre3d.org/tikiwiki/ManualSphereMeshes
 
@@ -79,7 +79,7 @@ namespace iGL.Engine
 
             AddComponent(_meshComponent);
 
-            _meshRenderComponent = new MeshRenderComponent(this);
+            _meshRenderComponent = new MeshRenderComponent();
 
             AddComponent(_meshRenderComponent);
         }

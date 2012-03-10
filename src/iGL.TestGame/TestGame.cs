@@ -15,8 +15,10 @@ namespace iGL.TestGame
         {
             base.Load();
 
-            //CastleScene scene = new CastleScene();
-            TestScene scene = new TestScene();
+            //CubeScene scene = new CubeScene();
+            //TestScene scene = new TestScene();
+            SpaceScene scene = new SpaceScene();
+
             SetScene(scene);
 
             LoadScene();

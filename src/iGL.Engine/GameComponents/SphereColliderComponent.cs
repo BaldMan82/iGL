@@ -8,8 +8,7 @@ namespace iGL.Engine
 {
     public class SphereColliderComponent : ColliderComponent
     {
-        public SphereColliderComponent(GameObject gameObject)
-            : base(gameObject)
+        public SphereColliderComponent()
         {
             
         }
@@ -36,6 +35,7 @@ namespace iGL.Engine
             float max = maxExtend;
 
             CollisionShape = new SphereShape(maxExtend);
+            CollisionShape.Tag = GameObject;
         }
 
         public override void Tick(float timeElapsed)

@@ -1,6 +1,6 @@
 
 
-precision mediump float;
+//precision mediump float;
 
 // Structs
 struct Light {	
@@ -34,7 +34,7 @@ void main()
 	vec4 color;
 	calcLightning(color);
 
-	gl_FragColor = color;
+	gl_FragColor = color;	
 }
 
 void calcLightning(out vec4 color)

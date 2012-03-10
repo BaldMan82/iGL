@@ -16,8 +16,7 @@ namespace iGL.Engine
 
         public Material Material { get; set; }
 
-        public MeshComponent(GameObject gameObject)
-            : base(gameObject)
+        public MeshComponent()
         {
             Material = new Material();
         }       

@@ -10,7 +10,7 @@ namespace iGL.Engine
     public abstract class Game
     {
         private Scene _scene;
-        private Size _windowSize;
+        public Size WindowSize { get; private set; }
 
         public static IGL GL { get ; private set; }
 
@@ -21,7 +21,7 @@ namespace iGL.Engine
 
         public void Resize(int width, int height)
         {
-            _windowSize = new Size(width, height);
+            WindowSize = new Size(width, height);
             GL.Viewport(0, 0, width, height);
         }
 
@@ -32,11 +32,8 @@ namespace iGL.Engine
         }
 
         public void MouseMove(int x, int y)
-        {       
-            float planeX = (float)(2 * (x + 1) - _windowSize.Width) / (float)_windowSize.Width;
-            float planeY = (float)(_windowSize.Height - 2 * (y + 1)) / (float)_windowSize.Height;        
-
-            _scene.MouseMove(planeX, planeY);
+        {                  
+            _scene.MouseMove(x, y);
         }
 
         public void Render()

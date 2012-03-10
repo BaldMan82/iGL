@@ -29,7 +29,15 @@ namespace iGL.TestGame
 
         public override void Load()
         {
-            _testCamera = new Camera(MathHelper.DegreesToRadians(45.0f), 3.0f / 2.0f, 1.00f, 1000.0f);
+            var camProperties = new PerspectiveProperties()
+            {
+                AspectRatio = MathHelper.DegreesToRadians(45.0f),
+                FieldOfViewRadians = 3.0f / 2.0f,
+                ZFar = 1.00f,
+                ZNear = 1000.0f
+            };
+
+            _testCamera = new Camera(camProperties);
             _testCamera.Position = new Vector3(40.0f, 10.0f, 80.0f);
             _testCamera.CameraComponent.Target = new Vector3(0, 0, 0);
             AddGameObject(_testCamera);
@@ -58,9 +66,9 @@ namespace iGL.TestGame
 
             _castle = new Castle();
             _castle.SetDefaultStones();
-                        
+
             AddGameObject(_castle);
-            _castle.Build( new Vector3(-10, 0, -10));
+            _castle.Build(new Vector3(-10, 0, -10));
 
             //_castle = new Castle();
             //_castle.SetDefaultStones();

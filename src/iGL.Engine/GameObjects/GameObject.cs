@@ -91,8 +91,9 @@ namespace iGL.Engine
         }
 
         public void AddComponent(GameComponent component)
-        {           
-            _components.Add(component);
+        {
+            component.GameObject = this;
+            _components.Add(component);            
         }
 
         public void AddChild(GameObject gameObject)

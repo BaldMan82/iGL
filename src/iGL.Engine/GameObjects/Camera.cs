@@ -9,9 +9,9 @@ namespace iGL.Engine
     {
         public CameraComponent CameraComponent { get; private set; }
 
-        public Camera(float fieldOfViewRadians, float aspectRatio, float zNear, float zFar)
-        {
-            CameraComponent = new CameraComponent(this, fieldOfViewRadians, aspectRatio, zNear, zFar);
+        public Camera(CameraProperties properties)
+        {           
+            CameraComponent = new CameraComponent(properties);
             AddComponent(CameraComponent);
         }     
     }

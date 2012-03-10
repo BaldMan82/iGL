@@ -12,8 +12,7 @@ namespace iGL.Engine
         private int[] _bufferIds;
         private MeshComponent _meshComponent;
 
-        public MeshRenderComponent(GameObject gameObject)
-            : base(gameObject)
+        public MeshRenderComponent()            
         {
             _bufferIds = new int[3];
         }
@@ -44,11 +43,11 @@ namespace iGL.Engine
 
         }
 
-        public MeshRenderComponent CloneForReuse(GameObject gameObject)
+        public MeshRenderComponent CloneForReuse()
         {
             if (!IsLoaded) Load();
 
-            var meshRenderComponent = new MeshRenderComponent(gameObject);
+            var meshRenderComponent = new MeshRenderComponent();
             meshRenderComponent._bufferIds = _bufferIds;
 
             return meshRenderComponent;
