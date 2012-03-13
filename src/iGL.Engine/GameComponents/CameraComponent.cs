@@ -41,6 +41,15 @@ namespace iGL.Engine
         
         private CameraProperties _properties;
 
+        public CameraComponent()
+            : this(new PerspectiveProperties()
+            {
+                AspectRatio = MathHelper.DegreesToRadians(45.0f),
+                FieldOfViewRadians = 3.0f / 2.0f,
+                ZNear = 1.00f,
+                ZFar = 1000.0f
+            }) { }
+        
         public CameraComponent(CameraProperties properties)
         {
             _properties = properties;

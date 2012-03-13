@@ -43,6 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\EditorField.cs" />
+    <Compile Include="Events\MouseButton.cs" />
+    <Compile Include="Events\MouseMoveEvent.cs" />
     <Compile Include="Events\TickEvent.cs" />
     <Compile Include="GameComponents\BoxColliderComponent.cs" />
     <Compile Include="GameComponents\ColliderComponent.cs" />
@@ -60,8 +63,11 @@
     <Compile Include="GameComponents\CompoundColliderComponent.cs" />
     <Compile Include="GameObjects\Camera.cs" />
     <Compile Include="GameComponents\CameraComponent.cs" />
-    <Compile Include="Events\MouseMoveEvent.cs" />
     <Compile Include="GameObjects\CompoundObject.cs" />
+    <Compile Include="Events\MouseButtonDownEvent.cs" />
+    <Compile Include="Events\MouseButtonUpEvent.cs" />
+    <Compile Include="Events\MouseInEvent.cs" />
+    <Compile Include="Events\MouseOutEvent.cs" />
     <Compile Include="GameObjects\Sphere.cs" />
     <Compile Include="GameObjects\Cube.cs" />
     <Compile Include="Game.cs" />

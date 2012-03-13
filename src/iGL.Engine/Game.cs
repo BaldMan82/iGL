@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using iGL.Engine.GL;
 using iGL.Engine.Math;
+using iGL.Engine.Events;
 
 namespace iGL.Engine
 {
@@ -12,12 +13,12 @@ namespace iGL.Engine
         private Scene _scene;
         public Size WindowSize { get; private set; }
 
-        public static IGL GL { get ; private set; }
+        public static IGL GL { get; private set; }
 
         public Game(IGL gl)
-        {          
+        {
             GL = gl;
-        }        
+        }
 
         public void Resize(int width, int height)
         {
@@ -32,20 +33,25 @@ namespace iGL.Engine
         }
 
         public void MouseMove(int x, int y)
-        {                  
+        {
             _scene.MouseMove(x, y);
         }
 
+        public void MouseButton(MouseButton button, bool down, int x, int y)
+        {
+            _scene.UpdateMouseButton(button,down, x, y);
+        }
+      
         public void Render()
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            
-            _scene.Render();           
+
+            _scene.Render();
         }
 
         public void Tick(float timeElapsed)
         {
-            _scene.Tick(timeElapsed);        
+            _scene.Tick(timeElapsed);
         }
 
         public void SetScene(Scene scene)
@@ -55,7 +61,7 @@ namespace iGL.Engine
         }
 
         public void LoadScene()
-        {           
+        {
             _scene.Load();
         }
 

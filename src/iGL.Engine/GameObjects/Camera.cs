@@ -9,6 +9,12 @@ namespace iGL.Engine
     {
         public CameraComponent CameraComponent { get; private set; }
 
+        public Camera()
+        {
+            CameraComponent = new CameraComponent();
+            AddComponent(CameraComponent);
+        }
+
         public Camera(CameraProperties properties)
         {           
             CameraComponent = new CameraComponent(properties);

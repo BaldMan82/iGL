@@ -13,11 +13,15 @@ namespace iGL.Engine
         internal Vector3 _position { get; set; }
         internal Vector3 _scale { get; set; }
         internal Vector3 _rotation { get; set; }
-
-        internal event EventHandler<MouseMoveEvent> MouseMoveEvent;
+      
+        internal event EventHandler<MouseButtonDownEvent> _mouseButtonDownEvent;
+        internal event EventHandler<MouseButtonUpEvent> _mouseButtonUpEvent;
+        internal event EventHandler<MouseInEvent> _mouseInEvent;
+        internal event EventHandler<MouseOutEvent> _mouseOutEvent;
 
         public IGL GL { get { return Game.GL; } }
 
+        [EditorField]
         public Vector3 Position 
         { 
             get
@@ -59,6 +63,8 @@ namespace iGL.Engine
                 UpdateRigidBody();
             }
         }
+
+        public string Name { get; set; }
 
         private List<GameObject> _children { get; set; }
 
@@ -158,6 +164,13 @@ namespace iGL.Engine
         private void UpdateRigidBody()
         {
             if (!this.IsLoaded) return;
+
+            var rigidBodyComponent = this.Components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
+            
+            if (rigidBodyComponent != null)
+            {
+                rigidBodyComponent.RigidBody.Position = this.Position.ToJitter();
+            }
         }
 
         private void UpdateTransform()
@@ -182,16 +195,77 @@ namespace iGL.Engine
             _components.ForEach(gc => gc.Tick(timeElapsed));
         }
 
-        public event EventHandler<MouseMoveEvent> OnMouseMove
+        #region Events
+
+        public event EventHandler<MouseButtonDownEvent> OnMouseDown
         {
             add
             {
-                MouseMoveEvent += value;
+                _mouseButtonDownEvent += value;
             }
             remove
             {
-                MouseMoveEvent -= value;
+                _mouseButtonDownEvent -= value;
             }
         }
+
+        internal void OnMouseDownEvent(MouseButtonDownEvent e)
+        {
+            if (_mouseButtonDownEvent != null) _mouseButtonDownEvent(this, e);
+        }
+
+        public event EventHandler<MouseButtonUpEvent> OnMouseUp
+        {
+            add
+            {
+                _mouseButtonUpEvent += value;
+            }
+            remove
+            {
+                _mouseButtonUpEvent -= value;
+            }
+        }
+
+        internal void OnMouseUpEvent(MouseButtonUpEvent e)
+        {
+            if (_mouseButtonUpEvent != null) _mouseButtonUpEvent(this, e);
+        }
+
+        public event EventHandler<MouseInEvent> OnMouseIn
+        {
+            add
+            {
+                _mouseInEvent += value;
+            }
+            remove
+            {
+                _mouseInEvent -= value;
+            }
+        }
+
+        internal void OnMouseInEvent(MouseInEvent e)
+        {
+            if (_mouseInEvent != null) _mouseInEvent(this, e);
+        }
+
+        public event EventHandler<MouseOutEvent> OnMouseOut
+        {
+            add
+            {
+                _mouseOutEvent += value;
+            }
+            remove
+            {
+                _mouseOutEvent -= value;
+            }
+        }
+
+        internal void OnMouseOutEvent(MouseOutEvent e)
+        {
+            if (_mouseOutEvent != null) _mouseOutEvent(this, e);
+        }
+
+        #endregion
+
     }
 }

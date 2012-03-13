@@ -8,9 +8,7 @@ namespace iGL.Engine
 {
     public class Sphere : GameObject
     {
-        public float Depth { get; set; }
-        public float Height { get; set; }
-        public float Width { get; set; }
+        public float Radius { get; private set; }
 
         public Material Material
         {
@@ -25,6 +23,8 @@ namespace iGL.Engine
 
         public Sphere(float r, int rings = 16, int segments = 16)
         {
+            Radius = r;
+
             _meshComponent = new MeshComponent();
 
             // code: http://www.ogre3d.org/tikiwiki/ManualSphereMeshes

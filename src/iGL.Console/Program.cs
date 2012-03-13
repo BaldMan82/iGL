@@ -6,6 +6,7 @@ using System.Threading;
 using OpenTK;
 using OpenTK.Graphics;
 using System.Diagnostics;
+using iGL.Engine.Events;
 
 namespace iGL.Console
 {
@@ -31,11 +32,38 @@ namespace iGL.Console
             gameWnd.RenderFrame += new EventHandler<FrameEventArgs>(gameWnd_RenderFrame);
             gameWnd.UpdateFrame += new EventHandler<FrameEventArgs>(gameWnd_UpdateFrame);
             gameWnd.Resize += new EventHandler<EventArgs>(gameWnd_Resize);
-            gameWnd.Mouse.Move += new EventHandler<OpenTK.Input.MouseMoveEventArgs>(Mouse_Move);            
-
+            gameWnd.Mouse.Move += new EventHandler<OpenTK.Input.MouseMoveEventArgs>(Mouse_Move);
+            gameWnd.Mouse.ButtonDown += new EventHandler<OpenTK.Input.MouseButtonEventArgs>(Mouse_ButtonDown);
+            gameWnd.Mouse.ButtonUp += new EventHandler<OpenTK.Input.MouseButtonEventArgs>(Mouse_ButtonUp);
             gameWnd.Run();       
 
             System.Console.ReadLine();                      
+        }
+
+        static void Mouse_ButtonUp(object sender, OpenTK.Input.MouseButtonEventArgs e)
+        {            
+            if (e.Button == OpenTK.Input.MouseButton.Left)
+            {
+                game.MouseButton(MouseButton.Button1, e.IsPressed, e.X, e.Y);
+            }
+
+            if (e.Button == OpenTK.Input.MouseButton.Right)
+            {
+                game.MouseButton(MouseButton.Button2, e.IsPressed, e.X, e.Y);
+            }
+        }
+
+        static void Mouse_ButtonDown(object sender, OpenTK.Input.MouseButtonEventArgs e)
+        {
+            if (e.Button == OpenTK.Input.MouseButton.Left)
+            {
+                game.MouseButton(MouseButton.Button1, e.IsPressed, e.X, e.Y);
+            }
+
+            if (e.Button == OpenTK.Input.MouseButton.Right)
+            {
+                game.MouseButton(MouseButton.Button2, e.IsPressed, e.X, e.Y);
+            }
         }
 
         static void Mouse_Move(object sender, OpenTK.Input.MouseMoveEventArgs e)
@@ -51,8 +79,8 @@ namespace iGL.Console
 
         static void gameWnd_UpdateFrame(object sender, FrameEventArgs e)
         {           
-            //game.Tick(1.0f / 100.0f);                       
-            game.Tick((float)e.Time);
+            game.Tick(1.0f / 100.0f);                       
+            //game.Tick((float)e.Time);
         }
 
         static void gameWnd_RenderFrame(object sender, FrameEventArgs e)

@@ -33,8 +33,8 @@ namespace iGL.TestGame
             {
                 AspectRatio = MathHelper.DegreesToRadians(45.0f),
                 FieldOfViewRadians = 3.0f / 2.0f,
-                ZFar = 1.00f,
-                ZNear = 1000.0f
+                ZNear = 1.00f,
+                ZFar = 1000.0f
             };
 
             _testCamera = new Camera(camProperties);

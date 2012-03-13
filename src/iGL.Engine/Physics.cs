@@ -24,7 +24,9 @@ namespace iGL.Engine
 
         void Events_PreStep(float timestep)
         {
-            var staticBodies = World.RigidBodies.Where(rb => rb.IsStatic).ToList();
+            Func<GameObject, bool> hasGravity = g => ((RigidBodyComponent)g.Components.Single(c => c is RigidBodyComponent)).IsGravitySource;                       
+            
+            var staticBodies = World.RigidBodies.Where(rb => rb.IsStatic && hasGravity((GameObject)rb.Tag)).ToList();
             var dynamicBodies = World.RigidBodies.Where(rb => !rb.IsStatic && rb.IsActive).ToList();        
            
             foreach (var body in dynamicBodies)
@@ -51,22 +53,13 @@ namespace iGL.Engine
         }
 
         internal class Constraint2D : Constraint
-        {
-         
+        {         
             public Constraint2D(RigidBody body)
                 : base(body, null)
             {               
-            }           
-
-            //public override void AddToDebugDrawList(List<JVector> lineList, List<JVector> pointList)
-            //{
-            //    // nothing to debug draw
-            //}
-
-            public override void PrepareForIteration(float timestep)
-            {
-                // nothing to prepare
             }
+
+            public override void PrepareForIteration(float timestep) { }            
 
             public override void Iterate()
             {
