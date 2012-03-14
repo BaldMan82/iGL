@@ -55,7 +55,7 @@ namespace iGL.Designer
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
                 var color = colorDialog.Color.ToVectorColor();
-                Scene.ShaderProgram.SetAmbientColor(color);
+                Scene.AmbientColor = color;
 
                 pnlAmbient.BackColor = colorDialog.Color;
             }

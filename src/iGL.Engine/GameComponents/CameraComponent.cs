@@ -79,9 +79,7 @@ namespace iGL.Engine
         }
 
         public override void Tick(float timeElapsed)
-        {
-            /* must be sure Target has ticked first ? */
-          
+        {                    
             ModelViewMatrix = Matrix4.LookAt(GameObject.Position, Target, Up);
             ModelViewProjectionMatrix = ModelViewMatrix * ProjectionMatrix;           
         }

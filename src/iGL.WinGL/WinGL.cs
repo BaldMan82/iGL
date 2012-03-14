@@ -28,7 +28,7 @@ namespace iGL
                     glShaderType = ShaderType.VertexShader;
                     break;
             }
-
+            
             return GL.CreateShader(glShaderType);
         }
 
@@ -150,8 +150,14 @@ namespace iGL
         public void Enable(Engine.EnableCap enableCap)
         {
             var cap = ToEnableCap(enableCap);
-            GL.Enable(cap);
-            
+            GL.Enable(cap);         
+        }
+
+        public void Disable(Engine.EnableCap disableCap)
+        {
+            var cap = ToEnableCap(disableCap);
+            GL.Disable(cap);
+           
         }
 
         public void UseProgram(int programId)
@@ -257,5 +263,6 @@ namespace iGL
         }
 
         #endregion
+        
     }
 }

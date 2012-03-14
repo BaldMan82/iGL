@@ -9,6 +9,6 @@ namespace iGL.Engine.Events
     public class MouseMoveEvent : EventArgs
     {
         public Vector3 NearPlane { get; set; }
-        public Vector3 Direction { get; set; }        
+        public Vector3 DirectionOnNearPlane { get; set; }        
     }
 }

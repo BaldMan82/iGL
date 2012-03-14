@@ -6,11 +6,11 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using OpenTK;
 using System.Threading;
 using System.Reflection;
 using iGL.Engine;
 using iGL.Designer.Code;
+using iGL.Engine.Math;
 
 namespace iGL.Designer
 {
@@ -24,6 +24,28 @@ namespace iGL.Designer
         private DateTime _lastTick;
 
         private Dictionary<Type, Type> _gameObjectDialogTypes;
+
+        private GameObject _selectedObject;
+        private Gizmo _selectionGizmo;
+        private System.Drawing.Point _lastMousePosition;
+
+        private enum EditAxis
+        {
+            XAXIS,
+            YAXIS,
+            ZAXIS,
+            ALL
+        }
+
+        private enum EditOperation
+        {
+            MOVE,
+            ROTATE,
+            SCALE
+        }
+
+        private EditAxis? _editAxis;
+        private EditOperation _editOperation;
 
         public Form1()
         {
@@ -50,27 +72,52 @@ namespace iGL.Designer
 
             }
         }      
-
-        private void glControl1_Load(object sender, EventArgs e)
+       
+        void _scene_OnMouseMove(object sender, Engine.Events.MouseMoveEvent e)
         {
-            _glLoaded = true;
-            _game = new EditorGame(new WinGL());
-            _scene = new Scene();
-            _game.SetScene(_scene);
+            if (_selectedObject == null) return;
 
-            var size = glControl1.ClientSize;
+            /* perform edit operation */
+            /* size of directional vector gives an indication of mouse movement magnitude */
 
-            _game.Resize(size.Width, size.Height);
-            _game.Load();
+            var distance = (e.NearPlane - _selectedObject.Position).Length;
 
-            renderTimer.Start();
-            tickTimer.Start();
-        }
+            var vector = _editOperation == EditOperation.MOVE ? _selectedObject.Position :
+                        (_editOperation == EditOperation.ROTATE ? _selectedObject.Rotation :
+                        (_editOperation == EditOperation.SCALE ? _selectedObject.Scale : new Vector3()));          
 
-        private void glControl1_Paint(object sender, PaintEventArgs e)
-        {
-            Render();  
-        }
+            if (_editAxis.HasValue)
+            {
+                if (_editAxis.Value == EditAxis.XAXIS)
+                {
+                    var change = new Vector3(e.DirectionOnNearPlane.X * distance, 0, 0);
+                    //change = Vector3.Transform(change, rotation);
+
+                    vector += change;
+                }
+                else if (_editAxis.Value == EditAxis.YAXIS)
+                {
+                    var change = new Vector3(0, e.DirectionOnNearPlane.Y * distance, 0);
+                    //change = Vector3.Transform(change, rotation);
+                    vector += change;
+                }
+                else if (_editAxis.Value == EditAxis.ZAXIS)
+                {
+                    var change = new Vector3(0, 0,  e.DirectionOnNearPlane.Z * distance);
+                    //change = Vector3.Transform(change, rotation);
+                    vector += change;
+                }
+                else if (_editAxis.Value == EditAxis.ALL)
+                {
+                    var change = new Vector3(e.DirectionOnNearPlane.X * distance, e.DirectionOnNearPlane.Y * distance, e.DirectionOnNearPlane.Z * distance);
+                    vector += change;
+                }
+            }
+
+            if (_editOperation == EditOperation.MOVE) _selectedObject.Position = vector;
+            if (_editOperation == EditOperation.ROTATE) _selectedObject.Rotation = vector;          
+            if (_editOperation == EditOperation.SCALE) _selectedObject.Scale = vector;
+        }             
 
         private void Render()
         {
@@ -81,24 +128,128 @@ namespace iGL.Designer
             glControl1.SwapBuffers();
         }
 
+        private void glControl1_Paint(object sender, PaintEventArgs e)
+        {
+            Render();
+        }
+
+        private void glControl1_Load(object sender, EventArgs e)
+        {
+            _glLoaded = true;
+            _game = new EditorGame(new WinGL());
+            _scene = new Scene();
+
+            _scene.OnMouseMove += new EventHandler<Engine.Events.MouseMoveEvent>(_scene_OnMouseMove);
+
+            /* origin gizmo */
+            var gizmo = new Gizmo(30.0f);
+            gizmo.UniformSphere.Visible = false;
+
+            _scene.AddGameObject(gizmo);
+
+            _selectionGizmo = new Gizmo();
+
+            _selectionGizmo.Visible = false;
+            _selectionGizmo.Enabled = false;
+
+            _selectionGizmo.XDirectionArrow.OnMouseDown += (a, b) => _editAxis = EditAxis.XAXIS;
+            _selectionGizmo.XDirectionArrow.OnMouseUp += (a, b) => _editAxis = null;
+            _selectionGizmo.XDirectionArrow.OnMouseIn += (a, b) => glControl1.Cursor = Cursors.Hand;
+            _selectionGizmo.XDirectionArrow.OnMouseOut += (a, b) => glControl1.Cursor = Cursors.Arrow;
+
+            _selectionGizmo.YDirectionArrow.OnMouseDown += (a, b) => _editAxis = EditAxis.YAXIS;
+            _selectionGizmo.YDirectionArrow.OnMouseUp += (a, b) => _editAxis = null;
+            _selectionGizmo.YDirectionArrow.OnMouseIn += (a, b) => glControl1.Cursor = Cursors.Hand;
+            _selectionGizmo.YDirectionArrow.OnMouseOut += (a, b) => glControl1.Cursor = Cursors.Arrow;
+
+            _selectionGizmo.ZDirectionArrow.OnMouseDown += (a, b) => _editAxis = EditAxis.ZAXIS;
+            _selectionGizmo.ZDirectionArrow.OnMouseUp += (a, b) => _editAxis = null;
+            _selectionGizmo.ZDirectionArrow.OnMouseIn += (a, b) => glControl1.Cursor = Cursors.Hand;
+            _selectionGizmo.ZDirectionArrow.OnMouseOut += (a, b) => glControl1.Cursor = Cursors.Arrow;
+
+            _selectionGizmo.UniformSphere.OnMouseDown += (a, b) => _editAxis = EditAxis.ALL;
+            _selectionGizmo.UniformSphere.OnMouseUp += (a, b) => _editAxis = null;
+            _selectionGizmo.UniformSphere.OnMouseIn += (a, b) => glControl1.Cursor = Cursors.Hand;
+            _selectionGizmo.UniformSphere.OnMouseOut += (a, b) => glControl1.Cursor = Cursors.Arrow;
+
+            _scene.AddGameObject(_selectionGizmo);
+
+            _game.SetScene(_scene);
+
+            var size = glControl1.ClientSize;
+
+            _game.Resize(size.Width, size.Height);
+            _game.Load();
+
+            renderTimer.Start();
+            tickTimer.Start();
+
+            _scene.AmbientColor = new Vector4(1, 1, 1, 1);
+        }
+
         private void glControl1_Resize(object sender, EventArgs e)
         {
-            GLControl control = sender as GLControl;            
+            OpenTK.GLControl control = sender as OpenTK.GLControl;            
         }
 
         private void glControl1_MouseMove(object sender, MouseEventArgs e)
-        {
+        {            
             _game.MouseMove(e.X, e.Y);
+            _lastMousePosition = e.Location;
         }
 
         private void glControl1_MouseDown(object sender, MouseEventArgs e)
         {
             _game.MouseButton(Engine.Events.MouseButton.Button1, true, e.X, e.Y);
+            if (_scene.LastMouseDownTarget == null)
+            {
+                SelectObject(null);
+            }
         }
 
         private void glControl1_MouseUp(object sender, MouseEventArgs e)
         {
             _game.MouseButton(Engine.Events.MouseButton.Button1, false, e.X, e.Y);
+        }
+
+        private void glControl1_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = e.AllowedEffect;
+        }
+
+        private void glControl1_DragDrop(object sender, DragEventArgs e)
+        {
+            var node = e.Data.GetData(typeof(TreeNode)) as TreeNode;
+            if (node == null) return;
+            try
+            {
+                var instance = Activator.CreateInstance(node.Tag as Type) as GameObject;
+                var count = _scene.GameObjects.Count(o => o.GetType() == (Type)node.Tag);
+
+                instance.Name = ((Type)node.Tag).Name + count.ToString();
+
+                _scene.AddGameObject(instance);
+
+                if (_scene.CurrentCamera == null && instance.Components.Any(c => c is CameraComponent))
+                {
+                    _scene.SetCurrentCamera(instance);
+                }
+
+                UpdateSceneTree();
+
+                /* hook up mouse events */
+
+                instance.OnMouseIn += (a, b) => glControl1.Cursor = Cursors.Cross;
+                instance.OnMouseOut += (a, b) => glControl1.Cursor = Cursors.Arrow;
+                instance.OnMouseDown += (a, b) =>
+                {
+                    SelectObject(a as GameObject);
+                };
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(((Type)node.Tag).Name + ": " + ex.Message);
+            }
         }
 
         private void tickTimer_Tick(object sender, EventArgs e)
@@ -113,6 +264,8 @@ namespace iGL.Designer
 
         private void renderTimer_Tick(object sender, EventArgs e)
         {
+            UpdateGizmo();
+
             Render();
         }
 
@@ -181,35 +334,57 @@ namespace iGL.Designer
         {
             DoDragDrop(e.Item, DragDropEffects.Move);
         }
-
-        private void glControl1_DragEnter(object sender, DragEventArgs e)
+    
+        private void SelectObject(GameObject obj)
         {
-            e.Effect = e.AllowedEffect;
+            if (obj != null)
+            {
+                toolStripStatusLabel.Text = string.Format("Selected: {0}", obj.Name == string.Empty ? "[Unnamed]" : obj.Name);
+            }
+            else
+            {
+                toolStripStatusLabel.Text = "Ready";
+            }
+
+            _selectedObject = obj;
+
+            _editOperation = EditOperation.MOVE;
+
+            /* select proper node */
+            SelectNode(sceneTree.TopNode, obj);            
         }
 
-        private void glControl1_DragDrop(object sender, DragEventArgs e)
+        private void SelectNode(TreeNode node, GameObject obj)
         {
-            var node = e.Data.GetData(typeof(TreeNode)) as TreeNode;
-            if (node == null) return;
-            try
+            if (node.Tag == obj || obj == null && node.Tag is Scene)
             {
-                var instance = Activator.CreateInstance(node.Tag as Type) as GameObject;
-                var count = _scene.GameObjects.Count(o => o.GetType() == (Type)node.Tag);
-
-                instance.Name = ((Type)node.Tag).Name + count.ToString();
-
-                _scene.AddGameObject(instance);
-
-                UpdateSceneTree();
-
-                /* hook up mouse events */
-
-                instance.OnMouseIn += (a, b) => glControl1.Cursor = Cursors.Cross;
-                instance.OnMouseOut += (a, b) => glControl1.Cursor = Cursors.Arrow;
+                sceneTree.SelectedNode = node;
+                node.BackColor = Color.Silver;
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(((Type)node.Tag).Name + ": " + ex.Message);
+                node.BackColor = Color.White;
+            }
+
+            foreach (var childNode in node.Nodes)
+            {
+                SelectNode(childNode as TreeNode, obj);
+            }          
+        }
+
+        private void UpdateGizmo()
+        {
+            if (_selectedObject == null)
+            {
+                _selectionGizmo.Visible = false;
+                _selectionGizmo.Enabled = false;
+            }
+            else
+            {
+                _selectionGizmo.Visible = true;
+                _selectionGizmo.Enabled = true;
+
+                _selectionGizmo.Position = _selectedObject.Position;
             }
         }
 
@@ -220,7 +395,7 @@ namespace iGL.Designer
             var sceneNode = sceneTree.Nodes.Add("Scene");
             sceneNode.Tag = _scene;
 
-            foreach (var gameObject in _scene.GameObjects)
+            foreach (var gameObject in _scene.GameObjects.Where(g => !g.Designer))
             {
                 AddSceneNode(sceneNode, gameObject);
             }
@@ -298,5 +473,20 @@ namespace iGL.Designer
             }
 
         }
+
+        private void toolScale_Click(object sender, EventArgs e)
+        {
+            _editOperation = EditOperation.SCALE;
+        }
+
+        private void toolRotate_Click(object sender, EventArgs e)
+        {
+            _editOperation = EditOperation.ROTATE;
+        }
+
+        private void toolTranslate_Click(object sender, EventArgs e)
+        {
+            _editOperation = EditOperation.MOVE;
+        }                      
     }
 }

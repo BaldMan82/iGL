@@ -48,7 +48,7 @@ namespace iGL.TestGame
             AddGameObject(_testCamera);
             SetCurrentCamera(_testCamera);
 
-            ShaderProgram.SetAmbientColor(new Vector4(0.5f, 0.5f, 0.5f, 1.0f));
+            AmbientColor = new Vector4(0.5f, 0.5f, 0.5f, 1.0f);
 
             /* add a point light */
 

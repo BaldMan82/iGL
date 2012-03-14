@@ -12,28 +12,40 @@ namespace iGL.Engine
 {
     public class Scene
     {
-        private TimeSpan _mouseUpdateRate = TimeSpan.FromSeconds(1.0 / 50.0);
-        private DateTime _lastMouseUpdate = DateTime.MinValue;
-
-        private List<GameObject> _gameObjects { get; set; }
-        private List<Timer> _timers = new List<Timer>();
-
         public CameraComponent CurrentCamera { get; private set; }
         public LightComponent CurrentLight { get; private set; }
-
+        public GameObject LastMouseDownTarget { get { return _currentMouseDownObj; } }
         public IEnumerable<GameObject> GameObjects { get { return _gameObjects.AsEnumerable(); } }
-
         public Game Game { get; internal set; }
-        public ShaderProgram ShaderProgram { get; internal set; }
 
-        internal Physics Physics { get; private set; }
-        private event EventHandler<TickEvent> OnTickEvent;
-        private event EventHandler<MouseMoveEvent> OnMouseMoveEvent;
-
+        private TimeSpan _mouseUpdateRate = TimeSpan.FromSeconds(1.0 / 50.0);
+        private DateTime _lastMouseUpdate = DateTime.MinValue;
+        private List<GameObject> _gameObjects { get; set; }
+        private List<Timer> _timers = new List<Timer>();
         private Point? _mousePosition = null;
         private GameObject _currentMouseOverObj = null;
         private GameObject _currentMouseDownObj = null;
         private Vector4? _lastNearPlaneMousePosition = null;
+        private Vector4 _ambientColor;
+
+        private event EventHandler<TickEvent> OnTickEvent;
+        private event EventHandler<MouseMoveEvent> OnMouseMoveEvent;
+                       
+        internal ShaderProgram ShaderProgram { get; set; }
+        internal Physics Physics { get; private set; }       
+
+        public Vector4 AmbientColor
+        {
+            get
+            {
+                return _ambientColor;
+            }
+            set
+            {
+                ShaderProgram.SetAmbientColor(_ambientColor);
+                _ambientColor = value;
+            }
+        }
 
         public Scene()
         {
@@ -70,7 +82,7 @@ namespace iGL.Engine
                 gameObject.Render(Matrix4.Identity);
             }
 
-        }
+        }      
 
         public void Tick(float timeElapsed)
         {
@@ -150,7 +162,6 @@ namespace iGL.Engine
             }
         }
 
-
         public void SetCurrentCamera(GameObject camera)
         {
             if (camera == null) CurrentCamera = null;
@@ -184,25 +195,30 @@ namespace iGL.Engine
             gameObject.Scene = this;
             gameObject.Load();
 
-            _gameObjects.Add(gameObject);
+            _gameObjects.Add(gameObject);     
+      
+            /* order game object list according to zbuffer enable/disable */
+
+            _gameObjects = _gameObjects.OrderByDescending(g => g.RenderQueuePriority).ToList();
         }
 
-        private void ProcessInteractiviy()
+        public void ScreenPointToWorld(Point screenPoint, out Vector4 nearPlane, out Vector4 farPlane)
         {
-            if (_mousePosition == null) return;
-
             float planeX = (float)(2 * (_mousePosition.Value.X + 1) - Game.WindowSize.Width) / (float)Game.WindowSize.Width;
             float planeY = (float)(Game.WindowSize.Height - 2 * (_mousePosition.Value.Y + 1)) / (float)Game.WindowSize.Height;
 
-            if (CurrentCamera == null) return;
+            Matrix4 projectionMatrix = Matrix4.Identity;
 
-            var cam = CurrentCamera;
+            if (CurrentCamera != null)
+            {             
+                var cam = CurrentCamera;
 
-            var pmv = cam.ModelViewMatrix * cam.ProjectionMatrix;
-            pmv.Invert();
+                projectionMatrix = cam.ModelViewMatrix * cam.ProjectionMatrix;
+                projectionMatrix.Invert();
+            }
 
-            var nearPlane = Vector4.Transform(new Vector4(planeX, planeY, -1, 1), pmv);
-            var farPlane = Vector4.Transform(new Vector4(planeX, planeY, 1, 1), pmv);
+            nearPlane = Vector4.Transform(new Vector4(planeX, planeY, -1, 1), projectionMatrix);
+            farPlane = Vector4.Transform(new Vector4(planeX, planeY, 1, 1), projectionMatrix);
 
             nearPlane.W = 1.0f / nearPlane.W;
             nearPlane.X *= nearPlane.W;
@@ -213,6 +229,14 @@ namespace iGL.Engine
             farPlane.X *= farPlane.W;
             farPlane.Y *= farPlane.W;
             farPlane.Z *= farPlane.W;
+        }
+
+        private void ProcessInteractiviy()
+        {
+            if (_mousePosition == null) return;
+
+            Vector4 nearPlane, farPlane;
+            ScreenPointToWorld(_mousePosition.Value, out nearPlane, out farPlane);
 
             /* hold a reference to the nearplane vector in order to calculate mouse input directional vector */
             if (_lastNearPlaneMousePosition != null)
@@ -224,7 +248,7 @@ namespace iGL.Engine
                     {
                         OnMouseMoveEvent(this, new MouseMoveEvent()
                         {
-                            Direction = new Vector3(direction.X, direction.Y, direction.Z),
+                            DirectionOnNearPlane = new Vector3(direction.X, direction.Y, direction.Z),
                             NearPlane = new Vector3(nearPlane.X, nearPlane.Y, nearPlane.Z)
                         });
                     }

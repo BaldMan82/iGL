@@ -142,7 +142,7 @@ namespace iGL.Engine
             var loc = GetUniformLocation("u_globalAmbientColor");
 
             GL.Uniform4(loc, color);
-        }
+        }        
 
         protected int GetUniformLocation(string uniform)
         {

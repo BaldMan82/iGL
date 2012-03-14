@@ -155,6 +155,12 @@ namespace iGL
             GL.Enable(cap);
         }
 
+        public void Disable(Engine.EnableCap disableCap)
+        {
+            var cap = ToEnableCap(disableCap);
+            GL.Disable(cap);
+        }
+
         public void UseProgram(int programId)
         {
             GL.UseProgram(programId);

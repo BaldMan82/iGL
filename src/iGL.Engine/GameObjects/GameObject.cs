@@ -9,19 +9,26 @@ using iGL.Engine.Events;
 namespace iGL.Engine
 {
     public class GameObject : Object
-    {
-        internal Vector3 _position { get; set; }
-        internal Vector3 _scale { get; set; }
-        internal Vector3 _rotation { get; set; }
-      
-        internal event EventHandler<MouseButtonDownEvent> _mouseButtonDownEvent;
-        internal event EventHandler<MouseButtonUpEvent> _mouseButtonUpEvent;
-        internal event EventHandler<MouseInEvent> _mouseInEvent;
-        internal event EventHandler<MouseOutEvent> _mouseOutEvent;
-
+    {     
         public IGL GL { get { return Game.GL; } }
+        public IEnumerable<GameObject> Children
+        {
+            get { return _children.AsEnumerable(); }
+        }
+        public IEnumerable<GameComponent> Components
+        {
+            get { return _components.AsEnumerable(); }
+        }
+        public int RenderQueuePriority { get; set; }
+        public bool Visible { get; set; }
+        public bool Enabled { get; set; }
+        public bool Designer { get; set; }
+        public string Name { get; set; }
+        
+        public Scene Scene { get; internal set; }
+        public GameObject Parent { get; internal set; }
+        public bool IsLoaded { get; private set; }
 
-        [EditorField]
         public Vector3 Position 
         { 
             get
@@ -35,7 +42,6 @@ namespace iGL.Engine
                 UpdateRigidBody();
             }
         }
-
         public Vector3 Scale
         {
             get
@@ -49,7 +55,6 @@ namespace iGL.Engine
                 UpdateRigidBody();
             }
         }
-
         public Vector3 Rotation
         {
             get
@@ -63,30 +68,19 @@ namespace iGL.Engine
                 UpdateRigidBody();
             }
         }
-
-        public string Name { get; set; }
-
-        private List<GameObject> _children { get; set; }
-
-        public IEnumerable<GameObject> Children
-        {
-            get { return _children.AsEnumerable(); }
-        }
-
         public Matrix4 Transform { get; internal set; }
 
-        public Scene Scene { get; internal set; }
+        private List<GameObject> _children { get; set; }        
+        private List<GameComponent> _components { get; set; }
 
-        public GameObject Parent { get; internal set; }
+        internal Vector3 _position { get; set; }
+        internal Vector3 _scale { get; set; }
+        internal Vector3 _rotation { get; set; }
 
-        public bool IsLoaded { get; private set; }
-
-        private List<GameComponent> _components { get; set; }       
-
-        public IEnumerable<GameComponent> Components 
-        {
-            get { return _components.AsEnumerable(); }
-        }
+        internal event EventHandler<MouseButtonDownEvent> _mouseButtonDownEvent;
+        internal event EventHandler<MouseButtonUpEvent> _mouseButtonUpEvent;
+        internal event EventHandler<MouseInEvent> _mouseInEvent;
+        internal event EventHandler<MouseOutEvent> _mouseOutEvent;        
 
         public GameObject() : this(string.Empty)
         {
@@ -101,6 +95,11 @@ namespace iGL.Engine
             _children = new List<GameObject>();
             
             Name = name;
+
+            /* default props */
+            Visible = true;
+            Enabled = true;
+            Designer = false;
         }
 
         public void AddComponent(GameComponent component)
@@ -137,7 +136,6 @@ namespace iGL.Engine
             return Transform * parentMatrix;
         }
 
-
         public virtual void Load()
         {
             foreach (var child in _children)
@@ -159,7 +157,13 @@ namespace iGL.Engine
 
         public virtual void Render(Matrix4 parentTransform)
         {
+            if (!Visible) return;
+
             if (!this.IsLoaded) throw new InvalidOperationException("Game Object not loaded!");
+
+            /* render designer objects in white ambient color */
+            var sceneColor = Scene.AmbientColor;
+            Scene.AmbientColor = new Vector4(1, 1, 1, 1);
 
             var thisTransform = Transform * parentTransform;
 
@@ -169,7 +173,7 @@ namespace iGL.Engine
             foreach (var child in _children)
             {
                 child.Render(thisTransform);
-            }           
+            }                      
 
             var renderComponents = Components.Where(c => c is RenderComponent)
                                              .Select(c => c as RenderComponent);
@@ -178,6 +182,8 @@ namespace iGL.Engine
             {
                 renderComponent.Render(thisTransform);
             }
+
+            Scene.AmbientColor = sceneColor;
             
         }
 
@@ -207,12 +213,35 @@ namespace iGL.Engine
 
         public void Tick(float timeElapsed)
         {
+            if (!Enabled) return;
+
             foreach (var child in _children)
             {
                 child.Tick(timeElapsed);
             }           
 
             _components.ForEach(gc => gc.Tick(timeElapsed));
+        }        
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        public GameObject RayTest(Vector3 origin, Vector3 direction)
+        {
+            if (!Enabled) return null;
+
+            var meshComponent = Components.FirstOrDefault(c => c is MeshComponent) as MeshComponent;
+            if (meshComponent != null && meshComponent.RayTest(origin, direction)) return this;
+
+            foreach (var child in _children)
+            {
+                var rayResult = child.RayTest(origin, direction);
+                if (rayResult != null) return rayResult;
+            }
+
+            return null;
         }
 
         #region Events
@@ -292,31 +321,11 @@ namespace iGL.Engine
         internal void OnMouseOutEvent(MouseOutEvent e)
         {
             if (_mouseOutEvent != null) _mouseOutEvent(this, e);
-            
+
             /* bubble up */
             if (Parent != null) Parent.OnMouseOutEvent(e);
         }
 
         #endregion
-
-
-        public override string ToString()
-        {
-            return Name;
-        }
-
-        public GameObject RayTest(Vector3 origin, Vector3 direction)
-        {
-            var meshComponent = Components.FirstOrDefault(c => c is MeshComponent) as MeshComponent;
-            if (meshComponent != null && meshComponent.RayTest(origin, direction)) return this;
-
-            foreach (var child in _children)
-            {
-                var rayResult = child.RayTest(origin, direction);
-                if (rayResult != null) return rayResult;
-            }
-
-            return null;
-        }
     }
 }

@@ -55,6 +55,8 @@ namespace iGL.Engine.GL
 
         void Enable(EnableCap enableCap);
 
+        void Disable(EnableCap disableCap);
+
         void UseProgram(int programId);
 
         void Clear(ClearBufferMask mask);

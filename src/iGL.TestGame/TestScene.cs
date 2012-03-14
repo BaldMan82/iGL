@@ -59,13 +59,11 @@ namespace iGL.TestGame
             _testCamera.Position = new Vector3(0.0f, 10.0f, 20.0f);
             _testCamera.CameraComponent.Target = new Vector3(0, 0f, 0);
             _testCamera.CameraComponent.ClearColor = new Vector4(1, 1, 1, 1);
-
-            ShaderProgram.SetAmbientColor(new Vector4(1, 1, 1, 1));
-
+            
             AddGameObject(_testCamera);
             SetCurrentCamera(_testCamera);
 
-            ShaderProgram.SetAmbientColor(new Vector4(0.5f, 0.5f, 0.5f, 1.0f));
+            AmbientColor = new Vector4(0.5f, 0.5f, 0.5f, 1.0f);
 
             var gizmo = new Gizmo();
 

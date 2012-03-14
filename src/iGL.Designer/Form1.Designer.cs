@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.glControl1 = new OpenTK.GLControl();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,17 +42,25 @@
             this.tickTimer = new System.Windows.Forms.Timer(this.components);
             this.sceneTree = new System.Windows.Forms.TreeView();
             this.label1 = new System.Windows.Forms.Label();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolTranslate = new System.Windows.Forms.ToolStripButton();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolRotate = new System.Windows.Forms.ToolStripButton();
+            this.toolScale = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.propertiesTab.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // glControl1
             // 
             this.glControl1.AllowDrop = true;
             this.glControl1.BackColor = System.Drawing.Color.Black;
-            this.glControl1.Location = new System.Drawing.Point(12, 36);
+            this.glControl1.Location = new System.Drawing.Point(12, 58);
             this.glControl1.Name = "glControl1";
             this.glControl1.Size = new System.Drawing.Size(960, 640);
             this.glControl1.TabIndex = 0;
@@ -85,7 +94,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.propertiesTab);
-            this.tabControl1.Location = new System.Drawing.Point(988, 36);
+            this.tabControl1.Location = new System.Drawing.Point(988, 58);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -148,26 +157,85 @@
             // 
             // sceneTree
             // 
-            this.sceneTree.Location = new System.Drawing.Point(988, 458);
+            this.sceneTree.Location = new System.Drawing.Point(988, 486);
             this.sceneTree.Name = "sceneTree";
-            this.sceneTree.Size = new System.Drawing.Size(341, 218);
+            this.sceneTree.Size = new System.Drawing.Size(341, 212);
             this.sceneTree.TabIndex = 3;
             this.sceneTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.sceneTree_AfterSelect);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(985, 442);
+            this.label1.Location = new System.Drawing.Point(985, 470);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(77, 13);
             this.label1.TabIndex = 4;
             this.label1.Text = "Scene Objects";
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolTranslate,
+            this.toolRotate,
+            this.toolScale});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(1352, 25);
+            this.toolStrip1.TabIndex = 5;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolTranslate
+            // 
+            this.toolTranslate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolTranslate.Image = ((System.Drawing.Image)(resources.GetObject("toolTranslate.Image")));
+            this.toolTranslate.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolTranslate.Name = "toolTranslate";
+            this.toolTranslate.Size = new System.Drawing.Size(23, 22);
+            this.toolTranslate.Text = "toolStripButton1";
+            this.toolTranslate.Click += new System.EventHandler(this.toolTranslate_Click);
+            // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel});
+            this.statusStrip.Location = new System.Drawing.Point(0, 701);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(1352, 22);
+            this.statusStrip.TabIndex = 6;
+            this.statusStrip.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel
+            // 
+            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(0, 17);
+            // 
+            // toolRotate
+            // 
+            this.toolRotate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolRotate.Image = ((System.Drawing.Image)(resources.GetObject("toolRotate.Image")));
+            this.toolRotate.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolRotate.Name = "toolRotate";
+            this.toolRotate.Size = new System.Drawing.Size(23, 22);
+            this.toolRotate.Text = "toolStripButton1";
+            this.toolRotate.Click += new System.EventHandler(this.toolRotate_Click);
+            // 
+            // toolScale
+            // 
+            this.toolScale.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolScale.Image = ((System.Drawing.Image)(resources.GetObject("toolScale.Image")));
+            this.toolScale.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolScale.Name = "toolScale";
+            this.toolScale.Size = new System.Drawing.Size(23, 22);
+            this.toolScale.Text = "toolStripButton1";
+            this.toolScale.Click += new System.EventHandler(this.toolScale_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1352, 701);
+            this.ClientSize = new System.Drawing.Size(1352, 723);
+            this.Controls.Add(this.statusStrip);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.sceneTree);
             this.Controls.Add(this.tabControl1);
@@ -176,13 +244,17 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "iGL Scene Editor";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.propertiesTab.ResumeLayout(false);
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -202,6 +274,12 @@
         private System.Windows.Forms.TreeView sceneTree;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton toolTranslate;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
+        private System.Windows.Forms.ToolStripButton toolRotate;
+        private System.Windows.Forms.ToolStripButton toolScale;
     }
 }
 

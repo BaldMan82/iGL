@@ -50,7 +50,7 @@ namespace iGL.TestGame
             _testCamera.CameraComponent.Target = new Vector3(0, 0f, 0);
             _testCamera.CameraComponent.ClearColor = new Vector4(0.2f, 0.2f, 0.2f, 1);
 
-            ShaderProgram.SetAmbientColor(new Vector4(1, 1, 1, 1));
+            AmbientColor = new Vector4(0.5f, 0.5f, 0.5f, 1.0f);
             
             AddGameObject(_testCamera);
             SetCurrentCamera(_testCamera);
