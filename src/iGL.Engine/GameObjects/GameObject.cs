@@ -86,14 +86,21 @@ namespace iGL.Engine
         public IEnumerable<GameComponent> Components 
         {
             get { return _components.AsEnumerable(); }
-        }        
+        }
 
-        public GameObject()
+        public GameObject() : this(string.Empty)
+        {
+
+        }
+
+        public GameObject(string name)
         {
             Scale = new Vector3(1.0f, 1.0f, 1.0f);
 
             _components = new List<GameComponent>();
             _children = new List<GameObject>();
+            
+            Name = name;
         }
 
         public void AddComponent(GameComponent component)
@@ -225,6 +232,9 @@ namespace iGL.Engine
         internal void OnMouseDownEvent(MouseButtonDownEvent e)
         {
             if (_mouseButtonDownEvent != null) _mouseButtonDownEvent(this, e);
+
+            /* bubble up */
+            if (Parent != null) Parent.OnMouseDownEvent(e);
         }
 
         public event EventHandler<MouseButtonUpEvent> OnMouseUp
@@ -242,6 +252,9 @@ namespace iGL.Engine
         internal void OnMouseUpEvent(MouseButtonUpEvent e)
         {
             if (_mouseButtonUpEvent != null) _mouseButtonUpEvent(this, e);
+
+            /* bubble up */
+            if (Parent != null) Parent.OnMouseUpEvent(e);
         }
 
         public event EventHandler<MouseInEvent> OnMouseIn
@@ -259,6 +272,9 @@ namespace iGL.Engine
         internal void OnMouseInEvent(MouseInEvent e)
         {
             if (_mouseInEvent != null) _mouseInEvent(this, e);
+
+            /* bubble up */
+            if (Parent != null) Parent.OnMouseInEvent(e);
         }
 
         public event EventHandler<MouseOutEvent> OnMouseOut
@@ -276,6 +292,9 @@ namespace iGL.Engine
         internal void OnMouseOutEvent(MouseOutEvent e)
         {
             if (_mouseOutEvent != null) _mouseOutEvent(this, e);
+            
+            /* bubble up */
+            if (Parent != null) Parent.OnMouseOutEvent(e);
         }
 
         #endregion
@@ -284,6 +303,20 @@ namespace iGL.Engine
         public override string ToString()
         {
             return Name;
+        }
+
+        public GameObject RayTest(Vector3 origin, Vector3 direction)
+        {
+            var meshComponent = Components.FirstOrDefault(c => c is MeshComponent) as MeshComponent;
+            if (meshComponent != null && meshComponent.RayTest(origin, direction)) return this;
+
+            foreach (var child in _children)
+            {
+                var rayResult = child.RayTest(origin, direction);
+                if (rayResult != null) return rayResult;
+            }
+
+            return null;
         }
     }
 }

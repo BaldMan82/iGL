@@ -121,7 +121,7 @@ namespace iGL.Engine
                 _meshComponent.Vertices = vertices;
                 _meshComponent.Indices = indices;
 
-                CalculateNormals();
+                _meshComponent.CalculateNormals();
 
                 AddComponent(_meshComponent);
 
@@ -147,39 +147,6 @@ namespace iGL.Engine
             }
         }
 
-        private void CalculateNormals()
-        {
-            var indices = _meshComponent.Indices;
-            var vertices = _meshComponent.Vertices;
-            var normals = _meshComponent.Normals;
-
-            if (indices.Length % 3 != 0)
-                throw new NotSupportedException("Invalid indices count for normal calc");
-
-            normals = new Vector3[vertices.Length];
-
-            for (int i = 0; i < indices.Length; i += 3)
-            {
-                Vector3[] v = new Vector3[3] { vertices[indices[i]], vertices[indices[i + 1]], vertices[indices[i + 2]] };
-
-                var norm = Vector3.Cross(v[1] - v[0], v[2] - v[0]);
-
-                for (int j = 0; j < 3; j++)
-                {
-                    Vector3 a = v[(j + 1) % 3] - v[j];
-                    Vector3 b = v[(j + 2) % 3] - v[j];
-
-                    float weight = (float)System.Math.Acos(Vector3.Dot(a, b) / (a.Length * b.Length));
-                    normals[indices[i + j]] += weight * norm;
-                }
-            }
-
-            for (int i = 0; i < normals.Length; i++)
-            {
-                normals[i].Normalize();
-            }
-
-            _meshComponent.Normals = normals;
-        }
+        
     }
 }

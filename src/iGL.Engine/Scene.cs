@@ -241,26 +241,25 @@ namespace iGL.Engine
 
             //Physics.World.CollisionSystem.Raycast(nearPlane.ToJitter(), ray.ToJitter(), (a, b, c) => true, out body, out normal, out fraction);                       
 
-            /* raycast through non-rigidbodies */
-            var meshes = GameObjects.Where(g =>  g.Components.Any(c => c is MeshComponent) &&
-                                                 g.Components.Any(c => c is MeshRenderComponent)).ToList();
+            /* raycast through non-rigidbodies */         
 
             float minDistance = float.MaxValue;
             GameObject result = null;
 
-            foreach (var mesh in meshes)
-            {
-                var meshComponent = mesh.Components.Single(c => c is MeshComponent) as MeshComponent;
-                var near = new Vector3(nearPlane);
-                var dir = new Vector3(ray);
+            var near = new Vector3(nearPlane);
+            var dir = new Vector3(ray);
 
-                if (meshComponent.RayTest(near, dir))
-                {
-                    var transform = mesh.GetCompositeTransform();
+            foreach (var gameObject in _gameObjects)
+            {
+               var rayHit = gameObject.RayTest(near, dir);
+               
+                if (rayHit != null)
+                {                    
+                    var transform = rayHit.GetCompositeTransform();
                     var center = new Vector3(transform.M41, transform.M42, transform.M43);
                     var distance = (center - dir).LengthSquared;
 
-                    if (distance < minDistance) result = mesh;
+                    if (distance < minDistance) result = rayHit;
                 }
             }            
 

@@ -5,6 +5,7 @@ using System.Text;
 using System.Drawing;
 using iGL.Engine.Math;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace iGL.Designer
 {
@@ -27,10 +28,10 @@ namespace iGL.Designer
 
         public static float TextToFloat(this TextBox t)
         {
-            if (string.IsNullOrEmpty(t.Text)) return 0f;
+            if (string.IsNullOrEmpty(t.Text) ||  t.Text == "-") return 0f;
 
             float result;
-            if (float.TryParse(t.Text, System.Globalization.NumberStyles.AllowDecimalPoint, System.Globalization.CultureInfo.InvariantCulture, out result))
+            if (float.TryParse(t.Text, NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign , CultureInfo.InvariantCulture, out result))
             {
                 return result;
             }

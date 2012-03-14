@@ -242,11 +242,14 @@ namespace iGL
         private static EnableCap ToEnableCap(Engine.EnableCap enableCap)
         {
             EnableCap cap = EnableCap.Blend;
-
+            
             switch (enableCap)
             {
                 case Engine.EnableCap.DepthTest:
                     cap = EnableCap.DepthTest;
+                    break;
+                case Engine.EnableCap.CullFace:
+                    cap = EnableCap.CullFace;
                     break;
             }
 

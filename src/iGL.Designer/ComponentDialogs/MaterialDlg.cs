@@ -47,8 +47,8 @@ namespace iGL.Designer.ComponentDialogs
             colorDialog.Color = Material.Diffuse.ToSystemColor();
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
-                Material.Diffuse = colorDialog.Color.ToVectorColor();
-                Material.Diffuse = new Vector4(Material.Diffuse.X, Material.Diffuse.Y, Material.Diffuse.Z, txtDiffuseAlpha.TextToFloat());
+                _material.Diffuse = colorDialog.Color.ToVectorColor();
+                _material.Diffuse = new Vector4(_material.Diffuse.X, _material.Diffuse.Y, _material.Diffuse.Z, txtDiffuseAlpha.TextToFloat());
             }
 
             ShowColors();
@@ -59,8 +59,8 @@ namespace iGL.Designer.ComponentDialogs
             colorDialog.Color = Material.Specular.ToSystemColor();
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
-                Material.Specular = colorDialog.Color.ToVectorColor();
-                Material.Specular = new Vector4(Material.Specular.X, Material.Specular.Y, Material.Specular.Z, txtSpecularAlpha.TextToFloat());
+                _material.Specular = colorDialog.Color.ToVectorColor();
+                _material.Specular = new Vector4(_material.Specular.X, _material.Specular.Y, _material.Specular.Z, txtSpecularAlpha.TextToFloat());
             }
 
             ShowColors();
@@ -68,20 +68,20 @@ namespace iGL.Designer.ComponentDialogs
 
         private void MaterialDlg_Load(object sender, EventArgs e)
         {
-            if (Material == null) Material = new Material();
+            if (_material == null) _material = new Material();
 
             ShowColors();
         }
 
         private void ShowColors()
         {
-            pnlAmbient.BackColor = Material.Ambient.ToSystemColor();
-            pnlDiffuse.BackColor = Material.Diffuse.ToSystemColor();
-            pnlSpecular.BackColor = Material.Specular.ToSystemColor();
+            pnlAmbient.BackColor = _material.Ambient.ToSystemColor();
+            pnlDiffuse.BackColor = _material.Diffuse.ToSystemColor();
+            pnlSpecular.BackColor = _material.Specular.ToSystemColor();
 
-            txtAmbientAlpha.Text = Material.Ambient.W.ToInvariant();
-            txtDiffuseAlpha.Text = Material.Diffuse.W.ToInvariant();
-            txtSpecularAlpha.Text = Material.Specular.W.ToInvariant();
+            txtAmbientAlpha.Text = _material.Ambient.W.ToInvariant();
+            txtDiffuseAlpha.Text = _material.Diffuse.W.ToInvariant();
+            txtSpecularAlpha.Text = _material.Specular.W.ToInvariant();
         }
     }
 }

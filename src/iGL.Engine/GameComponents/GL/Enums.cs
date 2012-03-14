@@ -39,7 +39,9 @@ namespace iGL.Engine
 
     public enum EnableCap
     {
-        DepthTest
+        DepthTest,
+        CullFace
+
     }
 
     [Flags]

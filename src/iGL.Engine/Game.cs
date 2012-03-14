@@ -29,6 +29,7 @@ namespace iGL.Engine
         public virtual void Load()
         {          
             GL.Enable(EnableCap.DepthTest);
+            GL.Enable(EnableCap.CullFace);
         }
 
         public void MouseMove(int x, int y)
