@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using iGL.Engine.Math;
 
 namespace iGL.Engine
 {
@@ -13,6 +14,10 @@ namespace iGL.Engine
         {
             CameraComponent = new CameraComponent();
             AddComponent(CameraComponent);
+
+            Position = new Vector3(0, 0, 10);
+            CameraComponent.Target = new Vector3(0, 0, 0);
+            CameraComponent.ClearColor = new Vector4(0.2f, 0.2f, 0.2f, 1);
         }
 
         public Camera(CameraProperties properties)

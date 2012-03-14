@@ -26,6 +26,12 @@ namespace iGL.Engine
         private static MeshComponent _staticMeshComponent;
         private static MeshRenderComponent _staticMeshRenderComponent;
 
+        public Cube()
+            : this(1, 1, 1)
+        {
+
+        }
+
         public Cube(float depth, float height, float width)
         {
             Depth = depth;
@@ -35,10 +41,10 @@ namespace iGL.Engine
             this.Scale = new Vector3(Width, Height, Depth);
 
             if (_staticMeshRenderComponent == null)
-            {             
+            {
                 var halfWidth = 0.5f;
                 var halfHeight = 0.5f;
-                var halfDepth = 0.5f;                             
+                var halfDepth = 0.5f;
 
                 _meshComponent = new MeshComponent();
 
@@ -138,7 +144,7 @@ namespace iGL.Engine
 
                 AddComponent(_meshComponent);
                 AddComponent(_meshRenderComponent);
-            }                        
+            }
         }
 
         private void CalculateNormals()

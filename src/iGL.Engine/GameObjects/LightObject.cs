@@ -11,7 +11,7 @@ namespace iGL.Engine
 
         public LightObject(ILight light)
         {
-            LightComponent = new LightComponent(this, light);
+            LightComponent = new LightComponent(light);
             AddComponent(LightComponent);
         }
     }

@@ -48,17 +48,106 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\ComponentControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Code\BaseObjectControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Code\EditorGame.cs" />
+    <Compile Include="Code\Extensions.cs" />
+    <Compile Include="Code\GameObjectDialogAttribute.cs" />
+    <Compile Include="ComponentDialogs\BoxColliderComponentDlg.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentDialogs\BoxColliderComponentDlg.Designer.cs">
+      <DependentUpon>BoxColliderComponentDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentDialogs\CameraComponentDlg.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentDialogs\CameraComponentDlg.Designer.cs">
+      <DependentUpon>CameraComponentDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentDialogs\LightComponentDlg.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentDialogs\LightComponentDlg.Designer.cs">
+      <DependentUpon>LightComponentDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentDialogs\PointLightDlg.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentDialogs\PointLightDlg.Designer.cs">
+      <DependentUpon>PointLightDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentDialogs\MaterialDlg.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentDialogs\MaterialDlg.Designer.cs">
+      <DependentUpon>MaterialDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentDialogs\MeshRenderComponentDlg.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentDialogs\MeshRenderComponentDlg.Designer.cs">
+      <DependentUpon>MeshRenderComponentDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentDialogs\MeshComponentDlg.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentDialogs\MeshComponentDlg.Designer.cs">
+      <DependentUpon>MeshComponentDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentDialogs\SceneControlDlg.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentDialogs\SceneControlDlg.Designer.cs">
+      <DependentUpon>SceneControlDlg.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComponentDialogs\GameObjectDlg.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentDialogs\GameObjectDlg.Designer.cs">
+      <DependentUpon>GameObjectDlg.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ComponentDialogs\BoxColliderComponentDlg.resx">
+      <DependentUpon>BoxColliderComponentDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentDialogs\CameraComponentDlg.resx">
+      <DependentUpon>CameraComponentDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentDialogs\LightComponentDlg.resx">
+      <DependentUpon>LightComponentDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentDialogs\PointLightDlg.resx">
+      <DependentUpon>PointLightDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentDialogs\MaterialDlg.resx">
+      <DependentUpon>MaterialDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentDialogs\MeshRenderComponentDlg.resx">
+      <DependentUpon>MeshRenderComponentDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentDialogs\MeshComponentDlg.resx">
+      <DependentUpon>MeshComponentDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentDialogs\SceneControlDlg.resx">
+      <DependentUpon>SceneControlDlg.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentDialogs\GameObjectDlg.resx">
+      <DependentUpon>GameObjectDlg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -92,6 +181,9 @@
       <Project>{BC65B5B5-0897-4D4C-8B93-FEC3FE1ADE00}</Project>
       <Name>iGL.WinGL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\DataSources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

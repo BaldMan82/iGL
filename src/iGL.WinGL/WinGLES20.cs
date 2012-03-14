@@ -144,9 +144,9 @@ namespace iGL
             GL.Viewport(x, y, width, height);
         }
 
-        public void ClearColor(byte r, byte g, byte b, byte a)
+        public void ClearColor(float r, float g, float b, float a)
         {
-            GL.ClearColor(r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f);
+            GL.ClearColor(r, g, b, a);
         }
 
         public void Enable(Engine.EnableCap enableCap)

@@ -8,7 +8,7 @@ using iGL.Engine.Events;
 
 namespace iGL.Engine
 {
-    public class GameObject
+    public class GameObject : Object
     {
         internal Vector3 _position { get; set; }
         internal Vector3 _scale { get; set; }
@@ -86,7 +86,7 @@ namespace iGL.Engine
         public IEnumerable<GameComponent> Components 
         {
             get { return _components.AsEnumerable(); }
-        }
+        }        
 
         public GameObject()
         {
@@ -117,6 +117,19 @@ namespace iGL.Engine
                 gameObject.Load();
             }
         }
+
+        public Matrix4 GetCompositeTransform()
+        {
+            Matrix4 parentMatrix = Matrix4.Identity;
+
+            if (Parent != null)
+            {
+                parentMatrix = Parent.GetCompositeTransform();
+            }
+
+            return Transform * parentMatrix;
+        }
+
 
         public virtual void Load()
         {
@@ -267,5 +280,10 @@ namespace iGL.Engine
 
         #endregion
 
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

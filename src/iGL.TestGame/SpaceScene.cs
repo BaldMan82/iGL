@@ -48,17 +48,22 @@ namespace iGL.TestGame
             _testCamera = new Camera(camProperties);
             _testCamera.Position = new Vector3(0.0f, 0.0f, 50.0f);
             _testCamera.CameraComponent.Target = new Vector3(0, 0f, 0);
+            _testCamera.CameraComponent.ClearColor = new Vector4(0.2f, 0.2f, 0.2f, 1);
 
+            ShaderProgram.SetAmbientColor(new Vector4(1, 1, 1, 1));
+            
             AddGameObject(_testCamera);
             SetCurrentCamera(_testCamera);
-
+            
             var pointlight = new PointLight();
             pointlight.Ambient = new Vector4(1.0f, 1.0f, 1.0f, 1.0f);
             pointlight.Diffuse = new Vector4(1.0f, 1.0f, 0.8f, 1.0f);
 
             _light = new Sphere(1.0f);
-            _light.Position = new Vector3(0, 100, -100);
-            _light.AddComponent(new LightComponent(_light, pointlight));
+            _light.Position = new Vector3(10, 10, 0);
+            _light.AddComponent(new LightComponent(pointlight));
+            //_light.AddComponent(new SphereColliderComponent());
+            //_light.AddComponent(new RigidBodyComponent());
             _light.Material.Ambient = new Vector4(1, 1, 0, 1);
 
             AddGameObject(_light);
@@ -74,11 +79,11 @@ namespace iGL.TestGame
             //AddGameObject(world);
 
             var world2 = new Sphere(3.0f, 32, 32);
-            world2.Position = new Vector3(0, 15, 0);
+            world2.Position = new Vector3(0, 10, 0);
             world2.Material.Diffuse = new Vector4(0.5f, 0.5f, 0.5f, 1);
             world2.AddComponent(new SphereColliderComponent());
 
-            world2.AddComponent(new RigidBodyComponent(mass: 5000, isStatic: true, isGravitySource:true));
+            world2.AddComponent(new RigidBodyComponent(mass: 500, isStatic: true, isGravitySource:true));
 
             AddGameObject(world2);
 

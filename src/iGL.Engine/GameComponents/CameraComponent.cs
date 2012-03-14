@@ -35,17 +35,19 @@ namespace iGL.Engine
        
         public Vector3 Target { get; set; }
         public Vector3 Up { get; set; }
+        public Vector4 ClearColor { get; set; }
+
         public Matrix4 ProjectionMatrix { get; private set; }
         public Matrix4 ModelViewMatrix { get; private set; }
-        public Matrix4 ModelViewProjectionMatrix { get; private set; }
-        
+        public Matrix4 ModelViewProjectionMatrix { get; private set; }        
+
         private CameraProperties _properties;
 
         public CameraComponent()
             : this(new PerspectiveProperties()
             {
-                AspectRatio = MathHelper.DegreesToRadians(45.0f),
-                FieldOfViewRadians = 3.0f / 2.0f,
+                FieldOfViewRadians = MathHelper.DegreesToRadians(45.0f),
+                AspectRatio = 3.0f / 2.0f,
                 ZNear = 1.00f,
                 ZFar = 1000.0f
             }) { }

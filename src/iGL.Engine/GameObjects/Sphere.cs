@@ -21,6 +21,11 @@ namespace iGL.Engine
         private MeshComponent _meshComponent;
         private MeshRenderComponent _meshRenderComponent;
 
+        public Sphere() : this(0.5f)
+        {
+
+        }
+
         public Sphere(float r, int rings = 16, int segments = 16)
         {
             Radius = r;

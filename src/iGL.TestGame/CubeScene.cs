@@ -35,10 +35,10 @@ namespace iGL.TestGame
 
             var camProperties = new PerspectiveProperties()
             {
-                AspectRatio = MathHelper.DegreesToRadians(45.0f),
-                FieldOfViewRadians = 3.0f / 2.0f,
-                ZFar = 1.00f,
-                ZNear = 1000.0f
+                FieldOfViewRadians = MathHelper.DegreesToRadians(45.0f),
+                AspectRatio = 3.0f / 2.0f,
+                ZNear = 1.00f,
+                ZFar = 1000.0f
             };
 
             _testCamera = new Camera(camProperties);
@@ -58,7 +58,7 @@ namespace iGL.TestGame
 
             var lightObj = new GameObject();
             lightObj.Position = new Vector3(0, 10, 0);
-            lightObj.AddComponent(new LightComponent(lightObj, pointlight));
+            lightObj.AddComponent(new LightComponent(pointlight));
 
             AddGameObject(lightObj);
             SetCurrentLight(lightObj);

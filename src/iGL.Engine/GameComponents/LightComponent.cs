@@ -20,7 +20,12 @@ namespace iGL.Engine
     {        
         public ILight Light { get; private set; }
 
-        public LightComponent(GameObject gameObject, ILight light)
+        public LightComponent() : this(new PointLight())
+        {
+
+        }
+
+        public LightComponent(ILight light)
         {
             Light = light;
         }

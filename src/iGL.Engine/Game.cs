@@ -27,8 +27,7 @@ namespace iGL.Engine
         }
 
         public virtual void Load()
-        {
-            GL.ClearColor(50, 50, 50, 255);
+        {          
             GL.Enable(EnableCap.DepthTest);
         }
 
@@ -43,9 +42,7 @@ namespace iGL.Engine
         }
       
         public void Render()
-        {
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
+        {           
             _scene.Render();
         }
 

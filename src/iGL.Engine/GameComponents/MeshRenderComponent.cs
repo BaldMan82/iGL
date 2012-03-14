@@ -12,9 +12,13 @@ namespace iGL.Engine
         private int[] _bufferIds;
         private MeshComponent _meshComponent;
 
+        public BeginMode BeginMode { get; set; }
+
         public MeshRenderComponent()            
         {
             _bufferIds = new int[3];
+
+            BeginMode = BeginMode.Triangles;
         }
 
         public override void InternalLoad()
@@ -79,7 +83,7 @@ namespace iGL.Engine
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, _bufferIds[2]);                        
 
-            GL.DrawElements(BeginMode.Triangles, _meshComponent.Indices.Length, DrawElementsType.UnsignedShort, 0);
+            GL.DrawElements(BeginMode, _meshComponent.Indices.Length, DrawElementsType.UnsignedShort, 0);
         }
 
         public override void Tick(float timeElapsed)

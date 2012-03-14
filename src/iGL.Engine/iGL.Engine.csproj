@@ -68,6 +68,7 @@
     <Compile Include="Events\MouseButtonUpEvent.cs" />
     <Compile Include="Events\MouseInEvent.cs" />
     <Compile Include="Events\MouseOutEvent.cs" />
+    <Compile Include="GameObjects\Gizmo.cs" />
     <Compile Include="GameObjects\Sphere.cs" />
     <Compile Include="GameObjects\Cube.cs" />
     <Compile Include="Game.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Math\BezierCurve.cs" />
     <Compile Include="Math\BezierCurveCubic.cs" />
     <Compile Include="Math\BezierCurveQuadric.cs" />
+    <Compile Include="Math\Box.cs" />
     <Compile Include="Math\Box2.cs" />
     <Compile Include="Math\Functions.cs" />
     <Compile Include="Math\Half.cs" />

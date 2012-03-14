@@ -23,6 +23,8 @@ namespace iGL.Designer
         private DateTime _lastRender;
         private DateTime _lastTick;
 
+        private Dictionary<Type, Type> _gameObjectDialogTypes;
+
         public Form1()
         {
             InitializeComponent();
@@ -34,7 +36,20 @@ namespace iGL.Designer
             _lastTick = DateTime.UtcNow;
 
             LoadGameObjectTree();
-        }
+
+            /* find all dialog types */
+            var asm = Assembly.GetExecutingAssembly();
+
+            var gameObjectDialogs = asm.GetTypes().Where(t => t.GetCustomAttributes(false).Any(o => o.GetType() == typeof(GameObjectDialogAttribute))).ToList();
+            _gameObjectDialogTypes = new Dictionary<Type, Type>();
+
+            foreach (var gameObjectDlg in gameObjectDialogs)
+            {
+                var attribute = gameObjectDlg.GetCustomAttributes(false).First(o => o.GetType() == typeof(GameObjectDialogAttribute)) as GameObjectDialogAttribute;
+                _gameObjectDialogTypes.Add(attribute.GameObjectType, gameObjectDlg);
+
+            }
+        }      
 
         private void glControl1_Load(object sender, EventArgs e)
         {
@@ -186,6 +201,11 @@ namespace iGL.Designer
                 _scene.AddGameObject(instance);
 
                 UpdateSceneTree();
+
+                /* hook up mouse events */
+
+                instance.OnMouseIn += (a, b) => glControl1.Cursor = Cursors.Cross;
+                instance.OnMouseOut += (a, b) => glControl1.Cursor = Cursors.Arrow;
             }
             catch (Exception ex)
             {
@@ -198,6 +218,7 @@ namespace iGL.Designer
             sceneTree.Nodes.Clear();
 
             var sceneNode = sceneTree.Nodes.Add("Scene");
+            sceneNode.Tag = _scene;
 
             foreach (var gameObject in _scene.GameObjects)
             {
@@ -210,10 +231,72 @@ namespace iGL.Designer
         private void AddSceneNode(TreeNode node, GameObject gameObject)
         {
             var newNode = node.Nodes.Add(gameObject.Name);
+            newNode.Tag = gameObject;
+
             foreach (var child in gameObject.Children)
             {
                 AddSceneNode(newNode, child);
             }
+        }
+
+        private void sceneTree_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            tabControl1.SelectedTab = propertiesTab;
+
+            flowLayoutPanel1.Controls.Clear();
+
+            if (e.Node.Tag is Scene)
+            {
+                var scene = e.Node.Tag as Scene;
+
+                var baseControl = _gameObjectDialogTypes[typeof(Scene)];
+                var control = Activator.CreateInstance(baseControl) as SceneControlDlg;
+
+                control.Scene = _scene;
+
+                var label = new Label();
+                label.Width = control.Width;
+                label.BackColor = Color.Silver;
+                label.BorderStyle = BorderStyle.FixedSingle;
+                label.Text = "Scene Properties";
+
+                flowLayoutPanel1.Controls.Add(label);
+                flowLayoutPanel1.Controls.Add(control);
+            }
+            else
+            {
+                var obj = e.Node.Tag as GameObject;
+
+                var baseControl = _gameObjectDialogTypes[typeof(GameObject)];
+                var control = Activator.CreateInstance(baseControl) as BaseObjectControl;
+
+                control.GameObject = obj;
+
+                var label = new Label();
+                label.Width = control.Width;
+                label.BackColor = Color.Silver;
+                label.BorderStyle = BorderStyle.FixedSingle;
+                label.Text = "Base Properties";
+
+                flowLayoutPanel1.Controls.Add(label);
+                flowLayoutPanel1.Controls.Add(control);
+
+                foreach (var component in obj.Components)
+                {
+                    var componentControl = Activator.CreateInstance(_gameObjectDialogTypes[component.GetType()]) as ComponentControl;
+                    componentControl.Component = component;
+
+                    var componentLabel = new Label();
+                    componentLabel.Width = control.Width;
+                    componentLabel.BackColor = Color.Silver;
+                    componentLabel.BorderStyle = BorderStyle.FixedSingle;
+                    componentLabel.Text = component.GetType().Name;
+
+                    flowLayoutPanel1.Controls.Add(componentLabel);
+                    flowLayoutPanel1.Controls.Add(componentControl);
+                }
+            }
+
         }
     }
 }

@@ -58,7 +58,7 @@ namespace iGL.TestGame
             testCube.Material.Diffuse = new Vector4(0.0f, 1.0f, 0.0f, 0.0f);
             testCube.Position = new Vector3(20.0f, 20.0f, 0.0f);
 
-            testCube.AddComponent(new LightComponent(testCube, pointlight));
+            testCube.AddComponent(new LightComponent(pointlight));
 
             AddGameObject(testCube);
 

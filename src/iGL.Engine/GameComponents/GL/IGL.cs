@@ -51,7 +51,7 @@ namespace iGL.Engine.GL
 
         void Viewport(int x, int y, int width, int height);
 
-        void ClearColor(byte r, byte g, byte b, byte a);
+        void ClearColor(float r, float g, float b, float a);
 
         void Enable(EnableCap enableCap);
 

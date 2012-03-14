@@ -48,8 +48,12 @@ namespace iGL.Engine
         }
 
         public void Render()
-        {
+        {            
             if (CurrentCamera == null) return;
+
+            Game.GL.ClearColor(CurrentCamera.ClearColor.X, CurrentCamera.ClearColor.Y, CurrentCamera.ClearColor.Z, CurrentCamera.ClearColor.W);
+
+            Game.GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             if (CurrentLight != null)
             {
@@ -149,6 +153,8 @@ namespace iGL.Engine
 
         public void SetCurrentCamera(GameObject camera)
         {
+            if (camera == null) CurrentCamera = null;
+
             if (!_gameObjects.Contains(camera)) throw new Exception("Camera is not part of this scene");
 
             var component = camera.Components.FirstOrDefault(c => c is CameraComponent) as CameraComponent;
@@ -160,6 +166,8 @@ namespace iGL.Engine
 
         public void SetCurrentLight(GameObject light)
         {
+            if (light == null) CurrentLight = null;
+
             if (!_gameObjects.Contains(light)) throw new Exception("Light is not part of this scene");
 
             var component = light.Components.FirstOrDefault(c => c is LightComponent) as LightComponent;
@@ -225,40 +233,61 @@ namespace iGL.Engine
 
             _lastNearPlaneMousePosition = nearPlane;
 
-            var ray = new Vector4(farPlane - nearPlane);
+            var ray = new Vector4(farPlane - nearPlane);            
 
-            RigidBody body;
-            JVector normal;
-            float fraction;
+            //RigidBody body;
+            //JVector normal;
+            //float fraction;
 
-            Physics.World.CollisionSystem.Raycast(nearPlane.ToJitter(), ray.ToJitter(), (a, b, c) => true, out body, out normal, out fraction);
+            //Physics.World.CollisionSystem.Raycast(nearPlane.ToJitter(), ray.ToJitter(), (a, b, c) => true, out body, out normal, out fraction);                       
+
+            /* raycast through non-rigidbodies */
+            var meshes = GameObjects.Where(g =>  g.Components.Any(c => c is MeshComponent) &&
+                                                 g.Components.Any(c => c is MeshRenderComponent)).ToList();
+
+            float minDistance = float.MaxValue;
+            GameObject result = null;
+
+            foreach (var mesh in meshes)
+            {
+                var meshComponent = mesh.Components.Single(c => c is MeshComponent) as MeshComponent;
+                var near = new Vector3(nearPlane);
+                var dir = new Vector3(ray);
+
+                if (meshComponent.RayTest(near, dir))
+                {
+                    var transform = mesh.GetCompositeTransform();
+                    var center = new Vector3(transform.M41, transform.M42, transform.M43);
+                    var distance = (center - dir).LengthSquared;
+
+                    if (distance < minDistance) result = mesh;
+                }
+            }            
 
             /* call events on raycast results */
 
-            if (body != null)
-            {
-                var gameObj = body.Tag as GameObject;
-
+            if (result != null)
+            {               
                 /* target changed */
-                if (_currentMouseOverObj != null && _currentMouseOverObj != gameObj)
+                if (_currentMouseOverObj != null && _currentMouseOverObj != result)
                 {
                     _currentMouseOverObj.OnMouseOutEvent(new MouseOutEvent());
-                    gameObj.OnMouseInEvent(new MouseInEvent());
+                    result.OnMouseInEvent(new MouseInEvent());
 
                 }
                 else if (_currentMouseOverObj == null)
                 {
-                    gameObj.OnMouseInEvent(new MouseInEvent());
+                    result.OnMouseInEvent(new MouseInEvent());
                 }
 
-                _currentMouseOverObj = gameObj;
+                _currentMouseOverObj = result;
             }
             else if (_currentMouseOverObj != null)
             {
                 _currentMouseOverObj.OnMouseOutEvent(new MouseOutEvent());
                 _currentMouseOverObj = null;
-            }
-
+            }            
+            
         }
 
         internal void UpdateMouseButton(MouseButton button, bool down, int x, int y)
