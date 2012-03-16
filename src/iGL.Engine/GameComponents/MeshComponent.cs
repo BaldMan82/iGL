@@ -48,13 +48,19 @@ namespace iGL.Engine
         public bool RayTest(Vector3 origin, Vector3 direction)
         {          
             var transform = GameObject.GetCompositeTransform();
-
-            transform.Invert();
             
+            transform.Invert();
+
+            var orientation = transform;
+            orientation.M41 = 0;
+            orientation.M42 = 0;
+            orientation.M43 = 0;
+            orientation.M44 = 1;
+
             /* transform ray to object space */
 
             var o = Vector3.Transform(origin, transform);
-            var d = Vector3.Transform(direction, transform);                 
+            var d = Vector3.Transform(direction, orientation);                 
 
             return _boundingBox.RayIntersect(o.ToJitter(), d.ToJitter());            
         }

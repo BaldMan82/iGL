@@ -155,6 +155,9 @@
     <EmbeddedResource Include="ComponentDialogs\GameObjectDlg.resx">
       <DependentUpon>GameObjectDlg.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="OpenTKControl.resx">
+      <DependentUpon>OpenTKControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

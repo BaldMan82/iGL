@@ -24,8 +24,8 @@ namespace iGL.TestGame
         void TestScene_OnTick(object sender, Engine.Events.TickEvent e)
         {
             //_testCamera.Position = new Vector3((float)(Math.Cos(alpha / 2.0f) * 10.0f), (float)(Math.Sin(alpha / 2.0f) * 10.0f) + 10.0f, (float)(Math.Sin(alpha / 2.0f) * 10.0f));
-            cube.Rotation = new Vector3(0, 0, alpha);
-            alpha += e.Elapsed * 1.0f;
+            //cube.Rotation = new Vector3(0, 0, alpha);
+            alpha += e.Elapsed * 0.1f;
 
             //Console.WriteLine(alpha);
         }
@@ -55,33 +55,35 @@ namespace iGL.TestGame
 
             //SetCurrentLight(_light);
 
-            _testCamera = new Camera(properties);
-            _testCamera.Position = new Vector3(0.0f, 10.0f, 20.0f);
-            _testCamera.CameraComponent.Target = new Vector3(0, 0f, 0);
+            _testCamera = new Camera();
+            _testCamera.Position = new Vector3(0.0f, 100.0f, 80.0f);
+            _testCamera.CameraComponent.Target = new Vector3(0, 100f, 0);
             _testCamera.CameraComponent.ClearColor = new Vector4(1, 1, 1, 1);
-            
+
             AddGameObject(_testCamera);
             SetCurrentCamera(_testCamera);
 
             AmbientColor = new Vector4(0.5f, 0.5f, 0.5f, 1.0f);
 
-            var gizmo = new Gizmo();
 
-            AddGameObject(gizmo);
-            
-            cube = gizmo;
-
-            //cube = new Cube(1, 10, 1);
-            //cube.Position = new Vector3(0, 5, 0);
+            cube = new Cube(1, 1, 1);
+            cube.Position = new Vector3(0, 100, 0);
             //cube.Rotation = new Vector3(0, 0, 10);
+            cube.OnMouseIn += (a, b) => ((Cube)a).Material.Ambient = new Vector4(0.5f, 0.5f, 0.5f, 1);
+            cube.OnMouseOut += (a, b) => ((Cube)a).Material.Ambient = new Vector4(1.0f, 0.5f, 0.5f, 1);
 
             //((Cube)cube).Material.Diffuse = new Vector4(0.5f, 0.5f, 0.5f, 1);
             //((Cube)cube).Material.Ambient = new Vector4(0.5f, 0.5f, 0.5f, 1);
-            //AddGameObject(cube);
-           
+            cube.Name = "testCube";
+            AddGameObject(cube);
+
+            //+ (float)Math.Sqrt((0.5*0.5) + (80*80))
+
+            var test = RayCast(new Vector4(0, 100, 80, 0), new Vector4(0, 0, -1, 0));
+
         }
 
-        
+
 
         private void AddBlocks(int line)
         {

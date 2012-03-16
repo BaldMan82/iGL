@@ -23,6 +23,11 @@ namespace iGL.Designer
             public GameObject AddedObject { get; set; }
         }
 
+        public class ObjectRemovedEvent : EventArgs
+        {
+            public GameObject RemovedObject { get; set; }
+        }
+
         public EditAxisType? EditAxis { get; set; }
         
         public EditOperationType EditOperation { get; set; }
@@ -51,6 +56,7 @@ namespace iGL.Designer
 
         private event EventHandler<SelectObjectEvent> _selectObjectEvent;
         private event EventHandler<ObjectAddedEvent> _objectAddedEvent;
+        private event EventHandler<ObjectRemovedEvent> _objectRemovedEvent;
 
         public OpenTKControl()
         {
@@ -65,7 +71,7 @@ namespace iGL.Designer
                 MouseDown += new MouseEventHandler(OpenTKControl_MouseDown);
                 MouseUp += new MouseEventHandler(OpenTKControl_MouseUp);
                 DragEnter += new DragEventHandler(OpenTKControl_DragEnter);
-                DragDrop += new DragEventHandler(OpenTKControl_DragDrop);
+                DragDrop += new DragEventHandler(OpenTKControl_DragDrop);                
             }
         }
 
@@ -100,6 +106,18 @@ namespace iGL.Designer
             remove
             {
                 _objectAddedEvent -= value;
+            }
+        }
+
+        public event EventHandler<ObjectRemovedEvent> OnObjectRemoved
+        {
+            add
+            {
+                _objectRemovedEvent += value;
+            }
+            remove
+            {
+                _objectRemovedEvent -= value;
             }
         }
 
@@ -174,14 +192,28 @@ namespace iGL.Designer
 
         void OpenTKControl_MouseDown(object sender, MouseEventArgs e)
         {
-            Game.MouseButton(Engine.Events.MouseButton.Button1, true, e.X, e.Y);
-            if (_scene.LastMouseDownTarget == null)
+            if (e.Button == System.Windows.Forms.MouseButtons.Left || 
+                e.Button == System.Windows.Forms.MouseButtons.Right)
             {
-                if (_selectObjectEvent != null)
+                Game.MouseButton(Engine.Events.MouseButton.Button1, true, e.X, e.Y);
+                if (_scene.LastMouseDownTarget == null)
                 {
-                    _selectObjectEvent(this, new SelectObjectEvent());
-                }
+                    _selectedObject = null;
+                    if (_selectObjectEvent != null)
+                    {
+                        _selectObjectEvent(this, new SelectObjectEvent());
+                    }
+                }             
             }
+            
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                var point = new System.Drawing.Point(e.X, e.Y);
+                point = PointToScreen(point);
+                contextMenu.Show(point.X, point.Y);
+            }
+
+            UpdateMenuStatus();
         }
 
         void OpenTKControl_MouseMove(object sender, MouseEventArgs e)
@@ -344,6 +376,34 @@ namespace iGL.Designer
 
                 _selectionGizmo.Position = _selectedObject.Position;
             }
+        }
+
+        private void deleteMenuItem_Click(object sender, EventArgs e)
+        {
+            /* delete selected object */
+            if (_selectedObject == null) return;
+
+            Game.Scene.UnloadObject(_selectedObject);
+            if (_objectRemovedEvent != null) _objectRemovedEvent(this, new ObjectRemovedEvent() { RemovedObject = _selectedObject });
+
+            _selectedObject = null;
+        }
+
+        private void UpdateMenuStatus()
+        {
+            if (_selectedObject != null)
+            {
+                deleteMenuItem.Enabled = true;
+            }
+            else
+            {
+                deleteMenuItem.Enabled = false;
+            }
+        }
+
+        private void contextMenu_Opening(object sender, CancelEventArgs e)
+        {
+            UpdateMenuStatus();
         }
     }
 }

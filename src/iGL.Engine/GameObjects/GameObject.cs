@@ -230,6 +230,11 @@ namespace iGL.Engine
 
         public GameObject RayTest(Vector3 origin, Vector3 direction)
         {
+            var deviation = this.Position - origin;
+            deviation.Normalize();
+            var normdir = direction;
+            normdir.Normalize();
+
             if (!Enabled) return null;
 
             var meshComponent = Components.FirstOrDefault(c => c is MeshComponent) as MeshComponent;

@@ -257,35 +257,21 @@ namespace iGL.Engine
 
             _lastNearPlaneMousePosition = nearPlane;
 
-            var ray = new Vector4(farPlane - nearPlane);            
+            var ray = new Vector4(farPlane - nearPlane);
 
             //RigidBody body;
             //JVector normal;
             //float fraction;
 
-            //Physics.World.CollisionSystem.Raycast(nearPlane.ToJitter(), ray.ToJitter(), (a, b, c) => true, out body, out normal, out fraction);                       
+            //Physics.World.CollisionSystem.Raycast(nearPlane.ToJitter(), ray.ToJitter(), (a, b, c) => true, out body, out normal, out fraction);
 
-            /* raycast through non-rigidbodies */         
+            //GameObject result = null;
+            //if (body != null) result = body.Tag as GameObject;
 
-            float minDistance = float.MaxValue;
-            GameObject result = null;
 
-            var near = new Vector3(nearPlane);
-            var dir = new Vector3(ray);
+            /* raycast through non-rigidbodies */
 
-            foreach (var gameObject in _gameObjects)
-            {
-               var rayHit = gameObject.RayTest(near, dir);
-               
-                if (rayHit != null)
-                {                    
-                    var transform = rayHit.GetCompositeTransform();
-                    var center = new Vector3(transform.M41, transform.M42, transform.M43);
-                    var distance = (center - dir).LengthSquared;
-
-                    if (distance < minDistance) result = rayHit;
-                }
-            }            
+            GameObject result = RayCast(nearPlane, ray);
 
             /* call events on raycast results */
 
@@ -307,10 +293,38 @@ namespace iGL.Engine
             }
             else if (_currentMouseOverObj != null)
             {
+                Console.WriteLine("...");
+
                 _currentMouseOverObj.OnMouseOutEvent(new MouseOutEvent());
                 _currentMouseOverObj = null;
             }            
             
+        }
+
+        public GameObject RayCast(Vector4 nearPlane, Vector4 ray)
+        {
+            float minDistance = float.MaxValue;
+            GameObject result = null;
+
+            var near = new Vector3(nearPlane);
+            var dir = new Vector3(ray);
+
+            foreach (var gameObject in _gameObjects)
+            {
+                var rayHit = gameObject.RayTest(near, dir);
+
+                if (rayHit != null)
+                {
+                    var transform = rayHit.GetCompositeTransform();
+                    var center = new Vector3(transform.M41, transform.M42, transform.M43);
+                    var distance = (center - dir).LengthSquared;
+
+                    if (distance < minDistance) result = rayHit;
+
+                    Console.WriteLine("Hit");
+                }
+            }
+            return result;
         }
 
         internal void UpdateMouseButton(MouseButton button, bool down, int x, int y)
@@ -349,6 +363,13 @@ namespace iGL.Engine
         internal void MouseMove(int x, int y)
         {
             _mousePosition = new Point(x, y);
+        }
+
+        public void UnloadObject(GameObject gameObject)
+        {
+            if (!GameObjects.Contains(gameObject)) throw new InvalidOperationException();
+
+            _gameObjects.Remove(gameObject);
         }
     }
 }

@@ -23,11 +23,11 @@ namespace iGL.TestGame
         {
             _light.Position = new Vector3((float)(Math.Cos(_alpha / 2.0f) * 20.0f), (float)(Math.Sin(_alpha / 2.0f) * 10.0f) + 10.0f, (float)(Math.Sin(_alpha / 2.0f) * 20.0f));
 
-            if (_alpha < 10)
-            {
-                _testCamera.Position = new Vector3(0.0f, _alpha, 40.0f);
-                _testCamera.CameraComponent.Target = new Vector3(0, _alpha, 0);
-            }
+            //if (_alpha < 10)
+            //{
+            //    _testCamera.Position = new Vector3(0.0f, _alpha, 40.0f);
+            //    _testCamera.CameraComponent.Target = new Vector3(0, _alpha, 0);
+            //}
 
             _alpha += e.Elapsed * 1.0f;
 
@@ -41,13 +41,13 @@ namespace iGL.TestGame
             {
                 Height = 20.0f,
                 Width = 20.0f * (3.0f / 2.0f),
-                ZFar = 1.00f,
-                ZNear = 1000.0f
-            };
+                ZNear = 1.00f,
+                ZFar = 1000.0f
+            };                
 
-            _testCamera = new Camera(camProperties);
-            _testCamera.Position = new Vector3(0.0f, 0.0f, 50.0f);
-            _testCamera.CameraComponent.Target = new Vector3(0, 0f, 0);
+            _testCamera = new Camera();
+            _testCamera.Position = new Vector3(0.0f, 0, 50.0f);
+            _testCamera.CameraComponent.Target = new Vector3(0, 0, 0);
             _testCamera.CameraComponent.ClearColor = new Vector4(0.2f, 0.2f, 0.2f, 1);
 
             AmbientColor = new Vector4(0.5f, 0.5f, 0.5f, 1.0f);
@@ -99,6 +99,17 @@ namespace iGL.TestGame
             var slingShot = new SlingShot();
             slingShot.Position = new Vector3(-10, 0, 0);
             AddGameObject(slingShot);
+
+            var c = new Cube(1, 1, 1);
+            c.Position = new Vector3(0, 100, 0);
+            c.Rotation = new Vector3(0, 0, 10);
+            c.OnMouseIn += (a, b) => ((Cube)a).Material.Ambient = new Vector4(0.5f, 0.5f, 0.5f, 1);
+            c.OnMouseOut += (a, b) => ((Cube)a).Material.Ambient = new Vector4(1.0f, 0.5f, 0.5f, 1);
+
+            //((Cube)cube).Material.Diffuse = new Vector4(0.5f, 0.5f, 0.5f, 1);
+            //((Cube)cube).Material.Ambient = new Vector4(0.5f, 0.5f, 0.5f, 1);
+
+            AddGameObject(c);
 
             AddTimer(new Timer()
             {

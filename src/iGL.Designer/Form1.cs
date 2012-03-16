@@ -53,6 +53,12 @@ namespace iGL.Designer
 
             openTKControl.OnObjectAdded += new EventHandler<OpenTKControl.ObjectAddedEvent>(openTKControl_OnObjectAdded);
             openTKControl.OnSelectObject += new EventHandler<OpenTKControl.SelectObjectEvent>(openTKControl_OnSelectObject);
+            openTKControl.OnObjectRemoved += new EventHandler<OpenTKControl.ObjectRemovedEvent>(openTKControl_OnObjectRemoved);
+        }
+
+        void openTKControl_OnObjectRemoved(object sender, OpenTKControl.ObjectRemovedEvent e)
+        {
+            UpdateSceneTree();
         }
 
         void openTKControl_OnSelectObject(object sender, OpenTKControl.SelectObjectEvent e)
@@ -160,11 +166,13 @@ namespace iGL.Designer
             openTKControl.EditOperation = iGL.Designer.OpenTKControl.EditOperationType.MOVE;
 
             /* select proper node */
-            SelectNode(sceneTree.TopNode, obj);            
+            SelectNode(sceneTree.Nodes[0], obj);            
         }
 
         private void SelectNode(TreeNode node, GameObject obj)
         {
+            if (node == null) return;
+
             if (node.Tag == obj || obj == null && node.Tag is Scene)
             {
                 sceneTree.SelectedNode = node;
