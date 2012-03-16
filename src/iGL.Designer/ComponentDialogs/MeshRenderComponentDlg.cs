@@ -17,5 +17,10 @@ namespace iGL.Designer.ComponentDialogs
         {
             InitializeComponent();
         }
+
+        public override void UpdateComponent()
+        {
+            
+        }
     }
 }

@@ -79,9 +79,9 @@ namespace iGL.Designer.ComponentDialogs
             pnlDiffuse.BackColor = _pointLight.Diffuse.ToSystemColor();
             pnlSpecular.BackColor = _pointLight.Specular.ToSystemColor();
 
-            txtAmbientAlpha.Text = _pointLight.Ambient.W.ToInvariant();
-            txtDiffuseAlpha.Text = _pointLight.Diffuse.W.ToInvariant();
-            txtSpecularAlpha.Text = _pointLight.Specular.W.ToInvariant();
+            txtAmbientAlpha.Text = _pointLight.Ambient.W.ToInvariantText();
+            txtDiffuseAlpha.Text = _pointLight.Diffuse.W.ToInvariantText();
+            txtSpecularAlpha.Text = _pointLight.Specular.W.ToInvariantText();
         }
     }
 }

@@ -23,5 +23,10 @@ namespace iGL.Designer.ComponentDialogs
             var meshComponent = this.Component as MeshComponent;        
             materialDlg.Material = meshComponent.Material;
         }
+
+        public override void UpdateComponent()
+        {
+            
+        }
     }
 }

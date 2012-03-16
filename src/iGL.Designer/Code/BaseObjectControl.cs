@@ -15,16 +15,7 @@ namespace iGL.Designer
         {
             base.OnLoad(e);
 
-            /* hook up all textboxes for change events */
-            foreach (var control in Controls)
-            {
-                if (control is TextBox)
-                {
-                    var t = control as TextBox;
-                    t.TextChanged += (a, b) => UpdateGameObject();
-
-                }
-            }
+            Controls.HookAllChangeEvents(() => UpdateGameObject());
         }
 
         public virtual void UpdateGameObject() { }

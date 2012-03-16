@@ -9,44 +9,20 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Reflection;
 using iGL.Engine;
-using iGL.Designer.Code;
 using iGL.Engine.Math;
 
 namespace iGL.Designer
 {
     public partial class Form1 : Form
-    {
-        private bool _glLoaded = false;      
-        private EditorGame _game;
-        private Scene _scene;
-      
+    {          
+        private EditorGame _game;      
         private DateTime _lastRender;
         private DateTime _lastTick;
 
         private Dictionary<Type, Type> _gameObjectDialogTypes;
-
-        private GameObject _selectedObject;
-        private Gizmo _selectionGizmo;
+       
         private System.Drawing.Point _lastMousePosition;
-
-        private enum EditAxis
-        {
-            XAXIS,
-            YAXIS,
-            ZAXIS,
-            ALL
-        }
-
-        private enum EditOperation
-        {
-            MOVE,
-            ROTATE,
-            SCALE
-        }
-
-        private EditAxis? _editAxis;
-        private EditOperation _editOperation;
-
+            
         public Form1()
         {
             InitializeComponent();
@@ -71,202 +47,37 @@ namespace iGL.Designer
                 _gameObjectDialogTypes.Add(attribute.GameObjectType, gameObjectDlg);
 
             }
-        }      
-       
-        void _scene_OnMouseMove(object sender, Engine.Events.MouseMoveEvent e)
-        {
-            if (_selectedObject == null) return;
-
-            /* perform edit operation */
-            /* size of directional vector gives an indication of mouse movement magnitude */
-
-            var distance = (e.NearPlane - _selectedObject.Position).Length;
-
-            var vector = _editOperation == EditOperation.MOVE ? _selectedObject.Position :
-                        (_editOperation == EditOperation.ROTATE ? _selectedObject.Rotation :
-                        (_editOperation == EditOperation.SCALE ? _selectedObject.Scale : new Vector3()));          
-
-            if (_editAxis.HasValue)
-            {
-                if (_editAxis.Value == EditAxis.XAXIS)
-                {
-                    var change = new Vector3(e.DirectionOnNearPlane.X * distance, 0, 0);
-                    //change = Vector3.Transform(change, rotation);
-
-                    vector += change;
-                }
-                else if (_editAxis.Value == EditAxis.YAXIS)
-                {
-                    var change = new Vector3(0, e.DirectionOnNearPlane.Y * distance, 0);
-                    //change = Vector3.Transform(change, rotation);
-                    vector += change;
-                }
-                else if (_editAxis.Value == EditAxis.ZAXIS)
-                {
-                    var change = new Vector3(0, 0,  e.DirectionOnNearPlane.Z * distance);
-                    //change = Vector3.Transform(change, rotation);
-                    vector += change;
-                }
-                else if (_editAxis.Value == EditAxis.ALL)
-                {
-                    var change = new Vector3(e.DirectionOnNearPlane.X * distance, e.DirectionOnNearPlane.Y * distance, e.DirectionOnNearPlane.Z * distance);
-                    vector += change;
-                }
-            }
-
-            if (_editOperation == EditOperation.MOVE) _selectedObject.Position = vector;
-            if (_editOperation == EditOperation.ROTATE) _selectedObject.Rotation = vector;          
-            if (_editOperation == EditOperation.SCALE) _selectedObject.Scale = vector;
-        }             
-
-        private void Render()
-        {
-            if (!_glLoaded) return;
-          
-            _game.Render();
-
-            glControl1.SwapBuffers();
-        }
-
-        private void glControl1_Paint(object sender, PaintEventArgs e)
-        {
-            Render();
-        }
-
-        private void glControl1_Load(object sender, EventArgs e)
-        {
-            _glLoaded = true;
-            _game = new EditorGame(new WinGL());
-            _scene = new Scene();
-
-            _scene.OnMouseMove += new EventHandler<Engine.Events.MouseMoveEvent>(_scene_OnMouseMove);
-
-            /* origin gizmo */
-            var gizmo = new Gizmo(30.0f);
-            gizmo.UniformSphere.Visible = false;
-
-            _scene.AddGameObject(gizmo);
-
-            _selectionGizmo = new Gizmo();
-
-            _selectionGizmo.Visible = false;
-            _selectionGizmo.Enabled = false;
-
-            _selectionGizmo.XDirectionArrow.OnMouseDown += (a, b) => _editAxis = EditAxis.XAXIS;
-            _selectionGizmo.XDirectionArrow.OnMouseUp += (a, b) => _editAxis = null;
-            _selectionGizmo.XDirectionArrow.OnMouseIn += (a, b) => glControl1.Cursor = Cursors.Hand;
-            _selectionGizmo.XDirectionArrow.OnMouseOut += (a, b) => glControl1.Cursor = Cursors.Arrow;
-
-            _selectionGizmo.YDirectionArrow.OnMouseDown += (a, b) => _editAxis = EditAxis.YAXIS;
-            _selectionGizmo.YDirectionArrow.OnMouseUp += (a, b) => _editAxis = null;
-            _selectionGizmo.YDirectionArrow.OnMouseIn += (a, b) => glControl1.Cursor = Cursors.Hand;
-            _selectionGizmo.YDirectionArrow.OnMouseOut += (a, b) => glControl1.Cursor = Cursors.Arrow;
-
-            _selectionGizmo.ZDirectionArrow.OnMouseDown += (a, b) => _editAxis = EditAxis.ZAXIS;
-            _selectionGizmo.ZDirectionArrow.OnMouseUp += (a, b) => _editAxis = null;
-            _selectionGizmo.ZDirectionArrow.OnMouseIn += (a, b) => glControl1.Cursor = Cursors.Hand;
-            _selectionGizmo.ZDirectionArrow.OnMouseOut += (a, b) => glControl1.Cursor = Cursors.Arrow;
-
-            _selectionGizmo.UniformSphere.OnMouseDown += (a, b) => _editAxis = EditAxis.ALL;
-            _selectionGizmo.UniformSphere.OnMouseUp += (a, b) => _editAxis = null;
-            _selectionGizmo.UniformSphere.OnMouseIn += (a, b) => glControl1.Cursor = Cursors.Hand;
-            _selectionGizmo.UniformSphere.OnMouseOut += (a, b) => glControl1.Cursor = Cursors.Arrow;
-
-            _scene.AddGameObject(_selectionGizmo);
-
-            _game.SetScene(_scene);
-
-            var size = glControl1.ClientSize;
-
-            _game.Resize(size.Width, size.Height);
-            _game.Load();
 
             renderTimer.Start();
             tickTimer.Start();
 
-            _scene.AmbientColor = new Vector4(1, 1, 1, 1);
+            openTKControl.OnObjectAdded += new EventHandler<OpenTKControl.ObjectAddedEvent>(openTKControl_OnObjectAdded);
+            openTKControl.OnSelectObject += new EventHandler<OpenTKControl.SelectObjectEvent>(openTKControl_OnSelectObject);
         }
 
-        private void glControl1_Resize(object sender, EventArgs e)
+        void openTKControl_OnSelectObject(object sender, OpenTKControl.SelectObjectEvent e)
         {
-            OpenTK.GLControl control = sender as OpenTK.GLControl;            
+            SelectObject(e.SelectedObject);
         }
 
-        private void glControl1_MouseMove(object sender, MouseEventArgs e)
-        {            
-            _game.MouseMove(e.X, e.Y);
-            _lastMousePosition = e.Location;
-        }
-
-        private void glControl1_MouseDown(object sender, MouseEventArgs e)
+        void openTKControl_OnObjectAdded(object sender, OpenTKControl.ObjectAddedEvent e)
         {
-            _game.MouseButton(Engine.Events.MouseButton.Button1, true, e.X, e.Y);
-            if (_scene.LastMouseDownTarget == null)
-            {
-                SelectObject(null);
-            }
-        }
-
-        private void glControl1_MouseUp(object sender, MouseEventArgs e)
-        {
-            _game.MouseButton(Engine.Events.MouseButton.Button1, false, e.X, e.Y);
-        }
-
-        private void glControl1_DragEnter(object sender, DragEventArgs e)
-        {
-            e.Effect = e.AllowedEffect;
-        }
-
-        private void glControl1_DragDrop(object sender, DragEventArgs e)
-        {
-            var node = e.Data.GetData(typeof(TreeNode)) as TreeNode;
-            if (node == null) return;
-            try
-            {
-                var instance = Activator.CreateInstance(node.Tag as Type) as GameObject;
-                var count = _scene.GameObjects.Count(o => o.GetType() == (Type)node.Tag);
-
-                instance.Name = ((Type)node.Tag).Name + count.ToString();
-
-                _scene.AddGameObject(instance);
-
-                if (_scene.CurrentCamera == null && instance.Components.Any(c => c is CameraComponent))
-                {
-                    _scene.SetCurrentCamera(instance);
-                }
-
-                UpdateSceneTree();
-
-                /* hook up mouse events */
-
-                instance.OnMouseIn += (a, b) => glControl1.Cursor = Cursors.Cross;
-                instance.OnMouseOut += (a, b) => glControl1.Cursor = Cursors.Arrow;
-                instance.OnMouseDown += (a, b) =>
-                {
-                    SelectObject(a as GameObject);
-                };
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(((Type)node.Tag).Name + ": " + ex.Message);
-            }
-        }
-
+            UpdateSceneTree();
+        }                     
+      
         private void tickTimer_Tick(object sender, EventArgs e)
         {
             float timePassed = (float)(DateTime.UtcNow - _lastTick).TotalSeconds;
             if (timePassed < (1.0f / 100.0f)) return;
 
-            _game.Tick(timePassed);
+            openTKControl.Tick(timePassed);            
 
             _lastTick = DateTime.UtcNow;
         }
 
         private void renderTimer_Tick(object sender, EventArgs e)
         {
-            UpdateGizmo();
-
-            Render();
+            openTKControl.Render();
         }
 
         private void LoadGameObjectTree()
@@ -344,11 +155,9 @@ namespace iGL.Designer
             else
             {
                 toolStripStatusLabel.Text = "Ready";
-            }
+            }           
 
-            _selectedObject = obj;
-
-            _editOperation = EditOperation.MOVE;
+            openTKControl.EditOperation = iGL.Designer.OpenTKControl.EditOperationType.MOVE;
 
             /* select proper node */
             SelectNode(sceneTree.TopNode, obj);            
@@ -372,30 +181,16 @@ namespace iGL.Designer
             }          
         }
 
-        private void UpdateGizmo()
-        {
-            if (_selectedObject == null)
-            {
-                _selectionGizmo.Visible = false;
-                _selectionGizmo.Enabled = false;
-            }
-            else
-            {
-                _selectionGizmo.Visible = true;
-                _selectionGizmo.Enabled = true;
-
-                _selectionGizmo.Position = _selectedObject.Position;
-            }
-        }
+       
 
         private void UpdateSceneTree()
         {
             sceneTree.Nodes.Clear();
 
             var sceneNode = sceneTree.Nodes.Add("Scene");
-            sceneNode.Tag = _scene;
+            sceneNode.Tag = openTKControl.Game.Scene;
 
-            foreach (var gameObject in _scene.GameObjects.Where(g => !g.Designer))
+            foreach (var gameObject in openTKControl.Game.Scene.GameObjects.Where(g => !g.Designer))
             {
                 AddSceneNode(sceneNode, gameObject);
             }
@@ -427,7 +222,7 @@ namespace iGL.Designer
                 var baseControl = _gameObjectDialogTypes[typeof(Scene)];
                 var control = Activator.CreateInstance(baseControl) as SceneControlDlg;
 
-                control.Scene = _scene;
+                control.Scene = openTKControl.Game.Scene;
 
                 var label = new Label();
                 label.Width = control.Width;
@@ -476,17 +271,17 @@ namespace iGL.Designer
 
         private void toolScale_Click(object sender, EventArgs e)
         {
-            _editOperation = EditOperation.SCALE;
+            openTKControl.EditOperation = OpenTKControl.EditOperationType.SCALE;
         }
 
         private void toolRotate_Click(object sender, EventArgs e)
         {
-            _editOperation = EditOperation.ROTATE;
+            openTKControl.EditOperation = OpenTKControl.EditOperationType.ROTATE;
         }
 
         private void toolTranslate_Click(object sender, EventArgs e)
         {
-            _editOperation = EditOperation.MOVE;
+            openTKControl.EditOperation = OpenTKControl.EditOperationType.MOVE;
         }                      
     }
 }

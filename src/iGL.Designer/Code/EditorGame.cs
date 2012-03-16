@@ -5,11 +5,29 @@ using System.Text;
 using iGL.Engine;
 using iGL.Engine.GL;
 
-namespace iGL.Designer.Code
+namespace iGL.Designer
 {
     public class EditorGame : Game
     {
-        public EditorGame(IGL gl) : base(gl) { }       
+        private static EditorGame _game;
+
+        private EditorGame() : base(new WinGL())
+        {
+
+        }
+
+        public static EditorGame Instance()
+        {
+            lock (typeof(EditorGame))
+            {
+                if (_game == null)
+                {
+                    _game = new EditorGame();
+                }
+            }
+
+            return _game;
+        }          
 
         public override void Load()
         {

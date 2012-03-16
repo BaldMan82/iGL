@@ -204,8 +204,8 @@ namespace iGL.Engine
 
         public void ScreenPointToWorld(Point screenPoint, out Vector4 nearPlane, out Vector4 farPlane)
         {
-            float planeX = (float)(2 * (_mousePosition.Value.X + 1) - Game.WindowSize.Width) / (float)Game.WindowSize.Width;
-            float planeY = (float)(Game.WindowSize.Height - 2 * (_mousePosition.Value.Y + 1)) / (float)Game.WindowSize.Height;
+            float planeX = (float)(2 * (screenPoint.X + 1) - Game.WindowSize.Width) / (float)Game.WindowSize.Width;
+            float planeY = (float)(Game.WindowSize.Height - 2 * (screenPoint.Y + 1)) / (float)Game.WindowSize.Height;
 
             Matrix4 projectionMatrix = Matrix4.Identity;
 

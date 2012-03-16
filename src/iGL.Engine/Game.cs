@@ -10,7 +10,7 @@ namespace iGL.Engine
 {
     public abstract class Game
     {
-        private Scene _scene;
+        public Scene Scene { get; private set; }
         public Size WindowSize { get; private set; }
 
         public static IGL GL { get; private set; }
@@ -34,33 +34,38 @@ namespace iGL.Engine
 
         public void MouseMove(int x, int y)
         {
-            _scene.MouseMove(x, y);
+            Scene.MouseMove(x, y);
         }
 
         public void MouseButton(MouseButton button, bool down, int x, int y)
         {
-            _scene.UpdateMouseButton(button,down, x, y);
+            Scene.UpdateMouseButton(button,down, x, y);
         }
       
         public void Render()
         {           
-            _scene.Render();
+            Scene.Render();
         }
 
         public void Tick(float timeElapsed)
         {
-            _scene.Tick(timeElapsed);
+            Scene.Tick(timeElapsed);
         }
 
         public void SetScene(Scene scene)
         {
             scene.Game = this;
-            _scene = scene;
+            Scene = scene;
         }
 
         public void LoadScene()
         {
-            _scene.Load();
+            Scene.Load();
+        }
+
+        public void SaveScene()
+        {
+
         }
 
     }

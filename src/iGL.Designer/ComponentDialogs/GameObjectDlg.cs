@@ -23,17 +23,20 @@ namespace iGL.Designer
         {
             if (GameObject == null) throw new NotSupportedException();
 
-            _txtPositionX.Text = GameObject.Position.X.ToInvariant();
-            _txtPositionY.Text = GameObject.Position.Y.ToInvariant();
-            _txtPositionZ.Text = GameObject.Position.Z.ToInvariant();
+            _txtPositionX.Text = GameObject.Position.X.ToInvariantText();
+            _txtPositionY.Text = GameObject.Position.Y.ToInvariantText();
+            _txtPositionZ.Text = GameObject.Position.Z.ToInvariantText();
 
-            _txtRotationX.Text = GameObject.Rotation.X.ToInvariant();
-            _txtRotationY.Text = GameObject.Rotation.Y.ToInvariant();
-            _txtRotationZ.Text = GameObject.Rotation.Z.ToInvariant();
+            _txtRotationX.Text = GameObject.Rotation.X.ToInvariantText();
+            _txtRotationY.Text = GameObject.Rotation.Y.ToInvariantText();
+            _txtRotationZ.Text = GameObject.Rotation.Z.ToInvariantText();
 
-            _txtScaleX.Text = GameObject.Scale.X.ToInvariant();
-            _txtScaleY.Text = GameObject.Scale.Y.ToInvariant();
-            _txtScaleZ.Text = GameObject.Scale.Z.ToInvariant();
+            _txtScaleX.Text = GameObject.Scale.X.ToInvariantText();
+            _txtScaleY.Text = GameObject.Scale.Y.ToInvariantText();
+            _txtScaleZ.Text = GameObject.Scale.Z.ToInvariantText();
+
+            cbEnabled.Checked = GameObject.Enabled;
+            cbVisible.Checked = GameObject.Visible;
         }
 
         public override void UpdateGameObject()
@@ -43,7 +46,8 @@ namespace iGL.Designer
             GameObject.Position = new Vector3(_txtPositionX.TextToFloat(), _txtPositionY.TextToFloat(), _txtPositionZ.TextToFloat());
             GameObject.Rotation = new Vector3(_txtRotationX.TextToFloat(), _txtRotationY.TextToFloat(), _txtRotationZ.TextToFloat());
             GameObject.Scale = new Vector3(_txtScaleX.TextToFloat(), _txtScaleY.TextToFloat(), _txtScaleZ.TextToFloat());
-           
+            GameObject.Visible = cbVisible.Checked;
+            GameObject.Enabled = cbEnabled.Checked;
         }
     }
 }

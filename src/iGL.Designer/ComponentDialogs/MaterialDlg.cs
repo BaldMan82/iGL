@@ -79,9 +79,9 @@ namespace iGL.Designer.ComponentDialogs
             pnlDiffuse.BackColor = _material.Diffuse.ToSystemColor();
             pnlSpecular.BackColor = _material.Specular.ToSystemColor();
 
-            txtAmbientAlpha.Text = _material.Ambient.W.ToInvariant();
-            txtDiffuseAlpha.Text = _material.Diffuse.W.ToInvariant();
-            txtSpecularAlpha.Text = _material.Specular.W.ToInvariant();
+            txtAmbientAlpha.Text = _material.Ambient.W.ToInvariantText();
+            txtDiffuseAlpha.Text = _material.Diffuse.W.ToInvariantText();
+            txtSpecularAlpha.Text = _material.Specular.W.ToInvariantText();
         }
     }
 }

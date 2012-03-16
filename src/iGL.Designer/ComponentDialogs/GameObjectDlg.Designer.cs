@@ -40,6 +40,8 @@
             this._txtPositionY = new System.Windows.Forms.TextBox();
             this._txtPositionX = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.cbVisible = new System.Windows.Forms.CheckBox();
+            this.cbEnabled = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // _txtScaleZ
@@ -132,11 +134,33 @@
             this.label1.TabIndex = 20;
             this.label1.Text = "Position";
             // 
+            // cbVisible
+            // 
+            this.cbVisible.AutoSize = true;
+            this.cbVisible.Location = new System.Drawing.Point(16, 187);
+            this.cbVisible.Name = "cbVisible";
+            this.cbVisible.Size = new System.Drawing.Size(54, 17);
+            this.cbVisible.TabIndex = 32;
+            this.cbVisible.Text = "Visble";
+            this.cbVisible.UseVisualStyleBackColor = true;
+            // 
+            // cbEnabled
+            // 
+            this.cbEnabled.AutoSize = true;
+            this.cbEnabled.Location = new System.Drawing.Point(76, 187);
+            this.cbEnabled.Name = "cbEnabled";
+            this.cbEnabled.Size = new System.Drawing.Size(65, 17);
+            this.cbEnabled.TabIndex = 33;
+            this.cbEnabled.Text = "Enabled";
+            this.cbEnabled.UseVisualStyleBackColor = true;
+            // 
             // GameObjectDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.cbEnabled);
+            this.Controls.Add(this.cbVisible);
             this.Controls.Add(this._txtScaleZ);
             this.Controls.Add(this._txtScaleY);
             this.Controls.Add(this._txtScaleX);
@@ -150,7 +174,7 @@
             this.Controls.Add(this._txtPositionX);
             this.Controls.Add(this.label1);
             this.Name = "GameObjectDlg";
-            this.Size = new System.Drawing.Size(290, 181);
+            this.Size = new System.Drawing.Size(290, 222);
             this.Load += new System.EventHandler(this.GameObjectDlg_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -171,6 +195,8 @@
         private System.Windows.Forms.TextBox _txtPositionY;
         private System.Windows.Forms.TextBox _txtPositionX;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox cbVisible;
+        private System.Windows.Forms.CheckBox cbEnabled;
 
     }
 }

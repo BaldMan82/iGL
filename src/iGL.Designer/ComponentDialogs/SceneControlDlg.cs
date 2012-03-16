@@ -33,12 +33,16 @@ namespace iGL.Designer
         {
             var cameras = Scene.GameObjects.Where(g => g.Components.Any(c => c is CameraComponent)).ToList();
 
-            cameras.ForEach(c => ddCameras.Items.Add(c));
-            ddCameras.SelectedValue = Scene.CurrentCamera;
+            cameras.ForEach(c => { 
+                int index = ddCameras.Items.Add(c);
+                if (Scene.CurrentCamera != null && Scene.CurrentCamera.GameObject == c) ddCameras.SelectedIndex = index;
+            });          
 
             var lights = Scene.GameObjects.Where(g => g.Components.Any(c => c is LightComponent)).ToList();
-            lights.ForEach(l => ddLights.Items.Add(l));
-            ddLights.SelectedValue = Scene.CurrentLight;
+            lights.ForEach(l => {
+                int index = ddLights.Items.Add(l);
+                if (Scene.CurrentLight != null && Scene.CurrentLight.GameObject == l) ddLights.SelectedIndex = index;
+            });          
 
             _loaded = true;
         }

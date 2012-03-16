@@ -146,7 +146,6 @@ namespace iGL.Engine
                 AddComponent(_meshRenderComponent);
             }
         }
-
         
     }
 }

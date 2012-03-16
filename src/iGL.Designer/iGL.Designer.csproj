@@ -117,6 +117,12 @@
     <Compile Include="ComponentDialogs\GameObjectDlg.Designer.cs">
       <DependentUpon>GameObjectDlg.cs</DependentUpon>
     </Compile>
+    <Compile Include="OpenTKControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OpenTKControl.Designer.cs">
+      <DependentUpon>OpenTKControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ComponentDialogs\BoxColliderComponentDlg.resx">

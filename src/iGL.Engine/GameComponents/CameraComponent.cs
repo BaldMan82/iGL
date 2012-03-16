@@ -26,22 +26,16 @@ namespace iGL.Engine
     }
 
     public class CameraComponent : GameComponent
-    {
-        public enum Type
-        {
-            Perspective,
-            Orthographic
-        }       
-       
+    {                  
         public Vector3 Target { get; set; }
         public Vector3 Up { get; set; }
         public Vector4 ClearColor { get; set; }
 
         public Matrix4 ProjectionMatrix { get; private set; }
         public Matrix4 ModelViewMatrix { get; private set; }
-        public Matrix4 ModelViewProjectionMatrix { get; private set; }        
+        public Matrix4 ModelViewProjectionMatrix { get; private set; }
 
-        private CameraProperties _properties;
+        public CameraProperties Properties { get; set; }             
 
         public CameraComponent()
             : this(new PerspectiveProperties()
@@ -54,24 +48,30 @@ namespace iGL.Engine
         
         public CameraComponent(CameraProperties properties)
         {
-            _properties = properties;
+            Properties = properties;           
 
-            if (_properties is PerspectiveProperties){
-                var perspective = _properties as PerspectiveProperties;
+            Up = new Vector3(0.0f, 1.0f, 0.0f);
+
+            Update();                   
+        }
+
+        public void Update()
+        {
+            if (Properties is PerspectiveProperties)
+            {
+                var perspective = Properties as PerspectiveProperties;
                 ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(perspective.FieldOfViewRadians, perspective.AspectRatio, perspective.ZNear, perspective.ZFar);
             }
-            else if (_properties is OrtographicProperties)
+            else if (Properties is OrtographicProperties)
             {
-                var orthograpgic = _properties as OrtographicProperties;
+                var orthograpgic = Properties as OrtographicProperties;
                 ProjectionMatrix = Matrix4.CreateOrthographic(orthograpgic.Width, orthograpgic.Height, orthograpgic.ZNear, orthograpgic.ZFar);
             }
             else
             {
-                throw new NotSupportedException(properties.GetType().ToString());
+                throw new NotSupportedException(Properties.GetType().ToString());
             }
-
-            Up = new Vector3(0.0f, 1.0f, 0.0f);                                               
-        }       
+        }
 
         public override void InternalLoad()
         {
