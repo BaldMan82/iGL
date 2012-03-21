@@ -20,7 +20,16 @@ namespace iGL.Designer.ComponentDialogs
 
         public override void UpdateComponent()
         {
-            
+            LightComponent lightComponent = Component as LightComponent;
+
+            lightComponent.Light = pointLightDlg1.PointLight;
+        }
+
+        private void LightComponentDlg_Load(object sender, EventArgs e)
+        {
+            LightComponent lightComponent = Component as LightComponent;
+
+            pointLightDlg1.PointLight = lightComponent.Light as PointLight;
         }
     }
 }

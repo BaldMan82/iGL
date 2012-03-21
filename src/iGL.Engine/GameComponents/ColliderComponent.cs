@@ -13,22 +13,20 @@ namespace iGL.Engine
 
         internal Shape CollisionShape { get; set; }
 
-        public ColliderComponent()          
-        {
-            
-        }
-
-        public override void InternalLoad()
+        public ColliderComponent() { }
+       
+        public override bool InternalLoad()
         {
             /* game object must have a rigid body component */
             //AttachedRigidBody = GameObject.Components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
 
             //if (AttachedRigidBody == null) throw new NotSupportedException("Collider must have a rigid body component");
+
+            return true;
         }
 
-        public override void Tick(float timeElapsed)
-        {
-            
-        }
+        internal abstract void Reload();
+
+        public override void Tick(float timeElapsed) { }        
     }
 }

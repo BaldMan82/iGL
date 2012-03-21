@@ -172,7 +172,7 @@
             this.label6.TabIndex = 11;
             this.label6.Text = "A";
             // 
-            // MaterialDlg
+            // PointLightDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -191,8 +191,8 @@
             this.Controls.Add(this.btnAmbient);
             this.Controls.Add(this.pnlAmbient);
             this.Controls.Add(this.label1);
-            this.Name = "MaterialDlg";
-            this.Size = new System.Drawing.Size(290, 150);
+            this.Name = "PointLightDlg";
+            this.Size = new System.Drawing.Size(290, 114);
             this.Load += new System.EventHandler(this.MaterialDlg_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

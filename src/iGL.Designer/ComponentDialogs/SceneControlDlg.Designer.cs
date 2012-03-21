@@ -140,7 +140,7 @@
             this.Controls.Add(this.ddCameras);
             this.Controls.Add(this.label1);
             this.Name = "SceneControlDlg";
-            this.Size = new System.Drawing.Size(290, 148);
+            this.Size = new System.Drawing.Size(290, 128);
             this.Load += new System.EventHandler(this.SceneControlDlg_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gameObjectBindingSource)).EndInit();
             this.ResumeLayout(false);

@@ -192,7 +192,7 @@
             this.Controls.Add(this.pnlAmbient);
             this.Controls.Add(this.label1);
             this.Name = "MaterialDlg";
-            this.Size = new System.Drawing.Size(290, 150);
+            this.Size = new System.Drawing.Size(290, 113);
             this.Load += new System.EventHandler(this.MaterialDlg_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -11,10 +11,9 @@ namespace iGL.Engine
     public abstract class Game
     {
         public Scene Scene { get; private set; }
-        public Size WindowSize { get; private set; }
-
+        public Size WindowSize { get; private set; }        
         public static IGL GL { get; private set; }
-
+     
         public Game(IGL gl)
         {
             GL = gl;
@@ -34,7 +33,7 @@ namespace iGL.Engine
 
         public void MouseMove(int x, int y)
         {
-            Scene.MouseMove(x, y);
+            Scene.MouseMove(x, y);           
         }
 
         public void MouseButton(MouseButton button, bool down, int x, int y)

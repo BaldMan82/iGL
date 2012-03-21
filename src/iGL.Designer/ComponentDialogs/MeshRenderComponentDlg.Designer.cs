@@ -30,13 +30,13 @@
         {
             this.SuspendLayout();
             // 
-            // BoxColliderComponent
+            // MeshRenderComponentDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Name = "BoxColliderComponent";
-            this.Size = new System.Drawing.Size(288, 148);
+            this.Name = "MeshRenderComponentDlg";
+            this.Size = new System.Drawing.Size(290, 20);
             this.ResumeLayout(false);
 
         }

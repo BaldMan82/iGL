@@ -42,6 +42,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cbVisible = new System.Windows.Forms.CheckBox();
             this.cbEnabled = new System.Windows.Forms.CheckBox();
+            this.btnResetPosition = new System.Windows.Forms.Button();
+            this.btnResetRotation = new System.Windows.Forms.Button();
+            this.btnResetScale = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // _txtScaleZ
@@ -154,11 +157,47 @@
             this.cbEnabled.Text = "Enabled";
             this.cbEnabled.UseVisualStyleBackColor = true;
             // 
+            // btnResetPosition
+            // 
+            this.btnResetPosition.AutoSize = true;
+            this.btnResetPosition.Location = new System.Drawing.Point(256, 30);
+            this.btnResetPosition.Name = "btnResetPosition";
+            this.btnResetPosition.Size = new System.Drawing.Size(22, 23);
+            this.btnResetPosition.TabIndex = 34;
+            this.btnResetPosition.Text = "x";
+            this.btnResetPosition.UseVisualStyleBackColor = true;
+            this.btnResetPosition.Click += new System.EventHandler(this.btnResetPosition_Click);
+            // 
+            // btnResetRotation
+            // 
+            this.btnResetRotation.AutoSize = true;
+            this.btnResetRotation.Location = new System.Drawing.Point(256, 85);
+            this.btnResetRotation.Name = "btnResetRotation";
+            this.btnResetRotation.Size = new System.Drawing.Size(22, 23);
+            this.btnResetRotation.TabIndex = 35;
+            this.btnResetRotation.Text = "x";
+            this.btnResetRotation.UseVisualStyleBackColor = true;
+            this.btnResetRotation.Click += new System.EventHandler(this.btnResetRotation_Click);
+            // 
+            // btnResetScale
+            // 
+            this.btnResetScale.AutoSize = true;
+            this.btnResetScale.Location = new System.Drawing.Point(256, 140);
+            this.btnResetScale.Name = "btnResetScale";
+            this.btnResetScale.Size = new System.Drawing.Size(22, 23);
+            this.btnResetScale.TabIndex = 36;
+            this.btnResetScale.Text = "x";
+            this.btnResetScale.UseVisualStyleBackColor = true;
+            this.btnResetScale.Click += new System.EventHandler(this.btnResetScale_Click);
+            // 
             // GameObjectDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.btnResetScale);
+            this.Controls.Add(this.btnResetRotation);
+            this.Controls.Add(this.btnResetPosition);
             this.Controls.Add(this.cbEnabled);
             this.Controls.Add(this.cbVisible);
             this.Controls.Add(this._txtScaleZ);
@@ -197,6 +236,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox cbVisible;
         private System.Windows.Forms.CheckBox cbEnabled;
+        private System.Windows.Forms.Button btnResetPosition;
+        private System.Windows.Forms.Button btnResetRotation;
+        private System.Windows.Forms.Button btnResetScale;
 
     }
 }

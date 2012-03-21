@@ -55,6 +55,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Code\EditorGame.cs" />
+    <Compile Include="Code\EngineAssets.cs" />
     <Compile Include="Code\Extensions.cs" />
     <Compile Include="Code\GameObjectDialogAttribute.cs" />
     <Compile Include="ComponentDialogs\BoxColliderComponentDlg.cs">
@@ -68,6 +69,24 @@
     </Compile>
     <Compile Include="ComponentDialogs\CameraComponentDlg.Designer.cs">
       <DependentUpon>CameraComponentDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentDialogs\ComponentSelectDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComponentDialogs\ComponentSelectDlg.Designer.cs">
+      <DependentUpon>ComponentSelectDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentDialogs\SphereColliderComponentDlg.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentDialogs\SphereColliderComponentDlg.Designer.cs">
+      <DependentUpon>SphereColliderComponentDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentDialogs\MeshRenderComponentDlg.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentDialogs\MeshRenderComponentDlg.Designer.cs">
+      <DependentUpon>MeshRenderComponentDlg.cs</DependentUpon>
     </Compile>
     <Compile Include="ComponentDialogs\LightComponentDlg.cs">
       <SubType>UserControl</SubType>
@@ -87,11 +106,11 @@
     <Compile Include="ComponentDialogs\MaterialDlg.Designer.cs">
       <DependentUpon>MaterialDlg.cs</DependentUpon>
     </Compile>
-    <Compile Include="ComponentDialogs\MeshRenderComponentDlg.cs">
+    <Compile Include="ComponentDialogs\RigidBodyComponentDlg.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ComponentDialogs\MeshRenderComponentDlg.Designer.cs">
-      <DependentUpon>MeshRenderComponentDlg.cs</DependentUpon>
+    <Compile Include="ComponentDialogs\RigidBodyComponentDlg.Designer.cs">
+      <DependentUpon>RigidBodyComponentDlg.cs</DependentUpon>
     </Compile>
     <Compile Include="ComponentDialogs\MeshComponentDlg.cs">
       <SubType>UserControl</SubType>
@@ -105,11 +124,17 @@
     <Compile Include="ComponentDialogs\SceneControlDlg.Designer.cs">
       <DependentUpon>SceneControlDlg.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="ComponentPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentPanel.Designer.cs">
+      <DependentUpon>ComponentPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ComponentDialogs\GameObjectDlg.cs">
       <SubType>UserControl</SubType>
@@ -131,6 +156,15 @@
     <EmbeddedResource Include="ComponentDialogs\CameraComponentDlg.resx">
       <DependentUpon>CameraComponentDlg.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ComponentDialogs\ComponentSelectDlg.resx">
+      <DependentUpon>ComponentSelectDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentDialogs\SphereColliderComponentDlg.resx">
+      <DependentUpon>SphereColliderComponentDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentDialogs\MeshRenderComponentDlg.resx">
+      <DependentUpon>MeshRenderComponentDlg.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ComponentDialogs\LightComponentDlg.resx">
       <DependentUpon>LightComponentDlg.cs</DependentUpon>
     </EmbeddedResource>
@@ -140,8 +174,8 @@
     <EmbeddedResource Include="ComponentDialogs\MaterialDlg.resx">
       <DependentUpon>MaterialDlg.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ComponentDialogs\MeshRenderComponentDlg.resx">
-      <DependentUpon>MeshRenderComponentDlg.cs</DependentUpon>
+    <EmbeddedResource Include="ComponentDialogs\RigidBodyComponentDlg.resx">
+      <DependentUpon>RigidBodyComponentDlg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComponentDialogs\MeshComponentDlg.resx">
       <DependentUpon>MeshComponentDlg.cs</DependentUpon>
@@ -149,8 +183,11 @@
     <EmbeddedResource Include="ComponentDialogs\SceneControlDlg.resx">
       <DependentUpon>SceneControlDlg.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="ComponentPanel.resx">
+      <DependentUpon>ComponentPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComponentDialogs\GameObjectDlg.resx">
       <DependentUpon>GameObjectDlg.cs</DependentUpon>
@@ -193,6 +230,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\DataSources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\scale.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

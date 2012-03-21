@@ -14,12 +14,18 @@ namespace iGL.TestGame.GameObjects
         private bool _inAimMode = false;
         private GameObject _currentBullet;
         private Vector3 _bulletStartPosition;
-        private float _slingShotRadius = 1.5f;
+        private float _slingShotRadius = 2.0f;
         private float _springConstant = 20000f;
 
-        public SlingShot(int numBullets = 20)
+        public SlingShot() : this(20)
         {
-            _slingShot = new Cube(0.5f, 3, 0.5f);
+            Name = "Slingshot";
+        }
+
+        public SlingShot(int numBullets)
+        {
+            _slingShot = new Cube() { Scale = new Vector3(0.5f, 3, 0.5f) };
+            _slingShot.Name = "Slingshot Tower";
             _slingShot.Material.Ambient = new Vector4(0.5f, 0.5f, 0.5f, 1);
             _slingShot.Position = new Vector3(0, _slingShot.Height / 2.0f, 0);
 
@@ -27,11 +33,11 @@ namespace iGL.TestGame.GameObjects
 
             for (int i = 0; i < numBullets; i++)
             {
-                var bullet = new Sphere(0.25f);
+                var bullet = new Sphere() { Scale = new Vector3(0.25f) };
                 bullet.AddComponent(new SphereColliderComponent());
                 bullet.AddComponent(new RigidBodyComponent(isStatic: true));
-
-                bullet.Position = new Vector3(-i - 1.0f, bullet.Radius, 0);
+                bullet.Name = "Bullet" + i.ToString();
+                bullet.Position = new Vector3(-i - 1.0f, bullet.Scale.X, 0);
                 Ammo.Add(bullet);
 
             }
@@ -39,15 +45,15 @@ namespace iGL.TestGame.GameObjects
 
         public override void Load()
         {
-            base.Load();
+            base.Load();         
 
-            _slingShot.Position += this.Position;
+            AddChild(_slingShot);
 
-            Scene.AddGameObject(_slingShot);
             Ammo.ForEach(b =>
             {
                 b.Position += this.Position;
-                Scene.AddGameObject(b);
+                this.AddChild(b);
+                //Scene.AddGameObject(b);
             }
                 );
 
@@ -59,8 +65,16 @@ namespace iGL.TestGame.GameObjects
         void Scene_OnMouseMove(object sender, Engine.Events.MouseMoveEvent e)
         {
             if (_inAimMode)
-            {
-                _currentBullet.Position = new Vector3(e.NearPlane.X, e.NearPlane.Y, _currentBullet.Position.Z);
+            {                              
+                var lookAt = Scene.CurrentCamera.Target - Scene.CurrentCamera.GameObject.Position;
+                lookAt.Normalize();
+
+                var p = Scene.CurrentCamera.GameObject.Position + lookAt;
+                var planeDistance = _currentBullet.Position.PlaneDistance(p, lookAt);               
+
+                var dirNearPlane = e.NearPlane - (Scene.CurrentCamera.GameObject.Position + lookAt);
+
+                _currentBullet.Position = e.NearPlane + (lookAt * planeDistance) + (dirNearPlane * Math.Abs(planeDistance));
 
                 var distance = (_currentBullet.Position - _bulletStartPosition).Length;
                 if (distance > _slingShotRadius)
@@ -80,7 +94,7 @@ namespace iGL.TestGame.GameObjects
             _currentBullet = Ammo.FirstOrDefault();
             if (_currentBullet == null) return;
 
-            _bulletStartPosition = _slingShot.Position + new Vector3(0, _slingShot.Height / 2.0f + 1.0f, 0);
+            _bulletStartPosition = _slingShot.Position + this.Position + new Vector3(0, _slingShot.Height / 2.0f + 1.0f, 0);
             Ammo.Remove(_currentBullet);
 
             _currentBullet.OnMouseDown += new EventHandler<Engine.Events.MouseButtonDownEvent>(bullet_OnMouseDown);
@@ -109,7 +123,7 @@ namespace iGL.TestGame.GameObjects
                 {
                     LoadBullet();
                 },
-                Interval = TimeSpan.FromSeconds(2),
+                Interval = TimeSpan.FromSeconds(1),
                 Mode = Timer.TimerMode.Once
             });
         }

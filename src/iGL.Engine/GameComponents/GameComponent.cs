@@ -6,32 +6,51 @@ using iGL.Engine.GL;
 
 namespace iGL.Engine
 {
-    public abstract class GameComponent
+    public abstract class GameComponent : Object 
     {
+        public enum CreationModeEnum
+        {
+            Additional,
+            Internal
+        }
+
         public bool IsLoaded { get; private set; }
         public GameObject GameObject { get; internal set; }
+        public CreationModeEnum CreationMode { get; internal set; }
+        public Guid Id { get; internal set; }
 
         public GameComponent()
         {
-            
-        }        
+            CreationMode = GameComponent.CreationModeEnum.Additional;
+            Id = Guid.NewGuid();
+        }      
 
         public IGL GL { get { return Game.GL; } }
 
-        public abstract void InternalLoad();
+        public abstract bool InternalLoad();
         public abstract void Tick(float timeElapsed);
 
-        public void Load()
+        public GameComponent Clone()
         {
-            if (IsLoaded) return;
+            var obj = Activator.CreateInstance(this.GetType()) as GameComponent;
+
+            this.CopyPublicValues(obj);
+
+            return obj;
+        }
+
+        public bool Load()
+        {
+            if (IsLoaded) return false;
 
             if (GameObject == null)
             {
                 throw new NotSupportedException("Cannot load component without game object");
             }
 
-            InternalLoad();
-            IsLoaded = true;
+            IsLoaded = InternalLoad();
+
+            return IsLoaded;
         }        
        
 

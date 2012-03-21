@@ -10,13 +10,14 @@ namespace iGL.TestGame
     public class TestScene : Scene
     {
         private GameObject cube;
-        private Camera _testCamera;
+        private PerspectiveCamera _testCamera;
         private float alpha = 0;//(float)Math.PI * 2.0f; 
         private float angle = (float)Math.PI / 8.0f;
         private int _sizeX = 10;
         private int _sizeY = 10;
 
         public TestScene()
+            : base(new Physics2d())
         {
             this.OnTick += new EventHandler<Engine.Events.TickEvent>(TestScene_OnTick);
         }
@@ -31,16 +32,7 @@ namespace iGL.TestGame
         }
 
         public override void Load()
-        {
-            /* create camera */
-            var properties = new PerspectiveProperties()
-            {
-                FieldOfViewRadians = MathHelper.DegreesToRadians(45.0f),
-                AspectRatio = 3.0f / 2.0f,
-                ZNear = 1.00f,
-                ZFar = 1000.0f
-            };
-
+        {                       
 
             var pointlight = new PointLight();
             pointlight.Ambient = new Vector4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -55,7 +47,14 @@ namespace iGL.TestGame
 
             //SetCurrentLight(_light);
 
-            _testCamera = new Camera();
+            _testCamera = new PerspectiveCamera()
+            {
+                FieldOfViewRadians = MathHelper.DegreesToRadians(45.0f),
+                AspectRatio = 3.0f / 2.0f,
+                ZNear = 1.00f,
+                ZFar = 1000.0f
+            };
+
             _testCamera.Position = new Vector3(0.0f, 100.0f, 80.0f);
             _testCamera.CameraComponent.Target = new Vector3(0, 100f, 0);
             _testCamera.CameraComponent.ClearColor = new Vector4(1, 1, 1, 1);
@@ -66,7 +65,7 @@ namespace iGL.TestGame
             AmbientColor = new Vector4(0.5f, 0.5f, 0.5f, 1.0f);
 
 
-            cube = new Cube(1, 1, 1);
+            cube = new Cube();
             cube.Position = new Vector3(0, 100, 0);
             //cube.Rotation = new Vector3(0, 0, 10);
             cube.OnMouseIn += (a, b) => ((Cube)a).Material.Ambient = new Vector4(0.5f, 0.5f, 0.5f, 1);
@@ -75,11 +74,7 @@ namespace iGL.TestGame
             //((Cube)cube).Material.Diffuse = new Vector4(0.5f, 0.5f, 0.5f, 1);
             //((Cube)cube).Material.Ambient = new Vector4(0.5f, 0.5f, 0.5f, 1);
             cube.Name = "testCube";
-            AddGameObject(cube);
-
-            //+ (float)Math.Sqrt((0.5*0.5) + (80*80))
-
-            var test = RayCast(new Vector4(0, 100, 80, 0), new Vector4(0, 0, -1, 0));
+            AddGameObject(cube);           
 
         }
 
@@ -97,7 +92,7 @@ namespace iGL.TestGame
                     int g = rand.Next(0, 2);
                     int b = rand.Next(0, 2);
 
-                    var block = new Cube(1, 1, 1);
+                    var block = new Cube() { Scale = new Vector3(1, 1, 1) };
 
                     var z = (float)(Math.Cos(angle) * ((_sizeY / 2) - line));
                     var y = (float)(Math.Sin(angle) * ((_sizeY / 2) - line)) + (0.65f * (float)Math.Cos(angle));
@@ -121,7 +116,7 @@ namespace iGL.TestGame
 
             for (int i = 0; i < 10; i++)
             {
-                var cube = new Cube(1.0f, 1.0f, 1.0f);
+                var cube = new Cube() { Scale = new Vector3(1.0f, 1.0f, 1.0f) };
                 cube.Position = new Vector3(i, 0, 0);
                 cube.AddComponent(new BoxColliderComponent());
                 cube.Material.Ambient = new Vector4(0.1f, 0.1f, 0.1f, 0.0f);

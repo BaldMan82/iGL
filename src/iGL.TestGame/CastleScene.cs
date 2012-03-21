@@ -10,12 +10,13 @@ namespace iGL.TestGame
 {
     public class CastleScene : Scene
     {
-        private Camera _testCamera;
+        private PerspectiveCamera _testCamera;
         private Castle _castle;
 
         private float alpha = 0;
 
         public CastleScene()
+            : base(new Physics2d())
         {
             this.OnTick += new EventHandler<Engine.Events.TickEvent>(CastleScene_OnTick);
         }
@@ -29,7 +30,8 @@ namespace iGL.TestGame
 
         public override void Load()
         {
-            var camProperties = new PerspectiveProperties()
+           
+            _testCamera = new PerspectiveCamera()
             {
                 AspectRatio = MathHelper.DegreesToRadians(45.0f),
                 FieldOfViewRadians = 3.0f / 2.0f,
@@ -37,7 +39,6 @@ namespace iGL.TestGame
                 ZFar = 1000.0f
             };
 
-            _testCamera = new Camera(camProperties);
             _testCamera.Position = new Vector3(40.0f, 10.0f, 80.0f);
             _testCamera.CameraComponent.Target = new Vector3(0, 0, 0);
             AddGameObject(_testCamera);
@@ -53,7 +54,7 @@ namespace iGL.TestGame
 
             /* add some test cubes */
 
-            var testCube = new Cube(2.0f, 2.0f, 2.0f);
+            var testCube = new Cube() { Scale = new Vector3(2.0f, 2.0f, 2.0f) };
             testCube.Material.Ambient = new Vector4(0.1f, 0.1f, 0.1f, 0.0f);
             testCube.Material.Diffuse = new Vector4(0.0f, 1.0f, 0.0f, 0.0f);
             testCube.Position = new Vector3(20.0f, 20.0f, 0.0f);

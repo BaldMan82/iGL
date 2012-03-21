@@ -117,7 +117,7 @@ namespace iGL.TestGame.GameObjects
         public void Build(Vector3 offset)
         {
             //_offset = offset;
-            _floor = new Cube(LandSizeZ + 10.0f, 1.0f, LandSizeX + 10.0f);
+            _floor = new Cube() { Scale = new Vector3(LandSizeZ + 10.0f, 1.0f, LandSizeX + 10.0f) };
             _floor.Position = new Vector3(0, -5.2f, 0) + _offset;
             _floor.Rotation = new Vector3(0.5f, 0, 0);
 
@@ -150,7 +150,7 @@ namespace iGL.TestGame.GameObjects
                         if (stone != null)
                         {
                             count++;
-                            stone.Cube = new Cube(1.0f, 1.0f, 1.0f);
+                            stone.Cube = new Cube() { Scale = new Vector3(1.0f, 1.0f, 1.0f) };
                             stone.Cube.Material.Ambient = new Vector4(0.1f, 0.1f, 0.1f, 0.0f);
                             stone.Cube.Material.Diffuse = new Vector4(1.0f, 0.0f, 0.0f, 1.0f);
                             stone.Cube.AddComponent(new BoxColliderComponent());

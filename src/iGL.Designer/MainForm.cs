@@ -10,20 +10,16 @@ using System.Threading;
 using System.Reflection;
 using iGL.Engine;
 using iGL.Engine.Math;
+using System.Collections;
 
 namespace iGL.Designer
 {
-    public partial class Form1 : Form
-    {          
-        private EditorGame _game;      
+    public partial class MainForm : Form
+    {               
         private DateTime _lastRender;
         private DateTime _lastTick;
-
-        private Dictionary<Type, Type> _gameObjectDialogTypes;
-       
-        private System.Drawing.Point _lastMousePosition;
-            
-        public Form1()
+                          
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -33,20 +29,7 @@ namespace iGL.Designer
             _lastRender = DateTime.UtcNow;
             _lastTick = DateTime.UtcNow;
 
-            LoadGameObjectTree();
-
-            /* find all dialog types */
-            var asm = Assembly.GetExecutingAssembly();
-
-            var gameObjectDialogs = asm.GetTypes().Where(t => t.GetCustomAttributes(false).Any(o => o.GetType() == typeof(GameObjectDialogAttribute))).ToList();
-            _gameObjectDialogTypes = new Dictionary<Type, Type>();
-
-            foreach (var gameObjectDlg in gameObjectDialogs)
-            {
-                var attribute = gameObjectDlg.GetCustomAttributes(false).First(o => o.GetType() == typeof(GameObjectDialogAttribute)) as GameObjectDialogAttribute;
-                _gameObjectDialogTypes.Add(attribute.GameObjectType, gameObjectDlg);
-
-            }
+            LoadGameObjectTree();            
 
             renderTimer.Start();
             tickTimer.Start();
@@ -68,7 +51,7 @@ namespace iGL.Designer
 
         void openTKControl_OnObjectAdded(object sender, OpenTKControl.ObjectAddedEvent e)
         {
-            UpdateSceneTree();
+            UpdateSceneTree();         
         }                     
       
         private void tickTimer_Tick(object sender, EventArgs e)
@@ -89,25 +72,19 @@ namespace iGL.Designer
         private void LoadGameObjectTree()
         {
             var engineAssembly = Assembly.GetAssembly(typeof(Game));
-            var testGame = Assembly.GetAssembly(typeof(TestGame.TestGame));
-
-            var gameObjects = GetGameObjectTypes(engineAssembly);
-            gameObjects.AddRange(GetGameObjectTypes(testGame));
+            var testGame = Assembly.GetAssembly(typeof(TestGame.TestGame));        
 
             var gameObjectsNode = _gameObjectsTree.Nodes.Add("Objects");
 
-            foreach (var gameObject in gameObjects)
+            foreach (var gameObject in EngineAssets.Instance.GameObjects)
             {
                 var node = gameObjectsNode.Nodes.Add(gameObject.Name);
                 node.Tag = gameObject;
             }
-
-            var gameComponents = GetGameComponentTypes(engineAssembly);
-            gameComponents.AddRange(GetGameComponentTypes(testGame));
-
+         
             var gameComponentsNode = _gameObjectsTree.Nodes.Add("Components");
 
-            foreach (var gameComponent in gameComponents)
+            foreach (var gameComponent in EngineAssets.Instance.Components)
             {
                 var node = gameComponentsNode.Nodes.Add(gameComponent.Name);
                 node.Tag = gameComponent;
@@ -115,37 +92,7 @@ namespace iGL.Designer
 
             gameObjectsNode.ExpandAll();
             gameComponentsNode.ExpandAll();
-        }
-
-        private List<Type> GetGameObjectTypes(Assembly assembly)
-        {
-            return assembly.GetTypes().Where(t => HasGameObjectType(t) && !t.IsAbstract).ToList();
-        }
-
-        private bool HasGameObjectType(Type type)
-        {
-            if (type.IsAbstract) return false;
-
-            if (type.BaseType == typeof(GameObject)) return true;
-            if (type.BaseType == typeof(Object)) return false;
-
-            return HasGameObjectType(type.BaseType);
-        }
-
-        private List<Type> GetGameComponentTypes(Assembly assembly)
-        {
-            return assembly.GetTypes().Where(t => HasGameComponentType(t) && !t.IsAbstract).ToList();
-        }
-
-        private bool HasGameComponentType(Type type)
-        {
-            if (type.BaseType == null) return false;
-
-            if (type.BaseType == typeof(GameComponent)) return true;
-            if (type.BaseType == typeof(Object)) return false;
-
-            return HasGameComponentType(type.BaseType);
-        }
+        }       
 
         private void _gameObjectsTree_ItemDrag(object sender, ItemDragEventArgs e)
         {
@@ -157,13 +104,12 @@ namespace iGL.Designer
             if (obj != null)
             {
                 toolStripStatusLabel.Text = string.Format("Selected: {0}", obj.Name == string.Empty ? "[Unnamed]" : obj.Name);
+                openTKControl.SetOperation(iGL.Designer.OpenTKControl.OperationType.MOVE);
             }
             else
             {
                 toolStripStatusLabel.Text = "Ready";
-            }           
-
-            openTKControl.EditOperation = iGL.Designer.OpenTKControl.EditOperationType.MOVE;
+            }            
 
             /* select proper node */
             SelectNode(sceneTree.Nodes[0], obj);            
@@ -190,7 +136,6 @@ namespace iGL.Designer
         }
 
        
-
         private void UpdateSceneTree()
         {
             sceneTree.Nodes.Clear();
@@ -211,7 +156,7 @@ namespace iGL.Designer
             var newNode = node.Nodes.Add(gameObject.Name);
             newNode.Tag = gameObject;
 
-            foreach (var child in gameObject.Children)
+            foreach (var child in gameObject.Children.Where(g => !g.Designer))
             {
                 AddSceneNode(newNode, child);
             }
@@ -226,9 +171,8 @@ namespace iGL.Designer
             if (e.Node.Tag is Scene)
             {
                 var scene = e.Node.Tag as Scene;
-
-                var baseControl = _gameObjectDialogTypes[typeof(Scene)];
-                var control = Activator.CreateInstance(baseControl) as SceneControlDlg;
+                
+                var control = new SceneControlDlg();
 
                 control.Scene = openTKControl.Game.Scene;
 
@@ -245,8 +189,10 @@ namespace iGL.Designer
             {
                 var obj = e.Node.Tag as GameObject;
 
-                var baseControl = _gameObjectDialogTypes[typeof(GameObject)];
-                var control = Activator.CreateInstance(baseControl) as BaseObjectControl;
+                obj.OnComponentAdded += gameObject_OnComponentAdded;
+                obj.OnComponentRemoved += gameObject_OnComponentRemoved;
+
+                var control = new GameObjectDlg();
 
                 control.GameObject = obj;
 
@@ -261,17 +207,10 @@ namespace iGL.Designer
 
                 foreach (var component in obj.Components)
                 {
-                    var componentControl = Activator.CreateInstance(_gameObjectDialogTypes[component.GetType()]) as ComponentControl;
-                    componentControl.Component = component;
+                    var componentPanel = new ComponentPanel();
+                    componentPanel.LoadComponent(component);
 
-                    var componentLabel = new Label();
-                    componentLabel.Width = control.Width;
-                    componentLabel.BackColor = Color.Silver;
-                    componentLabel.BorderStyle = BorderStyle.FixedSingle;
-                    componentLabel.Text = component.GetType().Name;
-
-                    flowLayoutPanel1.Controls.Add(componentLabel);
-                    flowLayoutPanel1.Controls.Add(componentControl);
+                    flowLayoutPanel1.Controls.Add(componentPanel);
                 }
             }
 
@@ -279,17 +218,77 @@ namespace iGL.Designer
 
         private void toolScale_Click(object sender, EventArgs e)
         {
-            openTKControl.EditOperation = OpenTKControl.EditOperationType.SCALE;
+            openTKControl.SetOperation(OpenTKControl.OperationType.SCALE);
         }
 
         private void toolRotate_Click(object sender, EventArgs e)
         {
-            openTKControl.EditOperation = OpenTKControl.EditOperationType.ROTATE;
+            openTKControl.SetOperation(OpenTKControl.OperationType.ROTATE);
         }
 
         private void toolTranslate_Click(object sender, EventArgs e)
         {
-            openTKControl.EditOperation = OpenTKControl.EditOperationType.MOVE;
+            openTKControl.SetOperation(OpenTKControl.OperationType.MOVE);
+        }
+
+        private void toolPan_Click(object sender, EventArgs e)
+        {
+            openTKControl.SetOperation(OpenTKControl.OperationType.PANVIEW);
+        }
+
+        private void toolPointer_Click(object sender, EventArgs e)
+        {
+            openTKControl.SetOperation(OpenTKControl.OperationType.NONE);
+        }   
+
+        private void sceneTree_BeforeSelect(object sender, TreeViewCancelEventArgs e)
+        {
+            if (sceneTree.SelectedNode != null && sceneTree.SelectedNode.Tag is GameObject)
+            {
+                var gameObject = sceneTree.SelectedNode.Tag as GameObject;
+                gameObject.OnComponentAdded -= gameObject_OnComponentAdded;
+                gameObject.OnComponentRemoved -= gameObject_OnComponentRemoved;
+            }
+        }
+
+        void gameObject_OnComponentRemoved(object sender, Engine.Events.ComponentRemovedEvent e)
+        {
+            Control controlToRemove = null;
+            foreach (var control in flowLayoutPanel1.Controls)
+            {
+                if (control is ComponentPanel && ((ComponentPanel)control).GameComponent == e.Component)
+                {
+                    controlToRemove = control as Control;
+                    break;
+                }
+            }
+
+            flowLayoutPanel1.Controls.Remove(controlToRemove);
+        }
+
+        void gameObject_OnComponentAdded(object sender, Engine.Events.ComponentAddedEvent e)
+        {
+            var componentPanel = new ComponentPanel();
+            componentPanel.LoadComponent(e.Component);
+
+            flowLayoutPanel1.Controls.Add(componentPanel);
+        }
+
+        private void toolPlay_Click(object sender, EventArgs e)
+        {
+            /* copy scene and play */
+
+            openTKControl.Play();
+        }
+
+        private void toolStop_Click(object sender, EventArgs e)
+        {
+            openTKControl.Stop();
+        }
+
+        private void toolPause_Click(object sender, EventArgs e)
+        {
+            openTKControl.Pause();
         }                      
     }
 }

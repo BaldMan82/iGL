@@ -7,6 +7,7 @@ using iGL.Engine.Math;
 using Jitter.Dynamics;
 using Jitter.LinearMath;
 using Jitter.Collision;
+using System.Diagnostics;
 
 namespace iGL.Engine
 {
@@ -16,7 +17,9 @@ namespace iGL.Engine
         public LightComponent CurrentLight { get; private set; }
         public GameObject LastMouseDownTarget { get { return _currentMouseDownObj; } }
         public IEnumerable<GameObject> GameObjects { get { return _gameObjects.AsEnumerable(); } }
+        public Vector4? LastNearPlaneMousePosition { get; private set; }
         public Game Game { get; internal set; }
+        public bool Loaded { get; internal set; }
 
         private TimeSpan _mouseUpdateRate = TimeSpan.FromSeconds(1.0 / 50.0);
         private DateTime _lastMouseUpdate = DateTime.MinValue;
@@ -25,14 +28,16 @@ namespace iGL.Engine
         private Point? _mousePosition = null;
         private GameObject _currentMouseOverObj = null;
         private GameObject _currentMouseDownObj = null;
-        private Vector4? _lastNearPlaneMousePosition = null;
+        
         private Vector4 _ambientColor;
 
         private event EventHandler<TickEvent> OnTickEvent;
         private event EventHandler<MouseMoveEvent> OnMouseMoveEvent;
                        
         internal ShaderProgram ShaderProgram { get; set; }
-        internal Physics Physics { get; private set; }       
+        public IPhysics Physics { get; private set; }
+
+        public Dictionary<MouseButton, bool> MouseButtonState { get; private set; }        
 
         public Vector4 AmbientColor
         {
@@ -47,7 +52,7 @@ namespace iGL.Engine
             }
         }
 
-        public Scene()
+        public Scene(IPhysics physics)
         {
             _gameObjects = new List<GameObject>();
 
@@ -56,7 +61,15 @@ namespace iGL.Engine
             ShaderProgram.Load();
             ShaderProgram.Use();
 
-            Physics = new Physics();
+            Physics = new Physics2d();
+
+            MouseButtonState = new Dictionary<MouseButton, bool>();
+            
+            MouseButtonState.Add(MouseButton.Button1, false);
+            MouseButtonState.Add(MouseButton.Button2, false);
+            MouseButtonState.Add(MouseButton.ButtonMiddle, false);
+
+            Physics = physics;
         }
 
         public void Render()
@@ -93,7 +106,7 @@ namespace iGL.Engine
                 float step = timeElapsed;
                 if (step > 1.0f / 100.0f) step = 1.0f / 100.0f;
 
-                Physics.World.Step(timeElapsed, false);
+                Physics.Step(timeElapsed);
             }
             catch { }
 
@@ -188,18 +201,25 @@ namespace iGL.Engine
             CurrentLight = component;
         }
 
-        public virtual void Load() { }
+        public virtual void Load() 
+        {
+            Loaded = true;
+            _gameObjects.ForEach(g => g.Load());
+        }
 
         public void AddGameObject(GameObject gameObject)
         {
-            gameObject.Scene = this;
-            gameObject.Load();
+            if (gameObject.IsLoaded) throw new InvalidOperationException("GameObject cannot be loaded");
+
+            gameObject.Scene = this;           
 
             _gameObjects.Add(gameObject);     
       
             /* order game object list according to zbuffer enable/disable */
 
             _gameObjects = _gameObjects.OrderByDescending(g => g.RenderQueuePriority).ToList();
+
+            if (Loaded) gameObject.Load();
         }
 
         public void ScreenPointToWorld(Point screenPoint, out Vector4 nearPlane, out Vector4 farPlane)
@@ -239,11 +259,11 @@ namespace iGL.Engine
             ScreenPointToWorld(_mousePosition.Value, out nearPlane, out farPlane);
 
             /* hold a reference to the nearplane vector in order to calculate mouse input directional vector */
-            if (_lastNearPlaneMousePosition != null)
+            if (LastNearPlaneMousePosition != null)
             {
-                var direction = nearPlane - _lastNearPlaneMousePosition.Value;
+                var direction = nearPlane - LastNearPlaneMousePosition.Value;
                 if (direction.LengthSquared != 0)
-                {
+                {                   
                     if (OnMouseMoveEvent != null)
                     {
                         OnMouseMoveEvent(this, new MouseMoveEvent()
@@ -255,7 +275,7 @@ namespace iGL.Engine
                 }
             }
 
-            _lastNearPlaneMousePosition = nearPlane;
+            UpdateCurrentMousePosition();
 
             var ray = new Vector4(farPlane - nearPlane);
 
@@ -317,9 +337,15 @@ namespace iGL.Engine
                 {
                     var transform = rayHit.GetCompositeTransform();
                     var center = new Vector3(transform.M41, transform.M42, transform.M43);
-                    var distance = (center - dir).LengthSquared;
+                    var distance = (center - near).LengthSquared;
 
-                    if (distance < minDistance) result = rayHit;
+                    if (distance < minDistance || gameObject is Gizmo)
+                    {
+                        result = rayHit;
+                        minDistance = distance;
+
+                        if (gameObject is Gizmo) break;
+                    }
 
                     Console.WriteLine("Hit");
                 }
@@ -329,6 +355,8 @@ namespace iGL.Engine
 
         internal void UpdateMouseButton(MouseButton button, bool down, int x, int y)
         {
+            MouseButtonState[button] = down;
+
             _mousePosition = new Point(x, y);
             ProcessInteractiviy();
 
@@ -370,6 +398,18 @@ namespace iGL.Engine
             if (!GameObjects.Contains(gameObject)) throw new InvalidOperationException();
 
             _gameObjects.Remove(gameObject);
+        }
+
+        public void UpdateCurrentMousePosition()
+        {
+            if (_mousePosition == null || CurrentCamera == null) return;
+
+            CurrentCamera.Tick(0);
+
+            Vector4 nearPlane, farPlane;
+            ScreenPointToWorld(_mousePosition.Value, out nearPlane, out farPlane);
+
+            LastNearPlaneMousePosition = nearPlane;
         }
     }
 }

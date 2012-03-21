@@ -10,13 +10,21 @@ namespace iGL.Engine
 {
     public class BoxColliderComponent : ColliderComponent
     {              
-        public override void InternalLoad()
+        public override bool InternalLoad()
         {
             base.InternalLoad();
+            return LoadCollider();
+        }
+
+        private bool LoadCollider()
+        {
 
             /* find a mesh component to create box from */
             var meshComponent = this.GameObject.Components.FirstOrDefault(c => c is MeshComponent) as MeshComponent;
-            if (meshComponent == null) return;
+            if (meshComponent == null)
+            {
+                return false;
+            }
 
             if (!meshComponent.IsLoaded) meshComponent.Load();
 
@@ -34,14 +42,21 @@ namespace iGL.Engine
                 if (vertex.Z * GameObject.Scale.Z < vMin.Z) vMin.Z = vertex.Z * GameObject.Scale.Z;
                 if (vertex.Z * GameObject.Scale.Z > vMax.Z) vMax.Z = vertex.Z * GameObject.Scale.Z;
             }
-         
+
             CollisionShape = new BoxShape(vMax - vMin);
             CollisionShape.Tag = GameObject;
+
+            return true;
         }
 
         public override void Tick(float timeElapsed)
         {
             base.Tick(timeElapsed);
+        }
+
+        internal override void Reload()
+        {
+            if (!LoadCollider()) throw new InvalidOperationException();
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Drawing;
 using iGL.Engine.Math;
 using System.Windows.Forms;
 using System.Globalization;
+using iGL.Engine.Events;
 
 namespace iGL.Designer
 {
@@ -24,6 +25,15 @@ namespace iGL.Designer
         public static Vector4 ToVectorColor(this Color col)
         {
             return new Vector4(col.R / 255.0f, col.G / 255.0f, col.B / 255.0f, 0);
+        }
+
+        public static MouseButton ToMouseButton(this MouseButtons buttons)
+        {
+            if (buttons == MouseButtons.Left) return MouseButton.Button1;
+            if (buttons == MouseButtons.Right) return MouseButton.Button2;
+            if (buttons == MouseButtons.Middle) return MouseButton.ButtonMiddle;
+
+            return MouseButton.Button1;
         }
 
         public static void HookAllChangeEvents(this System.Windows.Forms.Control.ControlCollection controls, Action action)

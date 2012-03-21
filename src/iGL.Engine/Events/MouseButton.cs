@@ -8,6 +8,7 @@ namespace iGL.Engine.Events
     public enum MouseButton
     {
         Button1,
-        Button2
+        Button2,
+        ButtonMiddle
     }
 }

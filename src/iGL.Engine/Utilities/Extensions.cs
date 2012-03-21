@@ -14,7 +14,23 @@ namespace iGL.Engine
             return new JMatrix(matrix.Row0.X, matrix.Row0.Y, matrix.Row0.Z,
                                matrix.Row1.X, matrix.Row1.Y, matrix.Row1.Z,
                                matrix.Row2.X, matrix.Row2.Y, matrix.Row2.Z);
-        }       
+        }
+
+        public static float PlaneDistance(this Vector3 point, Vector3 planePoint, Vector3 planeNormal)
+        {
+            return Vector3.Dot(point - planePoint, planeNormal) / planeNormal.Length;
+        }
+
+        public static void CopyPublicValues(this object obj, object destObj)
+        {
+            var props = obj.GetType().GetProperties().Where(p => p.GetSetMethod() != null).ToList();
+
+            foreach (var prop in props)
+            {
+                var val = prop.GetValue(obj, null);
+                prop.SetValue(destObj, val, null);
+            }
+        }
 
         public static Matrix4 ToOpenTK(this JMatrix matrix, JVector position)
         {

@@ -17,13 +17,18 @@ namespace iGL.Engine
             _colliderComponents = colliderComponents;
         }
 
-        public override void InternalLoad()
+        public override bool InternalLoad()
         {
             base.InternalLoad();
-      
+
+            return LoadCollider();
+        }
+
+        private bool LoadCollider()
+        {
             //var compoundShape = new CompoundShape(
 
-            var transformedShapes = new List<CompoundShape.TransformedShape>();            
+            var transformedShapes = new List<CompoundShape.TransformedShape>();
 
             foreach (var component in _colliderComponents)
             {
@@ -41,12 +46,14 @@ namespace iGL.Engine
                 var transform = mRotationX * mRotationY * mRotationZ * JMatrix.Identity;
 
                 var position = gameObject.Position.ToJitter();
-                transformedShapes.Add(new CompoundShape.TransformedShape(component.CollisionShape, transform, position));              
+                transformedShapes.Add(new CompoundShape.TransformedShape(component.CollisionShape, transform, position));
             }
-         
+
 
             CollisionShape = new CompoundShape(transformedShapes);
             CollisionShape.Tag = GameObject;
+
+            return true;
         }
 
         public Math.Matrix4 GetChildTransform(ColliderComponent component)
@@ -67,6 +74,11 @@ namespace iGL.Engine
         public override void Tick(float timeElapsed)
         {
             base.Tick(timeElapsed);
+        }
+
+        internal override void Reload()
+        {
+            if (!LoadCollider()) throw new InvalidOperationException();
         }
     }
 }

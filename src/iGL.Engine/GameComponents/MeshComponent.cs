@@ -11,20 +11,27 @@ namespace iGL.Engine
     public class MeshComponent : GameComponent
     {
         public Vector3[] Vertices { get; set; }
-        public Vector3[] Normals { get; set; }  
+        public Vector3[] Normals { get; set; }
 
         public short[] Indices { get; set; }
 
         public Material Material { get; set; }
 
-        private JBBox _boundingBox;        
+        private JBBox _boundingBox;
 
         public MeshComponent()
         {
-            Material = new Material();
-        }       
+            Material = new Material()
+            {                
+                Diffuse = new Vector4(0.4f, 0.4f, 0.4f, 1)
+            };
 
-        public override void InternalLoad()
+            Vertices = new Vector3[0];
+            Normals = new Vector3[0];
+            Indices = new short[0];
+        }
+
+        public override bool InternalLoad()
         {
             Vector3 vMin = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
             Vector3 vMax = new Vector3(float.MinValue, float.MinValue, float.MinValue);
@@ -43,12 +50,14 @@ namespace iGL.Engine
 
             _boundingBox.Max = vMax.ToJitter();
             _boundingBox.Min = vMin.ToJitter();
+
+            return true;
         }
 
         public bool RayTest(Vector3 origin, Vector3 direction)
-        {          
+        {
             var transform = GameObject.GetCompositeTransform();
-            
+
             transform.Invert();
 
             var orientation = transform;
@@ -60,15 +69,52 @@ namespace iGL.Engine
             /* transform ray to object space */
 
             var o = Vector3.Transform(origin, transform);
-            var d = Vector3.Transform(direction, orientation);                 
+            var d = Vector3.Transform(direction, orientation);
 
-            return _boundingBox.RayIntersect(o.ToJitter(), d.ToJitter());            
+            if (_boundingBox.RayIntersect(o.ToJitter(), d.ToJitter()))
+            {
+                Vector3 r0 = o;
+                Vector3 r1 = o + (d * 1000.0f);
+
+                /* test face / ray intersection */
+                for (int i = 0; i < Indices.Length; i += 3)
+                {
+                    if (FaceRayIntersect(ref r0, ref r1, ref Vertices[Indices[i]], ref Vertices[Indices[i + 1]], ref Vertices[Indices[i + 2]]))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+
         }
 
+        private bool FaceRayIntersect(ref Vector3 r0, ref Vector3 r1, ref Vector3 t0, ref Vector3 t1, ref Vector3 t2)
+        {
+            var R1 = r1 - r0;
+            var v0 = t0 - r0;
+            var v1 = t1 - r0;
+            var v2 = t2 - r0;
+
+            int sign = (Det(ref R1, ref v0, ref v1) >= 0.0f) ? 1 : 0;
+            sign += (Det(ref R1, ref v1, ref v2) >= 0.0f) ? 2 : 0;
+            sign += (Det(ref R1, ref v2, ref v0) > 0.0f) ? 4 : 0;
+
+            if (sign == 0 || sign == 7)
+                return true;
+
+            return false;
+        }
+
+        private float Det(ref Vector3 x, ref Vector3 y, ref Vector3 z)
+        {
+            return Vector3.Dot(x, Vector3.Cross(y, z));
+        }
 
         public override void Tick(float timeElapsed)
         {
-           
+
         }
 
         public void CalculateNormals()

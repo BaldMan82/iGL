@@ -52,7 +52,7 @@ namespace iGL.Engine
 
             Up = new Vector3(0.0f, 1.0f, 0.0f);
 
-            Update();                   
+            Update();                       
         }
 
         public void Update()
@@ -73,9 +73,9 @@ namespace iGL.Engine
             }
         }
 
-        public override void InternalLoad()
+        public override bool InternalLoad()
         {
-          
+            return true;
         }
 
         public override void Tick(float timeElapsed)

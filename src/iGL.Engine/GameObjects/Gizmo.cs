@@ -17,14 +17,30 @@ namespace iGL.Engine
         private GameObject _zDirection;
         private GameObject _xDirection;
 
-        public Gizmo() : this(7.0f) { }
-        
-        public Gizmo(float arrowLength)
-        {            
+        public float ArrowLength { get; set; }
+        public bool ShowUniformSphere { get; set; }
+
+        public Gizmo() 
+        {
+            ShowUniformSphere = true;
             YDirectionArrow = new GameObject("yDirectionArrow");
+            ZDirectionArrow = new GameObject("zDirectionArrow");
+            XDirectionArrow = new GameObject("xDirectionArrow");
+
+            _xDirection = new Cube() { Name = "xDirection" };
+            _yDirection = new Cube() { Name = "yDirection" };
+            _zDirection = new Cube() { Name = "zDirection" };
+
+            UniformSphere = new Sphere() { Scale = new Vector3(2.0f) };
+
+            ArrowLength = 7.0f;
+        }
+        
+        private void LoadGizmo()
+        {                                    
             YDirectionArrow.Scale = new Vector3(1, 3, 1);            
 
-            YDirectionArrow.Position = new Vector3(0, arrowLength, 0);
+            YDirectionArrow.Position = new Vector3(0, ArrowLength, 0);
 
             var mesh = new MeshComponent();
 
@@ -75,13 +91,11 @@ namespace iGL.Engine
             YDirectionArrow.AddComponent(mesh);
             YDirectionArrow.AddComponent(render);
 
-            AddChild(YDirectionArrow);
-
-            ZDirectionArrow = new GameObject("zDirectionArrow");
+            AddChild(YDirectionArrow);           
 
             ZDirectionArrow.Rotation = new Vector3((float)(System.Math.PI / 2.0f), 0, 0);
             ZDirectionArrow.Scale = new Vector3(1, 3, 1);
-            ZDirectionArrow.Position = new Vector3(0, 0, arrowLength);
+            ZDirectionArrow.Position = new Vector3(0, 0, ArrowLength);
 
             var zMesh = new MeshComponent();
 
@@ -95,13 +109,11 @@ namespace iGL.Engine
             ZDirectionArrow.AddComponent(zMesh);
             ZDirectionArrow.AddComponent(render);
 
-            AddChild(ZDirectionArrow);
-
-            XDirectionArrow = new GameObject("xDirectionArrow");
+            AddChild(ZDirectionArrow);            
 
             XDirectionArrow.Rotation = new Vector3(0, 0, -(float)(System.Math.PI / 2.0f));
             XDirectionArrow.Scale = new Vector3(1, 3, 1);
-            XDirectionArrow.Position = new Vector3(arrowLength, 0, 0);
+            XDirectionArrow.Position = new Vector3(ArrowLength, 0, 0);
 
             var xMesh = new MeshComponent();
 
@@ -116,21 +128,21 @@ namespace iGL.Engine
             XDirectionArrow.AddComponent(render);
 
             AddChild(XDirectionArrow);
-
-            _xDirection = new Cube(0.5f, 0.5f, arrowLength) { Name = "xDirection" };
-            _xDirection.Position = new Vector3((arrowLength / 2.0f) - 0.25f, 0, 0);
+            
+            _xDirection.Scale = new Vector3(ArrowLength, 0.5f, 0.5f);
+            _xDirection.Position = new Vector3((ArrowLength / 2.0f) - 0.25f, 0, 0);
             ((Cube)_xDirection).Material.Ambient = new Vector4(0, 1, 0, 1);
 
             AddChild(_xDirection);
 
-            _yDirection = new Cube(0.5f, arrowLength, 0.5f) { Name = "yDirection" };
-            _yDirection.Position = new Vector3(0, (arrowLength / 2.0f) - 0.25f, 0);
+            _yDirection.Scale = new Vector3(0.5f, ArrowLength, 0.5f);
+            _yDirection.Position = new Vector3(0, (ArrowLength / 2.0f) - 0.25f, 0);
             ((Cube)_yDirection).Material.Ambient = new Vector4(0, 0, 1, 1);
 
             AddChild(_yDirection);
 
-            _zDirection = new Cube(arrowLength, 0.5f, 0.5f) { Name = "zDirection" };
-            _zDirection.Position = new Vector3(0, 0, (arrowLength / 2.0f) - 0.25f);
+            _zDirection.Scale = new Vector3(0.5f, 0.5f, ArrowLength);
+            _zDirection.Position = new Vector3(0, 0, (ArrowLength / 2.0f) - 0.25f);
             ((Cube)_zDirection).Material.Ambient = new Vector4(1, 0, 0, 1);
 
             AddChild(_zDirection);
@@ -139,9 +151,11 @@ namespace iGL.Engine
 
             RenderQueuePriority = -1;
             Designer = true;
-
-            UniformSphere = new Sphere(2.0f);
+           
             UniformSphere.Material.Ambient = new Vector4(1, 1, 1, 1);
+
+            UniformSphere.Visible = ShowUniformSphere;
+            UniformSphere.Enabled = ShowUniformSphere;
 
             AddChild(UniformSphere);
         }
@@ -152,6 +166,13 @@ namespace iGL.Engine
             GL.Clear(ClearBufferMask.DepthBufferBit);
 
             base.Render(parentTransform);
+        }
+
+        public override void Load()
+        {
+            base.Load();
+
+            LoadGizmo();
         }
     }
 }

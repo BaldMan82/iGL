@@ -13,13 +13,21 @@ namespace iGL.Engine
             
         }
 
-        public override void InternalLoad()
+        public override bool InternalLoad()
         {
             base.InternalLoad();
 
+            return LoadCollider();
+        }
+
+        private bool LoadCollider()
+        {
             /* find a mesh component to create box from */
             var meshComponent = this.GameObject.Components.FirstOrDefault(c => c is MeshComponent) as MeshComponent;
-            if (meshComponent == null) return;
+            if (meshComponent == null)
+            {
+                return false;
+            }
 
             if (!meshComponent.IsLoaded) meshComponent.Load();
 
@@ -27,20 +35,27 @@ namespace iGL.Engine
 
             foreach (var vertex in meshComponent.Vertices)
             {
-                if (vertex.X > maxExtend) maxExtend = vertex.X;
-                if (vertex.Y > maxExtend) maxExtend = vertex.Y;
-                if (vertex.Z > maxExtend) maxExtend = vertex.Z;
+                if (vertex.X * GameObject.Scale.X > maxExtend) maxExtend = vertex.X * GameObject.Scale.X;
+                if (vertex.Y * GameObject.Scale.Y > maxExtend) maxExtend = vertex.Y * GameObject.Scale.Y;
+                if (vertex.Z * GameObject.Scale.Z > maxExtend) maxExtend = vertex.Z * GameObject.Scale.Z;
             }
 
             float max = maxExtend;
 
             CollisionShape = new SphereShape(maxExtend);
             CollisionShape.Tag = GameObject;
+
+            return true;
         }
 
         public override void Tick(float timeElapsed)
         {
             base.Tick(timeElapsed);
+        }
+
+        internal override void Reload()
+        {
+            if (!LoadCollider()) throw new InvalidOperationException();                
         }
     }
 }

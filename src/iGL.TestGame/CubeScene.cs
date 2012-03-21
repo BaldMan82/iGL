@@ -10,14 +10,15 @@ namespace iGL.TestGame
     public class CubeScene : Scene
     {
         private CompoundObject _floor;
-        private Camera _testCamera;
+        private PerspectiveCamera _testCamera;
         private float alpha = 0;//(float)Math.PI * 2.0f; 
         private float angle = (float)Math.PI / 8.0f;
         private int _sizeX = 10;
-        private int _sizeY = 10;            
+        private int _sizeY = 10;
 
 
         public CubeScene()
+            : base(new Physics2d())
         {          
             this.OnTick += new EventHandler<Engine.Events.TickEvent>(TestScene_OnTick);
         }
@@ -32,8 +33,8 @@ namespace iGL.TestGame
         public override void Load()
         {
             /* create camera */
-
-            var camProperties = new PerspectiveProperties()
+            
+            _testCamera = new PerspectiveCamera()
             {
                 FieldOfViewRadians = MathHelper.DegreesToRadians(45.0f),
                 AspectRatio = 3.0f / 2.0f,
@@ -41,7 +42,6 @@ namespace iGL.TestGame
                 ZFar = 1000.0f
             };
 
-            _testCamera = new Camera(camProperties);
             _testCamera.Position = new Vector3(0.0f, 20.0f, 20.0f);
             _testCamera.CameraComponent.Target = new Vector3(0, 0f, 0);
 
@@ -62,9 +62,9 @@ namespace iGL.TestGame
 
             AddGameObject(lightObj);
             SetCurrentLight(lightObj);
-          
 
-            var floor = new Cube(_sizeY*1000, 1.0f, _sizeX*1000);
+
+            var floor = new Cube() { Scale = new Vector3(_sizeY * 1000, 1.0f, _sizeX * 1000) };
             floor.Position = new Vector3(0.0f, -0.5f, 0.0f);
             floor.Material.Diffuse = new Vector4(0.5f, 0.5f, 0.5f, 1.0f);
             floor.AddComponent(new BoxColliderComponent());
@@ -81,7 +81,7 @@ namespace iGL.TestGame
                     int x = rand.Next(-_sizeX/2, _sizeX/2);
                     int y = rand.Next(-_sizeY/2, _sizeY/2);
 
-                    var cube = new Cube(1, 1, 1);
+                    var cube = new Cube() { Scale = new Vector3(1, 1, 1) };
                     cube.Position = new Vector3(x+0.5f, 2.5f, y+0.5f);
                     cube.AddComponent(new BoxColliderComponent());
                     cube.AddComponent(new RigidBodyComponent(50));

@@ -8,16 +8,27 @@ namespace iGL.Engine
 {
     public class Cube : GameObject
     {
-        public float Depth { get; set; }
-        public float Height { get; set; }
-        public float Width { get; set; }
-
         public Material Material
         {
             get
             {
                 return _meshComponent.Material;
-            }
+            }        
+        }
+
+        public float Height
+        {
+            get { return _scale.Y; }
+        }
+
+        public float Width
+        {
+            get { return _scale.X; }
+        }
+
+        public float Depth
+        {
+            get { return _scale.Z; }
         }
 
         private MeshComponent _meshComponent;
@@ -27,26 +38,21 @@ namespace iGL.Engine
         private static MeshRenderComponent _staticMeshRenderComponent;
 
         public Cube()
-            : this(1, 1, 1)
         {
+            _meshComponent = new MeshComponent() { CreationMode = GameComponent.CreationModeEnum.Internal };
+            _meshRenderComponent = new MeshRenderComponent() { CreationMode = GameComponent.CreationModeEnum.Internal };
 
+            AddComponent(_meshComponent);
+            AddComponent(_meshRenderComponent);
         }
 
-        public Cube(float depth, float height, float width)
+        private void LoadCube()
         {
-            Depth = depth;
-            Height = height;
-            Width = width;
-
-            this.Scale = new Vector3(Width, Height, Depth);
-
             if (_staticMeshRenderComponent == null)
             {
                 var halfWidth = 0.5f;
                 var halfHeight = 0.5f;
-                var halfDepth = 0.5f;
-
-                _meshComponent = new MeshComponent();
+                var halfDepth = 0.5f;              
 
                 var vertices = new Vector3[36];
                 // top (+z)
@@ -121,31 +127,27 @@ namespace iGL.Engine
                 _meshComponent.Vertices = vertices;
                 _meshComponent.Indices = indices;
 
-                _meshComponent.CalculateNormals();
-
-                AddComponent(_meshComponent);
-
-                _meshRenderComponent = new MeshRenderComponent();
-
-                AddComponent(_meshRenderComponent);
+                _meshComponent.CalculateNormals();             
 
                 _staticMeshComponent = _meshComponent;
                 _staticMeshRenderComponent = _meshRenderComponent;
             }
             else
             {
-                /* reuse vertex buffers */
-                _meshComponent = new MeshComponent();
+                /* reuse vertex buffers */              
                 _meshComponent.Vertices = _staticMeshComponent.Vertices;
                 _meshComponent.Normals = _staticMeshComponent.Normals;
                 _meshComponent.Indices = _staticMeshComponent.Indices;
 
                 _meshRenderComponent = _staticMeshRenderComponent.CloneForReuse();
-
-                AddComponent(_meshComponent);
-                AddComponent(_meshRenderComponent);
             }
         }
-        
+
+        public override void Load()
+        {
+            LoadCube();
+
+            base.Load();           
+        }
     }
 }

@@ -36,7 +36,7 @@
             // 
             // pointLightDlg1
             // 
-            this.pointLightDlg1.Location = new System.Drawing.Point(-1, 37);
+            this.pointLightDlg1.Location = new System.Drawing.Point(-1, 16);
             this.pointLightDlg1.Name = "pointLightDlg1";
             pointLight1.Ambient = ((iGL.Engine.Math.Vector4)(resources.GetObject("pointLight1.Ambient")));
             pointLight1.Diffuse = ((iGL.Engine.Math.Vector4)(resources.GetObject("pointLight1.Diffuse")));
@@ -47,9 +47,9 @@
             // 
             // label1
             // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label1.Location = new System.Drawing.Point(-1, 12);
+            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(290, 13);
             this.label1.TabIndex = 2;
@@ -63,7 +63,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pointLightDlg1);
             this.Name = "LightComponentDlg";
-            this.Size = new System.Drawing.Size(288, 204);
+            this.Size = new System.Drawing.Size(290, 138);
+            this.Load += new System.EventHandler(this.LightComponentDlg_Load);
             this.ResumeLayout(false);
 
         }

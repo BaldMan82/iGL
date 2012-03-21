@@ -21,12 +21,15 @@ namespace iGL.Engine
             BeginMode = BeginMode.Triangles;
         }
 
-        public override void InternalLoad()
+        public override bool InternalLoad()
         {
             /* find mesh component and load it if needed */
 
             _meshComponent = GameObject.Components.FirstOrDefault(c => c is MeshComponent) as MeshComponent;
-            if (_meshComponent == null) throw new InvalidOperationException("No mesh component to render");
+            if (_meshComponent == null)
+            {
+                return false;
+            }
 
             if (!_meshComponent.IsLoaded) _meshComponent.Load();
 
@@ -45,6 +48,7 @@ namespace iGL.Engine
             GL.BufferData(BufferTarget.ElementArrayBuffer, new IntPtr(_meshComponent.Indices.Length * sizeof(short)),
                           _meshComponent.Indices.ToArray(), BufferUsage.StaticDraw);
 
+            return true;
         }
 
         public MeshRenderComponent CloneForReuse()

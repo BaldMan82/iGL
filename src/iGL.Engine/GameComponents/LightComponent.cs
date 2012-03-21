@@ -18,7 +18,7 @@ namespace iGL.Engine
 
     public class LightComponent : GameComponent
     {        
-        public ILight Light { get; private set; }
+        public ILight Light { get; set; }
 
         public LightComponent() : this(new PointLight())
         {
@@ -30,9 +30,9 @@ namespace iGL.Engine
             Light = light;
         }
 
-        public override void InternalLoad()
+        public override bool InternalLoad()
         {
-           
+            return true;
         }
 
         public override void Tick(float timeElapsed)

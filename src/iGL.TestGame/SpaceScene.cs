@@ -10,11 +10,11 @@ namespace iGL.TestGame
 {
     public class SpaceScene : Scene
     {
-        private Camera _testCamera;
+        private OrthographicCamera _testCamera;
         private Sphere _light;
         private float _alpha = 7;
 
-        public SpaceScene()
+        public SpaceScene() : base(new Physics2d())
         {
             this.OnTick += new EventHandler<Engine.Events.TickEvent>(SpaceScene_OnTick);
         }
@@ -37,17 +37,16 @@ namespace iGL.TestGame
         {
             /* create camera */
 
-            var camProperties = new OrtographicProperties()
+            _testCamera = new OrthographicCamera()
             {
                 Height = 20.0f,
                 Width = 20.0f * (3.0f / 2.0f),
                 ZNear = 1.00f,
                 ZFar = 1000.0f
-            };                
+            };
 
-            _testCamera = new Camera();
-            _testCamera.Position = new Vector3(0.0f, 0, 50.0f);
-            _testCamera.CameraComponent.Target = new Vector3(0, 0, 0);
+            _testCamera.Position = new Vector3(10.0f, 5, 20.0f);
+            _testCamera.CameraComponent.Target = new Vector3(0, 5, 0);
             _testCamera.CameraComponent.ClearColor = new Vector4(0.2f, 0.2f, 0.2f, 1);
 
             AmbientColor = new Vector4(0.5f, 0.5f, 0.5f, 1.0f);
@@ -59,7 +58,7 @@ namespace iGL.TestGame
             pointlight.Ambient = new Vector4(1.0f, 1.0f, 1.0f, 1.0f);
             pointlight.Diffuse = new Vector4(1.0f, 1.0f, 0.8f, 1.0f);
 
-            _light = new Sphere(1.0f);
+            _light = new Sphere() { Scale = new Vector3(2.0f) };
             _light.Position = new Vector3(10, 10, 0);
             _light.AddComponent(new LightComponent(pointlight));
             //_light.AddComponent(new SphereColliderComponent());
@@ -78,38 +77,38 @@ namespace iGL.TestGame
 
             //AddGameObject(world);
 
-            var world2 = new Sphere(3.0f, 32, 32);
-            world2.Position = new Vector3(0, 10, 0);
-            world2.Material.Diffuse = new Vector4(0.5f, 0.5f, 0.5f, 1);
-            world2.AddComponent(new SphereColliderComponent());
+            //var world2 = new Sphere(3.0f, 32, 32);
+            //world2.Position = new Vector3(0, 10, 0);
+            //world2.Material.Diffuse = new Vector4(0.5f, 0.5f, 0.5f, 1);
+            //world2.AddComponent(new SphereColliderComponent());
 
-            world2.AddComponent(new RigidBodyComponent(mass: 500, isStatic: true, isGravitySource:true));
+            //world2.AddComponent(new RigidBodyComponent(mass: 500, isStatic: true, isGravitySource:true));
 
-            AddGameObject(world2);
+            //AddGameObject(world2);
 
-            var world3 = new Sphere(2.0f, 32, 32);
-            world3.Position = new Vector3(-10, 15, 0);
-            world3.Material.Diffuse = new Vector4(0.5f, 0.5f, 0.5f, 1);
-            world3.AddComponent(new SphereColliderComponent());
+            //var world3 = new Sphere(2.0f, 32, 32);
+            //world3.Position = new Vector3(-10, 15, 0);
+            //world3.Material.Diffuse = new Vector4(0.5f, 0.5f, 0.5f, 1);
+            //world3.AddComponent(new SphereColliderComponent());
 
-            world3.AddComponent(new RigidBodyComponent(mass: 200, isStatic: true, isGravitySource:true));
+            //world3.AddComponent(new RigidBodyComponent(mass: 200, isStatic: true, isGravitySource:true));
 
-            AddGameObject(world3);
+            //AddGameObject(world3);
 
             var slingShot = new SlingShot();
-            slingShot.Position = new Vector3(-10, 0, 0);
+            slingShot.Position = new Vector3(0, 5, 0);
             AddGameObject(slingShot);
 
-            var c = new Cube(1, 1, 1);
-            c.Position = new Vector3(0, 100, 0);
-            c.Rotation = new Vector3(0, 0, 10);
-            c.OnMouseIn += (a, b) => ((Cube)a).Material.Ambient = new Vector4(0.5f, 0.5f, 0.5f, 1);
-            c.OnMouseOut += (a, b) => ((Cube)a).Material.Ambient = new Vector4(1.0f, 0.5f, 0.5f, 1);
+            //var c = new Cube(1, 1, 1);
+            //c.Position = new Vector3(0, 100, 0);
+            //c.Rotation = new Vector3(0, 0, 10);
+            //c.OnMouseIn += (a, b) => ((Cube)a).Material.Ambient = new Vector4(0.5f, 0.5f, 0.5f, 1);
+            //c.OnMouseOut += (a, b) => ((Cube)a).Material.Ambient = new Vector4(1.0f, 0.5f, 0.5f, 1);
 
             //((Cube)cube).Material.Diffuse = new Vector4(0.5f, 0.5f, 0.5f, 1);
             //((Cube)cube).Material.Ambient = new Vector4(0.5f, 0.5f, 0.5f, 1);
 
-            AddGameObject(c);
+            //AddGameObject(c);
 
             AddTimer(new Timer()
             {
@@ -117,7 +116,7 @@ namespace iGL.TestGame
                     {
                         for (int i = 0; i < 10; i++)
                         {
-                            var cube = new Cube(0.5f, 0.5f, 0.5f);
+                            var cube = new Cube() { Scale = new Vector3(0.5f, 0.5f, 0.5f) };
                             cube.Position = new Vector3(-2.5f + i / 2.0f, 20, 0);
                             cube.Material.Diffuse = new Vector4(1.0f, 0.0f, 0.0f, 1);
                             cube.AddComponent(new BoxColliderComponent());
@@ -132,7 +131,7 @@ namespace iGL.TestGame
 
                         for (int i = 0; i < 10; i++)
                         {
-                            var sphere = new Sphere(0.25f, 8, 8);
+                            var sphere = new Sphere() { Scale = new Vector3( 0.5f ), Rings = 8, Segments = 8 };
                             sphere.Position = new Vector3(-2.5f + i / 2.0f, 30, 0);
                             sphere.Material.Diffuse = new Vector4(1.0f, 1.0f, 0.0f, 1);
                             sphere.AddComponent(new SphereColliderComponent());

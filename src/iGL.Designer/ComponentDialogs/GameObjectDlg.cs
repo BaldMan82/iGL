@@ -49,5 +49,26 @@ namespace iGL.Designer
             GameObject.Visible = cbVisible.Checked;
             GameObject.Enabled = cbEnabled.Checked;
         }
+
+        private void btnResetPosition_Click(object sender, EventArgs e)
+        {
+            _txtPositionX.Text = (0.0f).ToInvariantText();
+            _txtPositionY.Text = (0.0f).ToInvariantText();
+            _txtPositionZ.Text = (0.0f).ToInvariantText();                              
+        }
+
+        private void btnResetRotation_Click(object sender, EventArgs e)
+        {
+            _txtRotationX.Text = (0.0f).ToInvariantText();
+            _txtRotationY.Text = (0.0f).ToInvariantText();
+            _txtRotationZ.Text = (0.0f).ToInvariantText();
+        }
+
+        private void btnResetScale_Click(object sender, EventArgs e)
+        {
+            _txtScaleX.Text = (1.0f).ToInvariantText();
+            _txtScaleY.Text = (1.0f).ToInvariantText();
+            _txtScaleZ.Text = (1.0f).ToInvariantText();
+        }
     }
 }
