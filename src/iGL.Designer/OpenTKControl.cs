@@ -34,7 +34,7 @@ namespace iGL.Designer
 
         public OperationType Operation { get; private set; }
 
-        public EditorGame Game { get; private set; }
+        public EditorGame Game { get; private set; }      
 
         public enum EditAxisType
         {
@@ -207,7 +207,7 @@ namespace iGL.Designer
                     if (Operation == OperationType.PANVIEW || 
                         (b.Button != MouseButton.Button1 && b.Button != MouseButton.Button2)) return;
 
-                    _selectedObject = a as GameObject;
+                    _selectedObject = (a as GameObject).Root;
 
                     var rigidBody = _selectedObject.Components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
 
@@ -217,7 +217,7 @@ namespace iGL.Designer
 
                     if (_selectObjectEvent != null)
                     {
-                        _selectObjectEvent(this, new SelectObjectEvent() { SelectedObject = a as GameObject });
+                        _selectObjectEvent(this, new SelectObjectEvent() { SelectedObject = _selectedObject });
                     }
                 };
             }

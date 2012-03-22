@@ -21,6 +21,11 @@ namespace iGL.Engine
             return Vector3.Dot(point - planePoint, planeNormal) / planeNormal.Length;
         }
 
+        public static Vector3 Translation(this Matrix4 matrix)
+        {
+            return new Vector3(matrix.M41, matrix.M42, matrix.M43);
+        }
+
         public static void CopyPublicValues(this object obj, object destObj)
         {
             var props = obj.GetType().GetProperties().Where(p => p.GetSetMethod() != null).ToList();

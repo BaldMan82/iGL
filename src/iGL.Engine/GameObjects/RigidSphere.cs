@@ -6,7 +6,7 @@ using iGL.Engine.Math;
 
 namespace iGL.Engine
 {
-    public class Sphere : GameObject
+    public class RigidSphere : GameObject
     {       
         public int Rings { get; set; }
         public int Segments { get; set; }
@@ -21,21 +21,29 @@ namespace iGL.Engine
 
         private MeshComponent _meshComponent;
         private MeshRenderComponent _meshRenderComponent;
+        private RigidBodyComponent _rigidBodyComponent;
+        private SphereColliderComponent _sphereColliderComponent;
 
         private Guid _meshComponentId = new Guid("54d23823-aa44-4aeb-a742-57dbe16883e4");
-        private Guid _meshRenderComponentId = new Guid("4ed3d915-17ef-427e-bbde-7906f8375e6c");    
+        private Guid _meshRenderComponentId = new Guid("4ed3d915-17ef-427e-bbde-7906f8375e6c");
+        private Guid _rigidBodyComponentId = new Guid("faae1f68-eace-4029-a47a-dfe3d95ec2ea");
+        private Guid _sphereColliderComponentId = new Guid("7a256ff2-4f46-4151-8197-8f502b4343ab");
 
-        public Sphere() 
+        public RigidSphere() 
         {
             /* todo: re-use rendercomponent, like cube !! */
             _meshComponent = new MeshComponent() { CreationMode = GameComponent.CreationModeEnum.Internal, Id = _meshComponentId };
             _meshRenderComponent = new MeshRenderComponent() { CreationMode = GameComponent.CreationModeEnum.Internal, Id = _meshRenderComponentId };
-            
+            _rigidBodyComponent = new RigidBodyComponent() { CreationMode = GameComponent.CreationModeEnum.Internal, Id = _rigidBodyComponentId };
+            _sphereColliderComponent = new SphereColliderComponent() { CreationMode = GameComponent.CreationModeEnum.Internal, Id = _sphereColliderComponentId };
+
             Rings = 16;
             Segments = 16;
 
             AddComponent(_meshComponent);
             AddComponent(_meshRenderComponent);
+            AddComponent(_sphereColliderComponent);
+            AddComponent(_rigidBodyComponent);
         }
 
         private void LoadSphere()

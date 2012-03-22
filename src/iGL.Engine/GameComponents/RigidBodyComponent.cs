@@ -55,6 +55,8 @@ namespace iGL.Engine
             }
         }
 
+        public Matrix4 RigidBodyTransform { get; private set; }
+
         public ColliderComponent ColliderComponent { get; private set; }
 
         internal RigidBody RigidBody { get; private set; }
@@ -62,7 +64,7 @@ namespace iGL.Engine
         public RigidBodyComponent()
             : this(10.0f, false, false)
         {
-
+            RigidBodyTransform = Matrix4.Identity;
         }
 
         public RigidBodyComponent(float mass = 10.0f, bool isStatic = false, bool isGravitySource = false)
@@ -91,7 +93,30 @@ namespace iGL.Engine
 
         public override bool InternalLoad()
         {
-            return LoadRigidBody();
+            if (LoadRigidBody())
+            {
+                GameObject.OnMove += GameObject_OnMove;
+                GameObject.OnScale += GameObject_OnScale;
+                GameObject.OnRotate += GameObject_OnRotate;
+
+                return true;
+            }
+            else return false;
+        }
+
+        void GameObject_OnRotate(object sender, Events.RotateEvent e)
+        {           
+            Reload();
+        }
+
+        void GameObject_OnScale(object sender, Events.ScaleEvent e)
+        {           
+            Reload();
+        }
+
+        void GameObject_OnMove(object sender, Events.MoveEvent e)
+        {
+            Reload();
         }
 
         private bool LoadRigidBody()
@@ -109,12 +134,23 @@ namespace iGL.Engine
             {
                 if (!ColliderComponent.Load()) return false;
             }
+          
+            /* create a composite transform without this object's scale */
 
-            var mRotationX = JMatrix.CreateRotationX(GameObject.Rotation.X);
-            var mRotationY = JMatrix.CreateRotationY(GameObject.Rotation.Y);
-            var mRotationZ = JMatrix.CreateRotationZ(GameObject.Rotation.Z);
+            Matrix4 transform = Matrix4.Identity;
 
-            var transform = mRotationX * mRotationY * mRotationZ * JMatrix.Identity;
+            var mRotationX = Matrix4.CreateRotationX(GameObject.Rotation.X);
+            var mRotationY = Matrix4.CreateRotationY(GameObject.Rotation.Y);
+            var mRotationZ = Matrix4.CreateRotationZ(GameObject.Rotation.Z);
+            var translation = Matrix4.CreateTranslation(GameObject.Position);
+
+            transform = mRotationX * mRotationY * mRotationZ * translation;
+            
+            if (GameObject.Parent != null)
+            {
+                var parentTransform = GameObject.Parent.GetCompositeTransform();
+                transform = transform * parentTransform;
+            }       
 
             if (ColliderComponent is CompoundColliderComponent)
             {
@@ -122,8 +158,8 @@ namespace iGL.Engine
                 var compoundShape = compoundCollider.CollisionShape as CompoundShape;
 
                 RigidBody = new RigidBody(compoundShape);
-                RigidBody.Orientation = transform;
-                RigidBody.Position = GameObject.Position.ToJitter() - compoundShape.Shift;
+                RigidBody.Orientation = transform.ToJitter();
+                RigidBody.Position = transform.Translation().ToJitter() - compoundShape.Shift;
 
                 RigidBody.Mass = _mass;
 
@@ -134,8 +170,9 @@ namespace iGL.Engine
                 RigidBody = new RigidBody(ColliderComponent.CollisionShape);
                 RigidBody.Mass = _mass;
 
-                RigidBody.Orientation = transform;
-                RigidBody.Position = new JVector(GameObject._position.X, GameObject._position.Y, GameObject._position.Z);
+                RigidBody.Orientation = transform.ToJitter();
+
+                RigidBody.Position = transform.Translation().ToJitter();
 
                 RigidBody.IsStatic = _isStatic;
             }
@@ -155,22 +192,7 @@ namespace iGL.Engine
         public void ApplyForce(Vector3 force)
         {
             RigidBody.AddForce(force.ToJitter());
-        }
-
-        public void SetStatic(bool isStatic)
-        {
-            if (!IsLoaded) throw new InvalidOperationException("Object not loaded");
-            RigidBody.IsStatic = isStatic;
-
-            //if (!isStatic)
-            //{
-            //    GameObject.Scene.Physics.World.AddConstraint(new iGL.Engine.Physics.Constraint2D(RigidBody));
-            //}
-            //else
-            //{
-            //    GameObject.Scene.Physics.World.RemoveConstraint(RigidBody.Constraints.FirstOrDefault());
-            //}
-        }
+        }      
 
         private void UpdateRigidBody()
         {
@@ -185,8 +207,7 @@ namespace iGL.Engine
         {
             /* scale must be taking into account */
 
-            GameObject.Transform = Math.Matrix4.Scale(GameObject.Scale) * RigidBody.Orientation.ToOpenTK(RigidBody.Position); ;
-            GameObject._position = new iGL.Engine.Math.Vector3(RigidBody.Position.X, RigidBody.Position.Y, RigidBody.Position.Z);
+            RigidBodyTransform = Math.Matrix4.Scale(GameObject.Scale) * RigidBody.Orientation.ToOpenTK(RigidBody.Position);            
         }
     }
 }

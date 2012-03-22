@@ -56,7 +56,18 @@ namespace iGL.Engine
 
         public bool RayTest(Vector3 origin, Vector3 direction)
         {
-            var transform = GameObject.GetCompositeTransform();
+            Matrix4 transform;
+            
+            /* if there is a rigid body active in this object, we need that transform as it will always describe its world orientation */
+            var rigidBody = GameObject.Components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
+            
+            if (rigidBody != null)
+            {
+                transform = rigidBody.RigidBodyTransform;
+            }
+            else {
+                transform = GameObject.GetCompositeTransform();
+            }
 
             transform.Invert();
 

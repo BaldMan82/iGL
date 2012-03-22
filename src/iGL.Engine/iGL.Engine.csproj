@@ -44,6 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\EditorField.cs" />
+    <Compile Include="Events\MoveEvent.cs" />
+    <Compile Include="Events\RotateEvent.cs" />
+    <Compile Include="Events\ScaleEvent.cs" />
+    <Compile Include="GameObjects\RigidSphere.cs" />
     <Compile Include="GameObjects\RigidCube.cs" />
     <Compile Include="GameObjects\OrthographicCamera.cs" />
     <Compile Include="Physics\DesignPhysics.cs" />
@@ -129,6 +133,9 @@
       <Project>{AA03EF1A-94F7-4D30-AB14-2092863FF923}</Project>
       <Name>Jitter</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

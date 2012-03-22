@@ -32,6 +32,7 @@ namespace iGL.Engine
             ZFar = 1000.0f;
 
             ClearColor = new Vector4(0.2f, 0.2f, 0.2f, 1.0f);
+            Position = new Vector3(0, 0, 10);
 
             AddComponent(CameraComponent);
         }
@@ -46,9 +47,7 @@ namespace iGL.Engine
                 ZFar = this.ZFar
             };
 
-            CameraComponent.Update();            
-
-            Position = new Vector3(0, 0, 10);
+            CameraComponent.Update();                        
 
             CameraComponent.Target = Target;
             CameraComponent.ClearColor = ClearColor;

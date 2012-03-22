@@ -42,11 +42,27 @@ namespace iGL.Engine
             }
             set
             {
+                var moveEvent = new MoveEvent()
+                {
+                    OldPosition = _position,
+                    NewPosition = value
+                };
+
                 _position = value;
                 UpdateTransform();
-                UpdateRigidBody();
+                OnMoveEvent(this, moveEvent);
             }
         }
+
+        public Vector3 WorldPosition
+        {
+            get
+            {
+                var transform = GetCompositeTransform();
+                return Vector3.Transform(new Vector3(), transform);
+            }
+        }
+
         public Vector3 Scale
         {
             get
@@ -55,9 +71,15 @@ namespace iGL.Engine
             }
             set
             {
+                var scaleEvent = new ScaleEvent()
+                {
+                    NewScale = value,
+                    OldScale = _scale
+                };
+
                 _scale = value;
                 UpdateTransform();
-                UpdateRigidBody(true);
+                OnScaleEvent(this, scaleEvent);
             }
         }
         public Vector3 Rotation
@@ -68,12 +90,27 @@ namespace iGL.Engine
             }
             set
             {
+                var rotationEvent = new RotateEvent()
+                {
+                    NewRotation = value,
+                    OldRotation = _rotation
+                };
+
                 _rotation = value;
                 UpdateTransform();
-                UpdateRigidBody();
+                OnRotateEvent(this, rotationEvent);
             }
         }
         public Matrix4 Transform { get; internal set; }
+
+        public GameObject Root
+        {
+            get
+            {
+                if (Parent != null) return Parent.Root;
+                return this;
+            }
+        }
 
         private List<GameObject> _children { get; set; }
         private List<GameComponent> _components { get; set; }
@@ -89,6 +126,10 @@ namespace iGL.Engine
         internal event EventHandler<ComponentAddedEvent> _componentAddedEvent;
         internal event EventHandler<ComponentRemovedEvent> _componentRemovedEvent;
 
+        internal event EventHandler<MoveEvent> _moveEvent;
+        internal event EventHandler<ScaleEvent> _scaleEvent;
+        internal event EventHandler<RotateEvent> _rotateEvent;
+
         public GameObject()
             : this(string.Empty)
         {
@@ -96,11 +137,11 @@ namespace iGL.Engine
         }
 
         public GameObject(string name)
-        {
-            Scale = new Vector3(1.0f, 1.0f, 1.0f);
-
+        {           
             _components = new List<GameComponent>();
             _children = new List<GameObject>();
+
+            Scale = new Vector3(1.0f, 1.0f, 1.0f);
 
             Name = name;
 
@@ -118,7 +159,7 @@ namespace iGL.Engine
             var obj = Activator.CreateInstance(this.GetType()) as GameObject;
 
             this.CopyPublicValues(obj);
-       
+
             obj.Id = this.Id;
 
             foreach (var internalComponent in this.Components.Where(c => c.CreationMode == GameComponent.CreationModeEnum.Internal))
@@ -148,14 +189,14 @@ namespace iGL.Engine
                 _components.ForEach(gc => { if (!gc.IsLoaded) gc.Load(); });
             }
 
-            OnComponentAddedEvent(new ComponentAddedEvent() { Component = component });
+            OnComponentAddedEvent(this, new ComponentAddedEvent() { Component = component });
         }
 
         public void RemoveComponent(GameComponent component)
         {
             _components.Remove(component);
 
-            OnComponentRemovedEvent(new ComponentRemovedEvent() { Component = component });
+            OnComponentRemovedEvent(this, new ComponentRemovedEvent() { Component = component });
         }
 
         public void AddChild(GameObject gameObject)
@@ -175,11 +216,7 @@ namespace iGL.Engine
         }
 
         public Matrix4 GetCompositeTransform()
-        {
-            bool hasRigidBody = Components.Any(c => c is RigidBodyComponent);
-
-            if (hasRigidBody) return Transform;
-
+        {           
             Matrix4 parentMatrix = Matrix4.Identity;
 
             if (Parent != null)
@@ -207,6 +244,7 @@ namespace iGL.Engine
             }
 
             IsLoaded = true;
+            
         }
 
         public virtual void Render(Matrix4 parentTransform)
@@ -214,7 +252,8 @@ namespace iGL.Engine
             if (!Visible) return;
 
             if (!this.IsLoaded) throw new InvalidOperationException("Game Object not loaded!");
-            bool hasRigidBody = Components.Any(c => c is RigidBodyComponent);
+
+            var rigidBody = Components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
 
             /* render designer objects in white ambient color */
             var sceneColor = Scene.AmbientColor;
@@ -222,9 +261,11 @@ namespace iGL.Engine
 
             Matrix4 thisTransform;
 
-            if (hasRigidBody)
+            if (rigidBody != null)
             {
-                thisTransform = Transform;
+                /* when a gameobject has a rigidbody, always use this transform to render */
+                /* gameobject transform has original positioning / orientation in relation to its parent tree */
+                thisTransform = rigidBody.RigidBodyTransform;
             }
             else
             {
@@ -249,25 +290,6 @@ namespace iGL.Engine
 
             Scene.AmbientColor = sceneColor;
 
-        }
-
-        private void UpdateRigidBody(bool rescale = false)
-        {
-            if (!this.IsLoaded) return;
-
-            var rigidBodyComponent = this.Components.FirstOrDefault(c => c is RigidBodyComponent && c.IsLoaded) as RigidBodyComponent;
-
-            if (rigidBodyComponent != null )
-            {
-                if (rescale)
-                {
-                    rigidBodyComponent.Reload();
-                }
-                else
-                {
-                    rigidBodyComponent.RigidBody.Position = this.Position.ToJitter();
-                }
-            }
         }
 
         private void UpdateTransform()
@@ -334,12 +356,12 @@ namespace iGL.Engine
             }
         }
 
-        internal void OnMouseDownEvent(MouseButtonDownEvent e)
+        internal void OnMouseDownEvent(object sender, MouseButtonDownEvent e)
         {
-            if (_mouseButtonDownEvent != null) _mouseButtonDownEvent(this, e);
+            if (_mouseButtonDownEvent != null) _mouseButtonDownEvent(sender, e);
 
             /* bubble up */
-            if (Parent != null) Parent.OnMouseDownEvent(e);
+            if (Parent != null) Parent.OnMouseDownEvent(sender, e);
         }
 
         public event EventHandler<MouseButtonUpEvent> OnMouseUp
@@ -354,12 +376,12 @@ namespace iGL.Engine
             }
         }
 
-        internal void OnMouseUpEvent(MouseButtonUpEvent e)
+        internal void OnMouseUpEvent(object sender, MouseButtonUpEvent e)
         {
-            if (_mouseButtonUpEvent != null) _mouseButtonUpEvent(this, e);
+            if (_mouseButtonUpEvent != null) _mouseButtonUpEvent(sender, e);
 
             /* bubble up */
-            if (Parent != null) Parent.OnMouseUpEvent(e);
+            if (Parent != null) Parent.OnMouseUpEvent(sender, e);
         }
 
         public event EventHandler<MouseInEvent> OnMouseIn
@@ -374,12 +396,12 @@ namespace iGL.Engine
             }
         }
 
-        internal void OnMouseInEvent(MouseInEvent e)
+        internal void OnMouseInEvent(object sender, MouseInEvent e)
         {
-            if (_mouseInEvent != null) _mouseInEvent(this, e);
+            if (_mouseInEvent != null) _mouseInEvent(sender, e);
 
             /* bubble up */
-            if (Parent != null) Parent.OnMouseInEvent(e);
+            if (Parent != null) Parent.OnMouseInEvent(sender, e);
         }
 
         public event EventHandler<MouseOutEvent> OnMouseOut
@@ -394,12 +416,12 @@ namespace iGL.Engine
             }
         }
 
-        internal void OnMouseOutEvent(MouseOutEvent e)
+        internal void OnMouseOutEvent(object sender, MouseOutEvent e)
         {
-            if (_mouseOutEvent != null) _mouseOutEvent(this, e);
+            if (_mouseOutEvent != null) _mouseOutEvent(sender, e);
 
             /* bubble up */
-            if (Parent != null) Parent.OnMouseOutEvent(e);
+            if (Parent != null) Parent.OnMouseOutEvent(sender, e);
         }
 
         public event EventHandler<ComponentAddedEvent> OnComponentAdded
@@ -414,11 +436,11 @@ namespace iGL.Engine
             }
         }
 
-        internal void OnComponentAddedEvent(ComponentAddedEvent e)
+        internal void OnComponentAddedEvent(object sender, ComponentAddedEvent e)
         {
-            if (_componentAddedEvent != null) _componentAddedEvent(this, e);
+            if (_componentAddedEvent != null) _componentAddedEvent(sender, e);
 
-            if (Parent != null) Parent.OnComponentAddedEvent(e);
+            if (Parent != null) Parent.OnComponentAddedEvent(sender, e);
         }
 
         public event EventHandler<ComponentRemovedEvent> OnComponentRemoved
@@ -433,11 +455,59 @@ namespace iGL.Engine
             }
         }
 
-        internal void OnComponentRemovedEvent(ComponentRemovedEvent e)
+        internal void OnComponentRemovedEvent(object sender, ComponentRemovedEvent e)
         {
-            if (_componentRemovedEvent != null) _componentRemovedEvent(this, e);
+            if (_componentRemovedEvent != null) _componentRemovedEvent(sender, e);
 
-            if (Parent != null) Parent.OnComponentRemovedEvent(e);
+            if (Parent != null) Parent.OnComponentRemovedEvent(sender, e);
+        }
+
+        public event EventHandler<MoveEvent> OnMove
+        {
+            add { _moveEvent += value; }
+            remove { _moveEvent -= value; }
+        }
+
+        internal void OnMoveEvent(object sender, MoveEvent e)
+        {
+            if (_moveEvent != null) _moveEvent(sender, e);
+
+            foreach (var child in Children)
+            {
+                child.OnMoveEvent(sender, e);
+            }
+        }
+
+        public event EventHandler<ScaleEvent> OnScale
+        {
+            add { _scaleEvent += value; }
+            remove { _scaleEvent -= value; }
+        }
+
+        internal void OnScaleEvent(object sender, ScaleEvent e)
+        {
+            if (_scaleEvent != null) _scaleEvent(sender, e);
+
+            foreach (var child in Children)
+            {
+                child.OnScaleEvent(sender, e);
+            }
+        }
+
+        public event EventHandler<RotateEvent> OnRotate
+        {
+            add { _rotateEvent += value; }
+            remove { _rotateEvent -= value; }
+        }
+
+        internal void OnRotateEvent(object sender, RotateEvent e)
+        {
+            if (_rotateEvent != null) _rotateEvent(sender, e);
+
+            foreach (var child in Children)
+            {
+                child.OnRotateEvent(sender, e);
+            }
         }
 
         #endregion

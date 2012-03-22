@@ -15,9 +15,9 @@ namespace iGL.TestGame.GameObjects
         private GameObject _currentBullet;
         private Vector3 _bulletStartPosition;
         private float _slingShotRadius = 2.0f;
-        private float _springConstant = 20000f;
+        private float _springConstant = 10000f;
 
-        public SlingShot() : this(20)
+        public SlingShot() : this(5)
         {
             Name = "Slingshot";
         }
@@ -41,24 +41,23 @@ namespace iGL.TestGame.GameObjects
                 Ammo.Add(bullet);
 
             }
-        }
-
-        public override void Load()
-        {
-            base.Load();         
 
             AddChild(_slingShot);
 
             Ammo.ForEach(b =>
             {
                 b.Position += this.Position;
-                this.AddChild(b);
-                //Scene.AddGameObject(b);
+                this.AddChild(b);              
             }
                 );
 
             LoadBullet();
+        }
 
+        public override void Load()
+        {
+            base.Load();         
+            
             Scene.OnMouseMove += new EventHandler<Engine.Events.MouseMoveEvent>(Scene_OnMouseMove);
         }
 
@@ -67,14 +66,24 @@ namespace iGL.TestGame.GameObjects
             if (_inAimMode)
             {                              
                 var lookAt = Scene.CurrentCamera.Target - Scene.CurrentCamera.GameObject.Position;
-                lookAt.Normalize();
+                lookAt.Normalize();                          
 
                 var p = Scene.CurrentCamera.GameObject.Position + lookAt;
-                var planeDistance = _currentBullet.Position.PlaneDistance(p, lookAt);               
+                var planeDistance = _currentBullet.WorldPosition.PlaneDistance(p, lookAt);                
 
                 var dirNearPlane = e.NearPlane - (Scene.CurrentCamera.GameObject.Position + lookAt);
 
-                _currentBullet.Position = e.NearPlane + (lookAt * planeDistance) + (dirNearPlane * Math.Abs(planeDistance));
+                var newWorldPosition = e.NearPlane + (lookAt * planeDistance);
+
+                if (Scene.CurrentCamera.Properties is PerspectiveCamera)
+                {
+                    newWorldPosition += (dirNearPlane * Math.Abs(planeDistance));
+                }
+
+                var transform = _currentBullet.Parent.GetCompositeTransform();
+                transform.Invert();
+
+                _currentBullet.Position = Vector3.Transform(newWorldPosition, transform);
 
                 var distance = (_currentBullet.Position - _bulletStartPosition).Length;
                 if (distance > _slingShotRadius)
@@ -86,6 +95,8 @@ namespace iGL.TestGame.GameObjects
 
                     _currentBullet.Position -= norm;
                 }
+
+               
             }
         }
 
@@ -94,7 +105,7 @@ namespace iGL.TestGame.GameObjects
             _currentBullet = Ammo.FirstOrDefault();
             if (_currentBullet == null) return;
 
-            _bulletStartPosition = _slingShot.Position + this.Position + new Vector3(0, _slingShot.Height / 2.0f + 1.0f, 0);
+            _bulletStartPosition = _slingShot.Position + new Vector3(0, _slingShot.Height / 2.0f + 1.0f, 0);
             Ammo.Remove(_currentBullet);
 
             _currentBullet.OnMouseDown += new EventHandler<Engine.Events.MouseButtonDownEvent>(bullet_OnMouseDown);
@@ -112,7 +123,7 @@ namespace iGL.TestGame.GameObjects
             var rigidBody = bullet.Components.Single(c => c is RigidBodyComponent) as RigidBodyComponent;
 
             var fireDirection = _bulletStartPosition - bullet.Position;
-            rigidBody.SetStatic(false);
+            rigidBody.IsStatic = false;
             rigidBody.ApplyForce(fireDirection * _springConstant);
 
             _inAimMode = false;

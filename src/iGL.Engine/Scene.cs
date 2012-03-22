@@ -300,13 +300,13 @@ namespace iGL.Engine
                 /* target changed */
                 if (_currentMouseOverObj != null && _currentMouseOverObj != result)
                 {
-                    _currentMouseOverObj.OnMouseOutEvent(new MouseOutEvent());
-                    result.OnMouseInEvent(new MouseInEvent());
+                    _currentMouseOverObj.OnMouseOutEvent(_currentMouseOverObj, new MouseOutEvent());
+                    result.OnMouseInEvent(result, new MouseInEvent());
 
                 }
                 else if (_currentMouseOverObj == null)
                 {
-                    result.OnMouseInEvent(new MouseInEvent());
+                    result.OnMouseInEvent(result, new MouseInEvent());
                 }
 
                 _currentMouseOverObj = result;
@@ -315,7 +315,7 @@ namespace iGL.Engine
             {
                 Console.WriteLine("...");
 
-                _currentMouseOverObj.OnMouseOutEvent(new MouseOutEvent());
+                _currentMouseOverObj.OnMouseOutEvent(_currentMouseOverObj, new MouseOutEvent());
                 _currentMouseOverObj = null;
             }            
             
@@ -366,7 +366,7 @@ namespace iGL.Engine
             {
                 if (_currentMouseOverObj != null)
                 {
-                    _currentMouseOverObj.OnMouseDownEvent(new MouseButtonDownEvent() { Button = button });
+                    _currentMouseOverObj.OnMouseDownEvent(_currentMouseOverObj, new MouseButtonDownEvent() { Button = button });
                 }
 
                 /* can be null */
@@ -377,13 +377,13 @@ namespace iGL.Engine
                 /* send a mouse up event to the last target, even if it is not the current hover target anymore */
                 if (_currentMouseDownObj != null && _currentMouseDownObj != _currentMouseOverObj)
                 {
-                    _currentMouseDownObj.OnMouseUpEvent(new MouseButtonUpEvent() { Button = button });
+                    _currentMouseDownObj.OnMouseUpEvent(_currentMouseDownObj, new MouseButtonUpEvent() { Button = button });
                 }
 
                 /* send mouse up to the current obj */
                 if (_currentMouseOverObj != null)
                 {
-                    _currentMouseOverObj.OnMouseUpEvent(new MouseButtonUpEvent() { Button = button });
+                    _currentMouseOverObj.OnMouseUpEvent(_currentMouseOverObj, new MouseButtonUpEvent() { Button = button });
                 }
             }
         }
