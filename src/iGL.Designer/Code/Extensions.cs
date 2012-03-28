@@ -34,7 +34,7 @@ namespace iGL.Designer
             if (buttons == MouseButtons.Middle) return MouseButton.ButtonMiddle;
 
             return MouseButton.Button1;
-        }
+        }      
 
         public static void HookAllChangeEvents(this System.Windows.Forms.Control.ControlCollection controls, Action action)
         {
@@ -59,9 +59,9 @@ namespace iGL.Designer
             }
         }
 
-        public static float TextToFloat(this TextBox t)
+        public static float TextToFloat(this TextBox t, float defaultValue = 0.0f)
         {
-            if (string.IsNullOrEmpty(t.Text) ||  t.Text == "-") return 0f;
+            if (string.IsNullOrEmpty(t.Text) ||  t.Text == "-") return defaultValue;
 
             float result;
             if (float.TryParse(t.Text, NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign , CultureInfo.InvariantCulture, out result))
@@ -71,10 +71,10 @@ namespace iGL.Designer
             else
             {
                 MessageBox.Show("Invalid float value.");
-                t.Text = "0";
+                t.Text = defaultValue.ToInvariantText();
             }
 
-            return 0f;
+            return defaultValue;
             
         }
     }

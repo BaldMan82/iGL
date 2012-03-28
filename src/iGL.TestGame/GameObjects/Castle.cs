@@ -126,7 +126,7 @@ namespace iGL.TestGame.GameObjects
 
             _floor.AddComponent(new BoxColliderComponent());
 
-            var floorBody = new RigidBodyComponent(isStatic: true);          
+            var floorBody = new RigidBodyComponent();          
             
             _floor.AddComponent(floorBody);
 

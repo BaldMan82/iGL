@@ -25,6 +25,7 @@ SOFTWARE.
 using System;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
+using System.Runtime.Serialization;
 namespace iGL.Engine.Math
 {
     /// <summary>Represents a 4D vector using four single-precision floating-point numbers.</summary>
@@ -33,7 +34,7 @@ namespace iGL.Engine.Math
     /// </remarks>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector4 : IEquatable<Vector4>
+    public struct Vector4 : IEquatable<Vector4>, ISerializable
     {
         #region Fields
 
@@ -95,6 +96,14 @@ namespace iGL.Engine.Math
         #endregion
 
         #region Constructors
+
+        public Vector4(SerializationInfo info, StreamingContext context)
+            : this((float)info.GetValue("x", typeof(float)),
+                   (float)info.GetValue("y", typeof(float)),
+                   (float)info.GetValue("z", typeof(float)),
+                   (float)info.GetValue("z", typeof(float)))
+        {
+        }
 
         /// <summary>
         /// Constructs a new instance.
@@ -1209,5 +1218,13 @@ namespace iGL.Engine.Math
         }
 
         #endregion
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("x", X);
+            info.AddValue("y", Y);
+            info.AddValue("z", Z);
+            info.AddValue("w", W);
+        }
     }
 }

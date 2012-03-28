@@ -32,6 +32,12 @@
             this.cbStatic = new System.Windows.Forms.CheckBox();
             this.cbGravitySource = new System.Windows.Forms.CheckBox();
             this.txtMass = new System.Windows.Forms.TextBox();
+            this.txtKineticFriction = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtStaticFriction = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtRestitution = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -46,7 +52,7 @@
             // cbStatic
             // 
             this.cbStatic.AutoSize = true;
-            this.cbStatic.Location = new System.Drawing.Point(6, 51);
+            this.cbStatic.Location = new System.Drawing.Point(6, 115);
             this.cbStatic.Name = "cbStatic";
             this.cbStatic.Size = new System.Drawing.Size(53, 17);
             this.cbStatic.TabIndex = 1;
@@ -56,7 +62,7 @@
             // cbGravitySource
             // 
             this.cbGravitySource.AutoSize = true;
-            this.cbGravitySource.Location = new System.Drawing.Point(64, 51);
+            this.cbGravitySource.Location = new System.Drawing.Point(64, 115);
             this.cbGravitySource.Name = "cbGravitySource";
             this.cbGravitySource.Size = new System.Drawing.Size(96, 17);
             this.cbGravitySource.TabIndex = 2;
@@ -65,16 +71,70 @@
             // 
             // txtMass
             // 
-            this.txtMass.Location = new System.Drawing.Point(64, 11);
+            this.txtMass.Location = new System.Drawing.Point(123, 11);
             this.txtMass.Name = "txtMass";
             this.txtMass.Size = new System.Drawing.Size(98, 20);
             this.txtMass.TabIndex = 3;
+            // 
+            // txtKineticFriction
+            // 
+            this.txtKineticFriction.Location = new System.Drawing.Point(123, 37);
+            this.txtKineticFriction.Name = "txtKineticFriction";
+            this.txtKineticFriction.Size = new System.Drawing.Size(98, 20);
+            this.txtKineticFriction.TabIndex = 5;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 40);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(79, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Kinetic Friction:";
+            // 
+            // txtStaticFriction
+            // 
+            this.txtStaticFriction.Location = new System.Drawing.Point(123, 63);
+            this.txtStaticFriction.Name = "txtStaticFriction";
+            this.txtStaticFriction.Size = new System.Drawing.Size(98, 20);
+            this.txtStaticFriction.TabIndex = 7;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(3, 66);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(74, 13);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Static Friction:";
+            // 
+            // txtRestitution
+            // 
+            this.txtRestitution.Location = new System.Drawing.Point(123, 89);
+            this.txtRestitution.Name = "txtRestitution";
+            this.txtRestitution.Size = new System.Drawing.Size(98, 20);
+            this.txtRestitution.TabIndex = 9;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 92);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(60, 13);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "Restitution:";
             // 
             // RigidBodyComponentDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.txtRestitution);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.txtStaticFriction);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.txtKineticFriction);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.txtMass);
             this.Controls.Add(this.cbGravitySource);
             this.Controls.Add(this.cbStatic);
@@ -93,5 +153,11 @@
         private System.Windows.Forms.CheckBox cbStatic;
         private System.Windows.Forms.CheckBox cbGravitySource;
         private System.Windows.Forms.TextBox txtMass;
+        private System.Windows.Forms.TextBox txtKineticFriction;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtStaticFriction;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtRestitution;
+        private System.Windows.Forms.Label label4;
     }
 }

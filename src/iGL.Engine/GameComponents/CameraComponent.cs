@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using iGL.Engine.Math;
+using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
 namespace iGL.Engine
 {
@@ -31,28 +33,34 @@ namespace iGL.Engine
         public Vector3 Up { get; set; }
         public Vector4 ClearColor { get; set; }
 
+        [JsonIgnoreAttribute]
         public Matrix4 ProjectionMatrix { get; private set; }
+
+        [JsonIgnoreAttribute]
         public Matrix4 ModelViewMatrix { get; private set; }
+
+        [JsonIgnoreAttribute]
         public Matrix4 ModelViewProjectionMatrix { get; private set; }
 
-        public CameraProperties Properties { get; set; }             
+        public CameraProperties Properties { get; set; }
 
-        public CameraComponent()
-            : this(new PerspectiveProperties()
+        public CameraComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
+
+        public CameraComponent() { }
+        
+        protected override void Init()
+        {
+            Properties = new PerspectiveProperties()
             {
                 FieldOfViewRadians = MathHelper.DegreesToRadians(45.0f),
                 AspectRatio = 3.0f / 2.0f,
                 ZNear = 1.00f,
                 ZFar = 1000.0f
-            }) { }
-        
-        public CameraComponent(CameraProperties properties)
-        {
-            Properties = properties;           
+            };
 
             Up = new Vector3(0.0f, 1.0f, 0.0f);
 
-            Update();                       
+            Update();  
         }
 
         public void Update()

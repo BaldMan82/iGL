@@ -8,13 +8,19 @@ using Jitter.Dynamics;
 using Jitter.LinearMath;
 using Jitter.Collision;
 using System.Diagnostics;
+using System.Xml;
+using System.IO;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
 namespace iGL.Engine
 {
-    public class Scene
+    public class Scene 
     {
         public CameraComponent CurrentCamera { get; private set; }
         public LightComponent CurrentLight { get; private set; }
+
         public GameObject LastMouseDownTarget { get { return _currentMouseDownObj; } }
         public IEnumerable<GameObject> GameObjects { get { return _gameObjects.AsEnumerable(); } }
         public Vector4? LastNearPlaneMousePosition { get; private set; }
@@ -28,16 +34,17 @@ namespace iGL.Engine
         private Point? _mousePosition = null;
         private GameObject _currentMouseOverObj = null;
         private GameObject _currentMouseDownObj = null;
-        
+
         private Vector4 _ambientColor;
 
         private event EventHandler<TickEvent> OnTickEvent;
         private event EventHandler<MouseMoveEvent> OnMouseMoveEvent;
-                       
+        private event EventHandler<GameObjectAddedEvent> OnObjectAddedEvent;
+
         internal ShaderProgram ShaderProgram { get; set; }
         public IPhysics Physics { get; private set; }
 
-        public Dictionary<MouseButton, bool> MouseButtonState { get; private set; }        
+        public Dictionary<MouseButton, bool> MouseButtonState { get; private set; }
 
         public Vector4 AmbientColor
         {
@@ -50,6 +57,12 @@ namespace iGL.Engine
                 ShaderProgram.SetAmbientColor(_ambientColor);
                 _ambientColor = value;
             }
+        }     
+
+        public Scene()
+            : this(new Physics())
+        {
+
         }
 
         public Scene(IPhysics physics)
@@ -64,7 +77,7 @@ namespace iGL.Engine
             Physics = new Physics2d();
 
             MouseButtonState = new Dictionary<MouseButton, bool>();
-            
+
             MouseButtonState.Add(MouseButton.Button1, false);
             MouseButtonState.Add(MouseButton.Button2, false);
             MouseButtonState.Add(MouseButton.ButtonMiddle, false);
@@ -73,8 +86,17 @@ namespace iGL.Engine
         }
 
         public void Render()
-        {            
-            if (CurrentCamera == null) return;
+        {
+            if (CurrentCamera == null)
+            {
+                /* just clear the scene */
+
+                Game.GL.ClearColor(0, 0, 0, 0);
+                Game.GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+                return;
+
+            }
 
             Game.GL.ClearColor(CurrentCamera.ClearColor.X, CurrentCamera.ClearColor.Y, CurrentCamera.ClearColor.Z, CurrentCamera.ClearColor.W);
 
@@ -95,9 +117,9 @@ namespace iGL.Engine
                 gameObject.Render(Matrix4.Identity);
             }
 
-        }      
+        }
 
-        public void Tick(float timeElapsed)
+        public void Tick(float timeElapsed, bool tickPhysics = true)
         {
             if (OnTickEvent != null) OnTickEvent(this, new TickEvent() { Elapsed = timeElapsed });
 
@@ -106,7 +128,7 @@ namespace iGL.Engine
                 float step = timeElapsed;
                 if (step > 1.0f / 100.0f) step = 1.0f / 100.0f;
 
-                Physics.Step(timeElapsed);
+                if (tickPhysics) Physics.Step(timeElapsed);
             }
             catch { }
 
@@ -145,7 +167,7 @@ namespace iGL.Engine
         public void AddTimer(Timer timer)
         {
             if (_timers.Contains(timer)) throw new InvalidOperationException();
-            
+
             timer.LastTick = DateTime.UtcNow;
 
             _timers.Add(timer);
@@ -175,6 +197,18 @@ namespace iGL.Engine
             }
         }
 
+        public event EventHandler<GameObjectAddedEvent> OnObjectAdded
+        {
+            add
+            {
+                OnObjectAddedEvent += value;
+            }
+            remove
+            {
+                OnObjectAddedEvent -= value;
+            }
+        }
+
         public void SetCurrentCamera(GameObject camera)
         {
             if (camera == null) CurrentCamera = null;
@@ -201,7 +235,7 @@ namespace iGL.Engine
             CurrentLight = component;
         }
 
-        public virtual void Load() 
+        public virtual void Load()
         {
             Loaded = true;
             _gameObjects.ForEach(g => g.Load());
@@ -211,15 +245,17 @@ namespace iGL.Engine
         {
             if (gameObject.IsLoaded) throw new InvalidOperationException("GameObject cannot be loaded");
 
-            gameObject.Scene = this;           
+            gameObject.Scene = this;
 
-            _gameObjects.Add(gameObject);     
-      
+            _gameObjects.Add(gameObject);
+
             /* order game object list according to zbuffer enable/disable */
 
             _gameObjects = _gameObjects.OrderByDescending(g => g.RenderQueuePriority).ToList();
 
             if (Loaded) gameObject.Load();
+
+            if (OnObjectAddedEvent != null) OnObjectAddedEvent(this, new GameObjectAddedEvent() { GameObject = gameObject });
         }
 
         public void ScreenPointToWorld(Point screenPoint, out Vector4 nearPlane, out Vector4 farPlane)
@@ -230,7 +266,7 @@ namespace iGL.Engine
             Matrix4 projectionMatrix = Matrix4.Identity;
 
             if (CurrentCamera != null)
-            {             
+            {
                 var cam = CurrentCamera;
 
                 projectionMatrix = cam.ModelViewMatrix * cam.ProjectionMatrix;
@@ -263,7 +299,7 @@ namespace iGL.Engine
             {
                 var direction = nearPlane - LastNearPlaneMousePosition.Value;
                 if (direction.LengthSquared != 0)
-                {                   
+                {
                     if (OnMouseMoveEvent != null)
                     {
                         OnMouseMoveEvent(this, new MouseMoveEvent()
@@ -296,7 +332,7 @@ namespace iGL.Engine
             /* call events on raycast results */
 
             if (result != null)
-            {               
+            {
                 /* target changed */
                 if (_currentMouseOverObj != null && _currentMouseOverObj != result)
                 {
@@ -317,8 +353,8 @@ namespace iGL.Engine
 
                 _currentMouseOverObj.OnMouseOutEvent(_currentMouseOverObj, new MouseOutEvent());
                 _currentMouseOverObj = null;
-            }            
-            
+            }
+
         }
 
         public GameObject RayCast(Vector4 nearPlane, Vector4 ray)
@@ -398,6 +434,10 @@ namespace iGL.Engine
             if (!GameObjects.Contains(gameObject)) throw new InvalidOperationException();
 
             _gameObjects.Remove(gameObject);
+
+            if (CurrentCamera != null && gameObject.Components.Contains(CurrentCamera)) CurrentCamera = null;
+            if (CurrentLight != null && gameObject.Components.Contains(CurrentLight)) CurrentLight = null;
+
         }
 
         public void UpdateCurrentMousePosition()
@@ -411,5 +451,7 @@ namespace iGL.Engine
 
             LastNearPlaneMousePosition = nearPlane;
         }
+
+        
     }
 }

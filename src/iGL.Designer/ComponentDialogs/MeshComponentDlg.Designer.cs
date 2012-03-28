@@ -36,14 +36,14 @@
             // 
             // materialDlg
             // 
-            this.materialDlg.Location = new System.Drawing.Point(-1, 16);
+            this.materialDlg.Location = new System.Drawing.Point(0, 16);
             material1.Ambient = ((iGL.Engine.Math.Vector4)(resources.GetObject("material1.Ambient")));
             material1.Diffuse = ((iGL.Engine.Math.Vector4)(resources.GetObject("material1.Diffuse")));
             material1.Shininess = 0F;
             material1.Specular = ((iGL.Engine.Math.Vector4)(resources.GetObject("material1.Specular")));
             this.materialDlg.Material = material1;
             this.materialDlg.Name = "materialDlg";
-            this.materialDlg.Size = new System.Drawing.Size(290, 120);
+            this.materialDlg.Size = new System.Drawing.Size(290, 97);
             this.materialDlg.TabIndex = 0;
             // 
             // label1

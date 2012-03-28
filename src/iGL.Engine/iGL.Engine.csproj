@@ -44,6 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\EditorField.cs" />
+    <Compile Include="Attributes\RequiredComponent.cs" />
+    <Compile Include="Events\GameObjectAddedEvent.cs" />
+    <Compile Include="Events\SleepEvent.cs" />
     <Compile Include="Events\MoveEvent.cs" />
     <Compile Include="Events\RotateEvent.cs" />
     <Compile Include="Events\ScaleEvent.cs" />
@@ -116,6 +119,8 @@
     <Compile Include="Physics\Physics2d.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scene.cs" />
+    <Compile Include="Serialization\SceneSerializer.cs" />
+    <Compile Include="Textures\Texture.cs" />
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\Timer.cs" />
   </ItemGroup>
@@ -133,9 +138,10 @@
       <Project>{AA03EF1A-94F7-4D30-AB14-2092863FF923}</Project>
       <Name>Jitter</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
+    <ProjectReference Include="..\iGL.Newtonsoft.Json\Newtonsoft.Json.csproj">
+      <Project>{A9AE40FF-1A21-414A-9FE7-3BE13644CC6D}</Project>
+      <Name>Newtonsoft.Json</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -18,7 +18,7 @@ namespace iGL.Engine
             CollisionSystem collision = new CollisionSystemPersistentSAP();
             World = new Jitter.World(collision);
             World.AllowDeactivation = true;
-            World.Gravity = new Jitter.LinearMath.JVector(0, 0, 0);
+            World.Gravity = new Jitter.LinearMath.JVector(0, -9.81f, 0);
             World.Events.PreStep += new Jitter.World.WorldStep(Events_PreStep);
         }
 
@@ -90,11 +90,37 @@ namespace iGL.Engine
         public void AddBody(RigidBody body)
         {
             World.AddBody(body);
+            World.Events.DeactivatedBody += Events_DeactivatedBody;
+
+            if (!body.IsStatic)
+            {
+                World.AddConstraint(new Constraint2D(body));
+            }
         }
 
         public void RemoveBody(RigidBody body)
         {
+            World.Events.DeactivatedBody -= Events_DeactivatedBody;
             World.RemoveBody(body);
+        }
+
+        public bool CheckAllSleeping()
+        {
+            return World.RigidBodies.All(r => r.IsStatic || !r.IsActive);
+        }
+
+        public void SleepAll()
+        {
+            foreach (var body in World.RigidBodies)
+            {
+                var rBody = body as RigidBody;
+                if (!rBody.IsStatic) rBody.IsActive = false;
+            }
+        }
+
+        void Events_DeactivatedBody(RigidBody obj)
+        {
+            ((GameObject)obj.Tag).OnSleepEvent(obj.Tag, new Events.SleepEvent());
         }
     }
 }

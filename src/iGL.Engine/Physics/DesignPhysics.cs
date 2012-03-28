@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Jitter.Collision;
 using Jitter.Dynamics;
+using Jitter.LinearMath;
 
 namespace iGL.Engine
 {
@@ -18,10 +19,10 @@ namespace iGL.Engine
 
         public DesignPhysics()
         {
-            CollisionSystem collision = new CollisionSystemPersistentSAP();
+            CollisionSystem collision = new CollisionSystemBrute();
             _world = new Jitter.World(collision);
             _world.AllowDeactivation = true;
-            _world.Gravity = new Jitter.LinearMath.JVector(0, -0.001f, 0);
+            _world.Gravity = new Jitter.LinearMath.JVector(0, 0, 0);
 
             _world.Events.PreStep += new Jitter.World.WorldStep(Events_PreStep);
             _world.Events.PostStep += new Jitter.World.WorldStep(Events_PostStep);
@@ -48,7 +49,7 @@ namespace iGL.Engine
         }
 
         void Events_PreStep(float timestep)
-        {
+        {           
             HadCollision = false;
             RigidBody selectedBody = null;
 
@@ -76,36 +77,74 @@ namespace iGL.Engine
 
                 }
             }
+
+            Func<GameObject, bool> hasGravity = g => ((RigidBodyComponent)g.Components.Single(c => c is RigidBodyComponent)).IsGravitySource;
+
+            var staticBodies = _world.RigidBodies.Where(rb => rb.IsStatic && hasGravity((GameObject)rb.Tag)).ToList();
+            var dynamicBodies = _world.RigidBodies.Where(rb => !rb.IsStatic && rb.IsActive).ToList();
+
+            foreach (var body in dynamicBodies)
+            {
+                var totalForce = new JVector();
+
+                foreach (var staticBody in staticBodies)
+                {
+                    var G = (float)(6.67300 * System.Math.Pow(10, -1));
+                    var r = staticBody.Position - body.Position;
+
+                    var gravitySize = -G * (body.Mass * staticBody.Mass) / r.LengthSquared();
+
+                    var force = (body.Position - staticBody.Position);
+                    force.Normalize();
+
+                    force = JVector.Multiply(force, gravitySize);
+
+                    totalForce += force;
+                }
+
+                body.AddForce(totalForce);
+            }
         }
 
         void Events_PostStep(float timestep)
         {
-            foreach (var body in _world.RigidBodies)
-            {
-                var rBody = body as RigidBody;
-                rBody.IsStatic = _bodyStatics[rBody];
-                if (!rBody.IsStatic)
-                {
-                    rBody.AngularVelocity = new Jitter.LinearMath.JVector(0, 0, 0);
-                    rBody.LinearVelocity = new Jitter.LinearMath.JVector(0, 0, 0);
-                }
-            }
+            //foreach (var body in _world.RigidBodies)
+            //{
+            //    var rBody = body as RigidBody;
+            //    rBody.IsStatic = _bodyStatics[rBody];
+            //    if (!rBody.IsStatic)
+            //    {
+            //        rBody.AngularVelocity = new Jitter.LinearMath.JVector(0, 0, 0);
+            //        rBody.LinearVelocity = new Jitter.LinearMath.JVector(0, 0, 0);
+            //    }
+            //}
         }
 
         public void Step(float timeStep)
-        {
-            _world.Step(timeStep, false);
+        {           
+           _world.Step(timeStep, false);            
         }
 
-        public void AddBody(Jitter.Dynamics.RigidBody body)
+        public void AddBody(RigidBody body)
         {
             _world.AddBody(body);
-        }
+            _world.Events.DeactivatedBody += Events_DeactivatedBody;
 
+            if (!body.IsStatic)
+            {
+                //_world.AddConstraint(new Constraint2D(body));
+            }
+        }
 
         public void RemoveBody(RigidBody body)
         {
+            _world.Events.DeactivatedBody -= Events_DeactivatedBody;
             _world.RemoveBody(body);
+        }
+
+        void Events_DeactivatedBody(RigidBody obj)
+        {
+            ((GameObject)obj.Tag).OnSleepEvent(obj.Tag, new Events.SleepEvent());
         }
     }
 }

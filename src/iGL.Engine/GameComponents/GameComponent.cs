@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using iGL.Engine.GL;
+using System.Runtime.Serialization;
 
 namespace iGL.Engine
 {
-    public abstract class GameComponent : Object 
+    public abstract class GameComponent : Object, ISerializable
     {
         public enum CreationModeEnum
         {
@@ -17,13 +18,27 @@ namespace iGL.Engine
         public bool IsLoaded { get; private set; }
         public GameObject GameObject { get; internal set; }
         public CreationModeEnum CreationMode { get; internal set; }
-        public Guid Id { get; internal set; }
+        public string Id { get; set; }
 
-        public GameComponent()
+        public GameComponent() 
         {
             CreationMode = GameComponent.CreationModeEnum.Additional;
-            Id = Guid.NewGuid();
-        }      
+            Id = Guid.NewGuid().ToString();
+
+            Init();
+        }
+        
+        public GameComponent(SerializationInfo info, StreamingContext context) : this()
+        {
+            var props = this.GetType().GetProperties().Where(p => p.GetSetMethod() != null).ToList();
+
+            foreach (var prop in props)
+            {
+                prop.SetValue(this, info.GetValue(prop.Name, prop.PropertyType), null);
+            }            
+        }
+
+        protected virtual void Init() { }
 
         public IGL GL { get { return Game.GL; } }
 
@@ -51,8 +66,18 @@ namespace iGL.Engine
             IsLoaded = InternalLoad();
 
             return IsLoaded;
-        }        
-       
+        }
 
+
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            var props = this.GetType().GetProperties().Where(p => p.GetSetMethod() != null).ToList();
+
+            foreach (var prop in props)
+            {
+                info.AddValue(prop.Name, prop.GetValue(this, null));
+            }
+        }
     }
 }

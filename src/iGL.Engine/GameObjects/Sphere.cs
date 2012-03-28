@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using iGL.Engine.Math;
+using System.Runtime.Serialization;
 
 namespace iGL.Engine
 {
+    [RequiredComponent(typeof(MeshComponent), Sphere.MeshComponentId)]
+    [RequiredComponent(typeof(MeshRenderComponent), Sphere.MeshRenderComponentId)]
     public class Sphere : GameObject
     {       
         public int Rings { get; set; }
@@ -22,20 +25,24 @@ namespace iGL.Engine
         private MeshComponent _meshComponent;
         private MeshRenderComponent _meshRenderComponent;
 
-        private Guid _meshComponentId = new Guid("54d23823-aa44-4aeb-a742-57dbe16883e4");
-        private Guid _meshRenderComponentId = new Guid("4ed3d915-17ef-427e-bbde-7906f8375e6c");    
+        private const string MeshComponentId = "54d23823-aa44-4aeb-a742-57dbe16883e4";
+        private const string MeshRenderComponentId = "4ed3d915-17ef-427e-bbde-7906f8375e6c";
 
-        public Sphere() 
+        public Sphere(SerializationInfo info, StreamingContext context)
+            : base(info, context) 
+        {           
+        }
+
+        public Sphere() { }       
+
+        protected override void Init()
         {
             /* todo: re-use rendercomponent, like cube !! */
-            _meshComponent = new MeshComponent() { CreationMode = GameComponent.CreationModeEnum.Internal, Id = _meshComponentId };
-            _meshRenderComponent = new MeshRenderComponent() { CreationMode = GameComponent.CreationModeEnum.Internal, Id = _meshRenderComponentId };
-            
-            Rings = 16;
-            Segments = 16;
+            _meshComponent = Components.Single(c => c.Id == MeshComponentId) as MeshComponent;
+            _meshRenderComponent = Components.Single(c => c.Id == MeshRenderComponentId) as MeshRenderComponent;                     
 
-            AddComponent(_meshComponent);
-            AddComponent(_meshRenderComponent);
+            Rings = 16;
+            Segments = 16;           
         }
 
         private void LoadSphere()
@@ -99,5 +106,6 @@ namespace iGL.Engine
 
             base.Load();
         }
+      
     }
 }

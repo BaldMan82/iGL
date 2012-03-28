@@ -6,10 +6,12 @@ using iGL.Engine.Math;
 using iGL.Engine.GL;
 using iGL.Engine.Events;
 using System.Reflection;
+using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
 namespace iGL.Engine
 {
-    public class GameObject : Object
+    public class GameObject : Object, ISerializable
     {
         public IGL GL { get { return Game.GL; } }
 
@@ -28,16 +30,20 @@ namespace iGL.Engine
         public bool Designer { get; set; }
         public string Name { get; set; }
 
-        public Guid Id { get; private set; }
+        public string Id { get; set; }
 
         public Scene Scene { get; internal set; }
+
         public GameObject Parent { get; internal set; }
+
         public bool IsLoaded { get; private set; }
 
         public Vector3 Position
         {
             get
             {
+                UpdateGetRigidBodyOrientation();
+
                 return _position;
             }
             set
@@ -86,6 +92,8 @@ namespace iGL.Engine
         {
             get
             {
+                UpdateGetRigidBodyOrientation();
+
                 return _rotation;
             }
             set
@@ -101,6 +109,7 @@ namespace iGL.Engine
                 OnRotateEvent(this, rotationEvent);
             }
         }
+
         public Matrix4 Transform { get; internal set; }
 
         public GameObject Root
@@ -125,10 +134,41 @@ namespace iGL.Engine
         internal event EventHandler<MouseOutEvent> _mouseOutEvent;
         internal event EventHandler<ComponentAddedEvent> _componentAddedEvent;
         internal event EventHandler<ComponentRemovedEvent> _componentRemovedEvent;
+        internal event EventHandler<SleepEvent> _sleepEvent;
 
         internal event EventHandler<MoveEvent> _moveEvent;
         internal event EventHandler<ScaleEvent> _scaleEvent;
         internal event EventHandler<RotateEvent> _rotateEvent;
+
+        public GameObject(SerializationInfo info, StreamingContext context)
+            : this()
+        {
+            var props = this.GetType().GetProperties().Where(p => p.GetSetMethod() != null).ToList();
+
+            foreach (var prop in props)
+            {
+                prop.SetValue(this, info.GetValue(prop.Name, prop.PropertyType), null);
+            }
+
+            /* create required components */
+
+            var attributes = this.GetType().GetCustomAttributes(typeof(RequiredComponent), true).Select(o => o as RequiredComponent);
+            foreach (var attr in attributes)
+            {
+                var component = info.GetValue(attr.Id, attr.ComponentType) as GameComponent;
+                var loadedComponent = _components.Single(c => c.Id == component.Id);
+
+                component.CopyPublicValues(loadedComponent);
+            }
+
+            /* load addition components */
+            var componentList = info.GetValue("componentList", typeof(List<string>)) as List<string>;
+            foreach (var componentId in componentList.Where(id => !_components.Any(c2 => c2.Id == id)))
+            {
+                var component = info.GetValue(componentId, typeof(GameComponent)) as GameComponent;
+                AddComponent(component);
+            }
+        }
 
         public GameObject()
             : this(string.Empty)
@@ -137,7 +177,7 @@ namespace iGL.Engine
         }
 
         public GameObject(string name)
-        {           
+        {
             _components = new List<GameComponent>();
             _children = new List<GameObject>();
 
@@ -150,8 +190,27 @@ namespace iGL.Engine
             Enabled = true;
             Designer = false;
 
-            Id = Guid.NewGuid();
+            Id = Guid.NewGuid().ToString();
+
+            /* create required components */
+            var attributes = this.GetType().GetCustomAttributes(typeof(RequiredComponent), true).Select(o => o as RequiredComponent);
+            foreach (var attr in attributes)
+            {
+                if (!_components.Any(c => c.Id == attr.Id))
+                {
+                    var component = Activator.CreateInstance(attr.ComponentType) as GameComponent;
+                    
+                    component.Id = attr.Id;
+                    component.CreationMode = GameComponent.CreationModeEnum.Internal;
+
+                    AddComponent(component);
+                }
+            }
+
+            Init();
         }
+
+        protected virtual void Init() { }
 
         public GameObject Clone()
         {
@@ -216,7 +275,7 @@ namespace iGL.Engine
         }
 
         public Matrix4 GetCompositeTransform()
-        {           
+        {
             Matrix4 parentMatrix = Matrix4.Identity;
 
             if (Parent != null)
@@ -244,7 +303,7 @@ namespace iGL.Engine
             }
 
             IsLoaded = true;
-            
+
         }
 
         public virtual void Render(Matrix4 parentTransform)
@@ -261,7 +320,7 @@ namespace iGL.Engine
 
             Matrix4 thisTransform;
 
-            if (rigidBody != null)
+            if (rigidBody != null && rigidBody.IsLoaded)
             {
                 /* when a gameobject has a rigidbody, always use this transform to render */
                 /* gameobject transform has original positioning / orientation in relation to its parent tree */
@@ -294,10 +353,10 @@ namespace iGL.Engine
 
         private void UpdateTransform()
         {
-            var mPos = Matrix4.CreateTranslation(Position);
-            var mRotationX = Matrix4.CreateRotationX(Rotation.X);
-            var mRotationY = Matrix4.CreateRotationY(Rotation.Y);
-            var mRotationZ = Matrix4.CreateRotationZ(Rotation.Z);
+            var mPos = Matrix4.CreateTranslation(_position);
+            var mRotationX = Matrix4.CreateRotationX(_rotation.X);
+            var mRotationY = Matrix4.CreateRotationY(_rotation.Y);
+            var mRotationZ = Matrix4.CreateRotationZ(_rotation.Z);
 
             var scale = Matrix4.Scale(Scale);
 
@@ -510,6 +569,75 @@ namespace iGL.Engine
             }
         }
 
+        public event EventHandler<SleepEvent> OnSleep
+        {
+            add
+            {
+                _sleepEvent += value;
+            }
+            remove
+            {
+                _sleepEvent -= value;
+            }
+        }
+
+        internal void OnSleepEvent(object sender, SleepEvent e)
+        {
+            if (_sleepEvent != null) _sleepEvent(sender, e);
+        }
+
         #endregion
+
+        private void UpdateGetRigidBodyOrientation()
+        {
+            if (IsLoaded)
+            {
+                var rigidBody = this.Components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
+
+                if (rigidBody != null && rigidBody.IsLoaded)
+                {
+                    Vector3 position, rotation;
+
+                    if (Parent != null)
+                    {
+                        var composite = this.Parent.GetCompositeTransform();
+                        var rigidBodyTransform = rigidBody.RigidBodyTransform;
+                        composite.Invert();
+
+                        var thisTransform = rigidBodyTransform * composite;
+                        position = thisTransform.Translation();
+                        thisTransform.EulerAngles(out rotation);
+                    }
+                    else
+                    {
+                        position = rigidBody.RigidBodyTransform.Translation();
+                        rigidBody.RigidBodyTransform.EulerAngles(out rotation);
+                    }
+
+                    _rotation = rotation;
+                    _position = position;
+                }
+            }
+        }
+
+        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            var props = this.GetType().GetProperties().Where(p => p.GetSetMethod() != null).ToList();
+
+            foreach (var prop in props)
+            {
+                info.AddValue(prop.Name, prop.GetValue(this, null));
+            }
+
+            /* save components */
+            var componentList = new List<string>();
+            foreach (var component in Components)
+            {
+                info.AddValue(component.Id, component);
+                componentList.Add(component.Id);
+            }
+
+            info.AddValue("componentList", componentList);
+        }
     }
 }

@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Jitter.Collision.Shapes;
+using System.Runtime.Serialization;
 
 namespace iGL.Engine
 {
     public class SphereColliderComponent : ColliderComponent
-    {
-        public SphereColliderComponent()
-        {
-            
-        }
+    {        
+        public SphereColliderComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
+
+        public SphereColliderComponent() { }
 
         public override bool InternalLoad()
         {
@@ -55,7 +55,7 @@ namespace iGL.Engine
 
         internal override void Reload()
         {
-            if (!LoadCollider()) throw new InvalidOperationException();                
+            if (!LoadCollider()) throw new InvalidOperationException();
         }
     }
 }

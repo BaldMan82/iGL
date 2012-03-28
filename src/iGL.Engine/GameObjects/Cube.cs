@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using iGL.Engine.Math;
+using System.Runtime.Serialization;
 
 namespace iGL.Engine
 {
+    [RequiredComponent(typeof(MeshComponent), Cube.MeshComponentId)]
+    [RequiredComponent(typeof(MeshRenderComponent), Cube.MeshRenderComponentId)]
     public class Cube : GameObject
     {
         public Material Material
@@ -13,7 +16,7 @@ namespace iGL.Engine
             get
             {
                 return _meshComponent.Material;
-            }        
+            }
         }
 
         public float Height
@@ -37,13 +40,18 @@ namespace iGL.Engine
         private static MeshComponent _staticMeshComponent;
         private static MeshRenderComponent _staticMeshRenderComponent;
 
-        public Cube()
-        {
-            _meshComponent = new MeshComponent() { CreationMode = GameComponent.CreationModeEnum.Internal };
-            _meshRenderComponent = new MeshRenderComponent() { CreationMode = GameComponent.CreationModeEnum.Internal };
+        private const string MeshComponentId = "b2dae056-2ff7-443f-aed1-0afd3db7b0be";
+        private const string MeshRenderComponentId = "56af2307-be79-453a-a8ab-54bad0d21525";
 
-            AddComponent(_meshComponent);
-            AddComponent(_meshRenderComponent);
+        public Cube(SerializationInfo info, StreamingContext context)
+            : base(info, context) { }
+
+        public Cube() { }
+       
+        protected override void Init()
+        {
+            _meshComponent = Components.Single(c => c.Id == MeshComponentId) as MeshComponent;
+            _meshRenderComponent = Components.Single(c => c.Id == MeshRenderComponentId) as MeshRenderComponent;         
         }
 
         private void LoadCube()
@@ -52,7 +60,7 @@ namespace iGL.Engine
             {
                 var halfWidth = 0.5f;
                 var halfHeight = 0.5f;
-                var halfDepth = 0.5f;              
+                var halfDepth = 0.5f;
 
                 var vertices = new Vector3[36];
                 // top (+z)
@@ -127,14 +135,14 @@ namespace iGL.Engine
                 _meshComponent.Vertices = vertices;
                 _meshComponent.Indices = indices;
 
-                _meshComponent.CalculateNormals();             
+                _meshComponent.CalculateNormals();
 
                 _staticMeshComponent = _meshComponent;
                 _staticMeshRenderComponent = _meshRenderComponent;
             }
             else
             {
-                /* reuse vertex buffers */              
+                /* reuse vertex buffers */
                 _meshComponent.Vertices = _staticMeshComponent.Vertices;
                 _meshComponent.Normals = _staticMeshComponent.Normals;
                 _meshComponent.Indices = _staticMeshComponent.Indices;
@@ -147,7 +155,7 @@ namespace iGL.Engine
         {
             LoadCube();
 
-            base.Load();           
+            base.Load();
         }
     }
 }

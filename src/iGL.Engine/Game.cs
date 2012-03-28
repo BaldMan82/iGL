@@ -5,6 +5,7 @@ using System.Text;
 using iGL.Engine.GL;
 using iGL.Engine.Math;
 using iGL.Engine.Events;
+using Newtonsoft.Json;
 
 namespace iGL.Engine
 {
@@ -29,6 +30,9 @@ namespace iGL.Engine
         {          
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.CullFace);
+            GL.Enable(EnableCap.Texture2d);
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.SrcColor);
         }
 
         public void MouseMove(int x, int y)
@@ -46,9 +50,9 @@ namespace iGL.Engine
             Scene.Render();
         }
 
-        public void Tick(float timeElapsed)
+        public void Tick(float timeElapsed, bool tickPhysics = true)
         {
-            Scene.Tick(timeElapsed);
+            Scene.Tick(timeElapsed, tickPhysics);
         }
 
         public void SetScene(Scene scene)
@@ -62,9 +66,49 @@ namespace iGL.Engine
             Scene.Load();
         }
 
-        public void SaveScene()
+        public void LoadFromJson(string json)
         {
+            if (Scene == null) throw new InvalidCastException("Must load into a scene");
 
+            var obj = JsonConvert.DeserializeObject<SceneSerializer>(json, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                TypeNameHandling = TypeNameHandling.Objects
+            });
+
+            foreach (var gameObject in obj.GameObjects)
+            {
+                Scene.AddGameObject(gameObject);
+            }
+
+            if (!string.IsNullOrEmpty(obj.CurrentCameraId))
+            {
+                Scene.SetCurrentCamera(obj.GameObjects.FirstOrDefault(g => g.Id == obj.CurrentCameraId));
+            }
+
+            if (!string.IsNullOrEmpty(obj.CurrentLightId))
+            {
+                Scene.SetCurrentLight(obj.GameObjects.FirstOrDefault(g => g.Id == obj.CurrentLightId));
+            }
+        }
+
+        public string SaveSceneToJson()
+        {
+            var sceneSerializer = new SceneSerializer();
+
+            if (Scene.CurrentCamera != null) sceneSerializer.CurrentCameraId = Scene.CurrentCamera.GameObject.Id;
+            if (Scene.CurrentLight != null) sceneSerializer.CurrentLightId = Scene.CurrentLight.GameObject.Id;
+
+            sceneSerializer.GameObjects = Scene.GameObjects.Where(g => !g.Designer);
+
+            string json = JsonConvert.SerializeObject(sceneSerializer,
+                new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    TypeNameHandling = TypeNameHandling.Objects
+                });
+
+            return json;                    
         }
 
     }

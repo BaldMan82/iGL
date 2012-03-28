@@ -4,17 +4,22 @@ using System.Linq;
 using System.Text;
 using Jitter.Collision.Shapes;
 using Jitter.LinearMath;
+using System.Runtime.Serialization;
 
 
 namespace iGL.Engine
 {
     public class BoxColliderComponent : ColliderComponent
-    {              
+    {
         public override bool InternalLoad()
         {
             base.InternalLoad();
             return LoadCollider();
         }
+
+        public BoxColliderComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
+
+        public BoxColliderComponent() { }
 
         private bool LoadCollider()
         {

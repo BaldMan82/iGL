@@ -3,25 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Jitter.Collision.Shapes;
+using System.Runtime.Serialization;
 
 namespace iGL.Engine
 {
     public abstract class ColliderComponent : GameComponent
     {
-        public bool Enabled { get; set; }
-        public RigidBodyComponent AttachedRigidBody { get; set; }
-
+        public bool Enabled { get; set; }  
+   
         internal Shape CollisionShape { get; set; }
 
+        public ColliderComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        
         public ColliderComponent() { }
        
         public override bool InternalLoad()
         {
-            /* game object must have a rigid body component */
-            //AttachedRigidBody = GameObject.Components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
-
-            //if (AttachedRigidBody == null) throw new NotSupportedException("Collider must have a rigid body component");
-
             return true;
         }
 

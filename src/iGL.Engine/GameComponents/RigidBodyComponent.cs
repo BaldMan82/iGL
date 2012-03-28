@@ -6,12 +6,16 @@ using Jitter.Dynamics;
 using Jitter.LinearMath;
 using iGL.Engine.Math;
 using Jitter.Collision.Shapes;
+using System.Runtime.Serialization;
 
 namespace iGL.Engine
 {
     public class RigidBodyComponent : GameComponent
     {
         private float _mass { get; set; }
+        private float _staticFriction { get; set; }
+        private float _kineticFriction { get; set; }
+        private float _restitution { get; set; }
         private bool _isStatic { get; set; }
         private bool _isGravitySource { get; set; }
 
@@ -38,7 +42,7 @@ namespace iGL.Engine
             set
             {
                 _isGravitySource = value;
-                UpdateRigidBody();
+                Reload();
             }
         }
 
@@ -51,27 +55,70 @@ namespace iGL.Engine
             set
             {
                 _isStatic = value;
+                Reload();
+            }
+        }
+
+        public float Restitution
+        {
+            get
+            {
+                return _restitution;
+            }
+            set
+            {
+                _restitution = value;
                 UpdateRigidBody();
             }
         }
 
-        public Matrix4 RigidBodyTransform { get; private set; }
+        public float StaticFriction
+        {
+            get
+            {
+                return _staticFriction;
+            }
+            set
+            {
+                _staticFriction = value;
+                UpdateRigidBody();
+            }
+        }
+
+        public float KineticFriction
+        {
+            get
+            {
+                return _kineticFriction;
+            }
+            set
+            {
+                _kineticFriction = value;
+                UpdateRigidBody();
+            }
+        }
+
+        internal Matrix4 RigidBodyTransform { get; private set; }
 
         public ColliderComponent ColliderComponent { get; private set; }
 
         internal RigidBody RigidBody { get; private set; }
 
-        public RigidBodyComponent()
-            : this(10.0f, false, false)
+        public RigidBodyComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
+
+        public RigidBodyComponent() { }
+
+        protected override void Init()
         {
             RigidBodyTransform = Matrix4.Identity;
-        }
 
-        public RigidBodyComponent(float mass = 10.0f, bool isStatic = false, bool isGravitySource = false)
-        {
-            _mass = mass;
-            _isStatic = isStatic;
-            _isGravitySource = isGravitySource;
+            _mass = 10.0f;
+            _isStatic = false;
+            _isGravitySource = false;
+
+            _kineticFriction = 0.3f;
+            _staticFriction = 0.6f;
+            _restitution = 0.0f;
         }
 
         internal void Reload()
@@ -80,6 +127,7 @@ namespace iGL.Engine
 
             if (RigidBody != null)
             {
+
                 GameObject.Scene.Physics.RemoveBody(RigidBody);
 
                 ColliderComponent = GameObject.Components.FirstOrDefault(c => c is ColliderComponent) as ColliderComponent;
@@ -105,12 +153,12 @@ namespace iGL.Engine
         }
 
         void GameObject_OnRotate(object sender, Events.RotateEvent e)
-        {           
+        {
             Reload();
         }
 
         void GameObject_OnScale(object sender, Events.ScaleEvent e)
-        {           
+        {
             Reload();
         }
 
@@ -134,23 +182,23 @@ namespace iGL.Engine
             {
                 if (!ColliderComponent.Load()) return false;
             }
-          
+
             /* create a composite transform without this object's scale */
 
             Matrix4 transform = Matrix4.Identity;
 
-            var mRotationX = Matrix4.CreateRotationX(GameObject.Rotation.X);
-            var mRotationY = Matrix4.CreateRotationY(GameObject.Rotation.Y);
-            var mRotationZ = Matrix4.CreateRotationZ(GameObject.Rotation.Z);
-            var translation = Matrix4.CreateTranslation(GameObject.Position);
+            var mRotationX = Matrix4.CreateRotationX(GameObject._rotation.X);
+            var mRotationY = Matrix4.CreateRotationY(GameObject._rotation.Y);
+            var mRotationZ = Matrix4.CreateRotationZ(GameObject._rotation.Z);
+            var translation = Matrix4.CreateTranslation(GameObject._position);
 
             transform = mRotationX * mRotationY * mRotationZ * translation;
-            
+
             if (GameObject.Parent != null)
             {
                 var parentTransform = GameObject.Parent.GetCompositeTransform();
                 transform = transform * parentTransform;
-            }       
+            }
 
             if (ColliderComponent is CompoundColliderComponent)
             {
@@ -171,20 +219,19 @@ namespace iGL.Engine
                 RigidBody.Mass = _mass;
 
                 RigidBody.Orientation = transform.ToJitter();
-
                 RigidBody.Position = transform.Translation().ToJitter();
 
                 RigidBody.IsStatic = _isStatic;
             }
 
-            //if (!_isStatic)
-            //{
-            //    GameObject.Scene.Physics.World.AddConstraint(new iGL.Engine.Physics.Constraint2D(RigidBody));
-            //}
-
             RigidBody.Tag = GameObject;
+            RigidBody.Material.Restitution = _restitution;
+            RigidBody.Material.KineticFriction = _kineticFriction;
+            RigidBody.Material.StaticFriction = _staticFriction;
 
             GameObject.Scene.Physics.AddBody(RigidBody);
+
+
 
             return true;
         }
@@ -192,7 +239,7 @@ namespace iGL.Engine
         public void ApplyForce(Vector3 force)
         {
             RigidBody.AddForce(force.ToJitter());
-        }      
+        }
 
         private void UpdateRigidBody()
         {
@@ -200,14 +247,14 @@ namespace iGL.Engine
 
             RigidBody.IsStatic = _isStatic;
             RigidBody.Mass = _mass;
-            
+
         }
 
         public override void Tick(float timeElapsed)
         {
             /* scale must be taking into account */
 
-            RigidBodyTransform = Math.Matrix4.Scale(GameObject.Scale) * RigidBody.Orientation.ToOpenTK(RigidBody.Position);            
+            RigidBodyTransform = Math.Matrix4.Scale(GameObject.Scale) * RigidBody.Orientation.ToOpenTK(RigidBody.Position);
         }
     }
 }

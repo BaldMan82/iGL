@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using iGL.Engine.Math;
+using System.Runtime.Serialization;
 
 namespace iGL.Engine
 {
+    [RequiredComponent(typeof(CameraComponent), OrthographicCamera.CameraComponentId)]
     public class OrthographicCamera : GameObject
     {
         public CameraComponent CameraComponent { get; private set; }
@@ -18,11 +20,16 @@ namespace iGL.Engine
         public Vector3 Target { get; set; }
         public Vector4 ClearColor { get; set; }
 
-        private Guid _cameraComponentId = new Guid("7d719186-50f7-49c1-bb2b-7b7cd85dadbc");
+        private const string CameraComponentId = "7d719186-50f7-49c1-bb2b-7b7cd85dadbc";
 
-        public OrthographicCamera()
+        public OrthographicCamera(SerializationInfo info, StreamingContext context)
+            : base(info, context) { }
+
+        public OrthographicCamera() { }
+
+        protected override void Init()
         {
-            CameraComponent = new CameraComponent() { CreationMode = GameComponent.CreationModeEnum.Internal, Id =_cameraComponentId };
+            CameraComponent = Components.First(c => c.Id == CameraComponentId) as CameraComponent;
 
             /* defaults */
 
@@ -33,8 +40,6 @@ namespace iGL.Engine
 
             ClearColor = new Vector4(0.2f, 0.2f, 0.2f, 1.0f);
             Position = new Vector3(0, 0, 10);
-
-            AddComponent(CameraComponent);
         }
 
         private void LoadCamera()
@@ -47,7 +52,7 @@ namespace iGL.Engine
                 ZFar = this.ZFar
             };
 
-            CameraComponent.Update();                        
+            CameraComponent.Update();
 
             CameraComponent.Target = Target;
             CameraComponent.ClearColor = ClearColor;

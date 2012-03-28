@@ -33,7 +33,19 @@ namespace iGL.Engine
             foreach (var prop in props)
             {
                 var val = prop.GetValue(obj, null);
-                prop.SetValue(destObj, val, null);
+
+                if (val == null) continue;
+
+                if (!prop.PropertyType.IsValueType && !prop.PropertyType.IsArray && prop.PropertyType.IsClass && prop.PropertyType != typeof(string))
+                {
+                    var instance = Activator.CreateInstance(prop.PropertyType);
+                    val.CopyPublicValues(instance);
+                    prop.SetValue(destObj, instance, null);
+                }
+                else
+                {                    
+                    prop.SetValue(destObj, val, null);
+                }
             }
         }
 
@@ -54,6 +66,19 @@ namespace iGL.Engine
                            position.X,
                            position.Y, 
                            position.Z, 1.0f);           
+        }
+
+        public static void EulerAngles(this Matrix4 matrix, out Vector3 eulerRotation)
+        {
+
+            eulerRotation = new Vector3(0);
+
+            if (matrix.M31 != -1 || matrix.M32 != 1)
+            {
+                eulerRotation.Y = -(float)System.Math.Asin(matrix.M13);
+                eulerRotation.X = (float)System.Math.Atan2(matrix.M23 / System.Math.Cos(eulerRotation.X), matrix.M33 / System.Math.Cos(eulerRotation.X));
+                eulerRotation.Z = (float)System.Math.Atan2(matrix.M12 / System.Math.Cos(eulerRotation.X), matrix.M11 / System.Math.Cos(eulerRotation.X));
+            }
         }
 
         public static JVector ToJitter(this Vector4 vector)

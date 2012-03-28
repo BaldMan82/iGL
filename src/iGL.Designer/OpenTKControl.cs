@@ -34,7 +34,18 @@ namespace iGL.Designer
 
         public OperationType Operation { get; private set; }
 
-        public EditorGame Game { get; private set; }      
+        public EditorGame Game { get; private set; }
+
+        public bool Snap { get; set; }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public float SnapValue { get; set; }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public float SnapValueRotation { get; set; }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool PreStabilizePhysics { get; set; }
 
         public enum EditAxisType
         {
@@ -50,7 +61,8 @@ namespace iGL.Designer
             MOVE,
             ROTATE,
             SCALE,
-            PANVIEW
+            PANVIEW,
+            DROPPING
         }
 
         private bool _glLoaded = false;
@@ -59,7 +71,8 @@ namespace iGL.Designer
         private Scene _workingScene;
         private bool _isPaused;
         private bool _isPlaying;
-
+        private Vector3 _unsnappedOperationVector;
+        
         private event EventHandler<SelectObjectEvent> _selectObjectEvent;
         private event EventHandler<ObjectAddedEvent> _objectAddedEvent;
         private event EventHandler<ObjectRemovedEvent> _objectRemovedEvent;
@@ -80,6 +93,9 @@ namespace iGL.Designer
                 DragDrop += new DragEventHandler(OpenTKControl_DragDrop);
                 MouseWheel += new MouseEventHandler(OpenTKControl_MouseWheel);
             }
+
+            SnapValue = 0.25f;
+            SnapValueRotation = (float)(Math.PI / 8.0);
         }
 
         void OpenTKControl_MouseWheel(object sender, MouseEventArgs e)
@@ -166,7 +182,10 @@ namespace iGL.Designer
                     direction.Normalize();
                     direction = Vector3.Multiply(direction, 10);
 
-                    instance.Position = position + direction;
+                    var pos = position + direction;
+                    SnapTo(ref pos);
+
+                    instance.Position = pos;
                 }
 
                 _workingScene.AddGameObject(instance);
@@ -179,52 +198,51 @@ namespace iGL.Designer
                 if (_workingScene.CurrentLight == null && instance.Components.Any(c => c is LightComponent))
                 {
                     _workingScene.SetCurrentLight(instance);
-                }
-
-                if (_objectAddedEvent != null)
-                {
-                    _objectAddedEvent(this, new ObjectAddedEvent() { AddedObject = instance });
-                }
-
-                /* hook up mouse events */
-
-                instance.OnMouseIn += (a, b) =>
-                {
-                    if (Operation == OperationType.PANVIEW) return;
-
-                    Cursor = Cursors.Cross;
-                };
-
-                instance.OnMouseOut += (a, b) =>
-                {
-                    if (Operation == OperationType.PANVIEW) return;
-
-                    Cursor = Cursors.Arrow;
-                };
-
-                instance.OnMouseDown += (a, b) =>
-                {
-                    if (Operation == OperationType.PANVIEW || 
-                        (b.Button != MouseButton.Button1 && b.Button != MouseButton.Button2)) return;
-
-                    _selectedObject = (a as GameObject).Root;
-
-                    var rigidBody = _selectedObject.Components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
-
-                    ((DesignPhysics)_workingScene.Physics).SelectedObject = _selectedObject;
-                    
-                    UpdateGizmo();
-
-                    if (_selectObjectEvent != null)
-                    {
-                        _selectObjectEvent(this, new SelectObjectEvent() { SelectedObject = _selectedObject });
-                    }
-                };
+                }                
+                
             }
             catch (Exception ex)
             {
                 MessageBox.Show(((Type)node.Tag).Name + ": " + ex.Message);
             }
+        }
+
+        private void BindEvents(GameObject instance)
+        {
+            /* hook up mouse events */
+
+            instance.OnMouseIn += (a, b) =>
+            {
+                if (Operation == OperationType.PANVIEW) return;
+
+                Cursor = Cursors.Cross;
+            };
+
+            instance.OnMouseOut += (a, b) =>
+            {
+                if (Operation == OperationType.PANVIEW) return;
+
+                Cursor = Cursors.Arrow;
+            };
+
+            instance.OnMouseDown += (a, b) =>
+            {
+                if (Operation == OperationType.PANVIEW ||
+                    (b.Button != MouseButton.Button1 && b.Button != MouseButton.Button2)) return;
+
+                _selectedObject = (a as GameObject).Root;
+
+                var rigidBody = _selectedObject.Components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
+
+                ((DesignPhysics)_workingScene.Physics).SelectedObject = _selectedObject;
+
+                UpdateGizmo();
+
+                if (_selectObjectEvent != null)
+                {
+                    _selectObjectEvent(this, new SelectObjectEvent() { SelectedObject = _selectedObject });
+                }
+            };
         }
 
         void OpenTKControl_DragEnter(object sender, DragEventArgs e)
@@ -263,6 +281,13 @@ namespace iGL.Designer
                 contextMenu.Show(point.X, point.Y);
             }
 
+            if (_selectedObject != null)
+            {
+                if (Operation == OperationType.MOVE) _unsnappedOperationVector = _selectedObject.Position;
+                if (Operation == OperationType.ROTATE) _unsnappedOperationVector = _selectedObject.Rotation;
+                if (Operation == OperationType.SCALE) _unsnappedOperationVector = _selectedObject.Scale;
+            }
+
             UpdateMenuStatus();
             
         }        
@@ -285,14 +310,28 @@ namespace iGL.Designer
             Game = EditorGame.Instance();
             Game.Resize(Size.Width, Size.Height);
 
+            LoadScene(string.Empty);
+
+            var size = ClientSize;
+
+            Game.Resize(size.Width, size.Height);
+                      
+        }
+
+        public void LoadScene(string json)
+        {
+            ClearSelection();
+
             var physics = new DesignPhysics();
-            physics.OnCollision += new EventHandler<EventArgs>(physics_OnCollision);
+            //physics.OnCollision += new EventHandler<EventArgs>(physics_OnCollision);
             _workingScene = new Scene(physics);
-            
+
             _workingScene.OnMouseMove += new EventHandler<Engine.Events.MouseMoveEvent>(_scene_OnMouseMove);
+                     
+            Game.SetScene(_workingScene);
 
             /* origin gizmo */
-            var gizmo = new Gizmo() { ArrowLength = 30.0f, ShowUniformSphere = false };            
+            var gizmo = new Gizmo() { ArrowLength = 30.0f, ShowUniformSphere = false };
 
             _workingScene.AddGameObject(gizmo);
 
@@ -323,15 +362,22 @@ namespace iGL.Designer
 
             _workingScene.AddGameObject(_selectionGizmo);
 
-            Game.SetScene(_workingScene);
+            _workingScene.OnObjectAdded += _workingScene_OnObjectAdded;           
 
-            var size = ClientSize;
-
-            Game.Resize(size.Width, size.Height);
+            if (!string.IsNullOrEmpty(json)) Game.LoadFromJson(json);
+            
             Game.Load();
-
-            _workingScene.AmbientColor = new Vector4(1, 1, 1, 1);
         }
+
+        void _workingScene_OnObjectAdded(object sender, GameObjectAddedEvent e)
+        {
+            BindEvents(e.GameObject);
+
+            if (_objectAddedEvent != null)
+            {
+                _objectAddedEvent(this, new ObjectAddedEvent() { AddedObject = sender as GameObject });
+            }
+        }       
 
         void physics_OnCollision(object sender, EventArgs e)
         {
@@ -357,8 +403,10 @@ namespace iGL.Designer
         public void Tick(float timeElapsed)
         {
             if (_isPaused && _isPlaying) return;
+            
+            if (timeElapsed > 0.01f) timeElapsed = 0.01f;
 
-            Game.Tick(timeElapsed);
+            Game.Tick(timeElapsed, _isPlaying || Operation == OperationType.DROPPING);
         }
 
         public void Render()
@@ -374,6 +422,8 @@ namespace iGL.Designer
 
         void _scene_OnMouseMove(object sender, Engine.Events.MouseMoveEvent e)
         {
+            if (Operation == OperationType.DROPPING) return;
+
             if (_workingScene.MouseButtonState[MouseButton.ButtonMiddle])
             {               
                 _workingScene.CurrentCamera.GameObject.Position -= e.DirectionOnNearPlane * 10.0f;
@@ -416,9 +466,9 @@ namespace iGL.Designer
                 distance = objectDistance;
             }
 
-            var vector = Operation == OperationType.MOVE ? _selectedObject.Position :
-                        (Operation == OperationType.ROTATE ? _selectedObject.Rotation :
-                        (Operation == OperationType.SCALE ? _selectedObject.Scale : new Vector3()));
+            var vector = Operation == OperationType.MOVE ? _unsnappedOperationVector :
+                        (Operation == OperationType.ROTATE ? _unsnappedOperationVector :
+                        (Operation == OperationType.SCALE ? _unsnappedOperationVector : new Vector3()));
 
             Vector3 change = new Vector3(0);
 
@@ -446,34 +496,32 @@ namespace iGL.Designer
             }
 
             vector += change;
+            _unsnappedOperationVector = vector;           
+
+            if (change.Length == 0) return;
 
             if (Operation == OperationType.MOVE)
             {
-                var length = change.Length;
-                float iterations = (length / 0.01f);
-                var unitVec = change / iterations;
-                var totalVec = new Vector3(0);
-
-                bool hadCollision = false;
-
-                while (totalVec.Length < change.Length && !hadCollision)
-                {
-                    _selectedObject.Position += unitVec;
-                    _workingScene.Physics.Step(1.0f / 1000.0f);
-
-                    hadCollision = ((DesignPhysics)_workingScene.Physics).HadCollision;
-
-                    totalVec += unitVec;
-                }               
+                SnapTo(ref vector);
+                _selectedObject.Position = vector;
             }
 
-            if (Operation == OperationType.ROTATE) _selectedObject.Rotation = vector;
-            if (Operation == OperationType.SCALE) _selectedObject.Scale = vector;
-
+            if (Operation == OperationType.ROTATE)
+            {
+                SnapToRotation(ref vector);
+                _selectedObject.Rotation = vector;
+            }
+            if (Operation == OperationType.SCALE)
+            {
+                SnapTo(ref vector);
+                _selectedObject.Scale = vector;
+            }
         }
 
         private void UpdateGizmo()
         {
+            if (_selectionGizmo == null) return;
+
             if (_selectedObject == null)
             {
                 _selectionGizmo.Visible = false;
@@ -504,10 +552,14 @@ namespace iGL.Designer
             if (_selectedObject != null)
             {
                 deleteMenuItem.Enabled = true;
+                dropMenuItem.Enabled = _selectedObject.Components.Any(c => c is RigidBodyComponent);
+                cloneMenuItem.Enabled = true;
             }
             else
             {
+                dropMenuItem.Enabled = false;
                 deleteMenuItem.Enabled = false;
+                cloneMenuItem.Enabled = false;
             }
         }
 
@@ -542,21 +594,26 @@ namespace iGL.Designer
 
             if (_isPlaying) return;
 
-            var scene = new Scene(new Physics());
+            var json = Game.SaveSceneToJson();
 
-            foreach (var gameObject in _workingScene.GameObjects.Where(o => !o.Designer))
-            {
-                var clone = gameObject.Clone();
-                if (clone.Components.Count() != gameObject.Components.Count())
-                {
-                    throw new Exception("Component creation mode error: not counting equal component count after clone.");
-                }
+            var scene = new Scene(new Physics2d());
 
-                scene.AddGameObject(clone);
-            }
+            //foreach (var gameObject in _workingScene.GameObjects.Where(o => !o.Designer))
+            //{
+            //    var clone = gameObject.Clone();
+            //    if (clone.Components.Count() != gameObject.Components.Count())
+            //    {
+            //        throw new Exception("Component creation mode error: not counting equal component count after clone.");
+            //    }
+
+            //    scene.AddGameObject(clone);
+            //}
 
             Game.SetScene(scene);
+            Game.LoadFromJson(json);
             Game.LoadScene();
+
+           // ((Physics2d)scene.Physics).SleepAll();
 
             if (_workingScene.CurrentCamera != null)
             {
@@ -569,6 +626,26 @@ namespace iGL.Designer
             }
 
             _isPlaying = true;
+
+            if (PreStabilizePhysics)
+            {
+                /* stabilize physics */
+
+                int iterations = 0;
+                var physics2 = scene.Physics as Physics2d;
+
+                scene.Physics.Step(0.001f);
+
+                while (!physics2.CheckAllSleeping() && ++iterations < 10000)
+                {
+                    scene.Physics.Step(0.001f);
+                }
+
+                if (physics2.CheckAllSleeping())
+                {
+                    MessageBox.Show("Stable");
+                }
+            }
         }
         
         public void Pause()
@@ -576,12 +653,54 @@ namespace iGL.Designer
             _isPaused = true;
         }
 
-
         public void Stop()
         {
             _isPlaying = false;
             _isPaused = false;
             Game.SetScene(_workingScene);
+        }
+
+        private void dropMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_selectedObject != null)
+            {
+                Operation = OperationType.DROPPING;
+                _selectedObject.OnSleep += _selectedObject_OnSleep;
+            }
+        }
+
+        void _selectedObject_OnSleep(object sender, SleepEvent e)
+        {           
+            MessageBox.Show("Sleeping");
+            ((GameObject)sender).OnSleep -= _selectedObject_OnSleep;
+        }
+
+        private void SnapTo(ref Vector3 vector)
+        {
+            if (!Snap) return;
+
+            vector.X = (float)((int)(vector.X / SnapValue)) * SnapValue;
+            vector.Y = (float)((int)(vector.Y / SnapValue)) * SnapValue;
+            vector.Z = (float)((int)(vector.Z / SnapValue)) * SnapValue;
+        }
+
+        private void SnapToRotation(ref Vector3 vector)
+        {
+            if (!Snap) return;
+
+            vector.X = (float)((int)(vector.X / SnapValueRotation)) * SnapValueRotation;
+            vector.Y = (float)((int)(vector.Y / SnapValueRotation)) * SnapValueRotation;
+            vector.Z = (float)((int)(vector.Z / SnapValueRotation)) * SnapValueRotation;
+        }
+
+        private void cloneMenuItem_Click(object sender, EventArgs e)
+        {
+            var clone = _selectedObject.Clone();
+            var count = _workingScene.GameObjects.Count(o => o.GetType() == _selectedObject.GetType());
+
+            clone.Name = _selectedObject.GetType().Name + count.ToString();
+
+            _workingScene.AddGameObject(clone);         
         }
     }
 }

@@ -21,9 +21,13 @@ namespace iGL.Designer.ComponentDialogs
         public override void UpdateComponent()
         {
             var rigidBodyComponent = this.Component as RigidBodyComponent;
+
             rigidBodyComponent.IsStatic = cbStatic.Checked;
             rigidBodyComponent.IsGravitySource = cbGravitySource.Checked;
-            rigidBodyComponent.Mass = txtMass.TextToFloat();
+            rigidBodyComponent.Mass = txtMass.TextToFloat(defaultValue:100.0f);
+            rigidBodyComponent.KineticFriction = txtKineticFriction.TextToFloat();
+            rigidBodyComponent.StaticFriction = txtStaticFriction.TextToFloat();
+            rigidBodyComponent.Restitution = txtRestitution.TextToFloat();
         }
 
         private void RigidBodyComponentDlg_Load(object sender, EventArgs e)
@@ -34,6 +38,9 @@ namespace iGL.Designer.ComponentDialogs
             cbGravitySource.Checked = rigidBodyComponent.IsGravitySource;
 
             txtMass.Text = rigidBodyComponent.Mass.ToInvariantText();
+            txtKineticFriction.Text = rigidBodyComponent.KineticFriction.ToInvariantText();
+            txtStaticFriction.Text = rigidBodyComponent.StaticFriction.ToInvariantText();
+            txtRestitution.Text = rigidBodyComponent.Restitution.ToInvariantText();
         }
     }
 }

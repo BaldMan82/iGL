@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using iGL.Engine.GL;
 using iGL.Engine.Math;
+using System.Runtime.Serialization;
 
 namespace iGL.Engine
 {
@@ -12,10 +13,14 @@ namespace iGL.Engine
         private int[] _bufferIds;
         private MeshComponent _meshComponent;
 
-        public BeginMode BeginMode { get; set; }       
+        public BeginMode BeginMode { get; set; }
 
-        public MeshRenderComponent()            
-        {          
+        public MeshRenderComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
+
+        public MeshRenderComponent() { }
+
+        protected override void Init()
+        {
             _bufferIds = new int[3];
 
             BeginMode = BeginMode.Triangles;
@@ -56,14 +61,14 @@ namespace iGL.Engine
             if (!IsLoaded) Load();
 
             var meshRenderComponent = new MeshRenderComponent();
-            
-            meshRenderComponent._bufferIds = _bufferIds;         
+
+            meshRenderComponent._bufferIds = _bufferIds;
 
             return meshRenderComponent;
         }
 
         public override void Render(Matrix4 transform)
-        {            
+        {
             var locationInverse = transform;
 
             locationInverse.Invert();
@@ -86,10 +91,10 @@ namespace iGL.Engine
             GL.EnableVertexAttribArray(normalAttrib);
             GL.VertexAttribPointer(normalAttrib, 3, VertexAttribPointerType.Float, false, 0, 0);
 
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, _bufferIds[2]);                        
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, _bufferIds[2]);
 
             GL.DrawElements(BeginMode, _meshComponent.Indices.Length, DrawElementsType.UnsignedShort, 0);
-            
+
         }
 
         public override void Tick(float timeElapsed)

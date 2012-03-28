@@ -11,14 +11,16 @@ using System.Reflection;
 using iGL.Engine;
 using iGL.Engine.Math;
 using System.Collections;
+using System.IO;
 
 namespace iGL.Designer
 {
     public partial class MainForm : Form
-    {               
+    {
         private DateTime _lastRender;
         private DateTime _lastTick;
-                          
+        private string _currentFilename;
+
         public MainForm()
         {
             InitializeComponent();
@@ -29,7 +31,7 @@ namespace iGL.Designer
             _lastRender = DateTime.UtcNow;
             _lastTick = DateTime.UtcNow;
 
-            LoadGameObjectTree();            
+            LoadGameObjectTree();
 
             renderTimer.Start();
             tickTimer.Start();
@@ -51,15 +53,15 @@ namespace iGL.Designer
 
         void openTKControl_OnObjectAdded(object sender, OpenTKControl.ObjectAddedEvent e)
         {
-            UpdateSceneTree();         
-        }                     
-      
+            UpdateSceneTree();
+        }
+
         private void tickTimer_Tick(object sender, EventArgs e)
         {
             float timePassed = (float)(DateTime.UtcNow - _lastTick).TotalSeconds;
             if (timePassed < (1.0f / 100.0f)) return;
 
-            openTKControl.Tick(timePassed);            
+            openTKControl.Tick(timePassed);
 
             _lastTick = DateTime.UtcNow;
         }
@@ -72,7 +74,7 @@ namespace iGL.Designer
         private void LoadGameObjectTree()
         {
             var engineAssembly = Assembly.GetAssembly(typeof(Game));
-            var testGame = Assembly.GetAssembly(typeof(TestGame.TestGame));        
+            var testGame = Assembly.GetAssembly(typeof(TestGame.TestGame));
 
             var gameObjectsNode = _gameObjectsTree.Nodes.Add("Objects");
 
@@ -81,7 +83,7 @@ namespace iGL.Designer
                 var node = gameObjectsNode.Nodes.Add(gameObject.Name);
                 node.Tag = gameObject;
             }
-         
+
             var gameComponentsNode = _gameObjectsTree.Nodes.Add("Components");
 
             foreach (var gameComponent in EngineAssets.Instance.Components)
@@ -92,13 +94,13 @@ namespace iGL.Designer
 
             gameObjectsNode.ExpandAll();
             gameComponentsNode.ExpandAll();
-        }       
+        }
 
         private void _gameObjectsTree_ItemDrag(object sender, ItemDragEventArgs e)
         {
             DoDragDrop(e.Item, DragDropEffects.Move);
         }
-    
+
         private void SelectObject(GameObject obj)
         {
             if (obj != null)
@@ -109,10 +111,13 @@ namespace iGL.Designer
             else
             {
                 toolStripStatusLabel.Text = "Ready";
-            }            
+            }
 
             /* select proper node */
-            SelectNode(sceneTree.Nodes[0], obj);            
+            if (sceneTree.Nodes.Count > 0)
+            {
+                SelectNode(sceneTree.Nodes[0], obj);
+            }
         }
 
         private void SelectNode(TreeNode node, GameObject obj)
@@ -132,10 +137,10 @@ namespace iGL.Designer
             foreach (var childNode in node.Nodes)
             {
                 SelectNode(childNode as TreeNode, obj);
-            }          
+            }
         }
 
-       
+
         private void UpdateSceneTree()
         {
             sceneTree.Nodes.Clear();
@@ -171,7 +176,7 @@ namespace iGL.Designer
             if (e.Node.Tag is Scene)
             {
                 var scene = e.Node.Tag as Scene;
-                
+
                 var control = new SceneControlDlg();
 
                 control.Scene = openTKControl.Game.Scene;
@@ -239,7 +244,7 @@ namespace iGL.Designer
         private void toolPointer_Click(object sender, EventArgs e)
         {
             openTKControl.SetOperation(OpenTKControl.OperationType.NONE);
-        }   
+        }
 
         private void sceneTree_BeforeSelect(object sender, TreeViewCancelEventArgs e)
         {
@@ -289,6 +294,82 @@ namespace iGL.Designer
         private void toolPause_Click(object sender, EventArgs e)
         {
             openTKControl.Pause();
-        }                      
+        }
+
+        private void toolStripSnap_Click(object sender, EventArgs e)
+        {
+            openTKControl.Snap = toolStripSnap.Checked;
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void toolStripStabelize_Click(object sender, EventArgs e)
+        {
+            openTKControl.PreStabilizePhysics = toolStripStabilize.Checked;
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_currentFilename == null) saveToolStripMenuItem1_Click(sender, e);
+
+            Save(_currentFilename);
+        }
+
+        private void Save(string filename)
+        {
+            using (FileStream f = new FileStream(filename, FileMode.Create))
+            {
+                var json = EditorGame.Instance().SaveSceneToJson();
+                System.Text.UTF8Encoding encoding = new UTF8Encoding();
+                var bytes = encoding.GetBytes(json);
+
+                f.Write(bytes, 0, bytes.Length);
+
+                f.Flush();
+                f.Close();
+
+                _currentFilename = saveFileDialog.FileName;
+            }
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                using (FileStream f = new FileStream(openFileDialog.FileName, FileMode.Open))
+                {
+                    var bytes = new byte[f.Length];
+                    f.Read(bytes, 0, (int)f.Length);
+                    
+                    var chars = new char[f.Length];
+
+                    var decoder = System.Text.UTF8Encoding.UTF8.GetDecoder();
+                    decoder.GetChars(bytes, 0, bytes.Length, chars, 0);
+
+                    var json = new string(chars);
+
+                    openTKControl.LoadScene(json);
+                }
+            }
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openTKControl.LoadScene(null);
+            sceneTree.Nodes.Clear();
+        }
+
+        private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Save(saveFileDialog.FileName);
+            }
+        }
+
+       
     }
 }

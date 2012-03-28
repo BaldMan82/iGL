@@ -144,6 +144,8 @@ namespace iGL.TestGame
                 Interval = TimeSpan.FromSeconds(5),
                 Mode = Timer.TimerMode.Once
             });
+
+            base.Load();
         }
 
         void cube_OnMouseUp(object sender, Engine.Events.MouseButtonUpEvent e)

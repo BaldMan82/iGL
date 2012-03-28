@@ -23,6 +23,8 @@ namespace iGL.TestGame
             SetScene(scene);
 
             LoadScene();
+
+            this.SaveSceneToJson();
         }
     }
 }

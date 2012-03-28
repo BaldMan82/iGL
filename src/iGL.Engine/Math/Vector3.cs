@@ -25,6 +25,7 @@ SOFTWARE.
 using System;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
+using System.Runtime.Serialization;
 namespace iGL.Engine.Math
 {
     /// <summary>
@@ -35,7 +36,7 @@ namespace iGL.Engine.Math
     /// </remarks>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector3 : IEquatable<Vector3>
+    public struct Vector3 : IEquatable<Vector3>, ISerializable
     {
         #region Fields
 
@@ -57,6 +58,14 @@ namespace iGL.Engine.Math
         #endregion
 
         #region Constructors
+
+        public Vector3(SerializationInfo info, StreamingContext context)
+            : this((float)info.GetValue("x", typeof(float)), 
+                   (float)info.GetValue("y", typeof(float)), 
+                   (float)info.GetValue("z", typeof(float)))
+        {
+
+        }
 
         /// <summary>
         /// Constructs a new instance.
@@ -1376,5 +1385,12 @@ namespace iGL.Engine.Math
         }
 
         #endregion
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("x", X);
+            info.AddValue("y", Y);
+            info.AddValue("z", Z);
+        }
     }
 }

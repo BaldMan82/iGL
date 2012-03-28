@@ -68,7 +68,7 @@ namespace iGL.TestGame
             floor.Position = new Vector3(0.0f, -0.5f, 0.0f);
             floor.Material.Diffuse = new Vector4(0.5f, 0.5f, 0.5f, 1.0f);
             floor.AddComponent(new BoxColliderComponent());
-            floor.AddComponent(new RigidBodyComponent(isStatic:true, mass:1000));
+            floor.AddComponent(new RigidBodyComponent());
 
             AddGameObject(floor);
 
@@ -84,7 +84,7 @@ namespace iGL.TestGame
                     var cube = new Cube() { Scale = new Vector3(1, 1, 1) };
                     cube.Position = new Vector3(x+0.5f, 2.5f, y+0.5f);
                     cube.AddComponent(new BoxColliderComponent());
-                    cube.AddComponent(new RigidBodyComponent(50));
+                    cube.AddComponent(new RigidBodyComponent());
                     cube.Material.Diffuse = new Vector4(1.0f, 0.0f, 0.0f, 1);
                     AddGameObject(cube);
 

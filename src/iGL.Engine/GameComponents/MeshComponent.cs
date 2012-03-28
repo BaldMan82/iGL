@@ -5,24 +5,34 @@ using System.Text;
 
 using iGL.Engine.Math;
 using Jitter.LinearMath;
+using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
 namespace iGL.Engine
 {
     public class MeshComponent : GameComponent
     {
+        [JsonIgnoreAttribute]
         public Vector3[] Vertices { get; set; }
+
+        [JsonIgnoreAttribute]
         public Vector3[] Normals { get; set; }
 
+        [JsonIgnoreAttribute]
         public short[] Indices { get; set; }
 
         public Material Material { get; set; }
 
         private JBBox _boundingBox;
 
-        public MeshComponent()
+        public MeshComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
+
+        public MeshComponent() { }
+
+        protected override void Init()
         {
             Material = new Material()
-            {                
+            {
                 Diffuse = new Vector4(0.4f, 0.4f, 0.4f, 1)
             };
 
@@ -57,15 +67,16 @@ namespace iGL.Engine
         public bool RayTest(Vector3 origin, Vector3 direction)
         {
             Matrix4 transform;
-            
+
             /* if there is a rigid body active in this object, we need that transform as it will always describe its world orientation */
             var rigidBody = GameObject.Components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
-            
+
             if (rigidBody != null)
             {
                 transform = rigidBody.RigidBodyTransform;
             }
-            else {
+            else
+            {
                 transform = GameObject.GetCompositeTransform();
             }
 

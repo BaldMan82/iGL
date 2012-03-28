@@ -60,5 +60,7 @@ namespace iGL.Engine.GL
         void UseProgram(int programId);
 
         void Clear(ClearBufferMask mask);
+
+        void BlendFunc(BlendingFactorSrc src, BlendingFactorDest dest);
     }
 }

@@ -119,7 +119,7 @@ namespace iGL
         }
 
         public void EnableVertexAttribArray(int vertexAttrib)
-        {
+        {            
             GL.EnableVertexAttribArray(vertexAttrib);
         }
 
@@ -165,10 +165,17 @@ namespace iGL
             GL.UseProgram(programId);
         }
 
-
         public void Clear(Engine.ClearBufferMask mask)
         {
             GL.Clear((ClearBufferMask)mask);
+        }
+
+        public void BlendFunc(Engine.BlendingFactorSrc src, Engine.BlendingFactorDest dest)
+        {
+            var s = ToBlendingFactorSrc(src);
+            var d = ToBlendingFactorDest(dest);
+
+            GL.BlendFunc(s, d);           
         }
 
         #region Enum conversions
@@ -256,13 +263,47 @@ namespace iGL
                     break;
                 case Engine.EnableCap.CullFace:
                     cap = EnableCap.CullFace;
+                    break;               
+                case Engine.EnableCap.Texture2d:
+                    cap = EnableCap.Texture2D;
+                    break;
+                case Engine.EnableCap.Blend:
+                    cap = EnableCap.Blend;
                     break;
             }
 
             return cap;
         }
 
+        private static BlendingFactorSrc ToBlendingFactorSrc(Engine.BlendingFactorSrc blendingSrc)
+        {
+            BlendingFactorSrc src = BlendingFactorSrc.One;
+
+            switch (blendingSrc)
+            {
+                case Engine.BlendingFactorSrc.One:
+                    src = BlendingFactorSrc.One;
+                    break;
+            }
+
+            return src;
+        }
+
+        private static BlendingFactorDest ToBlendingFactorDest(Engine.BlendingFactorDest blendingDest)
+        {
+            BlendingFactorDest dest = BlendingFactorDest.SrcColor;
+
+            switch (blendingDest)
+            {
+                case Engine.BlendingFactorDest.SrcColor:
+                    dest = BlendingFactorDest.SrcColor;
+                    break;
+            }
+
+            return dest;
+        }
+
         #endregion
-        
+       
     }
 }

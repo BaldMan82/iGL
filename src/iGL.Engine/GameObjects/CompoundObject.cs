@@ -25,7 +25,9 @@ namespace iGL.Engine
 
             AddComponent(_collider);
 
-            _rigidBody = new RigidBodyComponent(totalMass, isStatic);
+            _rigidBody = new RigidBodyComponent();
+            _rigidBody.IsStatic = isStatic;
+
             _rigidBody.Mass = totalMass;
 
             AddComponent(_rigidBody);

@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using iGL.Engine;
 using iGL.Engine.Math;
+using System.Runtime.Serialization;
 
 namespace iGL.TestGame.GameObjects
 {
     public class SlingShot : GameObject
     {
-        public List<GameObject> Ammo;
+        private List<GameObject> _ammo;
         private Cube _slingShot;
         private bool _inAimMode = false;
         private GameObject _currentBullet;
@@ -17,41 +18,51 @@ namespace iGL.TestGame.GameObjects
         private float _slingShotRadius = 2.0f;
         private float _springConstant = 10000f;
 
-        public SlingShot() : this(5)
+        public int NumBullets { get; set; }
+
+        public SlingShot(SerializationInfo info, StreamingContext context)
+            : base(info, context) { }       
+
+        public SlingShot()
         {
-            Name = "Slingshot";
+
         }
 
-        public SlingShot(int numBullets)
+        protected override void Init()
         {
             _slingShot = new Cube() { Scale = new Vector3(0.5f, 3, 0.5f) };
             _slingShot.Name = "Slingshot Tower";
             _slingShot.Material.Ambient = new Vector4(0.5f, 0.5f, 0.5f, 1);
             _slingShot.Position = new Vector3(0, _slingShot.Height / 2.0f, 0);
 
-            Ammo = new List<GameObject>();
+            _ammo = new List<GameObject>();
 
-            for (int i = 0; i < numBullets; i++)
+            for (int i = 0; i < NumBullets; i++)
             {
                 var bullet = new Sphere() { Scale = new Vector3(0.25f) };
                 bullet.AddComponent(new SphereColliderComponent());
-                bullet.AddComponent(new RigidBodyComponent(isStatic: true));
+                bullet.AddComponent(new RigidBodyComponent());
                 bullet.Name = "Bullet" + i.ToString();
                 bullet.Position = new Vector3(-i - 1.0f, bullet.Scale.X, 0);
-                Ammo.Add(bullet);
+                _ammo.Add(bullet);
 
             }
 
             AddChild(_slingShot);
 
-            Ammo.ForEach(b =>
+            _ammo.ForEach(b =>
             {
                 b.Position += this.Position;
-                this.AddChild(b);              
+                this.AddChild(b);
             }
                 );
 
             LoadBullet();
+        }
+
+        public SlingShot(int numBullets)
+        {
+            
         }
 
         public override void Load()
@@ -102,17 +113,17 @@ namespace iGL.TestGame.GameObjects
 
         public void LoadBullet()
         {
-            _currentBullet = Ammo.FirstOrDefault();
+            _currentBullet = _ammo.FirstOrDefault();
             if (_currentBullet == null) return;
 
             _bulletStartPosition = _slingShot.Position + new Vector3(0, _slingShot.Height / 2.0f + 1.0f, 0);
-            Ammo.Remove(_currentBullet);
+            _ammo.Remove(_currentBullet);
 
             _currentBullet.OnMouseDown += new EventHandler<Engine.Events.MouseButtonDownEvent>(bullet_OnMouseDown);
             _currentBullet.OnMouseUp += new EventHandler<Engine.Events.MouseButtonUpEvent>(bullet_OnMouseUp);
             _currentBullet.Position = _bulletStartPosition;
 
-            Ammo.ForEach(b =>
+            _ammo.ForEach(b =>
                 b.Position += new Vector3(1.0f, 0, 0));
         }
 

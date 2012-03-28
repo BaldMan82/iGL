@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using iGL.Engine.Math;
+using System.Runtime.Serialization;
 
 namespace iGL.Engine
 {
+    [RequiredComponent(typeof(MeshComponent), RigidCube.MeshComponentId)]
+    [RequiredComponent(typeof(MeshRenderComponent), RigidCube.MeshRenderComponentId)]
+    [RequiredComponent(typeof(RigidBodyComponent), RigidCube.RigidBodyComponentId)]
+    [RequiredComponent(typeof(BoxColliderComponent), RigidCube.BoxColliderComponentId)]
     public class RigidCube : GameObject
     {
         public Material Material
@@ -39,22 +44,22 @@ namespace iGL.Engine
         private static MeshComponent _staticMeshComponent;
         private static MeshRenderComponent _staticMeshRenderComponent;
 
-        private Guid _meshComponentId = new Guid("e0bfb85f-fbf1-42e2-a970-02f2eb798df8");
-        private Guid _meshRenderComponentId = new Guid("58967a9d-8c90-41fa-9344-dec053def5b0");
-        private Guid _rigidBodyComponentId = new Guid("859ebd40-28f0-4d3b-95cf-e9811570f514");
-        private Guid _boxColliderComponentId = new Guid("d9bbe6d6-0108-48f2-9e83-6fd4760040fd");
+        private const string MeshComponentId = "e0bfb85f-fbf1-42e2-a970-02f2eb798df8";
+        private const string MeshRenderComponentId = "58967a9d-8c90-41fa-9344-dec053def5b0";
+        private const string RigidBodyComponentId = "859ebd40-28f0-4d3b-95cf-e9811570f514";
+        private const string BoxColliderComponentId = "d9bbe6d6-0108-48f2-9e83-6fd4760040fd";
 
-        public RigidCube()
+        public RigidCube(SerializationInfo info, StreamingContext context)
+            : base(info, context) { }
+
+        public RigidCube() { }
+
+        protected override void Init()
         {
-            _meshComponent = new MeshComponent() { CreationMode = GameComponent.CreationModeEnum.Internal, Id = _meshComponentId };
-            _meshRenderComponent = new MeshRenderComponent() { CreationMode = GameComponent.CreationModeEnum.Internal, Id = _meshRenderComponentId  };
-            _rigidBodyComponent = new RigidBodyComponent() { CreationMode = GameComponent.CreationModeEnum.Internal, Id = _rigidBodyComponentId };
-            _boxColliderComponent = new BoxColliderComponent() { CreationMode = GameComponent.CreationModeEnum.Internal, Id = _boxColliderComponentId };
-
-            AddComponent(_meshComponent);
-            AddComponent(_meshRenderComponent);
-            AddComponent(_rigidBodyComponent);
-            AddComponent(_boxColliderComponent);
+            _meshComponent = Components.Single(c => c.Id == MeshComponentId) as MeshComponent;
+            _meshRenderComponent = Components.Single(c => c.Id == MeshRenderComponentId) as MeshRenderComponent;
+            _rigidBodyComponent = Components.Single(c => c.Id == RigidBodyComponentId) as RigidBodyComponent;
+            _boxColliderComponent = Components.Single(c => c.Id == BoxColliderComponentId) as BoxColliderComponent;
         }
 
         private void LoadCube()
@@ -63,7 +68,7 @@ namespace iGL.Engine
             {
                 var halfWidth = 0.5f;
                 var halfHeight = 0.5f;
-                var halfDepth = 0.5f;              
+                var halfDepth = 0.5f;
 
                 var vertices = new Vector3[36];
                 // top (+z)
@@ -138,14 +143,14 @@ namespace iGL.Engine
                 _meshComponent.Vertices = vertices;
                 _meshComponent.Indices = indices;
 
-                _meshComponent.CalculateNormals();             
+                _meshComponent.CalculateNormals();
 
                 _staticMeshComponent = _meshComponent;
                 _staticMeshRenderComponent = _meshRenderComponent;
             }
             else
             {
-                /* reuse vertex buffers */              
+                /* reuse vertex buffers */
                 _meshComponent.Vertices = _staticMeshComponent.Vertices;
                 _meshComponent.Normals = _staticMeshComponent.Normals;
                 _meshComponent.Indices = _staticMeshComponent.Indices;
@@ -158,7 +163,7 @@ namespace iGL.Engine
         {
             LoadCube();
 
-            base.Load();           
+            base.Load();
         }
     }
 }

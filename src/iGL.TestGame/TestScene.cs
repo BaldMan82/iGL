@@ -74,8 +74,10 @@ namespace iGL.TestGame
             //((Cube)cube).Material.Diffuse = new Vector4(0.5f, 0.5f, 0.5f, 1);
             //((Cube)cube).Material.Ambient = new Vector4(0.5f, 0.5f, 0.5f, 1);
             cube.Name = "testCube";
-            AddGameObject(cube);           
+            AddGameObject(cube);
 
+
+            base.Load();
         }
 
 

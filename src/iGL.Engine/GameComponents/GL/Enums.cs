@@ -40,8 +40,9 @@ namespace iGL.Engine
     public enum EnableCap
     {
         DepthTest,
-        CullFace
-
+        CullFace,
+        Texture2d,
+        Blend
     }
 
     [Flags]
@@ -50,5 +51,15 @@ namespace iGL.Engine
         DepthBufferBit = ((int)0x00000100),
         StencilBufferBit = ((int)0x00000400),
         ColorBufferBit = ((int)0x00004000),
+    }
+
+    public enum BlendingFactorSrc
+    {
+       One
+    }
+
+    public enum BlendingFactorDest
+    {        
+        SrcColor
     }
 }
