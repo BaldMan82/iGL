@@ -30,14 +30,8 @@ namespace iGL.TestGame
 
         public override void Load()
         {
-           
-            _testCamera = new PerspectiveCamera()
-            {
-                AspectRatio = MathHelper.DegreesToRadians(45.0f),
-                FieldOfViewRadians = 3.0f / 2.0f,
-                ZNear = 1.00f,
-                ZFar = 1000.0f
-            };
+
+            _testCamera = new PerspectiveCamera();           
 
             _testCamera.Position = new Vector3(40.0f, 10.0f, 80.0f);
             _testCamera.CameraComponent.Target = new Vector3(0, 0, 0);

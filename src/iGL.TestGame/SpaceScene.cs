@@ -37,13 +37,7 @@ namespace iGL.TestGame
         {
             /* create camera */
 
-            _testCamera = new OrthographicCamera()
-            {
-                Height = 20.0f,
-                Width = 20.0f * (3.0f / 2.0f),
-                ZNear = 1.00f,
-                ZFar = 1000.0f
-            };
+            _testCamera = new OrthographicCamera();            
 
             _testCamera.Position = new Vector3(10.0f, 5, 20.0f);
             _testCamera.CameraComponent.Target = new Vector3(0, 5, 0);

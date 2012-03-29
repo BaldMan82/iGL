@@ -449,11 +449,10 @@ namespace iGL.Designer
             //var distance = (e.NearPlane - _selectedObject.Position).Length;
             var distance = 1.0f;
 
-            if (_workingScene.CurrentCamera.Properties is PerspectiveProperties)
+            if (_workingScene.CurrentCamera is PerspectiveCameraComponent)
             {
                 /* in a projection matrix, calculate the near plane / object plane ratio */
-                var camProps = _workingScene.CurrentCamera.Properties as PerspectiveProperties;
-
+           
                 var direction = _selectedObject.Position - _workingScene.CurrentCamera.GameObject.Position;
                 var directionNorm = direction;
                 directionNorm.Normalize();

@@ -219,7 +219,7 @@ namespace iGL.Engine
 
             this.CopyPublicValues(obj);
 
-            obj.Id = this.Id;
+            obj.Id = Guid.NewGuid().ToString();
 
             foreach (var internalComponent in this.Components.Where(c => c.CreationMode == GameComponent.CreationModeEnum.Internal))
             {

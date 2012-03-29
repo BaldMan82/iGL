@@ -64,17 +64,23 @@
     <Compile Include="ComponentDialogs\BoxColliderComponentDlg.Designer.cs">
       <DependentUpon>BoxColliderComponentDlg.cs</DependentUpon>
     </Compile>
-    <Compile Include="ComponentDialogs\CameraComponentDlg.cs">
+    <Compile Include="ComponentDialogs\PerspectiveCameraComponentDlg.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ComponentDialogs\CameraComponentDlg.Designer.cs">
-      <DependentUpon>CameraComponentDlg.cs</DependentUpon>
+    <Compile Include="ComponentDialogs\PerspectiveCameraComponentDlg.Designer.cs">
+      <DependentUpon>PerspectiveCameraComponentDlg.cs</DependentUpon>
     </Compile>
     <Compile Include="ComponentDialogs\ComponentSelectDlg.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ComponentDialogs\ComponentSelectDlg.Designer.cs">
       <DependentUpon>ComponentSelectDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentDialogs\OrthogonalCameraComponentDlg.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentDialogs\OrthogonalCameraComponentDlg.Designer.cs">
+      <DependentUpon>OrthogonalCameraComponentDlg.cs</DependentUpon>
     </Compile>
     <Compile Include="ComponentDialogs\SphereColliderComponentDlg.cs">
       <SubType>UserControl</SubType>
@@ -153,11 +159,14 @@
     <EmbeddedResource Include="ComponentDialogs\BoxColliderComponentDlg.resx">
       <DependentUpon>BoxColliderComponentDlg.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ComponentDialogs\CameraComponentDlg.resx">
-      <DependentUpon>CameraComponentDlg.cs</DependentUpon>
+    <EmbeddedResource Include="ComponentDialogs\PerspectiveCameraComponentDlg.resx">
+      <DependentUpon>PerspectiveCameraComponentDlg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComponentDialogs\ComponentSelectDlg.resx">
       <DependentUpon>ComponentSelectDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentDialogs\OrthogonalCameraComponentDlg.resx">
+      <DependentUpon>OrthogonalCameraComponentDlg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComponentDialogs\SphereColliderComponentDlg.resx">
       <DependentUpon>SphereColliderComponentDlg.cs</DependentUpon>

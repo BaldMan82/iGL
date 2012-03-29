@@ -86,7 +86,7 @@ namespace iGL.TestGame.GameObjects
 
                 var newWorldPosition = e.NearPlane + (lookAt * planeDistance);
 
-                if (Scene.CurrentCamera.Properties is PerspectiveCamera)
+                if (Scene.CurrentCamera is PerspectiveCameraComponent)
                 {
                     newWorldPosition += (dirNearPlane * Math.Abs(planeDistance));
                 }

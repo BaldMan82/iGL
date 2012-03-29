@@ -80,7 +80,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1337, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1335, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
@@ -145,7 +145,7 @@
             this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(341, 807);
+            this.tabControl1.Size = new System.Drawing.Size(338, 807);
             this.tabControl1.TabIndex = 2;
             // 
             // tabPage1
@@ -154,7 +154,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(333, 781);
+            this.tabPage1.Size = new System.Drawing.Size(330, 781);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Objects";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -165,7 +165,7 @@
             this._gameObjectsTree.Dock = System.Windows.Forms.DockStyle.Fill;
             this._gameObjectsTree.Location = new System.Drawing.Point(3, 3);
             this._gameObjectsTree.Name = "_gameObjectsTree";
-            this._gameObjectsTree.Size = new System.Drawing.Size(327, 775);
+            this._gameObjectsTree.Size = new System.Drawing.Size(324, 775);
             this._gameObjectsTree.TabIndex = 0;
             this._gameObjectsTree.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this._gameObjectsTree_ItemDrag);
             // 
@@ -175,7 +175,7 @@
             this.propertiesTab.Controls.Add(this.flowLayoutPanel1);
             this.propertiesTab.Location = new System.Drawing.Point(4, 22);
             this.propertiesTab.Name = "propertiesTab";
-            this.propertiesTab.Size = new System.Drawing.Size(333, 614);
+            this.propertiesTab.Size = new System.Drawing.Size(312, 781);
             this.propertiesTab.TabIndex = 1;
             this.propertiesTab.Text = "Properties";
             this.propertiesTab.UseVisualStyleBackColor = true;
@@ -189,7 +189,7 @@
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(333, 614);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(312, 781);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // renderTimer
@@ -230,7 +230,7 @@
             this.toolStripStabilize});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1337, 34);
+            this.toolStrip1.Size = new System.Drawing.Size(1335, 34);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -370,7 +370,7 @@
             this.toolStripStatusLabel});
             this.statusStrip.Location = new System.Drawing.Point(0, 871);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(1337, 22);
+            this.statusStrip.Size = new System.Drawing.Size(1335, 22);
             this.statusStrip.TabIndex = 6;
             this.statusStrip.Text = "statusStrip1";
             // 
@@ -413,7 +413,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1337, 893);
+            this.ClientSize = new System.Drawing.Size(1335, 893);
             this.Controls.Add(this.openTKControl);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip1);
