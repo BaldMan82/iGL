@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using iGL.Engine;
 using iGL.Engine.Math;
+using iGL.TestGame.GameObjects;
 
 namespace iGL.TestGame
 {
@@ -17,7 +18,7 @@ namespace iGL.TestGame
         private int _sizeY = 10;
 
         public TestScene()
-            : base(new Physics2d())
+            : base(new DesignPhysics())
         {
             this.OnTick += new EventHandler<Engine.Events.TickEvent>(TestScene_OnTick);
         }
@@ -28,50 +29,29 @@ namespace iGL.TestGame
             //cube.Rotation = new Vector3(0, 0, alpha);
             alpha += e.Elapsed * 0.1f;
 
+           
             //Console.WriteLine(alpha);
         }
 
         public override void Load()
-        {                       
+        {
+            this.OnMouseMove += new EventHandler<Engine.Events.MouseMoveEvent>(TestScene_OnMouseMove);
 
-            var pointlight = new PointLight();
-            pointlight.Ambient = new Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-            pointlight.Diffuse = new Vector4(1.0f, 1.0f, 0.8f, 1.0f);
-
-            //var _light = new Sphere(1.0f);
-            //_light.Position = new Vector3(0, 20, 0);
-            //_light.AddComponent(new LightComponent(pointlight));         
-            //_light.Material.Ambient = new Vector4(1, 1, 0, 1);
-
-            //AddGameObject(_light);
-
-            //SetCurrentLight(_light);
-
-            _testCamera = new PerspectiveCamera();
-
-            _testCamera.Position = new Vector3(0.0f, 100.0f, 80.0f);
-            _testCamera.CameraComponent.Target = new Vector3(0, 100f, 0);
-            _testCamera.CameraComponent.ClearColor = new Vector4(1, 1, 1, 1);
-
-            AddGameObject(_testCamera);
-            SetCurrentCamera(_testCamera);
-
-            AmbientColor = new Vector4(0.5f, 0.5f, 0.5f, 1.0f);
-
-
-            cube = new Cube();
-            cube.Position = new Vector3(0, 100, 0);
-            //cube.Rotation = new Vector3(0, 0, 10);
-            cube.OnMouseIn += (a, b) => ((Cube)a).Material.Ambient = new Vector4(0.5f, 0.5f, 0.5f, 1);
-            cube.OnMouseOut += (a, b) => ((Cube)a).Material.Ambient = new Vector4(1.0f, 0.5f, 0.5f, 1);
-
-            //((Cube)cube).Material.Diffuse = new Vector4(0.5f, 0.5f, 0.5f, 1);
-            //((Cube)cube).Material.Ambient = new Vector4(0.5f, 0.5f, 0.5f, 1);
-            cube.Name = "testCube";
+            cube = new SlingShot();
             AddGameObject(cube);
 
+            var cam = new PerspectiveCamera();
+
+            AddGameObject(cam);
+
+            SetCurrentCamera(cam);
 
             base.Load();
+        }
+
+        void TestScene_OnMouseMove(object sender, Engine.Events.MouseMoveEvent e)
+        {
+            cube.Position += new Vector3(0.02f, 0.01f, 0);
         }
 
 

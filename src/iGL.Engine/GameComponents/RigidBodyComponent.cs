@@ -231,7 +231,7 @@ namespace iGL.Engine
 
             GameObject.Scene.Physics.AddBody(RigidBody);
 
-
+            UpdateTransform();
 
             return true;
         }
@@ -250,11 +250,16 @@ namespace iGL.Engine
 
         }
 
-        public override void Tick(float timeElapsed)
+        private void UpdateTransform()
         {
             /* scale must be taking into account */
 
             RigidBodyTransform = Math.Matrix4.Scale(GameObject.Scale) * RigidBody.Orientation.ToOpenTK(RigidBody.Position);
+        }
+
+        public override void Tick(float timeElapsed)
+        {
+            UpdateTransform();
         }
     }
 }

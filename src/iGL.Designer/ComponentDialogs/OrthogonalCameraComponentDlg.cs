@@ -11,7 +11,7 @@ using iGL.Engine.Math;
 
 namespace iGL.Designer
 {
-    [GameObjectDialog(typeof(PerspectiveCameraComponent))]
+    [GameObjectDialog(typeof(OrthogonalCameraComponent))]
     public partial class OrhogonalCameraComponentDlg : ComponentControl
     {
         public OrhogonalCameraComponentDlg()

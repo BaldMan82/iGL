@@ -26,9 +26,7 @@ namespace iGL.Engine
             FieldOfViewRadians = MathHelper.DegreesToRadians(45.0f);
             AspectRatio = 3.0f / 2.0f;
             ZNear = 1.00f;
-            ZFar = 1000.0f;
-
-            Update();
+            ZFar = 1000.0f;          
         }
 
         public void Update()
@@ -38,6 +36,8 @@ namespace iGL.Engine
 
         public override bool InternalLoad()
         {
+            Update();
+
             return true;
         }
 

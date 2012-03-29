@@ -21,11 +21,11 @@ namespace iGL.TestGame.GameObjects
         public int NumBullets { get; set; }
 
         public SlingShot(SerializationInfo info, StreamingContext context)
-            : base(info, context) { }       
+            : base(info, context) { }
 
         public SlingShot()
         {
-
+            Name = "SlingShot";
         }
 
         protected override void Init()
@@ -37,50 +37,52 @@ namespace iGL.TestGame.GameObjects
 
             _ammo = new List<GameObject>();
 
+            NumBullets = 2;
+
+            AddChild(_slingShot);
+
+        }
+
+        private void LoadSlingshot()
+        {
             for (int i = 0; i < NumBullets; i++)
             {
                 var bullet = new Sphere() { Scale = new Vector3(0.25f) };
-                bullet.AddComponent(new SphereColliderComponent());
-                bullet.AddComponent(new RigidBodyComponent());
+                //bullet.AddComponent(new SphereColliderComponent());
+                //bullet.AddComponent(new RigidBodyComponent());
                 bullet.Name = "Bullet" + i.ToString();
                 bullet.Position = new Vector3(-i - 1.0f, bullet.Scale.X, 0);
                 _ammo.Add(bullet);
 
             }
 
-            AddChild(_slingShot);
-
             _ammo.ForEach(b =>
-            {
-                b.Position += this.Position;
+            {              
                 this.AddChild(b);
-            }
-                );
+            });
+                
 
             LoadBullet();
         }
 
-        public SlingShot(int numBullets)
-        {
-            
-        }
-
         public override void Load()
         {
-            base.Load();         
-            
+            base.Load();
+
+            LoadSlingshot();
+
             Scene.OnMouseMove += new EventHandler<Engine.Events.MouseMoveEvent>(Scene_OnMouseMove);
         }
 
         void Scene_OnMouseMove(object sender, Engine.Events.MouseMoveEvent e)
         {
             if (_inAimMode)
-            {                              
+            {
                 var lookAt = Scene.CurrentCamera.Target - Scene.CurrentCamera.GameObject.Position;
-                lookAt.Normalize();                          
+                lookAt.Normalize();
 
                 var p = Scene.CurrentCamera.GameObject.Position + lookAt;
-                var planeDistance = _currentBullet.WorldPosition.PlaneDistance(p, lookAt);                
+                var planeDistance = _currentBullet.WorldPosition.PlaneDistance(p, lookAt);
 
                 var dirNearPlane = e.NearPlane - (Scene.CurrentCamera.GameObject.Position + lookAt);
 
@@ -107,7 +109,7 @@ namespace iGL.TestGame.GameObjects
                     _currentBullet.Position -= norm;
                 }
 
-               
+
             }
         }
 
@@ -117,13 +119,15 @@ namespace iGL.TestGame.GameObjects
             if (_currentBullet == null) return;
 
             _bulletStartPosition = _slingShot.Position + new Vector3(0, _slingShot.Height / 2.0f + 1.0f, 0);
+            _currentBullet.Sleep();
+
             _ammo.Remove(_currentBullet);
 
             _currentBullet.OnMouseDown += new EventHandler<Engine.Events.MouseButtonDownEvent>(bullet_OnMouseDown);
             _currentBullet.OnMouseUp += new EventHandler<Engine.Events.MouseButtonUpEvent>(bullet_OnMouseUp);
             _currentBullet.Position = _bulletStartPosition;
 
-            _ammo.ForEach(b =>
+            _ammo.ForEach(b =>                
                 b.Position += new Vector3(1.0f, 0, 0));
         }
 
@@ -157,5 +161,7 @@ namespace iGL.TestGame.GameObjects
 
             _inAimMode = true;
         }
+
+
     }
 }

@@ -18,25 +18,7 @@ namespace iGL.Console
       
 
         static void Main(string[] args)
-        {
-            GameObject a = new GameObject(null, new System.Runtime.Serialization.StreamingContext());
-
-            var Rotation = new iGL.Engine.Math.Vector3(0.123f, 1, 0.7f);
-            var mRotationX = iGL.Engine.Math.Matrix4.CreateRotationX(Rotation.X);
-            var mRotationY = iGL.Engine.Math.Matrix4.CreateRotationY(Rotation.Y);
-            var mRotationZ = iGL.Engine.Math.Matrix4.CreateRotationZ(Rotation.Z);
-            
-            var result = mRotationX * mRotationY * mRotationZ;
-
-            iGL.Engine.Math.Vector3 euler;       
-            result.EulerAngles(out euler);
-
-            mRotationX = iGL.Engine.Math.Matrix4.CreateRotationX(euler.X);
-            mRotationY = iGL.Engine.Math.Matrix4.CreateRotationY(euler.Y);
-            mRotationZ = iGL.Engine.Math.Matrix4.CreateRotationZ(euler.Z);
-
-            var result2 = mRotationX * mRotationY * mRotationZ;
-
+        {                     
             System.Console.WriteLine("Starting...");
 
             var gl = new WinGL();

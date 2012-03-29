@@ -121,6 +121,7 @@ namespace iGL.Engine
 
         public void Tick(float timeElapsed, bool tickPhysics = true)
         {
+          
             if (OnTickEvent != null) OnTickEvent(this, new TickEvent() { Elapsed = timeElapsed });
 
             try
@@ -162,6 +163,7 @@ namespace iGL.Engine
 
                 _lastMouseUpdate = DateTime.UtcNow;
             }
+
         }
 
         public void AddTimer(Timer timer)

@@ -39,6 +39,8 @@ namespace iGL.Designer
             openTKControl.OnObjectAdded += new EventHandler<OpenTKControl.ObjectAddedEvent>(openTKControl_OnObjectAdded);
             openTKControl.OnSelectObject += new EventHandler<OpenTKControl.SelectObjectEvent>(openTKControl_OnSelectObject);
             openTKControl.OnObjectRemoved += new EventHandler<OpenTKControl.ObjectRemovedEvent>(openTKControl_OnObjectRemoved);
+
+            UpdateSceneTree();
         }
 
         void openTKControl_OnObjectRemoved(object sender, OpenTKControl.ObjectRemovedEvent e)

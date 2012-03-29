@@ -639,5 +639,17 @@ namespace iGL.Engine
 
             info.AddValue("componentList", componentList);
         }
+
+        #region Helper Methods
+
+        public void Sleep()
+        {
+            var rigidBody = _components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
+            if (rigidBody == null) return;
+
+            rigidBody.RigidBody.IsActive = false;
+        }
+
+        #endregion
     }
 }

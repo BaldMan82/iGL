@@ -17,8 +17,8 @@ namespace iGL.TestGame
 
             //CastleScene scene = new CastleScene();
             //CubeScene scene = new CubeScene();
-            //TestScene scene = new TestScene();
-            SpaceScene scene = new SpaceScene();
+            TestScene scene = new TestScene();
+            //SpaceScene scene = new SpaceScene();
 
             SetScene(scene);
 

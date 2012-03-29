@@ -26,9 +26,7 @@ namespace iGL.Engine
             Height = 20.0f;
             Width = 20.0f * (3.0f / 2.0f);
             ZNear = 1.00f;
-            ZFar = 1000.0f;
-
-            Update();
+            ZFar = 1000.0f;          
         }
 
         public void Update()
@@ -38,6 +36,7 @@ namespace iGL.Engine
 
         public override bool InternalLoad()
         {
+            Update();
             return true;
         }
 

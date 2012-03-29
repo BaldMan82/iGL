@@ -282,7 +282,7 @@ namespace iGL.Designer
             }
 
             if (_selectedObject != null)
-            {
+            {               
                 if (Operation == OperationType.MOVE) _unsnappedOperationVector = _selectedObject.Position;
                 if (Operation == OperationType.ROTATE) _unsnappedOperationVector = _selectedObject.Rotation;
                 if (Operation == OperationType.SCALE) _unsnappedOperationVector = _selectedObject.Scale;
@@ -294,9 +294,7 @@ namespace iGL.Designer
 
         void OpenTKControl_MouseMove(object sender, MouseEventArgs e)
         {
-            Game.MouseMove(e.X, e.Y);
-
-            //_lastMousePosition = e.Location;
+            Game.MouseMove(e.X, e.Y);    
         }
 
         void OpenTKControl_Resize(object sender, EventArgs e)
@@ -362,9 +360,20 @@ namespace iGL.Designer
 
             _workingScene.AddGameObject(_selectionGizmo);
 
-            _workingScene.OnObjectAdded += _workingScene_OnObjectAdded;           
+            _workingScene.OnObjectAdded += _workingScene_OnObjectAdded;
 
-            if (!string.IsNullOrEmpty(json)) Game.LoadFromJson(json);
+            if (!string.IsNullOrEmpty(json))
+            {
+                Game.LoadFromJson(json);
+            }
+            else
+            {
+                /* new scene, create a camera */
+                var camera = new PerspectiveCamera() { Name = "PerspectiveCamera" };
+                _workingScene.AddGameObject(camera);
+
+                _workingScene.SetCurrentCamera(camera);
+             }
             
             Game.Load();
         }
@@ -442,16 +451,14 @@ namespace iGL.Designer
             }
 
             if (_selectedObject == null) return;
-
+           
             /* perform edit operation */
-            /* size of directional vector gives an indication of mouse movement magnitude */
-
-            //var distance = (e.NearPlane - _selectedObject.Position).Length;
+         
             var distance = 1.0f;
 
             if (_workingScene.CurrentCamera is PerspectiveCameraComponent)
             {
-                /* in a projection matrix, calculate the near plane / object plane ratio */
+                /* in a perspective camera, calculate the near plane / object plane ratio */
            
                 var direction = _selectedObject.Position - _workingScene.CurrentCamera.GameObject.Position;
                 var directionNorm = direction;
@@ -502,7 +509,7 @@ namespace iGL.Designer
             if (Operation == OperationType.MOVE)
             {
                 SnapTo(ref vector);
-                _selectedObject.Position = vector;
+                _selectedObject.Position = vector;               
             }
 
             if (Operation == OperationType.ROTATE)
