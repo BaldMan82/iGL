@@ -26,12 +26,13 @@ namespace iGL.Engine
         public Vector4? LastNearPlaneMousePosition { get; private set; }
         public Game Game { get; internal set; }
         public bool Loaded { get; internal set; }
+        public Point? MousePosition { get; private set; }
 
         private TimeSpan _mouseUpdateRate = TimeSpan.FromSeconds(1.0 / 50.0);
         private DateTime _lastMouseUpdate = DateTime.MinValue;
         private List<GameObject> _gameObjects { get; set; }
         private List<Timer> _timers = new List<Timer>();
-        private Point? _mousePosition = null;
+        
         private GameObject _currentMouseOverObj = null;
         private GameObject _currentMouseDownObj = null;
 
@@ -39,6 +40,7 @@ namespace iGL.Engine
 
         private event EventHandler<TickEvent> OnTickEvent;
         private event EventHandler<MouseMoveEvent> OnMouseMoveEvent;
+        private event EventHandler<MouseZoomEvent> OnMouseZoomEvent;
         private event EventHandler<GameObjectAddedEvent> OnObjectAddedEvent;
 
         internal ShaderProgram ShaderProgram { get; set; }
@@ -199,6 +201,18 @@ namespace iGL.Engine
             }
         }
 
+        public event EventHandler<MouseZoomEvent> OnMouseZoom
+        {
+            add
+            {
+                OnMouseZoomEvent += value;
+            }
+            remove
+            {
+                OnMouseZoomEvent -= value;
+            }
+        }
+
         public event EventHandler<GameObjectAddedEvent> OnObjectAdded
         {
             add
@@ -291,10 +305,10 @@ namespace iGL.Engine
 
         private void ProcessInteractiviy()
         {
-            if (_mousePosition == null) return;
+            if (MousePosition == null) return;
 
             Vector4 nearPlane, farPlane;
-            ScreenPointToWorld(_mousePosition.Value, out nearPlane, out farPlane);
+            ScreenPointToWorld(MousePosition.Value, out nearPlane, out farPlane);
 
             /* hold a reference to the nearplane vector in order to calculate mouse input directional vector */
             if (LastNearPlaneMousePosition != null)
@@ -395,7 +409,7 @@ namespace iGL.Engine
         {
             MouseButtonState[button] = down;
 
-            _mousePosition = new Point(x, y);
+            MousePosition = new Point(x, y);
             ProcessInteractiviy();
 
             /* selected target is now updated, process button event */
@@ -428,7 +442,12 @@ namespace iGL.Engine
 
         internal void MouseMove(int x, int y)
         {
-            _mousePosition = new Point(x, y);
+            MousePosition = new Point(x, y);
+        }
+
+        internal void MouseZoom(int amount)
+        {
+            if (OnMouseZoomEvent != null) OnMouseZoomEvent(this, new MouseZoomEvent() { Amount = amount });
         }
 
         public void UnloadObject(GameObject gameObject)
@@ -444,12 +463,12 @@ namespace iGL.Engine
 
         public void UpdateCurrentMousePosition()
         {
-            if (_mousePosition == null || CurrentCamera == null) return;
+            if (MousePosition == null || CurrentCamera == null) return;
 
             CurrentCamera.Tick(0);
 
             Vector4 nearPlane, farPlane;
-            ScreenPointToWorld(_mousePosition.Value, out nearPlane, out farPlane);
+            ScreenPointToWorld(MousePosition.Value, out nearPlane, out farPlane);
 
             LastNearPlaneMousePosition = nearPlane;
         }

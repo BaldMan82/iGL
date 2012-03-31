@@ -13,15 +13,31 @@ namespace iGL.Designer
 {
     [GameObjectDialog(typeof(GameObject))]
     public partial class GameObjectDlg : BaseObjectControl
-    {    
+    {
+        private bool _internalUIUpdate = false;
+        private bool _userInputUpdate = false;
+
         public GameObjectDlg()
         {
-            InitializeComponent();
-        }
+            InitializeComponent();           
+        }        
 
         private void GameObjectDlg_Load(object sender, EventArgs e)
         {
-            if (GameObject == null) throw new NotSupportedException();
+            if (GameObject == null) throw new NotSupportedException();           
+
+            GameObject.OnMove += GameObject_OnMove;
+            GameObject.OnRotate += GameObject_OnRotate;
+            GameObject.OnScale += GameObject_OnScale;
+
+            UpdateUI();
+        }
+
+        private void UpdateUI()
+        {
+            if (_userInputUpdate) return;
+
+            _internalUIUpdate = true;
 
             _txtPositionX.Text = GameObject.Position.X.ToInvariantText();
             _txtPositionY.Text = GameObject.Position.Y.ToInvariantText();
@@ -37,10 +53,38 @@ namespace iGL.Designer
 
             cbEnabled.Checked = GameObject.Enabled;
             cbVisible.Checked = GameObject.Visible;
+
+            _internalUIUpdate = false;
+        }
+
+        void GameObject_OnScale(object sender, Engine.Events.ScaleEvent e)
+        {
+            UpdateUI();
+        }
+
+        void GameObject_OnRotate(object sender, Engine.Events.RotateEvent e)
+        {
+            UpdateUI();
+        }
+
+        void GameObject_OnMove(object sender, Engine.Events.MoveEvent e)
+        {
+            UpdateUI();
+        }
+
+        public void Unload()
+        {
+            GameObject.OnMove -= GameObject_OnMove;
+            GameObject.OnRotate -= GameObject_OnRotate;
+            GameObject.OnScale -= GameObject_OnScale;
         }
 
         public override void UpdateGameObject()
         {
+            if (_internalUIUpdate) return;
+
+            _userInputUpdate = true;
+
             base.UpdateGameObject();
 
             GameObject.Position = new Vector3(_txtPositionX.TextToFloat(), _txtPositionY.TextToFloat(), _txtPositionZ.TextToFloat());
@@ -48,6 +92,8 @@ namespace iGL.Designer
             GameObject.Scale = new Vector3(_txtScaleX.TextToFloat(), _txtScaleY.TextToFloat(), _txtScaleZ.TextToFloat());
             GameObject.Visible = cbVisible.Checked;
             GameObject.Enabled = cbEnabled.Checked;
+
+            _userInputUpdate = false;
         }
 
         private void btnResetPosition_Click(object sender, EventArgs e)

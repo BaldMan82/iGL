@@ -14,7 +14,8 @@ namespace iGL.Engine
         public Scene Scene { get; private set; }
         public Size WindowSize { get; private set; }        
         public static IGL GL { get; private set; }
-     
+        public static bool InDesignMode { get; set; }
+
         public Game(IGL gl)
         {
             GL = gl;
@@ -44,7 +45,12 @@ namespace iGL.Engine
         {
             Scene.UpdateMouseButton(button,down, x, y);
         }
-      
+
+        public void MouseZoom(int amount)
+        {
+            Scene.MouseZoom(amount);
+        }
+
         public void Render()
         {           
             Scene.Render();
@@ -90,6 +96,8 @@ namespace iGL.Engine
             {
                 Scene.SetCurrentLight(obj.GameObjects.FirstOrDefault(g => g.Id == obj.CurrentLightId));
             }
+
+            Scene.AmbientColor = obj.AmbientColor;
         }
 
         public string SaveSceneToJson()
@@ -98,6 +106,8 @@ namespace iGL.Engine
 
             if (Scene.CurrentCamera != null) sceneSerializer.CurrentCameraId = Scene.CurrentCamera.GameObject.Id;
             if (Scene.CurrentLight != null) sceneSerializer.CurrentLightId = Scene.CurrentLight.GameObject.Id;
+
+            sceneSerializer.AmbientColor = Scene.AmbientColor;
 
             sceneSerializer.GameObjects = Scene.GameObjects.Where(g => !g.Designer);
 

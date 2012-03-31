@@ -172,6 +172,11 @@ namespace iGL.Designer
         private void sceneTree_AfterSelect(object sender, TreeViewEventArgs e)
         {
             tabControl1.SelectedTab = propertiesTab;
+         
+            foreach (var control in flowLayoutPanel1.Controls)
+            {
+                if (control is GameObjectDlg) ((GameObjectDlg)control).Unload();
+            }
 
             flowLayoutPanel1.Controls.Clear();
 
@@ -198,20 +203,12 @@ namespace iGL.Designer
 
                 obj.OnComponentAdded += gameObject_OnComponentAdded;
                 obj.OnComponentRemoved += gameObject_OnComponentRemoved;
-
+               
                 var control = new GameObjectDlg();
-
                 control.GameObject = obj;
 
-                var label = new Label();
-                label.Width = control.Width;
-                label.BackColor = Color.Silver;
-                label.BorderStyle = BorderStyle.FixedSingle;
-                label.Text = "Base Properties";
-
-                flowLayoutPanel1.Controls.Add(label);
                 flowLayoutPanel1.Controls.Add(control);
-
+          
                 foreach (var component in obj.Components)
                 {
                     var componentPanel = new ComponentPanel();
@@ -354,6 +351,8 @@ namespace iGL.Designer
                     var json = new string(chars);
 
                     openTKControl.LoadScene(json);
+
+                    _currentFilename = openFileDialog.FileName;
                 }
             }
         }

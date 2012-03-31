@@ -15,7 +15,7 @@ namespace iGL.Engine
 
         public Physics2d()
         {
-            CollisionSystem collision = new CollisionSystemPersistentSAP();
+            var collision = new CollisionSystemBrute();
             World = new Jitter.World(collision);
             World.AllowDeactivation = true;
             World.Gravity = new Jitter.LinearMath.JVector(0, -9.81f, 0);

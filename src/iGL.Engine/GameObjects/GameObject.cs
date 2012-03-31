@@ -401,6 +401,58 @@ namespace iGL.Engine
             return null;
         }
 
+        private void UpdateGetRigidBodyOrientation()
+        {
+            if (IsLoaded)
+            {
+                var rigidBody = this.Components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
+
+                if (rigidBody != null && rigidBody.IsLoaded)
+                {
+                    Vector3 position, rotation;
+
+                    if (Parent != null)
+                    {
+                        var composite = this.Parent.GetCompositeTransform();
+                        var rigidBodyTransform = rigidBody.RigidBodyTransform;
+                        composite.Invert();
+
+                        var thisTransform = rigidBodyTransform * composite;
+                        position = thisTransform.Translation();
+                        thisTransform.EulerAngles(out rotation);
+                    }
+                    else
+                    {
+                        position = rigidBody.RigidBodyTransform.Translation();
+                        rigidBody.RigidBodyTransform.EulerAngles(out rotation);
+                    }
+
+                    _rotation = rotation;
+                    _position = position;
+                }
+            }
+        }
+
+        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            var props = this.GetType().GetProperties().Where(p => p.GetSetMethod() != null).ToList();
+
+            foreach (var prop in props)
+            {
+                info.AddValue(prop.Name, prop.GetValue(this, null));
+            }
+
+            /* save components */
+            var componentList = new List<string>();
+            foreach (var component in Components)
+            {
+                info.AddValue(component.Id, component);
+                componentList.Add(component.Id);
+            }
+
+            info.AddValue("componentList", componentList);
+        }
+
         #region Events
 
         public event EventHandler<MouseButtonDownEvent> OnMouseDown
@@ -586,59 +638,7 @@ namespace iGL.Engine
             if (_sleepEvent != null) _sleepEvent(sender, e);
         }
 
-        #endregion
-
-        private void UpdateGetRigidBodyOrientation()
-        {
-            if (IsLoaded)
-            {
-                var rigidBody = this.Components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
-
-                if (rigidBody != null && rigidBody.IsLoaded)
-                {
-                    Vector3 position, rotation;
-
-                    if (Parent != null)
-                    {
-                        var composite = this.Parent.GetCompositeTransform();
-                        var rigidBodyTransform = rigidBody.RigidBodyTransform;
-                        composite.Invert();
-
-                        var thisTransform = rigidBodyTransform * composite;
-                        position = thisTransform.Translation();
-                        thisTransform.EulerAngles(out rotation);
-                    }
-                    else
-                    {
-                        position = rigidBody.RigidBodyTransform.Translation();
-                        rigidBody.RigidBodyTransform.EulerAngles(out rotation);
-                    }
-
-                    _rotation = rotation;
-                    _position = position;
-                }
-            }
-        }
-
-        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            var props = this.GetType().GetProperties().Where(p => p.GetSetMethod() != null).ToList();
-
-            foreach (var prop in props)
-            {
-                info.AddValue(prop.Name, prop.GetValue(this, null));
-            }
-
-            /* save components */
-            var componentList = new List<string>();
-            foreach (var component in Components)
-            {
-                info.AddValue(component.Id, component);
-                componentList.Add(component.Id);
-            }
-
-            info.AddValue("componentList", componentList);
-        }
+        #endregion        
 
         #region Helper Methods
 

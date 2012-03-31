@@ -127,7 +127,6 @@ namespace iGL.Engine
 
             if (RigidBody != null)
             {
-
                 GameObject.Scene.Physics.RemoveBody(RigidBody);
 
                 ColliderComponent = GameObject.Components.FirstOrDefault(c => c is ColliderComponent) as ColliderComponent;
@@ -143,30 +142,17 @@ namespace iGL.Engine
         {
             if (LoadRigidBody())
             {
-                GameObject.OnMove += GameObject_OnMove;
-                GameObject.OnScale += GameObject_OnScale;
-                GameObject.OnRotate += GameObject_OnRotate;
+                /* subscribe to change events and reload when fired */
+                GameObject.OnMove += (a, b) => Reload();
+                GameObject.OnScale += (a, b) => Reload();
+                GameObject.OnRotate += (a, b) => Reload();
 
                 return true;
             }
-            else return false;
+            
+            return false;
         }
-
-        void GameObject_OnRotate(object sender, Events.RotateEvent e)
-        {
-            Reload();
-        }
-
-        void GameObject_OnScale(object sender, Events.ScaleEvent e)
-        {
-            Reload();
-        }
-
-        void GameObject_OnMove(object sender, Events.MoveEvent e)
-        {
-            Reload();
-        }
-
+       
         private bool LoadRigidBody()
         {
             /* game object must have a collider component */
@@ -202,6 +188,7 @@ namespace iGL.Engine
 
             if (ColliderComponent is CompoundColliderComponent)
             {
+                /* not currently used */
                 var compoundCollider = ColliderComponent as CompoundColliderComponent;
                 var compoundShape = compoundCollider.CollisionShape as CompoundShape;
 
@@ -210,7 +197,6 @@ namespace iGL.Engine
                 RigidBody.Position = transform.Translation().ToJitter() - compoundShape.Shift;
 
                 RigidBody.Mass = _mass;
-
                 RigidBody.IsStatic = _isStatic;
             }
             else

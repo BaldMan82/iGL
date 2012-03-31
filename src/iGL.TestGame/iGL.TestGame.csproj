@@ -41,11 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CastleScene.cs" />
-    <Compile Include="CubeScene.cs" />
     <Compile Include="GameObjects\Castle.cs" />
+    <Compile Include="GameObjects\PanViewFollowCamera.cs" />
     <Compile Include="GameObjects\SlingShot.cs" />
-    <Compile Include="SpaceScene.cs" />
     <Compile Include="TestGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestScene.cs" />

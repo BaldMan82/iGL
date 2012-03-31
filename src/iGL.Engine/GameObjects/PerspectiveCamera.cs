@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using iGL.Engine.Math;
 using System.Runtime.Serialization;
 
@@ -13,12 +10,9 @@ namespace iGL.Engine
         public PerspectiveCameraComponent CameraComponent { get; private set; }      
 
         private const string CameraComponentId = "7d719186-50f7-49c1-bb2b-7b7cd85dadbc";
-       
-        public PerspectiveCamera(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
 
+        public PerspectiveCamera(SerializationInfo info, StreamingContext context) : base(info, context) { }      
+            
         public PerspectiveCamera() { }
 
         protected override void Init()

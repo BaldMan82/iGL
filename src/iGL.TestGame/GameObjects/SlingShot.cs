@@ -16,7 +16,7 @@ namespace iGL.TestGame.GameObjects
         private GameObject _currentBullet;
         private Vector3 _bulletStartPosition;
         private float _slingShotRadius = 2.0f;
-        private float _springConstant = 10000f;
+        private float _springConstant = 20000f;
 
         public int NumBullets { get; set; }
 
@@ -37,7 +37,7 @@ namespace iGL.TestGame.GameObjects
 
             _ammo = new List<GameObject>();
 
-            NumBullets = 2;
+            NumBullets = 10;
 
             AddChild(_slingShot);
 
@@ -47,21 +47,15 @@ namespace iGL.TestGame.GameObjects
         {
             for (int i = 0; i < NumBullets; i++)
             {
-                var bullet = new Sphere() { Scale = new Vector3(0.25f) };
-                //bullet.AddComponent(new SphereColliderComponent());
-                //bullet.AddComponent(new RigidBodyComponent());
+                var bullet = new Sphere() { Scale = new Vector3(0.5f) };              
                 bullet.Name = "Bullet" + i.ToString();
                 bullet.Position = new Vector3(-i - 1.0f, bullet.Scale.X, 0);
-                _ammo.Add(bullet);
-
-            }
-
-            _ammo.ForEach(b =>
-            {              
-                this.AddChild(b);
-            });
                 
+                AddChild(bullet);
 
+                _ammo.Add(bullet);
+            }            
+            
             LoadBullet();
         }
 
@@ -71,13 +65,18 @@ namespace iGL.TestGame.GameObjects
 
             LoadSlingshot();
 
-            Scene.OnMouseMove += new EventHandler<Engine.Events.MouseMoveEvent>(Scene_OnMouseMove);
+            if (!Game.InDesignMode)
+            {
+                Scene.OnMouseMove += new EventHandler<Engine.Events.MouseMoveEvent>(Scene_OnMouseMove);
+            }
         }
 
         void Scene_OnMouseMove(object sender, Engine.Events.MouseMoveEvent e)
         {
             if (_inAimMode)
             {
+                /* slingshot dynamics */
+
                 var lookAt = Scene.CurrentCamera.Target - Scene.CurrentCamera.GameObject.Position;
                 lookAt.Normalize();
 
@@ -108,8 +107,6 @@ namespace iGL.TestGame.GameObjects
 
                     _currentBullet.Position -= norm;
                 }
-
-
             }
         }
 
@@ -123,8 +120,12 @@ namespace iGL.TestGame.GameObjects
 
             _ammo.Remove(_currentBullet);
 
-            _currentBullet.OnMouseDown += new EventHandler<Engine.Events.MouseButtonDownEvent>(bullet_OnMouseDown);
-            _currentBullet.OnMouseUp += new EventHandler<Engine.Events.MouseButtonUpEvent>(bullet_OnMouseUp);
+            if (!Game.InDesignMode)
+            {
+                _currentBullet.OnMouseDown += new EventHandler<Engine.Events.MouseButtonDownEvent>(bullet_OnMouseDown);
+                _currentBullet.OnMouseUp += new EventHandler<Engine.Events.MouseButtonUpEvent>(bullet_OnMouseUp);
+            }
+
             _currentBullet.Position = _bulletStartPosition;
 
             _ammo.ForEach(b =>                
@@ -133,7 +134,12 @@ namespace iGL.TestGame.GameObjects
 
         void bullet_OnMouseUp(object sender, Engine.Events.MouseButtonUpEvent e)
         {
+            Scene.CurrentCamera.GameObject.Enabled = true;
+
             var bullet = sender as Sphere;
+
+            bullet.AddComponent(new SphereColliderComponent());
+            bullet.AddComponent(new RigidBodyComponent());
 
             var rigidBody = bullet.Components.Single(c => c is RigidBodyComponent) as RigidBodyComponent;
 
@@ -160,6 +166,8 @@ namespace iGL.TestGame.GameObjects
             bullet.Material.Ambient = new Vector4(1, 0, 0, 0);
 
             _inAimMode = true;
+
+            Scene.CurrentCamera.GameObject.Enabled = false;
         }
 
 

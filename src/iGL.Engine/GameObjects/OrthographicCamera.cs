@@ -14,9 +14,8 @@ namespace iGL.Engine
        
         private const string CameraComponentId = "7d719186-50f7-49c1-bb2b-7b7cd85dadbc";
 
-        public OrthographicCamera(SerializationInfo info, StreamingContext context)
-            : base(info, context) { }
-
+        public OrthographicCamera(SerializationInfo info, StreamingContext context) : base(info, context) { }
+           
         public OrthographicCamera() { }
 
         protected override void Init()

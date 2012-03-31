@@ -96,22 +96,7 @@ namespace iGL.Designer
 
             SnapValue = 0.25f;
             SnapValueRotation = (float)(Math.PI / 8.0);
-        }
-
-        void OpenTKControl_MouseWheel(object sender, MouseEventArgs e)
-        {
-            /* zoom camera */
-
-            if (_workingScene.CurrentCamera != null)
-            {
-                var lookAt = _workingScene.CurrentCamera.Target - _workingScene.CurrentCamera.GameObject.Position;
-                lookAt.Normalize();
-                lookAt *= -(e.Delta / 200.0f);
-
-                _workingScene.CurrentCamera.Target -= lookAt;
-                _workingScene.CurrentCamera.GameObject.Position -= lookAt;
-            }
-        }
+        }       
 
         protected new bool DesignMode
         {
@@ -251,12 +236,16 @@ namespace iGL.Designer
         }
 
         void OpenTKControl_MouseUp(object sender, MouseEventArgs e)
-        {            
+        {           
             Game.MouseButton(e.Button.ToMouseButton(), false, e.X, e.Y);
         }
 
         void OpenTKControl_MouseDown(object sender, MouseEventArgs e)
         {
+            Game.MouseButton(e.Button.ToMouseButton(), true, e.X, e.Y);
+
+            if (!EditorGame.InDesignMode) return;
+
             if (e.Button == System.Windows.Forms.MouseButtons.Middle && _workingScene.LastNearPlaneMousePosition.HasValue)
             {
                 var lastNear = new Vector3(_workingScene.LastNearPlaneMousePosition.Value);
@@ -268,7 +257,7 @@ namespace iGL.Designer
                 _workingScene.CurrentCamera.Target = lastNear + lookAt * 10.0f;
             }
 
-            Game.MouseButton(e.Button.ToMouseButton(), true, e.X, e.Y);
+           
             if (_workingScene.LastMouseDownTarget == null)
             {
                 ClearSelection();
@@ -306,6 +295,8 @@ namespace iGL.Designer
         {
             _glLoaded = true;
             Game = EditorGame.Instance();
+            iGL.Engine.Game.InDesignMode = true;
+
             Game.Resize(Size.Width, Size.Height);
 
             LoadScene(string.Empty);
@@ -314,6 +305,30 @@ namespace iGL.Designer
 
             Game.Resize(size.Width, size.Height);
                       
+        }
+
+        void OpenTKControl_MouseWheel(object sender, MouseEventArgs e)
+        {
+            Game.MouseZoom(e.Delta);
+
+            if (!EditorGame.InDesignMode) return;
+
+            /* zoom camera */
+
+            if (_workingScene.CurrentCamera != null)
+            {
+                var lookAt = _workingScene.CurrentCamera.Target - _workingScene.CurrentCamera.GameObject.Position;
+                lookAt.Normalize();
+                lookAt *= -(e.Delta / 200.0f);
+
+                _workingScene.CurrentCamera.Target -= lookAt;
+                _workingScene.CurrentCamera.GameObject.Position -= lookAt;
+            }
+        }
+
+        void OpenTKControl_Paint(object sender, PaintEventArgs e)
+        {
+            Render();
         }
 
         public void LoadScene(string json)
@@ -392,12 +407,7 @@ namespace iGL.Designer
         {
             EditAxis = null;
         }
-
-        void OpenTKControl_Paint(object sender, PaintEventArgs e)
-        {
-            Render();
-        }
-
+      
         private void ClearSelection()
         {
             _selectedObject = null;
@@ -615,6 +625,8 @@ namespace iGL.Designer
             //    scene.AddGameObject(clone);
             //}
 
+            iGL.Engine.Game.InDesignMode = false;
+
             Game.SetScene(scene);
             Game.LoadFromJson(json);
             Game.LoadScene();
@@ -663,6 +675,9 @@ namespace iGL.Designer
         {
             _isPlaying = false;
             _isPaused = false;
+
+            iGL.Engine.Game.InDesignMode = true;
+
             Game.SetScene(_workingScene);
         }
 

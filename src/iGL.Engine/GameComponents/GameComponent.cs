@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using iGL.Engine.GL;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace iGL.Engine
 {
@@ -20,22 +22,25 @@ namespace iGL.Engine
         public CreationModeEnum CreationMode { get; internal set; }
         public string Id { get; set; }
 
-        public GameComponent() 
+        public GameComponent()
         {
             CreationMode = GameComponent.CreationModeEnum.Additional;
             Id = Guid.NewGuid().ToString();
 
             Init();
         }
-        
-        public GameComponent(SerializationInfo info, StreamingContext context) : this()
+
+        public GameComponent(SerializationInfo info, StreamingContext context)
+            : this()
         {
             var props = this.GetType().GetProperties().Where(p => p.GetSetMethod() != null).ToList();
 
             foreach (var prop in props)
             {
+                if (prop.GetCustomAttributes(false).Any(o => o is JsonIgnoreAttribute)) continue;
+                
                 prop.SetValue(this, info.GetValue(prop.Name, prop.PropertyType), null);
-            }            
+            }
         }
 
         protected virtual void Init() { }
@@ -76,6 +81,8 @@ namespace iGL.Engine
 
             foreach (var prop in props)
             {
+                if (prop.GetCustomAttributes(false).Any(o => o is JsonIgnoreAttribute)) continue;
+
                 info.AddValue(prop.Name, prop.GetValue(this, null));
             }
         }

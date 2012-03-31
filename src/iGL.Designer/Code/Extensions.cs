@@ -56,7 +56,14 @@ namespace iGL.Designer
                     var c = control as CheckBox;
                     c.CheckedChanged += (a, b) => action();
                 }
+                else
+                {
+                    var c = control as Control;
+                    c.Controls.HookAllChangeEvents(action);
+                }
+                
             }
+           
         }
 
         public static float TextToFloat(this TextBox t, float defaultValue = 0.0f)
