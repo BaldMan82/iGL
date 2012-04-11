@@ -11,7 +11,8 @@
     <RootNamespace>iGL.Designer</RootNamespace>
     <AssemblyName>iGL.Designer</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -23,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -40,14 +42,18 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddResourceDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddResourceDlg.Designer.cs">
+      <DependentUpon>AddResourceDlg.cs</DependentUpon>
+    </Compile>
     <Compile Include="Code\ComponentControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -156,6 +162,21 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SceneControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SceneControl.Designer.cs">
+      <DependentUpon>SceneControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TextureConverter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TextureConverter.Designer.cs">
+      <DependentUpon>TextureConverter.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AddResourceDlg.resx">
+      <DependentUpon>AddResourceDlg.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ComponentDialogs\BoxColliderComponentDlg.resx">
       <DependentUpon>BoxColliderComponentDlg.cs</DependentUpon>
     </EmbeddedResource>
@@ -214,7 +235,15 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SceneControl.resx">
+      <DependentUpon>SceneControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextureConverter.resx">
+      <DependentUpon>TextureConverter.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -1,11 +1,12 @@
 
 
-//precision mediump float;
+precision mediump float;
 //precision mediump int;
 
 // Attributes
 attribute vec3 a_position;
 attribute vec3 a_normal;
+attribute vec2 a_uv;
 
 // Shader variables
 vec4 normal;
@@ -42,6 +43,7 @@ varying vec4 v_ambientColor;
 varying vec3 v_normal;
 varying vec3 v_eyepos;
 varying vec3 v_lightVector;
+varying vec2 v_uv;
 
 void calcLightning();
 
@@ -49,7 +51,8 @@ void main()
 {
 	gl_Position =  u_modelViewProjectionMatrix * vec4(a_position.x, a_position.y, a_position.z, 1);
 	v_normal =  vec3(u_transposeAdjointModelViewMatrix * vec4(a_normal.x, a_normal.y, a_normal.z, 1));	
-	
+	v_uv = a_uv;
+
 	calcLightning();	
 }
 

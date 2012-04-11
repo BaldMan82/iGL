@@ -24,7 +24,7 @@ namespace iGL.Designer
 
         public static Vector4 ToVectorColor(this Color col)
         {
-            return new Vector4(col.R / 255.0f, col.G / 255.0f, col.B / 255.0f, 0);
+            return new Vector4(col.R / 255.0f, col.G / 255.0f, col.B / 255.0f, 1);
         }
 
         public static MouseButton ToMouseButton(this MouseButtons buttons)

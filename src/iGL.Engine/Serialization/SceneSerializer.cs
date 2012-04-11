@@ -7,6 +7,7 @@ using iGL.Engine.Math;
 
 namespace iGL.Engine
 {
+    [Serializable]
     public class SceneSerializer 
     {
         public string CurrentCameraId { get; set; }
@@ -14,6 +15,6 @@ namespace iGL.Engine
 
         public Vector4 AmbientColor { get; set; }
 
-        public IEnumerable<GameObject> GameObjects { get; set; }      
+        public List<GameObject> GameObjects { get; set; }      
     }
 }

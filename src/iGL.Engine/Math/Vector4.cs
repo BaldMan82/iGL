@@ -26,6 +26,9 @@ using System;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 using System.Runtime.Serialization;
+using System.Xml.Linq;
+using System.Linq;
+
 namespace iGL.Engine.Math
 {
     /// <summary>Represents a 4D vector using four single-precision floating-point numbers.</summary>
@@ -34,7 +37,7 @@ namespace iGL.Engine.Math
     /// </remarks>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector4 : IEquatable<Vector4>, ISerializable
+    public struct Vector4 : IEquatable<Vector4>, IXmlSerializable
     {
         #region Fields
 
@@ -97,12 +100,12 @@ namespace iGL.Engine.Math
 
         #region Constructors
 
-        public Vector4(SerializationInfo info, StreamingContext context)
-            : this((float)info.GetValue("x", typeof(float)),
-                   (float)info.GetValue("y", typeof(float)),
-                   (float)info.GetValue("z", typeof(float)),
-                   (float)info.GetValue("z", typeof(float)))
+        public Vector4(XElement element)
         {
+            X = float.Parse(element.Elements("x").Single().Value);
+            Y = float.Parse(element.Elements("y").Single().Value); 
+            Z = float.Parse(element.Elements("z").Single().Value); 
+            W = float.Parse(element.Elements("w").Single().Value);
         }
 
         /// <summary>
@@ -1225,6 +1228,16 @@ namespace iGL.Engine.Math
             info.AddValue("y", Y);
             info.AddValue("z", Z);
             info.AddValue("w", W);
+        }
+
+        public XElement ToXml(XElement element)
+        {
+            element.Add(new XElement("x", X));
+            element.Add(new XElement("y", Y));
+            element.Add(new XElement("z", Z));
+            element.Add(new XElement("w", Z));
+
+            return element;
         }
     }
 }

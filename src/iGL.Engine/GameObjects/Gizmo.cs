@@ -1,7 +1,10 @@
 ﻿using iGL.Engine.Math;
+using System;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
+    [Serializable]
     public class Gizmo : GameObject
     {
         public GameObject YDirectionArrow { get; private set; }
@@ -13,8 +16,12 @@ namespace iGL.Engine
         private GameObject _zDirection;
         private GameObject _xDirection;
 
-        public float ArrowLength { get; set; }
+        public float ArrowLength { get; set; }        
         public bool ShowUniformSphere { get; set; }       
+
+        public Gizmo(XElement element) : base(element) { }
+
+        public Gizmo() { }
 
         protected override void Init()
         {
@@ -80,6 +87,8 @@ namespace iGL.Engine
 
             mesh.Vertices = vertices;
             mesh.Indices = indices;
+            mesh.UV = new Vector2[vertices.Length];
+
             mesh.Material.Ambient = new Vector4(0, 0, 1, 1);
 
             mesh.CalculateNormals();
@@ -100,6 +109,7 @@ namespace iGL.Engine
             zMesh.Vertices = mesh.Vertices;
             zMesh.Normals = mesh.Normals;
             zMesh.Indices = mesh.Indices;
+            zMesh.UV = mesh.UV;
             zMesh.Material.Ambient = new Vector4(1, 0, 0, 1);
 
             render = render.CloneForReuse();
@@ -118,6 +128,7 @@ namespace iGL.Engine
             xMesh.Vertices = mesh.Vertices;
             xMesh.Normals = mesh.Normals;
             xMesh.Indices = mesh.Indices;
+            xMesh.UV = mesh.UV;
             xMesh.Material.Ambient = new Vector4(0, 1, 0, 1);
 
             render = render.CloneForReuse();

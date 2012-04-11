@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using iGL.Engine.Math;
 using System.Runtime.Serialization;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
+    [Serializable]
     [RequiredComponent(typeof(OrthogonalCameraComponent), OrthographicCamera.CameraComponentId)]
     public class OrthographicCamera : GameObject
     {
@@ -14,7 +16,7 @@ namespace iGL.Engine
        
         private const string CameraComponentId = "7d719186-50f7-49c1-bb2b-7b7cd85dadbc";
 
-        public OrthographicCamera(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        public OrthographicCamera(XElement element) : base(element) { }
            
         public OrthographicCamera() { }
 

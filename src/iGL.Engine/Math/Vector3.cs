@@ -26,6 +26,9 @@ using System;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 using System.Runtime.Serialization;
+using System.Xml.Linq;
+using System.Linq;
+
 namespace iGL.Engine.Math
 {
     /// <summary>
@@ -36,7 +39,7 @@ namespace iGL.Engine.Math
     /// </remarks>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector3 : IEquatable<Vector3>, ISerializable
+    public struct Vector3 : IEquatable<Vector3>, IXmlSerializable
     {
         #region Fields
 
@@ -59,14 +62,13 @@ namespace iGL.Engine.Math
 
         #region Constructors
 
-        public Vector3(SerializationInfo info, StreamingContext context)
-            : this((float)info.GetValue("x", typeof(float)), 
-                   (float)info.GetValue("y", typeof(float)), 
-                   (float)info.GetValue("z", typeof(float)))
+        public Vector3(XElement element)
         {
-
+            X = float.Parse(element.Elements("x").Single().Value);
+            Y = float.Parse(element.Elements("y").Single().Value); 
+            Z = float.Parse(element.Elements("z").Single().Value); 
         }
-
+       
         /// <summary>
         /// Constructs a new instance.
         /// </summary>
@@ -1385,12 +1387,15 @@ namespace iGL.Engine.Math
         }
 
         #endregion
+       
 
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        public XElement ToXml(XElement element)
         {
-            info.AddValue("x", X);
-            info.AddValue("y", Y);
-            info.AddValue("z", Z);
+            element.Add(new XElement("x", X));
+            element.Add(new XElement("y", Y));
+            element.Add(new XElement("z", Z));
+
+            return element;
         }
     }
 }

@@ -22,11 +22,35 @@ namespace iGL.Designer.ComponentDialogs
         {
             var meshComponent = this.Component as MeshComponent;        
             materialDlg.Material = meshComponent.Material;
+
+            comboTexture.Items.Add(string.Empty);
+
+            foreach (var texture in EditorGame.Instance().Scene.Resources.Where(r => r is Texture))
+            {
+                comboTexture.Items.Add(texture.Name);
+            }
         }
 
         public override void UpdateComponent()
         {
-            
+            var meshComponent = this.Component as MeshComponent;
+
+            string item = comboTexture.SelectedItem as string;
+            if (!string.IsNullOrEmpty(item))
+            {
+                meshComponent.Material.TextureName = item;
+            }
+            else
+            {
+                meshComponent.Material.TextureName = null;
+            }
+
+            ((MeshComponent)meshComponent).RefreshTexture();
+        }
+
+        private void comboTexture_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateComponent();
         }
     }
 }

@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using iGL.Engine.Math;
 using System.Runtime.Serialization;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
+    [Serializable]
     [RequiredComponent(typeof(MeshComponent), RigidSphere.MeshComponentId)]
     [RequiredComponent(typeof(MeshRenderComponent), RigidSphere.MeshRenderComponentId)]
     [RequiredComponent(typeof(RigidBodyComponent), RigidSphere.RigidBodyComponentId)]
@@ -46,8 +48,7 @@ namespace iGL.Engine
             Segments = 16;
         }
 
-        public RigidSphere(SerializationInfo info, StreamingContext context)
-            : base(info, context) { }
+        public RigidSphere(XElement element) : base(element) { }
 
         public RigidSphere() { }
 
@@ -58,6 +59,7 @@ namespace iGL.Engine
             List<short> indices = new List<short>();
             List<Vector3> vertices = new List<Vector3>();
             List<Vector3> normals = new List<Vector3>();
+            List<Vector2> uvs = new List<Vector2>();
 
             float radius = 0.5f;
             float fDeltaRingAngle = (float)(System.Math.PI / (double)Rings);
@@ -81,7 +83,8 @@ namespace iGL.Engine
                     norm.Normalize();
                     normals.Add(norm);
 
-                    // texture : (float) seg / (float) nSegments, (float) ring / (float) nRings
+                    Vector2 uv = new Vector2((float)seg / (float)Segments, (float)ring / (float)Rings);
+                    uvs.Add(uv);
 
                     if (ring != Rings)
                     {
@@ -101,6 +104,7 @@ namespace iGL.Engine
             _meshComponent.Vertices = vertices.ToArray();
             _meshComponent.Indices = indices.ToArray();
             _meshComponent.Normals = normals.ToArray();
+            _meshComponent.UV = uvs.ToArray();
 
             //_meshComponent.CalculateNormals();
 

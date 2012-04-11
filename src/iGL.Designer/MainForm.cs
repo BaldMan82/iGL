@@ -24,6 +24,11 @@ namespace iGL.Designer
         public MainForm()
         {
             InitializeComponent();
+
+            openTKControl.OnObjectAdded += new EventHandler<OpenTKControl.ObjectAddedEvent>(openTKControl_OnObjectAdded);
+            openTKControl.OnSelectObject += new EventHandler<OpenTKControl.SelectObjectEvent>(openTKControl_OnSelectObject);
+            openTKControl.OnObjectRemoved += new EventHandler<OpenTKControl.ObjectRemovedEvent>(openTKControl_OnObjectRemoved);
+            openTKControl.OnSceneLoaded += new EventHandler<OpenTKControl.SceneLoadedEvent>(openTKControl_OnSceneLoaded);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -36,11 +41,13 @@ namespace iGL.Designer
             renderTimer.Start();
             tickTimer.Start();
 
-            openTKControl.OnObjectAdded += new EventHandler<OpenTKControl.ObjectAddedEvent>(openTKControl_OnObjectAdded);
-            openTKControl.OnSelectObject += new EventHandler<OpenTKControl.SelectObjectEvent>(openTKControl_OnSelectObject);
-            openTKControl.OnObjectRemoved += new EventHandler<OpenTKControl.ObjectRemovedEvent>(openTKControl_OnObjectRemoved);
-
+          
             UpdateSceneTree();
+        }
+
+        void openTKControl_OnSceneLoaded(object sender, OpenTKControl.SceneLoadedEvent e)
+        {
+            sceneControl.Load(e.Scene);
         }
 
         void openTKControl_OnObjectRemoved(object sender, OpenTKControl.ObjectRemovedEvent e)
@@ -312,7 +319,7 @@ namespace iGL.Designer
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_currentFilename == null) saveToolStripMenuItem1_Click(sender, e);
+            if (string.IsNullOrEmpty(_currentFilename)) saveToolStripMenuItem1_Click(sender, e);
 
             Save(_currentFilename);
         }
@@ -321,14 +328,12 @@ namespace iGL.Designer
         {
             using (FileStream f = new FileStream(filename, FileMode.Create))
             {
-                var json = EditorGame.Instance().SaveSceneToJson();
-                System.Text.UTF8Encoding encoding = new UTF8Encoding();
-                var bytes = encoding.GetBytes(json);
+                var xml = EditorGame.Instance().SaveScene();
+
+                var encoder = new System.Text.UTF8Encoding();
+                var bytes = encoder.GetBytes(xml);
 
                 f.Write(bytes, 0, bytes.Length);
-
-                f.Flush();
-                f.Close();
 
                 _currentFilename = saveFileDialog.FileName;
             }
@@ -341,16 +346,11 @@ namespace iGL.Designer
                 using (FileStream f = new FileStream(openFileDialog.FileName, FileMode.Open))
                 {
                     var bytes = new byte[f.Length];
-                    f.Read(bytes, 0, (int)f.Length);
+                    f.Read(bytes, 0, bytes.Length);
+
+                    var encoder = new System.Text.UTF8Encoding();
                     
-                    var chars = new char[f.Length];
-
-                    var decoder = System.Text.UTF8Encoding.UTF8.GetDecoder();
-                    decoder.GetChars(bytes, 0, bytes.Length, chars, 0);
-
-                    var json = new string(chars);
-
-                    openTKControl.LoadScene(json);
+                    openTKControl.LoadScene(encoder.GetString(bytes));
 
                     _currentFilename = openFileDialog.FileName;
                 }
@@ -369,6 +369,12 @@ namespace iGL.Designer
             {
                 Save(saveFileDialog.FileName);
             }
+        }
+
+        private void textureConverterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var converter = new TextureConverter();
+            converter.ShowDialog();
         }
 
        

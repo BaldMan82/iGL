@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CA64D21A-D3A2-41FA-A68F-24FDD1FD12DE}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>iGL.iPhone</RootNamespace>
+    <AssemblyName>iGLiPhone</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchDebug>true</MtouchDebug>
+    <MtouchProfiling>true</MtouchProfiling>
+    <MtouchLink>None</MtouchLink>
+    <MtouchI18n />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchLink>None</MtouchLink>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchDebug>true</MtouchDebug>
+    <MtouchProfiling>true</MtouchProfiling>
+    <IpaPackageName />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="monotouch" />
+    <Reference Include="OpenTK-1.0">
+      <HintPath>..\References\OpenTK-1.0.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Info.plist" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Main.cs" />
+    <Compile Include="AppDelegate.cs" />
+    <Compile Include="OpenGLViewController.cs" />
+    <Compile Include="EAGLView.cs" />
+    <Compile Include="iOSGL\iOSGL.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterfaceDefinition Include="OpenGLViewController.xib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Shader.fsh" />
+    <Content Include="Shader.vsh" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\iGL.Bullet-NOXNA\BulletNoXna.csproj">
+      <Project>{FF33FF66-31D6-41EE-A80A-B27A03C15044}</Project>
+      <Name>BulletNoXna</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\iGL.Engine\iGL.Engine.csproj">
+      <Project>{FF33FF66-31D6-41EE-A80A-B27A03C15044}</Project>
+      <Name>iGL.Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\iGL.TestGame\iGL.TestGame.csproj">
+      <Project>{FF33FF66-31D6-41EE-A80A-B27A03C15044}</Project>
+      <Name>iGL.TestGame</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="iOSGL\" />
+  </ItemGroup>
+</Project>

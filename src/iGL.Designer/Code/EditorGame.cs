@@ -31,8 +31,7 @@ namespace iGL.Designer
 
         public override void Load()
         {
-            base.Load();           
-            LoadScene();
+            base.Load();                       
         }
     }
 }

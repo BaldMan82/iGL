@@ -5,7 +5,13 @@ using System.Text;
 using iGL.Engine.GL;
 using iGL.Engine.Math;
 using iGL.Engine.Events;
-using Newtonsoft.Json;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml.Serialization;
+using System.Threading;
+using System.Globalization;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
@@ -32,8 +38,10 @@ namespace iGL.Engine
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.Texture2d);
-            GL.Enable(EnableCap.Blend);
-            GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.SrcColor);
+            //GL.Enable(EnableCap.Blend);
+            //GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.SrcColor);
+
+           
         }
 
         public void MouseMove(int x, int y)
@@ -70,56 +78,82 @@ namespace iGL.Engine
         public void LoadScene()
         {
             Scene.Load();
+        }       
+
+        public string SaveScene()
+        {
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+
+            using (var writer = new StringWriter())
+            {
+                XDocument doc = new XDocument();
+                XElement element = new XElement("Scene");
+
+                element.Add(new XElement("CameraId", Scene.CurrentCamera != null ? Scene.CurrentCamera.GameObject.Id : string.Empty));
+                element.Add(new XElement("LightId", Scene.CurrentLight != null ? Scene.CurrentLight.GameObject.Id : string.Empty));
+                element.Add(XmlHelper.ToXml(Scene.AmbientColor, "AmbientColor"));
+
+                element.Add(new XElement("Objects", Scene.GameObjects.Where(g => !g.Designer).Select(go => XmlHelper.ToXml(go, "GameObject"))));
+                element.Add(new XElement("Resources", Scene.Resources.Select(res => XmlHelper.ToXml(res, "Resource"))));
+
+                doc.Add(element);
+                 
+                doc.Save(writer);
+
+                return writer.ToString();
+            }           
         }
 
-        public void LoadFromJson(string json)
+        public void LoadScene(string xml)
         {
-            if (Scene == null) throw new InvalidCastException("Must load into a scene");
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
-            var obj = JsonConvert.DeserializeObject<SceneSerializer>(json, new JsonSerializerSettings()
+            using (var reader = new StringReader(xml))
             {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                TypeNameHandling = TypeNameHandling.Objects
-            });
-
-            foreach (var gameObject in obj.GameObjects)
-            {
-                Scene.AddGameObject(gameObject);
-            }
-
-            if (!string.IsNullOrEmpty(obj.CurrentCameraId))
-            {
-                Scene.SetCurrentCamera(obj.GameObjects.FirstOrDefault(g => g.Id == obj.CurrentCameraId));
-            }
-
-            if (!string.IsNullOrEmpty(obj.CurrentLightId))
-            {
-                Scene.SetCurrentLight(obj.GameObjects.FirstOrDefault(g => g.Id == obj.CurrentLightId));
-            }
-
-            Scene.AmbientColor = obj.AmbientColor;
-        }
-
-        public string SaveSceneToJson()
-        {
-            var sceneSerializer = new SceneSerializer();
-
-            if (Scene.CurrentCamera != null) sceneSerializer.CurrentCameraId = Scene.CurrentCamera.GameObject.Id;
-            if (Scene.CurrentLight != null) sceneSerializer.CurrentLightId = Scene.CurrentLight.GameObject.Id;
-
-            sceneSerializer.AmbientColor = Scene.AmbientColor;
-
-            sceneSerializer.GameObjects = Scene.GameObjects.Where(g => !g.Designer);
-
-            string json = JsonConvert.SerializeObject(sceneSerializer,
-                new JsonSerializerSettings()
+                XDocument doc = XDocument.Load(reader);
+                if (doc.Root.Name == "Scene")
                 {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    TypeNameHandling = TypeNameHandling.Objects
-                });
+                    var objects = doc.Root.Elements().FirstOrDefault(e => e.Name == "Objects");
+                    if (objects != null)
+                    {
+                        foreach (var element in objects.Elements())
+                        {
+                            /* deserialize game objects */
+                            var gameObject = XmlHelper.FromXml(element, typeof(GameObject)) as GameObject;
 
-            return json;                    
+                            Scene.AddGameObject(gameObject);
+                        }
+                    }
+
+                    var resources = doc.Root.Elements().FirstOrDefault(e => e.Name == "Resources");
+                    if (resources != null)
+                    {
+                        foreach (var resource in resources.Elements())
+                        {
+                            Scene.AddResource(XmlHelper.FromXml(resource, typeof(Resource)) as Resource);
+                        }
+                    }
+
+                    var currentCam = doc.Root.Elements().FirstOrDefault(e => e.Name == "CameraId");
+                    if (currentCam != null && !string.IsNullOrEmpty(currentCam.Value))
+                    {
+                        Scene.SetCurrentCamera(Scene.GameObjects.Single(g => g.Id == currentCam.Value));
+                    }
+
+                    var currentLight = doc.Root.Elements().FirstOrDefault(e => e.Name == "LightId");
+                    if (currentLight != null && !string.IsNullOrEmpty(currentLight.Value))
+                    {
+                        Scene.SetCurrentLight(Scene.GameObjects.Single(g => g.Id == currentLight.Value));
+                    }
+
+                    var ambient = doc.Root.Elements().FirstOrDefault(e => e.Name == "AmbientColor");
+                    Scene.AmbientColor = (Vector4)XmlHelper.FromXml(ambient, typeof(Vector4));
+                }
+
+            }
+
+            Scene.Load();
+            
         }
-
     }
 }

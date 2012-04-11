@@ -5,6 +5,9 @@ using System.Text;
 using iGL.Engine;
 using iGL.Engine.Math;
 using iGL.TestGame.GameObjects;
+using System.Resources;
+using System.Reflection;
+using System.IO;
 
 namespace iGL.TestGame
 {
@@ -12,7 +15,7 @@ namespace iGL.TestGame
     {
     
         public TestScene()
-            : base(new DesignPhysics())
+            : base(new Physics2d())
         {
             this.OnTick += new EventHandler<Engine.Events.TickEvent>(TestScene_OnTick);
         }
@@ -24,7 +27,7 @@ namespace iGL.TestGame
 
         public override void Load()
         {           
-
+            base.Load();
         }
       
     }

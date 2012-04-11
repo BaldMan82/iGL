@@ -1,9 +1,12 @@
 ﻿using System.Linq;
 using iGL.Engine.Math;
 using System.Runtime.Serialization;
+using System;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
+    [Serializable]
     [RequiredComponent(typeof(PerspectiveCameraComponent), PerspectiveCamera.CameraComponentId)]
     public class PerspectiveCamera : GameObject
     {
@@ -11,7 +14,7 @@ namespace iGL.Engine
 
         private const string CameraComponentId = "7d719186-50f7-49c1-bb2b-7b7cd85dadbc";
 
-        public PerspectiveCamera(SerializationInfo info, StreamingContext context) : base(info, context) { }      
+        public PerspectiveCamera(XElement element) : base(element) { }
             
         public PerspectiveCamera() { }
 

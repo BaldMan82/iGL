@@ -9,6 +9,7 @@ using System.Runtime.Serialization;
 
 namespace iGL.Engine
 {
+    [Serializable]
     public class BoxColliderComponent : ColliderComponent
     {
         public override bool InternalLoad()

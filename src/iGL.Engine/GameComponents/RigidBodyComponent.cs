@@ -10,6 +10,7 @@ using System.Runtime.Serialization;
 
 namespace iGL.Engine
 {
+    [Serializable]
     public class RigidBodyComponent : GameComponent
     {
         private float _mass { get; set; }

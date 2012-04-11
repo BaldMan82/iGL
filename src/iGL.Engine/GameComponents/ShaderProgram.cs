@@ -104,6 +104,11 @@ namespace iGL.Engine
             return GL.GetAttribLocation(ProgramId, "a_normal");
         }
 
+        public int GetUVAttributeLocation()
+        {
+            return GL.GetAttribLocation(ProgramId, "a_uv");
+        }
+      
         public void SetMaterial(Material material)
         {
             var loc = GetUniformLocation("u_material.ambient");
@@ -117,6 +122,12 @@ namespace iGL.Engine
 
             loc = GetUniformLocation("u_material.shininess");
             GL.Uniform1(loc, material.Shininess);
+        }
+
+        public void SetSamplerUnit(int unit)
+        {
+            var loc = GetUniformLocation("s_texture");
+            GL.Uniform1(loc, unit);
         }
 
         public void SetModelViewMatrix(Matrix4 modelView)

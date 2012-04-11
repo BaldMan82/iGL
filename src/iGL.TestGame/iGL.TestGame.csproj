@@ -12,7 +12,8 @@
     <AssemblyName>iGL.TestGame</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,6 +54,15 @@
       <Project>{07392791-9B48-42BA-A316-24193A8B7F79}</Project>
       <Name>iGL.Engine</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\scene.igl" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scenes\cube.igl" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\crate.text" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,6 +6,7 @@ using iGL.Engine.Math;
 
 namespace iGL.Engine
 {
+    [Serializable]
     public class CompoundObject : GameObject
     {
         private List<GameObject> _compoundChildren { get; set; }

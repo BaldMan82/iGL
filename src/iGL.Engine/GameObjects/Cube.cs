@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using iGL.Engine.Math;
 using System.Runtime.Serialization;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
+    [Serializable]
     [RequiredComponent(typeof(MeshComponent), Cube.MeshComponentId)]
     [RequiredComponent(typeof(MeshRenderComponent), Cube.MeshRenderComponentId)]
     public class Cube : GameObject
@@ -43,15 +45,14 @@ namespace iGL.Engine
         private const string MeshComponentId = "b2dae056-2ff7-443f-aed1-0afd3db7b0be";
         private const string MeshRenderComponentId = "56af2307-be79-453a-a8ab-54bad0d21525";
 
-        public Cube(SerializationInfo info, StreamingContext context)
-            : base(info, context) { }
+        public Cube(XElement element) : base(element) { }
 
         public Cube() { }
-       
+
         protected override void Init()
         {
             _meshComponent = Components.Single(c => c.Id == MeshComponentId) as MeshComponent;
-            _meshRenderComponent = Components.Single(c => c.Id == MeshRenderComponentId) as MeshRenderComponent;         
+            _meshRenderComponent = Components.Single(c => c.Id == MeshRenderComponentId) as MeshRenderComponent;
         }
 
         private void LoadCube()
@@ -63,6 +64,8 @@ namespace iGL.Engine
                 var halfDepth = 0.5f;
 
                 var vertices = new Vector3[36];
+                var uv = new Vector2[36];
+
                 // top (+z)
                 vertices[0] = new Vector3(-halfWidth, -halfHeight, halfDepth);
                 vertices[1] = new Vector3(halfWidth, -halfHeight, halfDepth);
@@ -111,6 +114,15 @@ namespace iGL.Engine
                 vertices[34] = new Vector3(-halfWidth, halfHeight, halfDepth);
                 vertices[35] = new Vector3(halfWidth, halfHeight, halfDepth);
 
+                for (int i = 0; i < 36; i += 6)
+                {
+                    uv[i] = new Vector2(0, 0);
+                    uv[i + 1] = new Vector2(1, 0);
+                    uv[i + 2] = new Vector2(0, 1);
+                    uv[i + 3] = new Vector2(0, 1);
+                    uv[i + 4] = new Vector2(1, 0);
+                    uv[i + 5] = new Vector2(1, 1);
+                }
 
                 var indices = new short[] {
                  0, 1, 2, 
@@ -134,6 +146,7 @@ namespace iGL.Engine
 
                 _meshComponent.Vertices = vertices;
                 _meshComponent.Indices = indices;
+                _meshComponent.UV = uv;
 
                 _meshComponent.CalculateNormals();
 
@@ -146,6 +159,7 @@ namespace iGL.Engine
                 _meshComponent.Vertices = _staticMeshComponent.Vertices;
                 _meshComponent.Normals = _staticMeshComponent.Normals;
                 _meshComponent.Indices = _staticMeshComponent.Indices;
+                _meshComponent.UV = _staticMeshComponent.UV;
 
                 _meshRenderComponent = _staticMeshRenderComponent.CloneForReuse();
             }

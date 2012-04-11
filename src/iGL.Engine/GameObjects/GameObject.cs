@@ -6,12 +6,14 @@ using iGL.Engine.Math;
 using iGL.Engine.GL;
 using iGL.Engine.Events;
 using System.Reflection;
-using Newtonsoft.Json;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
+using System.Xml.Linq;
+using iGL.Engine.GameObjects;
 
 namespace iGL.Engine
 {
-    public class GameObject : Object, ISerializable
+    public class GameObject : Object, IXmlSerializable
     {
         public IGL GL { get { return Game.GL; } }
 
@@ -140,33 +142,53 @@ namespace iGL.Engine
         internal event EventHandler<ScaleEvent> _scaleEvent;
         internal event EventHandler<RotateEvent> _rotateEvent;
 
-        public GameObject(SerializationInfo info, StreamingContext context)
+        public GameObject(XElement xmlElement)
             : this()
         {
             var props = this.GetType().GetProperties().Where(p => p.GetSetMethod() != null).ToList();
 
             foreach (var prop in props)
             {
-                prop.SetValue(this, info.GetValue(prop.Name, prop.PropertyType), null);
+                var element = xmlElement.Elements().FirstOrDefault(e => e.Name == prop.Name);
+                
+                if (element != null)
+                {
+                    prop.SetValue(this, XmlHelper.FromXml(element, prop.PropertyType), null);
+                }
+            }
+
+            var componentElement = xmlElement.Elements("Components").FirstOrDefault();
+            List<GameComponent> components = new List<GameComponent>();
+
+            if (componentElement != null)
+            {
+                components = componentElement.Elements().Select(c => XmlHelper.FromXml(c, Type.GetType(c.Name.ToString())) as GameComponent).ToList();    
             }
 
             /* create required components */
-
             var attributes = this.GetType().GetCustomAttributes(typeof(RequiredComponent), true).Select(o => o as RequiredComponent);
             foreach (var attr in attributes)
             {
-                var component = info.GetValue(attr.Id, attr.ComponentType) as GameComponent;
-                var loadedComponent = _components.Single(c => c.Id == component.Id);
+                var component = components.FirstOrDefault(c => c.Id == attr.Id);
+                if (component != null)
+                {
+                    if (component.GetType() != attr.ComponentType) throw new InvalidOperationException();
 
-                component.CopyPublicValues(loadedComponent);
+                    var loadedComponent = _components.Single(c => c.Id == component.Id);
+                    component.CopyPublicValues(loadedComponent);
+                }                
             }
 
-            /* load addition components */
-            var componentList = info.GetValue("componentList", typeof(List<string>)) as List<string>;
-            foreach (var componentId in componentList.Where(id => !_components.Any(c2 => c2.Id == id)))
-            {
-                var component = info.GetValue(componentId, typeof(GameComponent)) as GameComponent;
+            /* load additional components */
+            foreach (var component in components.Where(c => !_components.Any(c2 => c2.Id == c.Id)))
+            {              
                 AddComponent(component);
+            }
+
+            var childrenElement = xmlElement.Elements("Children").FirstOrDefault();
+            if (childrenElement != null)
+            {
+
             }
         }
 
@@ -435,22 +457,7 @@ namespace iGL.Engine
 
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            var props = this.GetType().GetProperties().Where(p => p.GetSetMethod() != null).ToList();
-
-            foreach (var prop in props)
-            {
-                info.AddValue(prop.Name, prop.GetValue(this, null));
-            }
-
-            /* save components */
-            var componentList = new List<string>();
-            foreach (var component in Components)
-            {
-                info.AddValue(component.Id, component);
-                componentList.Add(component.Id);
-            }
-
-            info.AddValue("componentList", componentList);
+           
         }
 
         #region Events
@@ -650,6 +657,17 @@ namespace iGL.Engine
             rigidBody.RigidBody.IsActive = false;
         }
 
-        #endregion
+        #endregion                 
+
+        public XElement ToXml(XElement element)
+        {
+            var props = this.GetType().GetProperties().Where(p => p.GetSetMethod() != null);
+            element.Add(props.Select(p => XmlHelper.ToXml(p.GetValue(this, null), p.Name)));
+
+            element.Add(new XElement("Children", Children.Select(c => XmlHelper.ToXml(c, name: "GameObject"))));
+            element.Add(new XElement("Components", Components.Select(c => XmlHelper.ToXml(c, name: "GameComponent"))));
+
+            return element;
+        }      
     }
 }

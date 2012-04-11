@@ -38,6 +38,8 @@
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.textureConverterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this._gameObjectsTree = new System.Windows.Forms.TreeView();
@@ -66,6 +68,7 @@
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.openTKControl = new iGL.Designer.OpenTKControl();
+            this.sceneControl = new iGL.Designer.SceneControl();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -77,7 +80,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.toolsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1335, 24);
@@ -137,6 +141,21 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.textureConverterToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // textureConverterToolStripMenuItem
+            // 
+            this.textureConverterToolStripMenuItem.Name = "textureConverterToolStripMenuItem";
+            this.textureConverterToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.textureConverterToolStripMenuItem.Text = "Texture Converter";
+            this.textureConverterToolStripMenuItem.Click += new System.EventHandler(this.textureConverterToolStripMenuItem_Click);
+            // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
@@ -175,7 +194,7 @@
             this.propertiesTab.Controls.Add(this.flowLayoutPanel1);
             this.propertiesTab.Location = new System.Drawing.Point(4, 22);
             this.propertiesTab.Name = "propertiesTab";
-            this.propertiesTab.Size = new System.Drawing.Size(312, 781);
+            this.propertiesTab.Size = new System.Drawing.Size(330, 781);
             this.propertiesTab.TabIndex = 1;
             this.propertiesTab.Text = "Properties";
             this.propertiesTab.UseVisualStyleBackColor = true;
@@ -189,7 +208,7 @@
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(312, 781);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(330, 781);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // renderTimer
@@ -206,7 +225,7 @@
             // 
             this.sceneTree.Location = new System.Drawing.Point(12, 704);
             this.sceneTree.Name = "sceneTree";
-            this.sceneTree.Size = new System.Drawing.Size(960, 161);
+            this.sceneTree.Size = new System.Drawing.Size(357, 161);
             this.sceneTree.TabIndex = 3;
             this.sceneTree.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.sceneTree_BeforeSelect);
             this.sceneTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.sceneTree_AfterSelect);
@@ -409,11 +428,20 @@
             this.openTKControl.TabIndex = 7;
             this.openTKControl.VSync = false;
             // 
+            // sceneControl
+            // 
+            this.sceneControl.AutoSize = true;
+            this.sceneControl.Location = new System.Drawing.Point(385, 704);
+            this.sceneControl.Name = "sceneControl";
+            this.sceneControl.Size = new System.Drawing.Size(574, 154);
+            this.sceneControl.TabIndex = 8;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1335, 893);
+            this.Controls.Add(this.sceneControl);
             this.Controls.Add(this.openTKControl);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip1);
@@ -477,6 +505,9 @@
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem textureConverterToolStripMenuItem;
+        private SceneControl sceneControl;
     }
 }
 

@@ -10,6 +10,7 @@ using iGL.Engine;
 using iGL.Engine.Math;
 using iGL.Engine.Events;
 using System.Diagnostics;
+using System.IO;
 
 namespace iGL.Designer
 {
@@ -28,6 +29,11 @@ namespace iGL.Designer
         public class ObjectRemovedEvent : EventArgs
         {
             public GameObject RemovedObject { get; set; }
+        }
+
+        public class SceneLoadedEvent : EventArgs
+        {
+            public Scene Scene { get; set; }
         }
 
         public EditAxisType? EditAxis { get; set; }
@@ -76,7 +82,8 @@ namespace iGL.Designer
         private event EventHandler<SelectObjectEvent> _selectObjectEvent;
         private event EventHandler<ObjectAddedEvent> _objectAddedEvent;
         private event EventHandler<ObjectRemovedEvent> _objectRemovedEvent;
-        
+        private event EventHandler<SceneLoadedEvent> _sceneLoadedEvent;
+
         public OpenTKControl()
         {
             InitializeComponent();
@@ -141,6 +148,19 @@ namespace iGL.Designer
             remove
             {
                 _objectRemovedEvent -= value;
+            }
+        }
+
+        public event EventHandler<SceneLoadedEvent> OnSceneLoaded
+        {
+            add
+            {
+                _sceneLoadedEvent += value;
+            }
+
+            remove
+            {
+                _sceneLoadedEvent -= value;
             }
         }
 
@@ -299,7 +319,7 @@ namespace iGL.Designer
 
             Game.Resize(Size.Width, Size.Height);
 
-            LoadScene(string.Empty);
+            LoadScene(null);
 
             var size = ClientSize;
 
@@ -331,7 +351,7 @@ namespace iGL.Designer
             Render();
         }
 
-        public void LoadScene(string json)
+        public void LoadScene(string xml)
         {
             ClearSelection();
 
@@ -377,9 +397,9 @@ namespace iGL.Designer
 
             _workingScene.OnObjectAdded += _workingScene_OnObjectAdded;
 
-            if (!string.IsNullOrEmpty(json))
+            if (!string.IsNullOrEmpty(xml))
             {
-                Game.LoadFromJson(json);
+                Game.LoadScene(xml);
             }
             else
             {
@@ -388,9 +408,13 @@ namespace iGL.Designer
                 _workingScene.AddGameObject(camera);
 
                 _workingScene.SetCurrentCamera(camera);
+
+                Game.LoadScene();
              }
             
             Game.Load();
+
+            if (_sceneLoadedEvent != null) _sceneLoadedEvent(this, new SceneLoadedEvent() { Scene = Game.Scene });
         }
 
         void _workingScene_OnObjectAdded(object sender, GameObjectAddedEvent e)
@@ -610,7 +634,7 @@ namespace iGL.Designer
 
             if (_isPlaying) return;
 
-            var json = Game.SaveSceneToJson();
+            //var bytes = Game.SaveScene();
 
             var scene = new Scene(new Physics2d());
 
@@ -627,21 +651,24 @@ namespace iGL.Designer
 
             iGL.Engine.Game.InDesignMode = false;
 
-            Game.SetScene(scene);
-            Game.LoadFromJson(json);
-            Game.LoadScene();
+            var xml = Game.SaveScene();
+
+            Game.SetScene(scene);           
+            Game.LoadScene(xml);
+
+            Game.Load();
 
            // ((Physics2d)scene.Physics).SleepAll();
 
-            if (_workingScene.CurrentCamera != null)
-            {
-                scene.SetCurrentCamera(scene.GameObjects.Single(g => g.Id == _workingScene.CurrentCamera.GameObject.Id));
-            }
+            //if (_workingScene.CurrentCamera != null)
+            //{
+            //    scene.SetCurrentCamera(scene.GameObjects.Single(g => g.Id == _workingScene.CurrentCamera.GameObject.Id));
+            //}
 
-            if (_workingScene.CurrentLight != null)
-            {
-                scene.SetCurrentLight(scene.GameObjects.Single(g => g.Id == _workingScene.CurrentLight.GameObject.Id));
-            }
+            //if (_workingScene.CurrentLight != null)
+            //{
+            //    scene.SetCurrentLight(scene.GameObjects.Single(g => g.Id == _workingScene.CurrentLight.GameObject.Id));
+            //}
 
             _isPlaying = true;
 

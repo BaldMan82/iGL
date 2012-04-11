@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 
 namespace iGL.Engine
 {
+    [Serializable]
     public class SphereColliderComponent : ColliderComponent
     {        
         public SphereColliderComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }

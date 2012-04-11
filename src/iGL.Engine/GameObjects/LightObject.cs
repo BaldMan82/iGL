@@ -1,9 +1,12 @@
 ﻿using System.Linq;
 using iGL.Engine.Math;
 using System.Runtime.Serialization;
+using System;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
+    [Serializable]
     [RequiredComponent(typeof(LightComponent), LightObject.LightComponentId)]
     public class LightObject : GameObject
     {
@@ -13,8 +16,7 @@ namespace iGL.Engine
 
         private const string LightComponentId = "a7a1fffa-f12a-4a52-8e89-c79630bdf223";
 
-        public LightObject(SerializationInfo info, StreamingContext context)
-            : base(info, context) { }
+        public LightObject(XElement element) : base(element) { }
 
         public LightObject() { }
 

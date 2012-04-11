@@ -8,6 +8,7 @@ using iGL.Engine.GL;
 
 namespace iGL.Engine
 {
+    [Serializable]
     public class PointLightShader : ShaderProgram
     {       
         public PointLightShader()

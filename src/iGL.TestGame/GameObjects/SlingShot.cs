@@ -5,9 +5,11 @@ using System.Text;
 using iGL.Engine;
 using iGL.Engine.Math;
 using System.Runtime.Serialization;
+using System.Xml.Linq;
 
 namespace iGL.TestGame.GameObjects
 {
+    [Serializable]
     public class SlingShot : GameObject
     {
         private List<GameObject> _ammo;
@@ -17,11 +19,11 @@ namespace iGL.TestGame.GameObjects
         private Vector3 _bulletStartPosition;
         private float _slingShotRadius = 2.0f;
         private float _springConstant = 20000f;
+        private Sphere _aimSphere;
 
         public int NumBullets { get; set; }
 
-        public SlingShot(SerializationInfo info, StreamingContext context)
-            : base(info, context) { }
+        public SlingShot(XElement element) : base(element) { }
 
         public SlingShot()
         {
@@ -50,13 +52,61 @@ namespace iGL.TestGame.GameObjects
                 var bullet = new Sphere() { Scale = new Vector3(0.5f) };              
                 bullet.Name = "Bullet" + i.ToString();
                 bullet.Position = new Vector3(-i - 1.0f, bullet.Scale.X, 0);
-                
+                bullet.Enabled = false;
+
                 AddChild(bullet);
 
                 _ammo.Add(bullet);
-            }            
-            
+            }
+
+            _aimSphere = new Sphere();
+            _aimSphere.Scale = new Vector3(3);
+            _aimSphere.Position =  _slingShot.Position + new Vector3(0, _slingShot.Height / 2.0f + 1.0f, 0);
+            _aimSphere.OnMouseDown += new EventHandler<Engine.Events.MouseButtonDownEvent>(_aimSphere_OnMouseDown);
+            _aimSphere.OnMouseUp += new EventHandler<Engine.Events.MouseButtonUpEvent>(_aimSphere_OnMouseUp);
+            _aimSphere.Visible = false;
+
+            AddChild(_aimSphere);
+
             LoadBullet();
+        }
+
+        void _aimSphere_OnMouseUp(object sender, Engine.Events.MouseButtonUpEvent e)
+        {
+            Scene.CurrentCamera.GameObject.Enabled = true;
+
+            var bullet = _currentBullet as Sphere;
+
+            bullet.AddComponent(new SphereColliderComponent());
+            bullet.AddComponent(new RigidBodyComponent());
+
+            var rigidBody = bullet.Components.Single(c => c is RigidBodyComponent) as RigidBodyComponent;
+
+            var fireDirection = _bulletStartPosition - bullet.Position;
+            rigidBody.IsStatic = false;
+            rigidBody.ApplyForce(fireDirection * _springConstant);
+
+            _inAimMode = false;
+
+            Scene.AddTimer(new Timer()
+            {
+                Action = () =>
+                {
+                    LoadBullet();
+                },
+                Interval = TimeSpan.FromSeconds(1),
+                Mode = Timer.TimerMode.Once
+            });
+        }
+
+        void _aimSphere_OnMouseDown(object sender, Engine.Events.MouseButtonDownEvent e)
+        {           
+            ((Sphere)_currentBullet).Material.Ambient = new Vector4(1, 0, 0, 0);
+            _currentBullet.Enabled = true;
+
+            _inAimMode = true;
+
+            Scene.CurrentCamera.GameObject.Enabled = false;
         }
 
         public override void Load()
@@ -134,40 +184,12 @@ namespace iGL.TestGame.GameObjects
 
         void bullet_OnMouseUp(object sender, Engine.Events.MouseButtonUpEvent e)
         {
-            Scene.CurrentCamera.GameObject.Enabled = true;
-
-            var bullet = sender as Sphere;
-
-            bullet.AddComponent(new SphereColliderComponent());
-            bullet.AddComponent(new RigidBodyComponent());
-
-            var rigidBody = bullet.Components.Single(c => c is RigidBodyComponent) as RigidBodyComponent;
-
-            var fireDirection = _bulletStartPosition - bullet.Position;
-            rigidBody.IsStatic = false;
-            rigidBody.ApplyForce(fireDirection * _springConstant);
-
-            _inAimMode = false;
-
-            Scene.AddTimer(new Timer()
-            {
-                Action = () =>
-                {
-                    LoadBullet();
-                },
-                Interval = TimeSpan.FromSeconds(1),
-                Mode = Timer.TimerMode.Once
-            });
+            
         }
 
         void bullet_OnMouseDown(object sender, Engine.Events.MouseButtonDownEvent e)
         {
-            var bullet = sender as Sphere;
-            bullet.Material.Ambient = new Vector4(1, 0, 0, 0);
-
-            _inAimMode = true;
-
-            Scene.CurrentCamera.GameObject.Enabled = false;
+            
         }
 
 

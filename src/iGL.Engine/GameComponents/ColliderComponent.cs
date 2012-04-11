@@ -7,10 +7,9 @@ using System.Runtime.Serialization;
 
 namespace iGL.Engine
 {
+    [Serializable]
     public abstract class ColliderComponent : GameComponent
     {
-        public bool Enabled { get; set; }  
-   
         internal Shape CollisionShape { get; set; }
 
         public ColliderComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }

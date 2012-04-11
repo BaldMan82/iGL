@@ -70,7 +70,7 @@ namespace iGL.Designer.ComponentDialogs
         {
             if (_material == null) _material = new Material();
 
-            ShowColors();
+            ShowColors();          
         }
 
         private void ShowColors()

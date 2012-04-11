@@ -7,6 +7,7 @@ using Jitter.LinearMath;
 
 namespace iGL.Engine
 {
+    [Serializable]
     public class CompoundColliderComponent : ColliderComponent
     {
         private List<ColliderComponent> _colliderComponents;

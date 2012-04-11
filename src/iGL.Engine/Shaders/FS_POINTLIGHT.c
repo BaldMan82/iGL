@@ -1,6 +1,6 @@
 
 
-//precision mediump float;
+precision mediump float;
 
 // Structs
 struct Light {	
@@ -26,6 +26,9 @@ varying vec4 v_ambientColor;
 varying vec3 v_normal;
 varying vec3 v_eyepos;
 varying vec3 v_lightVector;
+varying vec2 v_uv;
+
+uniform sampler2D s_texture;
 
 void calcLightning(out vec4 color);
 
@@ -33,8 +36,8 @@ void main()
 {	
 	vec4 color;
 	calcLightning(color);
-
-	gl_FragColor = color;	
+	
+	gl_FragColor = color + texture2D(s_texture, v_uv); 
 }
 
 void calcLightning(out vec4 color)

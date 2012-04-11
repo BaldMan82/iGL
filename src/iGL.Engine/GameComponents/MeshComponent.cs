@@ -5,23 +5,29 @@ using System.Text;
 
 using iGL.Engine.Math;
 using Jitter.LinearMath;
-using Newtonsoft.Json;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace iGL.Engine
 {
+    [Serializable]
     public class MeshComponent : GameComponent
     {
-        [JsonIgnoreAttribute]
+        [XmlIgnore]
         public Vector3[] Vertices { get; set; }
 
-        [JsonIgnoreAttribute]
+        [XmlIgnore]
         public Vector3[] Normals { get; set; }
 
-        [JsonIgnoreAttribute]
+        [XmlIgnore]
+        public Vector2[] UV { get; set; }
+
+        [XmlIgnore]
         public short[] Indices { get; set; }
 
         public Material Material { get; set; }
+
+        public Texture Texture { get; private set; }
 
         private JBBox _boundingBox;
 
@@ -39,6 +45,7 @@ namespace iGL.Engine
             Vertices = new Vector3[0];
             Normals = new Vector3[0];
             Indices = new short[0];
+            UV = new Vector2[0];
         }
 
         public override bool InternalLoad()
@@ -61,7 +68,14 @@ namespace iGL.Engine
             _boundingBox.Max = vMax.ToJitter();
             _boundingBox.Min = vMin.ToJitter();
 
+            RefreshTexture();
+
             return true;
+        }
+
+        public void RefreshTexture()
+        {
+            Texture = GameObject.Scene.Resources.FirstOrDefault(t => t.Name == Material.TextureName) as Texture;
         }
 
         public bool RayTest(Vector3 origin, Vector3 direction)

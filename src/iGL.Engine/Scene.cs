@@ -11,8 +11,8 @@ using System.Diagnostics;
 using System.Xml;
 using System.IO;
 using System.Xml.Serialization;
-using Newtonsoft.Json;
 using System.Runtime.Serialization;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
@@ -23,6 +23,7 @@ namespace iGL.Engine
 
         public GameObject LastMouseDownTarget { get { return _currentMouseDownObj; } }
         public IEnumerable<GameObject> GameObjects { get { return _gameObjects.AsEnumerable(); } }
+        public IEnumerable<Resource> Resources { get { return _resources.AsEnumerable(); } }
         public Vector4? LastNearPlaneMousePosition { get; private set; }
         public Game Game { get; internal set; }
         public bool Loaded { get; internal set; }
@@ -31,6 +32,8 @@ namespace iGL.Engine
         private TimeSpan _mouseUpdateRate = TimeSpan.FromSeconds(1.0 / 50.0);
         private DateTime _lastMouseUpdate = DateTime.MinValue;
         private List<GameObject> _gameObjects { get; set; }
+        private List<Resource> _resources { get; set; }
+
         private List<Timer> _timers = new List<Timer>();
         
         private GameObject _currentMouseOverObj = null;
@@ -70,6 +73,7 @@ namespace iGL.Engine
         public Scene(IPhysics physics)
         {
             _gameObjects = new List<GameObject>();
+            _resources = new List<Resource>();
 
             ShaderProgram = new PointLightShader();
 
@@ -252,9 +256,11 @@ namespace iGL.Engine
         }
 
         public virtual void Load()
-        {
-            Loaded = true;
+        {           
+            _resources.ForEach(r => r.Load());
             _gameObjects.ForEach(g => g.Load());
+
+            Loaded = true;
         }
 
         public void AddGameObject(GameObject gameObject)
@@ -272,6 +278,13 @@ namespace iGL.Engine
             if (Loaded) gameObject.Load();
 
             if (OnObjectAddedEvent != null) OnObjectAddedEvent(this, new GameObjectAddedEvent() { GameObject = gameObject });
+        }
+
+        public void AddResource(Resource resource)
+        {
+            if (Loaded) resource.Load();
+
+            _resources.Add(resource);
         }
 
         public void ScreenPointToWorld(Point screenPoint, out Vector4 nearPlane, out Vector4 farPlane)
@@ -471,8 +484,7 @@ namespace iGL.Engine
             ScreenPointToWorld(MousePosition.Value, out nearPlane, out farPlane);
 
             LastNearPlaneMousePosition = nearPlane;
-        }
-
-        
+        }      
+       
     }
 }

@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using iGL.Engine;
 using iGL.Engine.GL;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace iGL.TestGame
 {
@@ -19,9 +22,11 @@ namespace iGL.TestGame
 
             SetScene(scene);
 
-            LoadScene();
-
-            this.SaveSceneToJson();
+            using (var textStreamReader = new StreamReader(this.GetType().Assembly.GetManifestResourceStream("iGL.TestGame.Resources.scene.igl")))
+            {
+                var sceneData = textStreamReader.ReadToEnd();
+                LoadScene(sceneData);
+            }          
         }
-    }
+    }  
 }

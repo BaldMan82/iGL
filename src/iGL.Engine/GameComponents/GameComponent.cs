@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using iGL.Engine.GL;
 using System.Runtime.Serialization;
-using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Xml.Serialization;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
-    public abstract class GameComponent : Object, ISerializable
+    public abstract class GameComponent : Object
     {
         public enum CreationModeEnum
         {
@@ -37,8 +38,8 @@ namespace iGL.Engine
 
             foreach (var prop in props)
             {
-                if (prop.GetCustomAttributes(false).Any(o => o is JsonIgnoreAttribute)) continue;
-                
+                if (prop.GetCustomAttributes(false).Any(o => o is XmlIgnoreAttribute)) continue;
+
                 prop.SetValue(this, info.GetValue(prop.Name, prop.PropertyType), null);
             }
         }
@@ -81,10 +82,10 @@ namespace iGL.Engine
 
             foreach (var prop in props)
             {
-                if (prop.GetCustomAttributes(false).Any(o => o is JsonIgnoreAttribute)) continue;
+                if (prop.GetCustomAttributes(false).Any(o => o is XmlIgnoreAttribute)) continue;
 
                 info.AddValue(prop.Name, prop.GetValue(this, null));
             }
-        }
+        }           
     }
 }

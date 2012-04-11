@@ -5,9 +5,11 @@ using System.Text;
 using iGL.Engine;
 using System.Runtime.Serialization;
 using iGL.Engine.Math;
+using System.Xml.Linq;
 
 namespace iGL.TestGame.GameObjects
 {
+    [Serializable]
     [RequiredComponent(typeof(OrthogonalCameraComponent), PanViewFollowCamera.CameraComponentId)]
     public class PanViewFollowCamera : GameObject
     {
@@ -16,7 +18,7 @@ namespace iGL.TestGame.GameObjects
         public Vector3 Min { get; set; }
         public Vector3 Max { get; set; }
 
-        public PanViewFollowCamera(SerializationInfo info, StreamingContext context) : base(info, context) { }                
+        public PanViewFollowCamera(XElement element) : base(element) { }
 
         public PanViewFollowCamera () {}
 	

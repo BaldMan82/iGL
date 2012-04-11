@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using iGL.Engine.Math;
 using System.Runtime.Serialization;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
+    [Serializable]
     [RequiredComponent(typeof(MeshComponent), Sphere.MeshComponentId)]
     [RequiredComponent(typeof(MeshRenderComponent), Sphere.MeshRenderComponentId)]
     public class Sphere : GameObject
@@ -28,10 +30,7 @@ namespace iGL.Engine
         private const string MeshComponentId = "54d23823-aa44-4aeb-a742-57dbe16883e4";
         private const string MeshRenderComponentId = "4ed3d915-17ef-427e-bbde-7906f8375e6c";
 
-        public Sphere(SerializationInfo info, StreamingContext context)
-            : base(info, context) 
-        {           
-        }
+        public Sphere(XElement element) : base(element) { }
 
         public Sphere() { }       
 
@@ -52,7 +51,8 @@ namespace iGL.Engine
             List<short> indices = new List<short>();
             List<Vector3> vertices = new List<Vector3>();
             List<Vector3> normals = new List<Vector3>();
-            
+            List<Vector2> uvs = new List<Vector2>();
+
             float radius = 0.5f;
             float fDeltaRingAngle = (float)(System.Math.PI / (double)Rings);
             float fDeltaSegAngle = (float)(2.0d * System.Math.PI / (double)Segments);
@@ -75,7 +75,8 @@ namespace iGL.Engine
                     norm.Normalize();
                     normals.Add(norm);
 
-                    // texture : (float) seg / (float) nSegments, (float) ring / (float) nRings
+                    Vector2 uv = new Vector2((float)seg / (float)Segments, (float)ring / (float)Rings);
+                    uvs.Add(uv);
 
                     if (ring != Rings)
                     {
@@ -95,6 +96,7 @@ namespace iGL.Engine
             _meshComponent.Vertices = vertices.ToArray();
             _meshComponent.Indices = indices.ToArray();
             _meshComponent.Normals = normals.ToArray();
+            _meshComponent.UV = uvs.ToArray();
 
             //_meshComponent.CalculateNormals();
           

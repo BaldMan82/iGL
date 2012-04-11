@@ -95,5 +95,15 @@ namespace iGL.Engine
         {
             return new Vector3(vector.X, vector.Y, vector.Z);
         }
+
+        public static void DefaultToXml(this object obj, System.Xml.XmlWriter writer)
+        {
+            var props = obj.GetType().GetProperties().Where(p => p.GetSetMethod() != null).ToList();
+
+            foreach (var prop in props)
+            {
+                writer.WriteElementString(prop.Name, prop.GetValue(obj, null).ToString());
+            }      
+        }
     }
 }

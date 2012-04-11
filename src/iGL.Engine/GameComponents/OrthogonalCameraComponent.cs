@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using iGL.Engine.Math;
-using Newtonsoft.Json;
 using System.Runtime.Serialization;
 
 namespace iGL.Engine
 {
+    [Serializable]
     public class OrthogonalCameraComponent : CameraComponent
     {
         public float Width { get; set; }
