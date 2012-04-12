@@ -148,6 +148,12 @@ namespace iGL.Engine
             GL.UniformMatrix4(loc, false, modelViewTransposeInverse);
         }
 
+        public void SetHasTexture(bool hasTexture)
+        {
+            var loc = GetUniformLocation("u_hasTexture");
+            GL.Uniform1(loc, hasTexture ? 1 : 0);
+        }
+
         public void SetAmbientColor(Vector4 color)
         {
             var loc = GetUniformLocation("u_globalAmbientColor");

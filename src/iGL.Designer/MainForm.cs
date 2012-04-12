@@ -319,9 +319,14 @@ namespace iGL.Designer
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(_currentFilename)) saveToolStripMenuItem1_Click(sender, e);
-
-            Save(_currentFilename);
+            if (string.IsNullOrEmpty(_currentFilename))
+            {
+                saveToolStripMenuItem1_Click(sender, e);
+            }
+            else
+            {
+                Save(_currentFilename);
+            }
         }
 
         private void Save(string filename)

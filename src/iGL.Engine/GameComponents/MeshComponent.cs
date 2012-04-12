@@ -39,6 +39,7 @@ namespace iGL.Engine
         {
             Material = new Material()
             {
+                Ambient = new Vector4(0, 0, 0, 1),
                 Diffuse = new Vector4(0.4f, 0.4f, 0.4f, 1)
             };
 

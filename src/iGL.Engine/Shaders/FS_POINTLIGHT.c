@@ -20,6 +20,8 @@ struct Material {
 // Uniforms
 uniform Light u_light;
 uniform Material u_material;
+uniform vec4 u_globalAmbientColor;
+uniform bool u_hasTexture;
 
 // Varyings
 varying vec4 v_ambientColor;
@@ -30,19 +32,21 @@ varying vec2 v_uv;
 
 uniform sampler2D s_texture;
 
-void calcLightning(out vec4 color);
+void calcLightning(out vec4 color, vec4 textureColor);
 
 void main() 
 {	
 	vec4 color;
-	calcLightning(color);
+	vec4 textureColor = texture2D(s_texture, v_uv);
+	calcLightning(color, textureColor);
 	
-	gl_FragColor = color + texture2D(s_texture, v_uv); 
+	gl_FragColor = color; 
 }
 
-void calcLightning(out vec4 color)
+void calcLightning(out vec4 color, vec4 textureColor)
 {
 	color = v_ambientColor;
+	if (u_hasTexture) color *= textureColor;
 
 	vec3 N = normalize(v_normal);
 	vec3 L = normalize(v_lightVector);
@@ -51,10 +55,14 @@ void calcLightning(out vec4 color)
 	
 	if(lambertTerm > 0.0)
 	{
-		color += u_light.diffuse * 
+		vec4 addColor = u_light.diffuse * 
 		               u_material.diffuse * 
 					   lambertTerm;	
+
+		if (u_hasTexture) addColor *= textureColor;
 		
+		color += addColor;
+
 		vec3 E = normalize(v_eyepos);
 		vec3 R = reflect(-L, N);
 		float specular = pow( max(dot(R, E), 0.0), 

@@ -14,6 +14,7 @@ namespace iGL.Designer.ComponentDialogs
     public partial class MaterialDlg : UserControl
     {
         private Material _material;
+        private bool _internalUpdate;
 
         public Material Material
         {
@@ -28,6 +29,7 @@ namespace iGL.Designer.ComponentDialogs
         public MaterialDlg()
         {
             InitializeComponent();
+            Controls.HookAllChangeEvents(() => UpdateColor());
         }
 
         private void btnAmbient_Click(object sender, EventArgs e)
@@ -66,6 +68,16 @@ namespace iGL.Designer.ComponentDialogs
             ShowColors();
         }
 
+        private void UpdateColor()
+        {
+            if (_internalUpdate) return;
+
+            /* alpha text box changed */
+            _material.Ambient = new Vector4(_material.Ambient.X, _material.Ambient.Y, _material.Ambient.Z, txtAmbientAlpha.TextToFloat());
+            _material.Diffuse = new Vector4(_material.Diffuse.X, _material.Diffuse.Y, _material.Diffuse.Z, txtDiffuseAlpha.TextToFloat());
+            _material.Specular = new Vector4(_material.Specular.X, _material.Specular.Y, _material.Specular.Z, txtSpecularAlpha.TextToFloat());
+        }
+
         private void MaterialDlg_Load(object sender, EventArgs e)
         {
             if (_material == null) _material = new Material();
@@ -75,6 +87,8 @@ namespace iGL.Designer.ComponentDialogs
 
         private void ShowColors()
         {
+            _internalUpdate = true;
+
             pnlAmbient.BackColor = _material.Ambient.ToSystemColor();
             pnlDiffuse.BackColor = _material.Diffuse.ToSystemColor();
             pnlSpecular.BackColor = _material.Specular.ToSystemColor();
@@ -82,6 +96,8 @@ namespace iGL.Designer.ComponentDialogs
             txtAmbientAlpha.Text = _material.Ambient.W.ToInvariantText();
             txtDiffuseAlpha.Text = _material.Diffuse.W.ToInvariantText();
             txtSpecularAlpha.Text = _material.Specular.W.ToInvariantText();
+
+            _internalUpdate = false;
         }
     }
 }

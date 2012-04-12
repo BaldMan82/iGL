@@ -110,10 +110,12 @@ namespace iGL.Engine
                 OpenGL.GL.ActiveTexture(OpenGL.TextureUnit.Texture0);
                 OpenGL.GL.BindTexture(OpenGL.TextureTarget.Texture2D, _meshComponent.Texture.TextureId);
                 shader.SetSamplerUnit(0);
+                shader.SetHasTexture(true);
             }
             else
             {
                 OpenGL.GL.BindTexture(OpenGL.TextureTarget.Texture2D, -1);
+                shader.SetHasTexture(false);
             }
            
             GL.DrawElements(BeginMode, _meshComponent.Indices.Length, DrawElementsType.UnsignedShort, 0);

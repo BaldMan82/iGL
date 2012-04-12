@@ -89,6 +89,8 @@ namespace iGL.Engine
             MouseButtonState.Add(MouseButton.ButtonMiddle, false);
 
             Physics = physics;
+
+            AmbientColor = new Vector4(1, 1, 1, 1);
         }
 
         public void Render()

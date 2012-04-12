@@ -36,6 +36,7 @@ uniform vec4 u_eyepos;
 
 uniform Light u_light;
 uniform Material u_material;
+uniform bool u_hasTexture;
 
 uniform vec4 u_globalAmbientColor;
 

@@ -38,10 +38,10 @@ namespace iGL.Engine
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.Texture2d);
-            //GL.Enable(EnableCap.Blend);
+            GL.Enable(EnableCap.Blend);
             //GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.SrcColor);
 
-           
+            OpenTK.Graphics.OpenGL.GL.BlendFunc(OpenTK.Graphics.OpenGL.BlendingFactorSrc.SrcAlpha, OpenTK.Graphics.OpenGL.BlendingFactorDest.OneMinusSrcAlpha);
         }
 
         public void MouseMove(int x, int y)
