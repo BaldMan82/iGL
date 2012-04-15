@@ -15,7 +15,7 @@ namespace iGL.Designer
         public static string ToInvariantText(this float val)
         {
             return val.ToString(System.Globalization.CultureInfo.InvariantCulture);
-        }
+        }      
 
         public static Color ToSystemColor(this Vector4 vec)
         {
@@ -83,6 +83,25 @@ namespace iGL.Designer
 
             return defaultValue;
             
+        }
+
+        public static int TextToInt(this TextBox t, int defaultValue = 0)
+        {
+            if (string.IsNullOrEmpty(t.Text) || t.Text == "-") return defaultValue;
+
+            int result;
+            if (int.TryParse(t.Text, NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out result))
+            {
+                return result;
+            }
+            else
+            {
+                MessageBox.Show("Invalid int value.");
+                t.Text = defaultValue.ToString();
+            }
+
+            return defaultValue;
+
         }
     }
 }

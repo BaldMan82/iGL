@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 namespace iGL.Engine
 {
     public abstract class RenderComponent : GameComponent
-    {
+    {       
         public RenderComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
 
         public RenderComponent() { }

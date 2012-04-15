@@ -25,12 +25,14 @@ namespace iGL.Engine
         {
             get { return _components.AsEnumerable(); }
         }
-
-        public int RenderQueuePriority { get; set; }
+      
         public bool Visible { get; set; }
         public bool Enabled { get; set; }
         public bool Designer { get; set; }
         public string Name { get; set; }
+        
+        public bool DistanceSorting { get; set; }
+        public int RenderQueuePriority { get; set; }
 
         public string Id { get; set; }
 

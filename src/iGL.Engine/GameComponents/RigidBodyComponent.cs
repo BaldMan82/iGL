@@ -113,7 +113,7 @@ namespace iGL.Engine
         {
             RigidBodyTransform = Matrix4.Identity;
 
-            _mass = 10.0f;
+            _mass = 100.0f;
             _isStatic = false;
             _isGravitySource = false;
 

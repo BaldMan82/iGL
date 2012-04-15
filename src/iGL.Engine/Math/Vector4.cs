@@ -1235,7 +1235,7 @@ namespace iGL.Engine.Math
             element.Add(new XElement("x", X));
             element.Add(new XElement("y", Y));
             element.Add(new XElement("z", Z));
-            element.Add(new XElement("w", Z));
+            element.Add(new XElement("w", W));
 
             return element;
         }

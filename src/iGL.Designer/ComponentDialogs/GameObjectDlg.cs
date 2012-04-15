@@ -51,8 +51,11 @@ namespace iGL.Designer
             _txtScaleY.Text = GameObject.Scale.Y.ToInvariantText();
             _txtScaleZ.Text = GameObject.Scale.Z.ToInvariantText();
 
+            txtRenderQueue.Text = GameObject.RenderQueuePriority.ToString();
+
             cbEnabled.Checked = GameObject.Enabled;
             cbVisible.Checked = GameObject.Visible;
+            cbDistanceSorting.Checked = GameObject.DistanceSorting;
 
             _internalUIUpdate = false;
         }
@@ -92,6 +95,8 @@ namespace iGL.Designer
             GameObject.Scale = new Vector3(_txtScaleX.TextToFloat(), _txtScaleY.TextToFloat(), _txtScaleZ.TextToFloat());
             GameObject.Visible = cbVisible.Checked;
             GameObject.Enabled = cbEnabled.Checked;
+            GameObject.DistanceSorting = cbDistanceSorting.Checked;
+            GameObject.RenderQueuePriority = txtRenderQueue.TextToInt();
 
             _userInputUpdate = false;
         }

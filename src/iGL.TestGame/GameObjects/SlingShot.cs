@@ -18,7 +18,7 @@ namespace iGL.TestGame.GameObjects
         private GameObject _currentBullet;
         private Vector3 _bulletStartPosition;
         private float _slingShotRadius = 2.0f;
-        private float _springConstant = 20000f;
+        private float _springConstant = 80000f;
         private Sphere _aimSphere;
 
         public int NumBullets { get; set; }

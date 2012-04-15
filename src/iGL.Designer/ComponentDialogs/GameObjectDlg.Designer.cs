@@ -48,6 +48,9 @@
             this._txtPositionY = new System.Windows.Forms.TextBox();
             this._txtPositionX = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtRenderQueue = new System.Windows.Forms.TextBox();
+            this.cbDistanceSorting = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.contentPanel.SuspendLayout();
             this.SuspendLayout();
@@ -75,6 +78,9 @@
             // 
             this.contentPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.contentPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.contentPanel.Controls.Add(this.cbDistanceSorting);
+            this.contentPanel.Controls.Add(this.txtRenderQueue);
+            this.contentPanel.Controls.Add(this.label2);
             this.contentPanel.Controls.Add(this.btnResetScale);
             this.contentPanel.Controls.Add(this.btnResetRotation);
             this.contentPanel.Controls.Add(this.btnResetPosition);
@@ -94,7 +100,7 @@
             this.contentPanel.Controls.Add(this.label1);
             this.contentPanel.Location = new System.Drawing.Point(3, 32);
             this.contentPanel.Name = "contentPanel";
-            this.contentPanel.Size = new System.Drawing.Size(290, 215);
+            this.contentPanel.Size = new System.Drawing.Size(290, 244);
             this.contentPanel.TabIndex = 37;
             // 
             // btnResetScale
@@ -240,6 +246,32 @@
             this.label1.TabIndex = 37;
             this.label1.Text = "Position";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(9, 218);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(106, 13);
+            this.label2.TabIndex = 54;
+            this.label2.Text = "Renderqueue Priority";
+            // 
+            // txtRenderQueue
+            // 
+            this.txtRenderQueue.Location = new System.Drawing.Point(146, 211);
+            this.txtRenderQueue.Name = "txtRenderQueue";
+            this.txtRenderQueue.Size = new System.Drawing.Size(100, 20);
+            this.txtRenderQueue.TabIndex = 55;
+            // 
+            // cbDistanceSorting
+            // 
+            this.cbDistanceSorting.AutoSize = true;
+            this.cbDistanceSorting.Location = new System.Drawing.Point(146, 187);
+            this.cbDistanceSorting.Name = "cbDistanceSorting";
+            this.cbDistanceSorting.Size = new System.Drawing.Size(104, 17);
+            this.cbDistanceSorting.TabIndex = 56;
+            this.cbDistanceSorting.Text = "Distance Sorting";
+            this.cbDistanceSorting.UseVisualStyleBackColor = true;
+            // 
             // GameObjectDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -247,7 +279,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.contentPanel);
             this.Name = "GameObjectDlg";
-            this.Size = new System.Drawing.Size(298, 252);
+            this.Size = new System.Drawing.Size(298, 279);
             this.Load += new System.EventHandler(this.GameObjectDlg_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -279,6 +311,9 @@
         private System.Windows.Forms.TextBox _txtPositionY;
         private System.Windows.Forms.TextBox _txtPositionX;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox cbDistanceSorting;
+        private System.Windows.Forms.TextBox txtRenderQueue;
+        private System.Windows.Forms.Label label2;
 
 
     }

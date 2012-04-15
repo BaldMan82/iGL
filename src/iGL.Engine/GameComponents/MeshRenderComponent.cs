@@ -16,7 +16,7 @@ namespace iGL.Engine
         private int[] _bufferIds;
         private MeshComponent _meshComponent;
       
-        public BeginMode BeginMode { get; set; }
+        public BeginMode BeginMode { get; set; }      
 
         public MeshRenderComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
 

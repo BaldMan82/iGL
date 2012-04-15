@@ -118,9 +118,11 @@ namespace iGL.Engine
                 pointLightShader.SetLight(CurrentLight.Light, new Vector4(CurrentLight.GameObject.Position));
             }
 
-            /* load the current camera projection matrix in the shader program */
+            //var renderQueue = _gameObjects.OrderByDescending(g => g.RenderQueuePriority).ThenByDescending(g => g..ThenByDescending(g => (g.Position - CurrentCamera.GameObject.Position).LengthSquared);
+          
+            var sortedObjects = _gameObjects.OrderByDescending(g => g.RenderQueuePriority).ThenByDescending(g => g.DistanceSorting ? (g.Position - CurrentCamera.GameObject.Position).LengthSquared : float.MaxValue);
 
-            foreach (var gameObject in _gameObjects)
+            foreach (var gameObject in sortedObjects)
             {
                 gameObject.Render(Matrix4.Identity);
             }
@@ -272,11 +274,7 @@ namespace iGL.Engine
             gameObject.Scene = this;
 
             _gameObjects.Add(gameObject);
-
-            /* order game object list according to zbuffer enable/disable */
-
-            _gameObjects = _gameObjects.OrderByDescending(g => g.RenderQueuePriority).ToList();
-
+            
             if (Loaded) gameObject.Load();
 
             if (OnObjectAddedEvent != null) OnObjectAddedEvent(this, new GameObjectAddedEvent() { GameObject = gameObject });
