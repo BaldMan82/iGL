@@ -25,6 +25,17 @@ namespace iGL.Engine
         {
             get { return _components.AsEnumerable(); }
         }
+
+        public IEnumerable<GameObject> AllChildren
+        {
+            get
+            {
+                var children = _children.SelectMany(c => c.AllChildren).ToList();
+                children.AddRange(_children);
+
+                return children;
+            }
+        }
       
         public bool Visible { get; set; }
         public bool Enabled { get; set; }
@@ -69,7 +80,7 @@ namespace iGL.Engine
             get
             {
                 var transform = GetCompositeTransform();
-                return Vector3.Transform(new Vector3(), transform);
+                return Vector3.Transform(Position, transform);
             }
         }
 
@@ -387,7 +398,7 @@ namespace iGL.Engine
             Transform = scale * mRotationX * mRotationY * mRotationZ * mPos * Matrix4.Identity;
         }
 
-        public void Tick(float timeElapsed)
+        public virtual void Tick(float timeElapsed)
         {
             if (!Enabled) return;
 
@@ -404,24 +415,21 @@ namespace iGL.Engine
             return Name;
         }
 
-        public GameObject RayTest(Vector3 origin, Vector3 direction)
+        public GameObject RayTest(Vector3 origin, Vector3 direction, out Vector3 hitLocation)
         {
-            var deviation = this.Position - origin;
-            deviation.Normalize();
-            var normdir = direction;
-            normdir.Normalize();
+            hitLocation = new Vector3(0);           
 
             if (!Enabled) return null;
 
             var meshComponent = Components.FirstOrDefault(c => c is MeshComponent) as MeshComponent;
-            if (meshComponent != null && meshComponent.RayTest(origin, direction)) return this;
-
-            foreach (var child in _children)
-            {
-                var rayResult = child.RayTest(origin, direction);
-                if (rayResult != null) return rayResult;
+            if (meshComponent != null) 
+            {                
+                if (meshComponent.RayTest(origin, direction, out hitLocation))
+                {                    
+                    return this;
+                }
             }
-
+           
             return null;
         }
 

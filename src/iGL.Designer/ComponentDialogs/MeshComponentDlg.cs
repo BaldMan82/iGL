@@ -29,6 +29,8 @@ namespace iGL.Designer.ComponentDialogs
             {
                 comboTexture.Items.Add(texture.Name);
             }
+
+            comboTexture.SelectedItem = meshComponent.Material.TextureName;
         }
 
         public override void UpdateComponent()

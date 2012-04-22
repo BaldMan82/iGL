@@ -24,6 +24,7 @@
     <MtouchProfiling>true</MtouchProfiling>
     <MtouchLink>None</MtouchLink>
     <MtouchI18n />
+    <MtouchUseSGen>true</MtouchUseSGen>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -56,6 +57,9 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchI18n />
+    <CodesignProvision>78F8A2E3-C9E0-4704-8CE2-167F00B2C35B</CodesignProvision>
+    <IpaPackageName />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -63,7 +67,7 @@
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
     <Reference Include="OpenTK-1.0">
-      <HintPath>..\References\OpenTK-1.0.dll</HintPath>
+      <HintPath>..\..\..\..\..\Developer\MonoTouch\usr\lib\mono\2.1\OpenTK-1.0.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -79,26 +83,18 @@
   <ItemGroup>
     <InterfaceDefinition Include="OpenGLViewController.xib" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Shader.fsh" />
-    <Content Include="Shader.vsh" />
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\iGL.Bullet-NOXNA\BulletNoXna.csproj">
-      <Project>{FF33FF66-31D6-41EE-A80A-B27A03C15044}</Project>
-      <Name>BulletNoXna</Name>
-    </ProjectReference>
+    <Folder Include="iOSGL\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\iGL.Engine\iGL.Engine.csproj">
-      <Project>{FF33FF66-31D6-41EE-A80A-B27A03C15044}</Project>
+      <Project>{07392791-9B48-42BA-A316-24193A8B7F79}</Project>
       <Name>iGL.Engine</Name>
     </ProjectReference>
     <ProjectReference Include="..\iGL.TestGame\iGL.TestGame.csproj">
-      <Project>{FF33FF66-31D6-41EE-A80A-B27A03C15044}</Project>
+      <Project>{F4324499-1FD3-4DE4-B4F6-C16951162199}</Project>
       <Name>iGL.TestGame</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="iOSGL\" />
   </ItemGroup>
 </Project>

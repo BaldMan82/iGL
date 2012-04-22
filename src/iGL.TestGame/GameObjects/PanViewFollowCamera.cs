@@ -16,13 +16,15 @@ namespace iGL.TestGame.GameObjects
         public OrthogonalCameraComponent CameraComponent { get; private set; }
 
         public Vector3 Min { get; set; }
-        public Vector3 Max { get; set; }
+        public Vector3 Max { get; set; }        
 
         public PanViewFollowCamera(XElement element) : base(element) { }
 
         public PanViewFollowCamera () {}
 	
         private const string CameraComponentId = "d7ca3165-4ccb-4ee4-8db3-05dc706efeda";
+
+        private GameObject _target;
 
         protected override void Init()
         {
@@ -42,8 +44,29 @@ namespace iGL.TestGame.GameObjects
                 this.Scene.OnMouseMove += new EventHandler<Engine.Events.MouseMoveEvent>(Scene_OnMouseMove);
                 this.Scene.OnMouseZoom += new EventHandler<Engine.Events.MouseZoomEvent>(Scene_OnMouseZoom);
             }
+
+            Scene.OnPreRender += new EventHandler<Engine.Events.PreRenderEvent>(Scene_OnPreRender);              
         }
 
+        void Scene_OnPreRender(object sender, Engine.Events.PreRenderEvent e)
+        {          
+        }
+
+        public override void Tick(float timeElapsed)
+        {
+            base.Tick(timeElapsed);
+            
+            if (_target == null) return;
+
+            CameraComponent.Target = Vector3.Lerp(CameraComponent.Target, _target.Position, timeElapsed*2);
+            CameraComponent.GameObject.Position = CameraComponent.Target + new Vector3(0, 0, 5);
+        }
+
+        public void Follow(GameObject target)
+        {
+            _target = target;           
+        }     
+      
         void Scene_OnMouseZoom(object sender, Engine.Events.MouseZoomEvent e)
         {
             if (Scene.LastNearPlaneMousePosition == null || !Enabled) return;
@@ -72,7 +95,7 @@ namespace iGL.TestGame.GameObjects
             if (!Enabled) return;
 
             if (Scene.MouseButtonState[Engine.Events.MouseButton.Button1])
-            {                
+            {
                 Position -= e.DirectionOnNearPlane;
                 CameraComponent.Target = Position + new Vector3(0, 0, -1);
             }

@@ -18,7 +18,7 @@ namespace iGL.Engine
             var collision = new CollisionSystemBrute();
             World = new Jitter.World(collision);
             World.AllowDeactivation = true;
-            World.Gravity = new Jitter.LinearMath.JVector(0, -9.81f, 0);
+            World.Gravity = new Jitter.LinearMath.JVector(0, -50.0f, 0);
             World.Events.PreStep += new Jitter.World.WorldStep(Events_PreStep);
         }
 

@@ -41,9 +41,8 @@ namespace iGL.TestGame.GameObjects
 
             NumBullets = 10;
 
-            AddChild(_slingShot);
-
-        }
+            AddChild(_slingShot);            
+        }        
 
         private void LoadSlingshot()
         {
@@ -101,7 +100,7 @@ namespace iGL.TestGame.GameObjects
 
         void _aimSphere_OnMouseDown(object sender, Engine.Events.MouseButtonDownEvent e)
         {           
-            ((Sphere)_currentBullet).Material.Ambient = new Vector4(1, 0, 0, 0);
+            ((Sphere)_currentBullet).Material.Ambient = new Vector4(1, 0, 0, 1);
             _currentBullet.Enabled = true;
 
             _inAimMode = true;
@@ -119,7 +118,11 @@ namespace iGL.TestGame.GameObjects
             {
                 Scene.OnMouseMove += new EventHandler<Engine.Events.MouseMoveEvent>(Scene_OnMouseMove);
             }
+
+          
         }
+
+       
 
         void Scene_OnMouseMove(object sender, Engine.Events.MouseMoveEvent e)
         {

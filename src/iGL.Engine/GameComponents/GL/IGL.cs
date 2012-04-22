@@ -41,7 +41,7 @@ namespace iGL.Engine.GL
 
         void BindBuffer(BufferTarget bufferTarget, int name);
 
-        void BufferData<T>(BufferTarget bufferTarget, IntPtr size, [InAttribute, OutAttribute] T[] data, BufferUsage bufferUsage) where T : struct;
+        void BufferData(BufferTarget bufferTarget, IntPtr size, IntPtr data, BufferUsage bufferUsage);
 
         void EnableVertexAttribArray(int vertexAttrib);
 
@@ -62,5 +62,15 @@ namespace iGL.Engine.GL
         void Clear(ClearBufferMask mask);
 
         void BlendFunc(BlendingFactorSrc src, BlendingFactorDest dest);
+
+        void TexParameter(TextureTarget textureTarget, TextureParameterName paramName, int value);
+
+        void BindTexture(TextureTarget textureTarget, int nTexture);
+
+        int GenTexture();
+
+        void TexImage2D(TextureTarget textureTarget, int level, PixelInternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels);
+
+        void ActiveTexture(TextureUnit textureUnit);
     }
 }

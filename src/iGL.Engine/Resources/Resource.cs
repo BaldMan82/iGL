@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using iGL.Engine.GL;
 
 namespace iGL.Engine
 {
@@ -10,6 +11,8 @@ namespace iGL.Engine
         public string ResourceName { get; set; }
         public bool IsLoaded { get; private set; }
         public string Name { get; set; }
+
+        public static IGL GL { get { return Game.GL; } }
 
         public Resource()
         {

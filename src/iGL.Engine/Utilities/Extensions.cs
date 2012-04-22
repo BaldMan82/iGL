@@ -70,7 +70,6 @@ namespace iGL.Engine
 
         public static void EulerAngles(this Matrix4 matrix, out Vector3 eulerRotation)
         {
-
             eulerRotation = new Vector3(0);
 
             if (matrix.M31 != -1 || matrix.M32 != 1)

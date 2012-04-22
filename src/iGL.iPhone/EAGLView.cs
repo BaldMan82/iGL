@@ -11,6 +11,9 @@ using MonoTouch.CoreAnimation;
 using MonoTouch.ObjCRuntime;
 using MonoTouch.OpenGLES;
 using MonoTouch.UIKit;
+using System.Diagnostics;
+using System.Drawing;
+using System.Collections.Generic;
 
 namespace iGL.iPhone
 {
@@ -22,11 +25,18 @@ namespace iGL.iPhone
 		private TestGame _game;
 		private DateTime _lastRender = DateTime.MinValue;
 		
+		private float _pinchDistance = 0f;
+		
+		private List<UITouch> _uiTouches = new List<UITouch>();
+		
 		[Export("initWithCoder:")]
 		public EAGLView (NSCoder coder) : base (coder)
 		{
 			LayerRetainsBacking = true;
 			LayerColorFormat = EAGLColorFormat.RGBA8;
+			
+			MultipleTouchEnabled = true;
+				
 		}
 		
 		[Export ("layerClass")]
@@ -42,6 +52,7 @@ namespace iGL.iPhone
 		
 		protected override void CreateFrameBuffer ()
 		{			
+		
 			ContextRenderingApi = EAGLRenderingAPI.OpenGLES2;
 			base.CreateFrameBuffer ();		
 			
@@ -59,6 +70,92 @@ namespace iGL.iPhone
 		{
 			base.DestroyFrameBuffer ();
 	
+		}
+		
+		public override void TouchesBegan (NSSet touches, UIEvent evt)
+		{
+			base.TouchesBegan (touches, evt);
+			
+			_uiTouches.AddRange(touches.ToArray<UITouch>());
+		
+			if (_uiTouches.Count == 1) 
+			{
+				var touch = touches.AnyObject as UITouch;
+				var loc = touch.LocationInView(this);
+				
+				_game.MouseButton(iGL.Engine.Events.MouseButton.Button1, true, (int)loc.X, (int)loc.Y);
+			}
+			else if (_uiTouches.Count == 2) 
+			{				
+				
+				var p1 = _uiTouches[0].LocationInView(this);
+				var p2 = _uiTouches[1].LocationInView(this);
+				
+				var vec1 = new Vector2(p1.X, p1.Y);
+				var vec2 = new Vector2(p2.X, p2.Y);
+				
+				var direction = vec2 - vec1;
+				_pinchDistance = direction.Length;				
+				
+				_game.MouseButton(iGL.Engine.Events.MouseButton.Button1, false, (int)((p1.X + p2.X) / 2.0f), (int)((p1.Y + p2.Y) / 2.0f));
+					
+			}
+		}
+		
+		public override void TouchesMoved (NSSet touches, UIEvent evt)
+		{
+			base.TouchesMoved (touches, evt);
+			
+			if (_uiTouches.Count == 2)
+			{							
+				/* pinch zoom */
+				
+				var p1 = _uiTouches[0].LocationInView(this);
+				var p2 = _uiTouches[1].LocationInView(this);
+				
+				var vec1 = new Vector2(p1.X, p1.Y);
+				var vec2 = new Vector2(p2.X, p2.Y);
+				
+				var direction = vec2 - vec1;
+				var newpinchDistance = direction.Length;		
+						
+				var amount = _pinchDistance - newpinchDistance;
+				
+				_game.MouseZoom(-(int)amount*2);
+				
+				_pinchDistance = newpinchDistance;
+			}
+			else if (_uiTouches.Count == 1)
+			{
+				/* mouse move */
+				
+				var loc = _uiTouches[0].LocationInView(this);
+				
+				_game.MouseMove((int)loc.X, (int)loc.Y);
+				
+			}
+		}
+		
+		public override void TouchesEnded (NSSet touches, UIEvent evt)
+		{
+			base.TouchesEnded(touches, evt);
+						
+			if (_uiTouches.Count == 1)
+			{
+				var loc = _uiTouches[0].LocationInView(this);
+				
+				_game.MouseButton(iGL.Engine.Events.MouseButton.Button1, false, (int)loc.X, (int)loc.Y);
+			}
+			
+			foreach( var uiTouch in touches.ToArray<UITouch>()) _uiTouches.Remove(uiTouch);
+						
+		}
+		
+		public override void TouchesCancelled (NSSet touches, UIEvent evt)
+		{
+			base.TouchesCancelled (touches, evt);
+			
+			foreach( var uiTouch in touches.ToArray<UITouch>()) _uiTouches.Remove(uiTouch);
 		}
 		
 		#region DisplayLink support
@@ -95,11 +192,13 @@ namespace iGL.iPhone
 			displayLink.AddToRunLoop (NSRunLoop.Current, NSRunLoop.NSDefaultRunLoopMode);
 			this.displayLink = displayLink;
 			
+			
+			
 			IsAnimating = true;
 			
 			_game = new TestGame(_iOSGL);
 			_game.Resize(this.Size.Width, this.Size.Height);
-			_game.Load();		
+			_game.Load();	
 			
 			GL.Enable(EnableCap.DepthTest);
 			
@@ -126,20 +225,38 @@ namespace iGL.iPhone
 		
 		protected override void OnRenderFrame (FrameEventArgs e)
 		{						
+			
+			
 			base.OnRenderFrame (e);
 			
 			MakeCurrent ();
 		
 			if (_lastRender == DateTime.MinValue) _lastRender = DateTime.UtcNow;
 			
-			/* tick at constant interval for debugging purpose */
-			_game.Tick(1f / 100f);
-						
+			float ticks = (float)(DateTime.UtcNow -_lastRender).TotalSeconds;			
+			
+			if (ticks < 0.01f)
+			{			
+				_game.Tick(ticks);
+			}
+			else 
+			{
+				for (float t = 0; t < ticks; t += 0.01f)
+				{
+					_game.Tick(0.01f);
+				}	
+			}
+			
+			_lastRender = DateTime.UtcNow;
+			
+			//DateTime startRender = DateTime.UtcNow;
 			_game.Render();
+			//Debug.WriteLine("Time: " + (DateTime.UtcNow - startRender).TotalSeconds.ToString ());
 			
 			SwapBuffers ();
 			
-			_lastRender = DateTime.UtcNow;
+			
+			
 		}
 		
 	}

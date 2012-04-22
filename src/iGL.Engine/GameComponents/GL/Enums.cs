@@ -55,11 +55,71 @@ namespace iGL.Engine
 
     public enum BlendingFactorSrc
     {
-       One
+       One,
+       SrcAlpha,
+       OneMinusSrcAlpha
     }
 
     public enum BlendingFactorDest
     {        
-        SrcColor
+        SrcColor,
+        OneMinusSrcAlpha
+    }
+
+    public enum TextureTarget
+    {
+        Texture2D
+    }
+
+    public enum TextureParameterName
+    {
+        TextureMinFilter,
+        TextureMagFilter,
+        TextureWrapS,
+        TextureWrapT
+    }
+
+    public enum TextureMinFilter
+    {
+        Nearest = 9728,
+        Linear = 9729
+    }
+
+    public enum TextureMagFilter
+    {
+        Nearest = 9728,
+        Linear = 9729
+    }
+
+    public enum TextureWrapMode
+    {
+        Clamp = 10496,
+        Repeat = 10497,
+        ClampToBorder = 33069,
+        ClampToEdge = 33071,
+        MirroredRepeat = 33648,
+    }
+
+    public enum PixelInternalFormat
+    {
+        Rgba = 6408
+    }
+
+    public enum PixelFormat
+    {
+        Rgba = 6408
+    }
+
+    public enum PixelType
+    {
+        UnsignedByte = 5121
+    }
+
+    public enum TextureUnit
+    {
+        Texture0,
+        Texture1,
+        Texture2,
+        Texture3    
     }
 }

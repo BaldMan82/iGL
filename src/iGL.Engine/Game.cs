@@ -38,10 +38,8 @@ namespace iGL.Engine
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.Texture2d);
-            GL.Enable(EnableCap.Blend);
-            //GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.SrcColor);
-
-            OpenTK.Graphics.OpenGL.GL.BlendFunc(OpenTK.Graphics.OpenGL.BlendingFactorSrc.SrcAlpha, OpenTK.Graphics.OpenGL.BlendingFactorDest.OneMinusSrcAlpha);
+            GL.Enable(EnableCap.Blend);            
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);           
         }
 
         public void MouseMove(int x, int y)
@@ -60,13 +58,19 @@ namespace iGL.Engine
         }
 
         public void Render()
-        {           
-            Scene.Render();
+        {
+            lock (typeof(Game))
+            {
+                Scene.Render();
+            }
         }
 
         public void Tick(float timeElapsed, bool tickPhysics = true)
         {
-            Scene.Tick(timeElapsed, tickPhysics);
+            lock (typeof(Game))
+            {
+                Scene.Tick(timeElapsed, tickPhysics);
+            }
         }
 
         public void SetScene(Scene scene)

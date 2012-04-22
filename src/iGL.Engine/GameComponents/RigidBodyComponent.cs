@@ -7,6 +7,7 @@ using Jitter.LinearMath;
 using iGL.Engine.Math;
 using Jitter.Collision.Shapes;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace iGL.Engine
 {
@@ -96,6 +97,49 @@ namespace iGL.Engine
             {
                 _kineticFriction = value;
                 UpdateRigidBody();
+            }
+        }
+
+        [XmlIgnoreAttribute]
+        public Vector3 AngularVelocity
+        {
+            get
+            {
+                if (!IsLoaded) return new Vector3(0);
+
+                return RigidBody.AngularVelocity.ToOpenTK();
+            }
+            set
+            {
+                if (!IsLoaded) return;
+
+                RigidBody.AngularVelocity = value.ToJitter();
+            }
+        }
+
+        [XmlIgnoreAttribute]
+        public Vector3 LinearVelocity
+        {
+            get
+            {
+                if (!IsLoaded) return new Vector3(0);
+
+                return RigidBody.LinearVelocity.ToOpenTK();
+            }
+            set
+            {
+                if (!IsLoaded) return;
+
+                RigidBody.LinearVelocity = value.ToJitter();
+            }
+        }
+
+        public bool IsActive
+        {
+            get
+            {
+                if (!IsLoaded) return false;
+                return RigidBody.IsActive;
             }
         }
 
@@ -215,7 +259,7 @@ namespace iGL.Engine
             RigidBody.Material.Restitution = _restitution;
             RigidBody.Material.KineticFriction = _kineticFriction;
             RigidBody.Material.StaticFriction = _staticFriction;
-
+            
             GameObject.Scene.Physics.AddBody(RigidBody);
 
             UpdateTransform();

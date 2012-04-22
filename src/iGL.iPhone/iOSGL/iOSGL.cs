@@ -113,11 +113,12 @@ namespace iGL.iPhone
 		
         }       
 
-        public void BufferData<T>(Engine.BufferTarget bufferTarget, IntPtr size, T[] data, Engine.BufferUsage bufferUsage) where T : struct
+        public void BufferData(Engine.BufferTarget bufferTarget, IntPtr size, IntPtr data, Engine.BufferUsage bufferUsage) 
         {
             var target = ToBufferTarget(bufferTarget);
             var usage = ToBufferUsage(bufferUsage);
-
+			
+			
             GL.BufferData(target, size, data, usage);
         }
 
@@ -167,6 +168,24 @@ namespace iGL.iPhone
         public void Clear(Engine.ClearBufferMask mask)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+        }
+		
+		public void ClearColor(float r, float g, float b, float a)
+		{
+			GL.ClearColor(r, g, b, a);	
+		}
+		
+		public void Disable(Engine.EnableCap disableCap)
+		{
+			GL.Disable(ToEnableCap(disableCap));
+		}
+						
+		public void BlendFunc(Engine.BlendingFactorSrc src, Engine.BlendingFactorDest dest)
+        {
+            var s = ToBlendingFactorSrc(src);
+            var d = ToBlendingFactorDest(dest);
+
+            GL.BlendFunc(s, d);           
         }
 
         #region Enum conversions
@@ -255,6 +274,34 @@ namespace iGL.iPhone
             }
 
             return cap;
+        }
+		
+		private static BlendingFactorSrc ToBlendingFactorSrc(Engine.BlendingFactorSrc blendingSrc)
+        {
+            BlendingFactorSrc src = BlendingFactorSrc.One;
+
+            switch (blendingSrc)
+            {
+                case Engine.BlendingFactorSrc.One:
+                    src = BlendingFactorSrc.One;
+                    break;
+            }
+
+            return src;
+        }
+
+        private static BlendingFactorDest ToBlendingFactorDest(Engine.BlendingFactorDest blendingDest)
+        {
+            BlendingFactorDest dest = BlendingFactorDest.SrcColor;
+
+            switch (blendingDest)
+            {
+                case Engine.BlendingFactorDest.SrcColor:
+                    dest = BlendingFactorDest.SrcColor;
+                    break;
+            }
+
+            return dest;
         }
 
         #endregion

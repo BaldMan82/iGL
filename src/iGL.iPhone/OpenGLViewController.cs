@@ -37,6 +37,7 @@ namespace iGL.iPhone
 				if (IsViewLoaded && View.Window != null)
 					View.StopAnimating ();
 			}, this);
+			
 		}
 		
 		protected override void Dispose (bool disposing)

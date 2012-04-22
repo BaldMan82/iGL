@@ -29,7 +29,7 @@ namespace iGL.Engine
         public bool Loaded { get; internal set; }
         public Point? MousePosition { get; private set; }
 
-        private TimeSpan _mouseUpdateRate = TimeSpan.FromSeconds(1.0 / 50.0);
+        private TimeSpan _mouseUpdateRate = TimeSpan.FromSeconds(1.0 / 40.0);
         private DateTime _lastMouseUpdate = DateTime.MinValue;
         private List<GameObject> _gameObjects { get; set; }
         private List<Resource> _resources { get; set; }
@@ -45,6 +45,8 @@ namespace iGL.Engine
         private event EventHandler<MouseMoveEvent> OnMouseMoveEvent;
         private event EventHandler<MouseZoomEvent> OnMouseZoomEvent;
         private event EventHandler<GameObjectAddedEvent> OnObjectAddedEvent;
+        private event EventHandler<LoadedEvent> OnLoadedEvent;
+        private event EventHandler<PreRenderEvent> OnPreRenderEvent;
 
         internal ShaderProgram ShaderProgram { get; set; }
         public IPhysics Physics { get; private set; }
@@ -95,6 +97,8 @@ namespace iGL.Engine
 
         public void Render()
         {
+            if (OnPreRenderEvent != null) OnPreRenderEvent(this, new PreRenderEvent());
+
             if (CurrentCamera == null)
             {
                 /* just clear the scene */
@@ -118,8 +122,6 @@ namespace iGL.Engine
                 pointLightShader.SetLight(CurrentLight.Light, new Vector4(CurrentLight.GameObject.Position));
             }
 
-            //var renderQueue = _gameObjects.OrderByDescending(g => g.RenderQueuePriority).ThenByDescending(g => g..ThenByDescending(g => (g.Position - CurrentCamera.GameObject.Position).LengthSquared);
-          
             var sortedObjects = _gameObjects.OrderByDescending(g => g.RenderQueuePriority).ThenByDescending(g => g.DistanceSorting ? (g.Position - CurrentCamera.GameObject.Position).LengthSquared : float.MaxValue);
 
             foreach (var gameObject in sortedObjects)
@@ -233,6 +235,30 @@ namespace iGL.Engine
             }
         }
 
+        public event EventHandler<LoadedEvent> OnLoaded
+        {
+            add
+            {
+                OnLoadedEvent += value;
+            }
+            remove
+            {
+                OnLoadedEvent -= value;
+            }
+        }
+
+        public event EventHandler<PreRenderEvent> OnPreRender
+        {
+            add
+            {
+                OnPreRenderEvent += value;
+            }
+            remove
+            {
+                OnPreRenderEvent -= value;
+            }
+        }
+
         public void SetCurrentCamera(GameObject camera)
         {
             if (camera == null) CurrentCamera = null;
@@ -265,6 +291,8 @@ namespace iGL.Engine
             _gameObjects.ForEach(g => g.Load());
 
             Loaded = true;
+
+            if (OnLoadedEvent != null) OnLoadedEvent(this, new LoadedEvent());
         }
 
         public void AddGameObject(GameObject gameObject)
@@ -355,8 +383,9 @@ namespace iGL.Engine
 
 
             /* raycast through non-rigidbodies */
+            Vector3 hitLocation;
 
-            GameObject result = RayCast(nearPlane, ray);
+            GameObject result = RayCast(nearPlane, ray, out hitLocation);
 
             /* call events on raycast results */
 
@@ -386,35 +415,42 @@ namespace iGL.Engine
 
         }
 
-        public GameObject RayCast(Vector4 nearPlane, Vector4 ray)
+        public GameObject RayCast(Vector4 nearPlane, Vector4 ray, out Vector3 hitLocation)
         {
+            hitLocation = new Vector3(0);
+
             float minDistance = float.MaxValue;
             GameObject result = null;
 
             var near = new Vector3(nearPlane);
             var dir = new Vector3(ray);
 
-            foreach (var gameObject in _gameObjects)
+            var objects = _gameObjects.SelectMany(g => g.AllChildren).ToList();
+            objects.AddRange(_gameObjects);
+
+            foreach (var gameObject in objects)
             {
-                var rayHit = gameObject.RayTest(near, dir);
+                Vector3 rayHitLocation;
+                var rayHit = gameObject.RayTest(near, dir, out rayHitLocation);
 
                 if (rayHit != null)
                 {
-                    var transform = rayHit.GetCompositeTransform();
-                    var center = new Vector3(transform.M41, transform.M42, transform.M43);
-                    var distance = (center - near).LengthSquared;
+                    var distance = (rayHitLocation - near).LengthSquared;
 
-                    if (distance < minDistance || gameObject is Gizmo)
+                    if (distance < minDistance || gameObject.Parent is Gizmo)
                     {
                         result = rayHit;
                         minDistance = distance;
+                        hitLocation = rayHitLocation;
 
-                        if (gameObject is Gizmo) break;
-                    }
-
-                    Console.WriteLine("Hit");
+                        if (gameObject.Parent is Gizmo)
+                        {
+                            break;
+                        }
+                    }                   
                 }
             }
+
             return result;
         }
 

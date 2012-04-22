@@ -68,10 +68,11 @@ namespace iGL.Designer
         private void tickTimer_Tick(object sender, EventArgs e)
         {
             float timePassed = (float)(DateTime.UtcNow - _lastTick).TotalSeconds;
-            if (timePassed < (1.0f / 100.0f)) return;
+            //if (timePassed < (1.0f / 100.0f)) return;
 
-            openTKControl.Tick(timePassed);
+            
 
+            openTKControl.Tick(timePassed*2);
             _lastTick = DateTime.UtcNow;
         }
 

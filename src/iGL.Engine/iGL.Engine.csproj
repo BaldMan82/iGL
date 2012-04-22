@@ -35,10 +35,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OpenTK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\References\OpenTK.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -51,8 +47,10 @@
   <ItemGroup>
     <Compile Include="Attributes\EditorField.cs" />
     <Compile Include="Attributes\RequiredComponent.cs" />
+    <Compile Include="Events\LoadedEvent.cs" />
     <Compile Include="Events\MouseZoomEvent.cs" />
     <Compile Include="Events\GameObjectAddedEvent.cs" />
+    <Compile Include="Events\PreRenderEvent.cs" />
     <Compile Include="Events\SleepEvent.cs" />
     <Compile Include="Events\MoveEvent.cs" />
     <Compile Include="Events\RotateEvent.cs" />

@@ -79,8 +79,10 @@ namespace iGL.Engine
             Texture = GameObject.Scene.Resources.FirstOrDefault(t => t.Name == Material.TextureName) as Texture;
         }
 
-        public bool RayTest(Vector3 origin, Vector3 direction)
+        public bool RayTest(Vector3 origin, Vector3 direction, out Vector3 hitLocation)
         {
+            hitLocation = new Vector3(0);
+
             Matrix4 transform;
 
             /* if there is a rigid body active in this object, we need that transform as it will always describe its world orientation */
@@ -113,13 +115,26 @@ namespace iGL.Engine
                 Vector3 r0 = o;
                 Vector3 r1 = o + (d * 1000.0f);
 
+                List<Vector3> hits = new List<Vector3>();
+
                 /* test face / ray intersection */
                 for (int i = 0; i < Indices.Length; i += 3)
                 {
                     if (FaceRayIntersect(ref r0, ref r1, ref Vertices[Indices[i]], ref Vertices[Indices[i + 1]], ref Vertices[Indices[i + 2]]))
                     {
-                        return true;
+                        hitLocation = Vertices[Indices[i]] + Vertices[Indices[i + 1]] + Vertices[Indices[i + 2]];
+                        hitLocation /= 3.0f;
+
+                        hits.Add(hitLocation);
                     }
+                }
+
+                if (hits.Count > 0)
+                {                    
+                    hitLocation = hits.OrderBy(hit => (hit - origin).LengthSquared).First();
+                    hitLocation = Vector3.Transform(hitLocation, GameObject.GetCompositeTransform());
+
+                    return true;
                 }
             }
 

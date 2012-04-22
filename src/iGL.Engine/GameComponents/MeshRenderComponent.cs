@@ -6,8 +6,6 @@ using iGL.Engine.GL;
 using iGL.Engine.Math;
 using System.Runtime.Serialization;
 
-using OpenGL = OpenTK.Graphics.OpenGL;
-
 namespace iGL.Engine
 {
     [Serializable]
@@ -30,7 +28,7 @@ namespace iGL.Engine
         }
 
         public override bool InternalLoad()
-        {
+        {          
             /* find mesh component and load it if needed */
 
             _meshComponent = GameObject.Components.FirstOrDefault(c => c is MeshComponent) as MeshComponent;
@@ -41,24 +39,40 @@ namespace iGL.Engine
 
             if (!_meshComponent.IsLoaded) _meshComponent.Load();
 
-            /* create buffers to store vertex data */
+            /* create buffers to store vertex data */      
 
-            GL.GenBuffers(4, _bufferIds);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, _bufferIds[0]);
-            GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(_meshComponent.Vertices.Length * (Vector3.SizeInBytes)),
-                       _meshComponent.Vertices.ToArray(), BufferUsage.StaticDraw);
+            GL.GenBuffers(4, _bufferIds);        
 
-            GL.BindBuffer(BufferTarget.ArrayBuffer, _bufferIds[1]);
-            GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(_meshComponent.UV.Length * (Vector2.SizeInBytes)),
-                     _meshComponent.UV.ToArray(), BufferUsage.StaticDraw);
+            unsafe
+            {
+                fixed (Vector3* data = _meshComponent.Vertices.ToArray())
+                {
+                    GL.BindBuffer(BufferTarget.ArrayBuffer, _bufferIds[0]);
+                    GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(_meshComponent.Vertices.Length * (Vector3.SizeInBytes)),
+                               (IntPtr)data, BufferUsage.StaticDraw);
+                }
 
-            GL.BindBuffer(BufferTarget.ArrayBuffer, _bufferIds[2]);
-            GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(_meshComponent.Normals.Length * (Vector3.SizeInBytes)),
-                     _meshComponent.Normals.ToArray(), BufferUsage.StaticDraw);
+                fixed (Vector2* data = _meshComponent.UV.ToArray())
+                {
+                    GL.BindBuffer(BufferTarget.ArrayBuffer, _bufferIds[1]);
+                    GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(_meshComponent.UV.Length * (Vector2.SizeInBytes)),
+                             (IntPtr)data, BufferUsage.StaticDraw);
+                }
+               
+                fixed (Vector3* data = _meshComponent.Normals.ToArray())
+                {
+                    GL.BindBuffer(BufferTarget.ArrayBuffer, _bufferIds[2]);
+                    GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(_meshComponent.Normals.Length * (Vector3.SizeInBytes)),
+                         (IntPtr)data, BufferUsage.StaticDraw);
+                }
 
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, _bufferIds[3]);
-            GL.BufferData(BufferTarget.ElementArrayBuffer, new IntPtr(_meshComponent.Indices.Length * sizeof(short)),
-                          _meshComponent.Indices.ToArray(), BufferUsage.StaticDraw);           
+                fixed (short* data = _meshComponent.Indices.ToArray())
+                {
+                    GL.BindBuffer(BufferTarget.ElementArrayBuffer, _bufferIds[3]);
+                    GL.BufferData(BufferTarget.ElementArrayBuffer, new IntPtr(_meshComponent.Indices.Length * sizeof(short)),
+                          (IntPtr)data, BufferUsage.StaticDraw);
+                }
+            }
 
             return true;
         }
@@ -107,14 +121,15 @@ namespace iGL.Engine
 
             if (_meshComponent.Texture != null)
             {
-                OpenGL.GL.ActiveTexture(OpenGL.TextureUnit.Texture0);
-                OpenGL.GL.BindTexture(OpenGL.TextureTarget.Texture2D, _meshComponent.Texture.TextureId);
+                GL.ActiveTexture(TextureUnit.Texture0);
+                GL.BindTexture(TextureTarget.Texture2D, _meshComponent.Texture.TextureId);
+                
                 shader.SetSamplerUnit(0);
                 shader.SetHasTexture(true);
             }
             else
             {
-                OpenGL.GL.BindTexture(OpenGL.TextureTarget.Texture2D, -1);
+                GL.BindTexture(TextureTarget.Texture2D, -1);                
                 shader.SetHasTexture(false);
             }
            
