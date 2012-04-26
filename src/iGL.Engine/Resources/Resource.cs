@@ -11,6 +11,7 @@ namespace iGL.Engine
         public string ResourceName { get; set; }
         public bool IsLoaded { get; private set; }
         public string Name { get; set; }
+        public Scene Scene { get; internal set; }
 
         public static IGL GL { get { return Game.GL; } }
 

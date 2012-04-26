@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using iGL.Engine;
+using iGL.Engine.Resources;
 
 namespace iGL.Designer.ComponentDialogs
 {
@@ -30,7 +31,13 @@ namespace iGL.Designer.ComponentDialogs
                 comboTexture.Items.Add(texture.Name);
             }
 
+            foreach (var meshResource in EditorGame.Instance().Scene.Resources.Where(r => r is ColladaMesh))
+            {
+                comboMeshResource.Items.Add(meshResource.Name);
+            }
+
             comboTexture.SelectedItem = meshComponent.Material.TextureName;
+            comboMeshResource.SelectedItem = meshComponent.MeshResourceName;
         }
 
         public override void UpdateComponent()
@@ -47,12 +54,29 @@ namespace iGL.Designer.ComponentDialogs
                 meshComponent.Material.TextureName = null;
             }
 
-            ((MeshComponent)meshComponent).RefreshTexture();
+            meshComponent.RefreshTexture();
+
+            /* reload mesh render component to incorporate tiling */
+            var renderComponent = meshComponent.GameObject.Components.FirstOrDefault(c => c is MeshRenderComponent) as MeshRenderComponent;
+            if (renderComponent != null) renderComponent.Reload();
         }
 
         private void comboTexture_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateComponent();
+        }       
+
+        private void comboMeshResource_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var meshComponent = this.Component as MeshComponent;
+            if (meshComponent.MeshResourceName == comboMeshResource.SelectedItem as string) return;
+
+            meshComponent.MeshResourceName = comboMeshResource.SelectedItem as string;
+            meshComponent.Reload();
+
+            /* reload render component if any */
+            var renderComponent = this.Component.GameObject.Components.FirstOrDefault(c => c is MeshRenderComponent) as MeshRenderComponent;
+            if (renderComponent != null) renderComponent.Reload();
         }
     }
 }

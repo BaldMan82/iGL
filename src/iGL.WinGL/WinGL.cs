@@ -215,6 +215,11 @@ namespace iGL
             GL.ActiveTexture(unit);
         }
 
+        public void DeleteBuffers(int p, int[] bufferIds)
+        {
+            GL.DeleteBuffers(p, bufferIds);
+        }
+
         #region Enum conversions
 
         private static TextureUnit ToTextureUnit(Engine.TextureUnit textureUnit)
@@ -278,9 +283,9 @@ namespace iGL
                 case Engine.TextureTarget.Texture2D:
                     target = TextureTarget.Texture2D;
                     break;
-            }
+            }           
 
-            return target;
+            return target;          
         }
 
         private static TextureParameterName ToTextureParameterName(Engine.TextureParameterName parameterName)
@@ -438,6 +443,6 @@ namespace iGL
         }        
 
         #endregion       
-                         
+                                
     }
 }

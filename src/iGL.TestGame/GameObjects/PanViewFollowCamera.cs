@@ -73,7 +73,7 @@ namespace iGL.TestGame.GameObjects
 
             float amount = -(e.Amount / 100.0f);
 
-            var mousePos = Scene.MousePosition.Value;
+            var mousePos = Scene.MousePosition;
             Vector4 nearPlane, farPlane;
             
             Scene.ScreenPointToWorld(mousePos, out nearPlane, out farPlane);

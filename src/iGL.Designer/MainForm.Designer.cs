@@ -67,8 +67,8 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.openTKControl = new iGL.Designer.OpenTKControl();
             this.sceneControl = new iGL.Designer.SceneControl();
+            this.openTKControl = new iGL.Designer.OpenTKControl();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -416,6 +416,14 @@
             // 
             this.openFileDialog.Filter = "Scene|*.igl";
             // 
+            // sceneControl
+            // 
+            this.sceneControl.AutoSize = true;
+            this.sceneControl.Location = new System.Drawing.Point(385, 704);
+            this.sceneControl.Name = "sceneControl";
+            this.sceneControl.Size = new System.Drawing.Size(574, 154);
+            this.sceneControl.TabIndex = 8;
+            // 
             // openTKControl
             // 
             this.openTKControl.AllowDrop = true;
@@ -427,14 +435,6 @@
             this.openTKControl.Snap = false;
             this.openTKControl.TabIndex = 7;
             this.openTKControl.VSync = false;
-            // 
-            // sceneControl
-            // 
-            this.sceneControl.AutoSize = true;
-            this.sceneControl.Location = new System.Drawing.Point(385, 704);
-            this.sceneControl.Name = "sceneControl";
-            this.sceneControl.Size = new System.Drawing.Size(574, 154);
-            this.sceneControl.TabIndex = 8;
             // 
             // MainForm
             // 

@@ -39,6 +39,8 @@ namespace iGL.Engine.GL
 
         void GenBuffers(int p, int[] bufferIds);
 
+        void DeleteBuffers(int p, int[] bufferIds);
+
         void BindBuffer(BufferTarget bufferTarget, int name);
 
         void BufferData(BufferTarget bufferTarget, IntPtr size, IntPtr data, BufferUsage bufferUsage);

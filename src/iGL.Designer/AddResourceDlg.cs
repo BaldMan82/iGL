@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using iGL.Engine;
+using iGL.Engine.Resources;
 
 namespace iGL.Designer
 {
@@ -27,11 +28,34 @@ namespace iGL.Designer
                 return;
             }
 
-            Resource = new Texture()
+            if ((string)comboType.SelectedItem == "Texture")
             {
-                ResourceName = (string)comboResource.SelectedItem,
-                Name = txtName.Text
-            };
+                Resource = new Texture()
+                {
+                    ResourceName = (string)comboResource.SelectedItem,
+                    Name = txtName.Text
+                };
+            }
+            else if ((string)comboType.SelectedItem == "Font")
+            {
+                Resource = new iGL.Engine.Resources.Font()
+                {
+                    ResourceName = (string)comboResource.SelectedItem,
+                    Name = txtName.Text
+                };
+            }
+            else if ((string)comboType.SelectedItem == "ColladaMesh")
+            {
+                Resource = new ColladaMesh()
+                {
+                    ResourceName = (string)comboResource.SelectedItem,
+                    Name = txtName.Text
+                };
+            }
+            else
+            {
+                throw new NotSupportedException(comboType.SelectedValue.ToString());
+            }
 
             DialogResult = System.Windows.Forms.DialogResult.OK;
             Close();
@@ -51,6 +75,33 @@ namespace iGL.Designer
             {
                 comboResource.Items.Add(resource);
             }
+        }
+
+        private void comboResource_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var item = comboResource.SelectedItem as string;
+            var parts = item.Split('.');
+
+            if (parts.Length < 2) return;
+
+            if (parts.Last() == "text")
+            {
+                comboType.SelectedItem = "Texture";
+            }
+            else if (parts.Last() == "fnt")
+            {
+                comboType.SelectedItem = "Font";
+            }
+            else if (parts.Last() == "dae")
+            {
+                comboType.SelectedItem = "ColladaMesh";
+            }
+            else
+            {
+                return;
+            }
+
+            txtName.Text = parts[parts.Length - 2];
         }
     }
 }

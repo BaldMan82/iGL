@@ -31,11 +31,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SceneControl));
             this.tabScene = new System.Windows.Forms.TabControl();
             this.ObjectPage = new System.Windows.Forms.TabPage();
-            this.ResourcePage = new System.Windows.Forms.TabPage();
             this.sceneTree = new System.Windows.Forms.TreeView();
+            this.ResourcePage = new System.Windows.Forms.TabPage();
+            this.resourceTree = new System.Windows.Forms.TreeView();
             this.resourceToolstrip = new System.Windows.Forms.ToolStrip();
             this.toolStripAdd = new System.Windows.Forms.ToolStripButton();
-            this.resourceTree = new System.Windows.Forms.TreeView();
+            this.toolStripAddFont = new System.Windows.Forms.ToolStripButton();
             this.tabScene.SuspendLayout();
             this.ObjectPage.SuspendLayout();
             this.ResourcePage.SuspendLayout();
@@ -64,6 +65,15 @@
             this.ObjectPage.Text = "Objects";
             this.ObjectPage.UseVisualStyleBackColor = true;
             // 
+            // sceneTree
+            // 
+            this.sceneTree.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.sceneTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sceneTree.Location = new System.Drawing.Point(3, 3);
+            this.sceneTree.Name = "sceneTree";
+            this.sceneTree.Size = new System.Drawing.Size(490, 116);
+            this.sceneTree.TabIndex = 0;
+            // 
             // ResourcePage
             // 
             this.ResourcePage.Controls.Add(this.resourceTree);
@@ -75,20 +85,21 @@
             this.ResourcePage.Text = "Resources";
             this.ResourcePage.UseVisualStyleBackColor = true;
             // 
-            // sceneTree
+            // resourceTree
             // 
-            this.sceneTree.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.sceneTree.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sceneTree.Location = new System.Drawing.Point(3, 3);
-            this.sceneTree.Name = "sceneTree";
-            this.sceneTree.Size = new System.Drawing.Size(490, 116);
-            this.sceneTree.TabIndex = 0;
+            this.resourceTree.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.resourceTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.resourceTree.Location = new System.Drawing.Point(0, 25);
+            this.resourceTree.Name = "resourceTree";
+            this.resourceTree.Size = new System.Drawing.Size(496, 97);
+            this.resourceTree.TabIndex = 2;
             // 
             // resourceToolstrip
             // 
             this.resourceToolstrip.GripMargin = new System.Windows.Forms.Padding(0);
             this.resourceToolstrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripAdd});
+            this.toolStripAdd,
+            this.toolStripAddFont});
             this.resourceToolstrip.Location = new System.Drawing.Point(0, 0);
             this.resourceToolstrip.Name = "resourceToolstrip";
             this.resourceToolstrip.Size = new System.Drawing.Size(496, 25);
@@ -105,14 +116,15 @@
             this.toolStripAdd.Text = "toolStripButton1";
             this.toolStripAdd.Click += new System.EventHandler(this.toolStripAdd_Click);
             // 
-            // resourceTree
+            // toolStripAddFont
             // 
-            this.resourceTree.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.resourceTree.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.resourceTree.Location = new System.Drawing.Point(0, 25);
-            this.resourceTree.Name = "resourceTree";
-            this.resourceTree.Size = new System.Drawing.Size(496, 97);
-            this.resourceTree.TabIndex = 2;
+            this.toolStripAddFont.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripAddFont.Image = ((System.Drawing.Image)(resources.GetObject("toolStripAddFont.Image")));
+            this.toolStripAddFont.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripAddFont.Name = "toolStripAddFont";
+            this.toolStripAddFont.Size = new System.Drawing.Size(23, 22);
+            this.toolStripAddFont.Text = "toolStripButton1";
+            this.toolStripAddFont.Click += new System.EventHandler(this.toolStripAddFont_Click);
             // 
             // SceneControl
             // 
@@ -141,5 +153,6 @@
         private System.Windows.Forms.ToolStrip resourceToolstrip;
         private System.Windows.Forms.ToolStripButton toolStripAdd;
         private System.Windows.Forms.TreeView resourceTree;
+        private System.Windows.Forms.ToolStripButton toolStripAddFont;
     }
 }

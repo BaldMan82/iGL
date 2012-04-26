@@ -447,7 +447,7 @@ namespace iGL.Designer
         {
             if (_isPaused && _isPlaying) return;
             
-            if (timeElapsed > 0.01f) timeElapsed = 0.01f;
+            //if (timeElapsed > 0.01f) timeElapsed = 0.01f;
 
             Game.Tick(timeElapsed, _isPlaying || Operation == OperationType.DROPPING);
         }
@@ -633,21 +633,9 @@ namespace iGL.Designer
             }
 
             if (_isPlaying) return;
+      
 
-            //var bytes = Game.SaveScene();
-
-            var scene = new Scene(new Physics2d());
-
-            //foreach (var gameObject in _workingScene.GameObjects.Where(o => !o.Designer))
-            //{
-            //    var clone = gameObject.Clone();
-            //    if (clone.Components.Count() != gameObject.Components.Count())
-            //    {
-            //        throw new Exception("Component creation mode error: not counting equal component count after clone.");
-            //    }
-
-            //    scene.AddGameObject(clone);
-            //}
+            var scene = new Scene(new Physics2d());          
 
             iGL.Engine.Game.InDesignMode = false;
 
@@ -656,19 +644,7 @@ namespace iGL.Designer
             Game.SetScene(scene);           
             Game.LoadScene(xml);
 
-            Game.Load();
-
-           // ((Physics2d)scene.Physics).SleepAll();
-
-            //if (_workingScene.CurrentCamera != null)
-            //{
-            //    scene.SetCurrentCamera(scene.GameObjects.Single(g => g.Id == _workingScene.CurrentCamera.GameObject.Id));
-            //}
-
-            //if (_workingScene.CurrentLight != null)
-            //{
-            //    scene.SetCurrentLight(scene.GameObjects.Single(g => g.Id == _workingScene.CurrentLight.GameObject.Id));
-            //}
+            Game.Load();         
 
             _isPlaying = true;
 

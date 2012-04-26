@@ -44,6 +44,12 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cbTilingRepeatX = new System.Windows.Forms.CheckBox();
+            this.cbTilingRepeatY = new System.Windows.Forms.CheckBox();
+            this.txtTilingX = new System.Windows.Forms.TextBox();
+            this.txtTilingY = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -172,10 +178,69 @@
             this.label6.TabIndex = 11;
             this.label6.Text = "A";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(3, 110);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(84, 13);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "Texture Tiling X:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(3, 136);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(84, 13);
+            this.label8.TabIndex = 13;
+            this.label8.Text = "Texture Tiling Y:";
+            // 
+            // cbTilingRepeatX
+            // 
+            this.cbTilingRepeatX.AutoSize = true;
+            this.cbTilingRepeatX.Location = new System.Drawing.Point(199, 110);
+            this.cbTilingRepeatX.Name = "cbTilingRepeatX";
+            this.cbTilingRepeatX.Size = new System.Drawing.Size(61, 17);
+            this.cbTilingRepeatX.TabIndex = 14;
+            this.cbTilingRepeatX.Text = "Repeat";
+            this.cbTilingRepeatX.UseVisualStyleBackColor = true;
+            // 
+            // cbTilingRepeatY
+            // 
+            this.cbTilingRepeatY.AutoSize = true;
+            this.cbTilingRepeatY.Location = new System.Drawing.Point(199, 135);
+            this.cbTilingRepeatY.Name = "cbTilingRepeatY";
+            this.cbTilingRepeatY.Size = new System.Drawing.Size(61, 17);
+            this.cbTilingRepeatY.TabIndex = 15;
+            this.cbTilingRepeatY.Text = "Repeat";
+            this.cbTilingRepeatY.UseVisualStyleBackColor = true;
+            // 
+            // txtTilingX
+            // 
+            this.txtTilingX.Location = new System.Drawing.Point(93, 107);
+            this.txtTilingX.Name = "txtTilingX";
+            this.txtTilingX.Size = new System.Drawing.Size(87, 20);
+            this.txtTilingX.TabIndex = 16;
+            // 
+            // txtTilingY
+            // 
+            this.txtTilingY.Location = new System.Drawing.Point(93, 133);
+            this.txtTilingY.Name = "txtTilingY";
+            this.txtTilingY.Size = new System.Drawing.Size(87, 20);
+            this.txtTilingY.TabIndex = 17;
+            // 
             // MaterialDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.txtTilingY);
+            this.Controls.Add(this.txtTilingX);
+            this.Controls.Add(this.cbTilingRepeatY);
+            this.Controls.Add(this.cbTilingRepeatX);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -192,7 +257,7 @@
             this.Controls.Add(this.pnlAmbient);
             this.Controls.Add(this.label1);
             this.Name = "MaterialDlg";
-            this.Size = new System.Drawing.Size(290, 113);
+            this.Size = new System.Drawing.Size(288, 169);
             this.Load += new System.EventHandler(this.MaterialDlg_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -217,5 +282,11 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.CheckBox cbTilingRepeatX;
+        private System.Windows.Forms.CheckBox cbTilingRepeatY;
+        private System.Windows.Forms.TextBox txtTilingX;
+        private System.Windows.Forms.TextBox txtTilingY;
     }
 }

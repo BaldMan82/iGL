@@ -217,6 +217,11 @@ namespace iGL
             GL.ActiveTexture(unit);
         }
 
+        public void DeleteBuffers(int p, int[] bufferIds)
+        {
+            GL.DeleteBuffers(p, bufferIds);
+        }
+
         #region Enum conversions
 
         private static TextureUnit ToTextureUnit(Engine.TextureUnit textureUnit)

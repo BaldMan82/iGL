@@ -47,17 +47,11 @@ namespace iGL.TestGame.GameObjects
 
             if (!Game.InDesignMode)
             {
-                this.Scene.OnMouseMove += new EventHandler<Engine.Events.MouseMoveEvent>(Scene_OnMouseMove);
+                //this.Scene.OnMouseMove += new EventHandler<Engine.Events.MouseMoveEvent>(Scene_OnMouseMove);
                 this.Scene.OnMouseZoom += new EventHandler<Engine.Events.MouseZoomEvent>(Scene_OnMouseZoom);
-            }
-
-            Scene.OnPreRender += new EventHandler<Engine.Events.PreRenderEvent>(Scene_OnPreRender);              
+            }                
         }
-
-        void Scene_OnPreRender(object sender, Engine.Events.PreRenderEvent e)
-        {          
-        }
-
+      
         public override void Tick(float timeElapsed)
         {
             base.Tick(timeElapsed);
@@ -66,7 +60,7 @@ namespace iGL.TestGame.GameObjects
 
             if (FollowingEnabled)
             {
-                CameraComponent.Target = Vector3.Lerp(CameraComponent.Target, _target.Position, timeElapsed * 2);
+                CameraComponent.Target = Vector3.Lerp(CameraComponent.Target, _target.WorldPosition, timeElapsed * 2);             
                 CameraComponent.GameObject.Position = CameraComponent.Target + new Vector3(0, 0, 30);
             }
         }

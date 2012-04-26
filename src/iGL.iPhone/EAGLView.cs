@@ -224,9 +224,7 @@ namespace iGL.iPhone
 		#endregion
 		
 		protected override void OnRenderFrame (FrameEventArgs e)
-		{						
-			
-			
+		{							
 			base.OnRenderFrame (e);
 			
 			MakeCurrent ();
@@ -235,27 +233,15 @@ namespace iGL.iPhone
 			
 			float ticks = (float)(DateTime.UtcNow -_lastRender).TotalSeconds;			
 			
-			if (ticks < 0.01f)
-			{			
-				_game.Tick(ticks);
-			}
-			else 
-			{
-				for (float t = 0; t < ticks; t += 0.01f)
-				{
-					_game.Tick(0.01f);
-				}	
-			}
-			
 			_lastRender = DateTime.UtcNow;
 			
-			//DateTime startRender = DateTime.UtcNow;
+			if (ticks > 0.02f) ticks = 0.02f;
+			
+			_game.Tick(ticks);
+			
 			_game.Render();
-			//Debug.WriteLine("Time: " + (DateTime.UtcNow - startRender).TotalSeconds.ToString ());
 			
 			SwapBuffers ();
-			
-			
 			
 		}
 		

@@ -33,14 +33,17 @@
             this.label1 = new System.Windows.Forms.Label();
             this.comboTexture = new System.Windows.Forms.ComboBox();
             this.lblTexture = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.comboMeshResource = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // materialDlg
             // 
+            this.materialDlg.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.materialDlg.Location = new System.Drawing.Point(0, 16);
             this.materialDlg.Material = ((iGL.Engine.Material)(resources.GetObject("materialDlg.Material")));
             this.materialDlg.Name = "materialDlg";
-            this.materialDlg.Size = new System.Drawing.Size(290, 97);
+            this.materialDlg.Size = new System.Drawing.Size(290, 163);
             this.materialDlg.TabIndex = 0;
             // 
             // label1
@@ -56,7 +59,7 @@
             // comboTexture
             // 
             this.comboTexture.FormattingEnabled = true;
-            this.comboTexture.Location = new System.Drawing.Point(64, 128);
+            this.comboTexture.Location = new System.Drawing.Point(105, 188);
             this.comboTexture.Name = "comboTexture";
             this.comboTexture.Size = new System.Drawing.Size(121, 21);
             this.comboTexture.TabIndex = 15;
@@ -65,23 +68,43 @@
             // lblTexture
             // 
             this.lblTexture.AutoSize = true;
-            this.lblTexture.Location = new System.Drawing.Point(3, 131);
+            this.lblTexture.Location = new System.Drawing.Point(5, 188);
             this.lblTexture.Name = "lblTexture";
             this.lblTexture.Size = new System.Drawing.Size(46, 13);
             this.lblTexture.TabIndex = 14;
             this.lblTexture.Text = "Texture:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(5, 220);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(85, 13);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "Mesh Resource:";
+            // 
+            // comboMeshResource
+            // 
+            this.comboMeshResource.FormattingEnabled = true;
+            this.comboMeshResource.Location = new System.Drawing.Point(105, 217);
+            this.comboMeshResource.Name = "comboMeshResource";
+            this.comboMeshResource.Size = new System.Drawing.Size(121, 21);
+            this.comboMeshResource.TabIndex = 17;
+            this.comboMeshResource.SelectedIndexChanged += new System.EventHandler(this.comboMeshResource_SelectedIndexChanged);
             // 
             // MeshComponentDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.comboMeshResource);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.comboTexture);
             this.Controls.Add(this.lblTexture);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.materialDlg);
             this.Name = "MeshComponentDlg";
-            this.Size = new System.Drawing.Size(290, 163);
+            this.Size = new System.Drawing.Size(290, 265);
             this.Load += new System.EventHandler(this.MeshComponentDlg_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -94,5 +117,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboTexture;
         private System.Windows.Forms.Label lblTexture;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox comboMeshResource;
     }
 }

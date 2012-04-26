@@ -7,6 +7,7 @@ using iGL.Engine.Math;
 using Jitter.LinearMath;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
+using iGL.Engine.Resources;
 
 namespace iGL.Engine
 {
@@ -29,6 +30,8 @@ namespace iGL.Engine
 
         public Texture Texture { get; private set; }
 
+        public string MeshResourceName { get; set; }
+
         private JBBox _boundingBox;
 
         public MeshComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
@@ -40,7 +43,11 @@ namespace iGL.Engine
             Material = new Material()
             {
                 Ambient = new Vector4(0, 0, 0, 1),
-                Diffuse = new Vector4(0.4f, 0.4f, 0.4f, 1)
+                Diffuse = new Vector4(0.4f, 0.4f, 0.4f, 1),
+                TextureTilingX = 1,
+                TextureTilingY = 1,
+                TextureRepeatX = false,
+                TextureRepeatY = false          
             };
 
             Vertices = new Vector3[0];
@@ -51,6 +58,16 @@ namespace iGL.Engine
 
         public override bool InternalLoad()
         {
+            if (!string.IsNullOrEmpty(MeshResourceName))
+            {
+                var meshResource = GameObject.Scene.Resources.FirstOrDefault(t => t.Name == MeshResourceName) as ColladaMesh;
+                if (meshResource == null) return false;
+
+                this.Normals = meshResource.Normals;
+                this.Vertices = meshResource.Vertices;
+                this.Indices = meshResource.Indices;
+            }
+
             Vector3 vMin = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
             Vector3 vMax = new Vector3(float.MinValue, float.MinValue, float.MinValue);
 
@@ -72,6 +89,11 @@ namespace iGL.Engine
             RefreshTexture();
 
             return true;
+        }
+
+        public void Reload()
+        {
+            InternalLoad();
         }
 
         public void RefreshTexture()

@@ -16,7 +16,7 @@ namespace iGL.TestGame.GameObjects
         private bool _inAimMode;
         private Vector3 _triggerPosition;
         private float _slingShotRadius = 4.0f;
-        private float _springConstant = 900000f;
+        private float _springConstant = 1000000f;
         private Arrow2d _arrow2d;
         private bool _canFire;
         private PanViewFollowCamera3d _followCamera;
@@ -78,8 +78,7 @@ namespace iGL.TestGame.GameObjects
             {
                 _followCamera = Scene.CurrentCamera.GameObject as PanViewFollowCamera3d;
 
-                _followCamera.Follow(_displaySphere);
-                _followCamera.Enabled = false;
+                _followCamera.Follow(_displaySphere);             
                 _followCamera.FollowingEnabled = true;
             }
 
@@ -132,27 +131,8 @@ namespace iGL.TestGame.GameObjects
                 }
 
 
-                /* adjust arrow image */
-
-                _arrow2d.Position = _displaySphere.WorldPosition;
-
-                var direction = _displaySphere.WorldPosition - _triggerPosition;
-                var normDirection = direction;
-                normDirection.Normalize();
-
-                _arrow2d.Position += normDirection * (_displaySphere.Scale.Y + _arrow2d.Scale.Y / 2.0f);              
-
-                Vector2 a = new Vector2(direction.X, direction.Y);
-                Vector2 b = new Vector2(0, 1);
-
-                var angle = (float)(Math.Atan2((a.X * b.Y) - (b.X * a.Y), (a.X * b.X) + (a.Y * b.Y)) % (2 * Math.PI));
-                _arrow2d.Rotation = new Vector3(0, 0, -angle);
-                _arrow2d.Scale = new Vector3(1+direction.Length/2.0f, 1+direction.Length, 1);
-
-                float colorFactor = distance / _slingShotRadius;
-
-                _arrow2d.Material.Ambient = new Vector4(colorFactor, 1 - colorFactor, 0, 1);
-                Debug.WriteLine(MathHelper.RadiansToDegrees(angle));
+				SetArrowPosition(distance);
+               
             }
 
 
@@ -160,7 +140,7 @@ namespace iGL.TestGame.GameObjects
             var body = _displaySphere.Components.Single(c => c is RigidBodyComponent) as RigidBodyComponent;
             body.AngularVelocity = body.AngularVelocity * 0.92f;
 
-            if (body.AngularVelocity.LengthSquared < 0.4f && body.LinearVelocity.LengthSquared < 0.4f)
+            if (body.AngularVelocity.LengthSquared < 4.0f && body.LinearVelocity.LengthSquared < 4.0f)
             {
                 _displaySphere.Material.Ambient = new Vector4(0, 1, 0, 1);
                 _canFire = true;
@@ -171,13 +151,40 @@ namespace iGL.TestGame.GameObjects
                 _inAimMode = false;
                 _canFire = false;
                 _arrow2d.Visible = false;
+				
+				if (_followCamera != null) _followCamera.FollowingEnabled = true;
             }
 
             /* light */
 
-            _lightObject.Position = _displaySphere.WorldPosition + new Vector3(0, 0, 5);
+            _lightObject.Position = _displaySphere.WorldPosition + new Vector3(0, 0, 2);
         }
 
+		void SetArrowPosition(float triggerDistance)
+		{
+			/* adjust arrow image */
+
+            _arrow2d.Position = _displaySphere.WorldPosition;
+
+            var direction = _displaySphere.WorldPosition - _triggerPosition;
+            var normDirection = direction;
+            normDirection.Normalize();
+
+            _arrow2d.Position += normDirection * (_displaySphere.Scale.Y + _arrow2d.Scale.Y / 2.0f);              
+
+            Vector2 a = new Vector2(direction.X, direction.Y);
+            Vector2 b = new Vector2(0, 1);
+
+            var angle = (float)(Math.Atan2((a.X * b.Y) - (b.X * a.Y), (a.X * b.X) + (a.Y * b.Y)) % (2 * Math.PI));
+            _arrow2d.Rotation = new Vector3(0, 0, -angle);
+            _arrow2d.Scale = new Vector3(1+direction.Length/2.0f, 1+direction.Length, 1);
+
+            float colorFactor = triggerDistance / _slingShotRadius;
+
+            _arrow2d.Material.Ambient = new Vector4(colorFactor, 1 - colorFactor, 0, 1);	
+			
+		}
+		
         void _aimSphere_OnMouseUp(object sender, Engine.Events.MouseButtonUpEvent e)
         {
             if (Game.InDesignMode || !_inAimMode) return;
@@ -201,13 +208,15 @@ namespace iGL.TestGame.GameObjects
         {
             if (Game.InDesignMode) return;
 
-            var body = _displaySphere.Components.Single(c => c is RigidBodyComponent) as RigidBodyComponent;
             if (!_canFire) return;
 
             _displaySphere.Material.Ambient = new Vector4(0, 1, 0, 1);
             _inAimMode = true;
 
             _triggerPosition = _displaySphere.WorldPosition;
+			
+			SetArrowPosition(0f);
+			
             _arrow2d.Visible = true;
 
             if (_followCamera != null) _followCamera.FollowingEnabled = false;

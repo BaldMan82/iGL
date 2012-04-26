@@ -20,6 +20,7 @@ namespace iGL.Engine
     {
         public CameraComponent CurrentCamera { get; private set; }
         public LightComponent CurrentLight { get; private set; }
+        public Statistics Statistics { get; private set; }
 
         public GameObject LastMouseDownTarget { get { return _currentMouseDownObj; } }
         public IEnumerable<GameObject> GameObjects { get { return _gameObjects.AsEnumerable(); } }
@@ -27,7 +28,7 @@ namespace iGL.Engine
         public Vector4? LastNearPlaneMousePosition { get; private set; }
         public Game Game { get; internal set; }
         public bool Loaded { get; internal set; }
-        public Point? MousePosition { get; private set; }
+        public Point MousePosition { get; private set; }
 
         private TimeSpan _mouseUpdateRate = TimeSpan.FromSeconds(1.0 / 40.0);
         private DateTime _lastMouseUpdate = DateTime.MinValue;
@@ -40,6 +41,7 @@ namespace iGL.Engine
         private GameObject _currentMouseDownObj = null;
 
         private Vector4 _ambientColor;
+        private DateTime _lastRenderUtc;
 
         private event EventHandler<TickEvent> OnTickEvent;
         private event EventHandler<MouseMoveEvent> OnMouseMoveEvent;
@@ -93,10 +95,14 @@ namespace iGL.Engine
             Physics = physics;
 
             AmbientColor = new Vector4(1, 1, 1, 1);
+
+            Statistics = new Statistics();
         }
 
         public void Render()
         {
+           
+
             if (OnPreRenderEvent != null) OnPreRenderEvent(this, new PreRenderEvent());
 
             if (CurrentCamera == null)
@@ -129,6 +135,9 @@ namespace iGL.Engine
                 gameObject.Render(Matrix4.Identity);
             }
 
+            Statistics.LastRenderDuration = DateTime.UtcNow - _lastRenderUtc;
+
+            _lastRenderUtc = DateTime.UtcNow;
         }
 
         public void Tick(float timeElapsed, bool tickPhysics = true)
@@ -141,7 +150,7 @@ namespace iGL.Engine
                 float step = timeElapsed;
                 if (step > 1.0f / 100.0f) step = 1.0f / 100.0f;
 
-                if (tickPhysics) Physics.Step(timeElapsed);
+                if (tickPhysics) Physics.Step(step);
             }
             catch { }
 
@@ -310,6 +319,8 @@ namespace iGL.Engine
 
         public void AddResource(Resource resource)
         {
+            resource.Scene = this;
+
             if (Loaded) resource.Load();
 
             _resources.Add(resource);
@@ -349,7 +360,7 @@ namespace iGL.Engine
             if (MousePosition == null) return;
 
             Vector4 nearPlane, farPlane;
-            ScreenPointToWorld(MousePosition.Value, out nearPlane, out farPlane);
+            ScreenPointToWorld(MousePosition, out nearPlane, out farPlane);
 
             /* hold a reference to the nearplane vector in order to calculate mouse input directional vector */
             if (LastNearPlaneMousePosition != null)
@@ -425,7 +436,7 @@ namespace iGL.Engine
             var near = new Vector3(nearPlane);
             var dir = new Vector3(ray);
 
-            var objects = _gameObjects.SelectMany(g => g.AllChildren).ToList();
+            var objects = _gameObjects.Where(g => g.Enabled).SelectMany(g => g.AllChildren).ToList();
             objects.AddRange(_gameObjects);
 
             foreach (var gameObject in objects)
@@ -517,7 +528,7 @@ namespace iGL.Engine
             CurrentCamera.Tick(0);
 
             Vector4 nearPlane, farPlane;
-            ScreenPointToWorld(MousePosition.Value, out nearPlane, out farPlane);
+            ScreenPointToWorld(MousePosition, out nearPlane, out farPlane);
 
             LastNearPlaneMousePosition = nearPlane;
         }      

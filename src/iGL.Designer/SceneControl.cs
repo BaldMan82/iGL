@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using iGL.Engine;
+using iGL.Engine.Resources;
 
 namespace iGL.Designer
 {
@@ -34,9 +35,16 @@ namespace iGL.Designer
 
             var textureNode = resourceTree.Nodes.Add("Textures");
 
-            foreach (var resource in _scene.Resources)
+            foreach (var resource in _scene.Resources.Where(r => r is Texture))
             {
                 textureNode.Nodes.Add(resource.Name);
+            }
+
+            var fontNode = resourceTree.Nodes.Add("Fonts");
+
+            foreach (var resource in _scene.Resources.Where(r => r is iGL.Engine.Resources.Font))
+            {
+                fontNode.Nodes.Add(resource.Name);
             }
         }
 
@@ -77,12 +85,16 @@ namespace iGL.Designer
         {
             AddResourceDlg dlg = new AddResourceDlg();
             if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                var texture = dlg.Resource as Texture;
-                _scene.AddResource(texture);
+            {                
+                _scene.AddResource(dlg.Resource);
 
                 LoadResourceTree();
             }
+        }
+
+        private void toolStripAddFont_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

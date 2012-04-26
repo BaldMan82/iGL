@@ -188,8 +188,134 @@ namespace iGL.iPhone
             GL.BlendFunc(s, d);           
         }
 
-        #region Enum conversions
+        public void TexParameter(Engine.TextureTarget textureTarget, Engine.TextureParameterName paramName, int value)
+        {
+            var target = ToTextureTarget(textureTarget);
+            var param = ToTextureParameterName(paramName);
 
+            GL.TexParameter(target, param, value);
+        }
+
+        public void BindTexture(Engine.TextureTarget textureTarget, int nTexture)
+        {
+            var target = ToTextureTarget(textureTarget);
+
+            GL.BindTexture(target, nTexture);
+        }
+
+        public int GenTexture()
+        {
+            return GL.GenTexture();
+        }
+
+        public void TexImage2D(Engine.TextureTarget textureTarget, int level, Engine.PixelInternalFormat internalformat, int width, int height, int border, Engine.PixelFormat format, Engine.PixelType type, IntPtr pixels)
+        {
+            var target = ToTextureTarget(textureTarget);
+            var internalPixelFormat = ToInternalPixelFormat(internalformat);
+            var pixelFormat = ToPixelFormat(format);
+            var pixelType = ToPixelType(type);
+
+            GL.TexImage2D(target, level, internalPixelFormat, width, height, border, pixelFormat, pixelType, pixels);
+        }
+
+        public void ActiveTexture(Engine.TextureUnit textureUnit)
+        {
+            var unit = ToTextureUnit(textureUnit);
+            GL.ActiveTexture(unit);
+        }
+
+
+        #region Enum conversions
+		
+		private static TextureUnit ToTextureUnit(Engine.TextureUnit textureUnit)
+        {
+            TextureUnit unit = TextureUnit.Texture0;
+            switch (textureUnit)
+            {
+                case Engine.TextureUnit.Texture0:
+                    unit = TextureUnit.Texture0;
+                    break;
+            }
+
+            return unit;
+        }
+
+        private static PixelType ToPixelType(Engine.PixelType pixelType)
+        {
+            PixelType type = PixelType.UnsignedByte;
+            switch (pixelType)
+            {
+                case Engine.PixelType.UnsignedByte:
+                    type = PixelType.UnsignedByte;
+                    break;
+            }
+
+            return type;
+        }
+
+        private static PixelFormat ToPixelFormat(Engine.PixelFormat pixelFormat)
+        {
+            PixelFormat format = PixelFormat.Alpha;
+            switch (pixelFormat)
+            {
+                case Engine.PixelFormat.Rgba:
+                    format = PixelFormat.Rgba;
+                    break;
+            }
+
+            return format;
+        }
+
+        private static PixelInternalFormat ToInternalPixelFormat(Engine.PixelInternalFormat internalFormat)
+        {
+            PixelInternalFormat format = PixelInternalFormat.Alpha;
+            switch (internalFormat)
+            {
+                case Engine.PixelInternalFormat.Rgba:
+                    format = PixelInternalFormat.Rgba;
+                    break;
+
+            }
+
+            return format;
+        }
+
+        private static TextureTarget ToTextureTarget(Engine.TextureTarget textureTarget)
+        {
+            TextureTarget target = TextureTarget.Texture2D;
+            switch (textureTarget)
+            {
+                case Engine.TextureTarget.Texture2D:
+                    target = TextureTarget.Texture2D;
+                    break;
+            }
+
+            return target;
+        }
+
+        private static TextureParameterName ToTextureParameterName(Engine.TextureParameterName parameterName)
+        {
+            TextureParameterName name = TextureParameterName.TextureMagFilter;
+            switch (parameterName)
+            {
+                case Engine.TextureParameterName.TextureMagFilter:
+                    name = TextureParameterName.TextureMagFilter;
+                    break;
+                case Engine.TextureParameterName.TextureMinFilter:
+                    name = TextureParameterName.TextureMinFilter;
+                    break;
+                case Engine.TextureParameterName.TextureWrapS:
+                    name = TextureParameterName.TextureWrapS;
+                    break;
+                case Engine.TextureParameterName.TextureWrapT:
+                    name = TextureParameterName.TextureWrapT;
+                    break;
+            }
+
+            return name;
+        }
+
+		
         private static BufferTarget ToBufferTarget(Engine.BufferTarget bufferTarget)
         {						
             BufferTarget target = BufferTarget.ArrayBuffer;
@@ -305,6 +431,7 @@ namespace iGL.iPhone
         }
 
         #endregion
+
 	}
 }
 

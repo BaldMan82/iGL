@@ -76,6 +76,12 @@ namespace iGL.Designer.ComponentDialogs
             _material.Ambient = new Vector4(_material.Ambient.X, _material.Ambient.Y, _material.Ambient.Z, txtAmbientAlpha.TextToFloat());
             _material.Diffuse = new Vector4(_material.Diffuse.X, _material.Diffuse.Y, _material.Diffuse.Z, txtDiffuseAlpha.TextToFloat());
             _material.Specular = new Vector4(_material.Specular.X, _material.Specular.Y, _material.Specular.Z, txtSpecularAlpha.TextToFloat());
+            
+            _material.TextureRepeatX = cbTilingRepeatX.Checked;
+            _material.TextureRepeatY = cbTilingRepeatY.Checked;
+
+            _material.TextureTilingX = txtTilingX.TextToFloat();
+            _material.TextureTilingY = txtTilingY.TextToFloat();
         }
 
         private void MaterialDlg_Load(object sender, EventArgs e)
@@ -96,6 +102,12 @@ namespace iGL.Designer.ComponentDialogs
             txtAmbientAlpha.Text = _material.Ambient.W.ToInvariantText();
             txtDiffuseAlpha.Text = _material.Diffuse.W.ToInvariantText();
             txtSpecularAlpha.Text = _material.Specular.W.ToInvariantText();
+
+            cbTilingRepeatX.Checked = _material.TextureRepeatX;
+            cbTilingRepeatY.Checked = _material.TextureRepeatY;
+
+            txtTilingX.Text = _material.TextureTilingX.ToInvariantText();
+            txtTilingY.Text = _material.TextureTilingY.ToInvariantText();
 
             _internalUpdate = false;
         }

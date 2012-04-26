@@ -16,6 +16,12 @@ namespace iGL.Engine
         public Vector4 Diffuse { get; set; }
         public Vector4 Specular { get; set; }  
         public float Shininess { get; set; }
-        public string TextureName { get; set; }        
+        public string TextureName { get; set; }
+
+        public bool TextureRepeatX { get; set; }
+        public bool TextureRepeatY { get; set; }
+
+        public float TextureTilingX { get; set; }
+        public float TextureTilingY { get; set; }
     }
 }

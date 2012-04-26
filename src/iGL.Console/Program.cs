@@ -24,7 +24,7 @@ namespace iGL.Console
             var gl = new WinGL();
 
             game = new TestGame.TestGame(gl);
-            gameWnd = new GameWindow(960, 640, new GraphicsMode(16, 16), "", GameWindowFlags.Fullscreen, DisplayDevice.Default,
+            gameWnd = new GameWindow(960, 640, new GraphicsMode(16, 16), "", GameWindowFlags.Default, DisplayDevice.Default,
                                   2, 0, GraphicsContextFlags.Default);
          
 
@@ -88,16 +88,7 @@ namespace iGL.Console
             var now = DateTime.UtcNow;
 
             game.Render();
-            ((GameWindow)sender).SwapBuffers();
-
-            var renderTime = DateTime.UtcNow - now;
-
-            if (renderTime.Milliseconds > 0)
-            {
-                int fps = 1000 / (int)renderTime.Milliseconds;
-
-                //System.Console.WriteLine("FPS: " + fps.ToString());
-            }
+            ((GameWindow)sender).SwapBuffers();           
         }
 
         static void gameWnd_Load(object sender, EventArgs e)

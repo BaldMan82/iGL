@@ -32,6 +32,18 @@ namespace iGL.Engine
         public void Update()
         {
             ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(FieldOfViewRadians, AspectRatio, ZNear, ZFar);
+
+            /* quick hack to get into landscape mode on iphone */
+
+            //var r0 = ProjectionMatrix.Row0;
+            //var r1 = ProjectionMatrix.Row1;
+            //var r2 = ProjectionMatrix.Row2;
+            //var r3 = ProjectionMatrix.Row3;
+
+            //ProjectionMatrix = new Matrix4(new Vector4(r0.Y, -r0.X, r0.Z, r0.W),
+            //                                        new Vector4(r1.Y, -r1.X, r1.Z, r1.W),
+            //                                        new Vector4(r2.Y, -r2.X, r2.Z, r2.W),
+            //                                        new Vector4(r3.Y, -r3.X, r3.Z, r3.W));
         }
 
         public override bool InternalLoad()

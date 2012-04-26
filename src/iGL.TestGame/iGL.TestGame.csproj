@@ -85,6 +85,21 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\arrow.text" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\bmpfont.fnt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\bmpfont_0.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\benchmark.igl" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\bush.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\test.dae" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
