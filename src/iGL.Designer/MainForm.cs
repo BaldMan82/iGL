@@ -39,20 +39,73 @@ namespace iGL.Designer
             LoadGameObjectTree();
 
             renderTimer.Start();
-            tickTimer.Start();
+            tickTimer.Start();                  
 
-          
-            UpdateSceneTree();
+            sceneControl.OnNodeSelected += new EventHandler<SceneControl.NodeSelected>(sceneControl_OnNodeSelected);
+            sceneControl.OnNodeUnSelected += new EventHandler<SceneControl.NodeUnSelected>(sceneControl_OnNodeUnSelected);
+        }
+
+        void sceneControl_OnNodeUnSelected(object sender, SceneControl.NodeUnSelected e)
+        {
+            if (e.NodeValue is GameObject)
+            {
+                var obj = e.NodeValue as GameObject;
+
+                obj.OnComponentAdded -= gameObject_OnComponentAdded;
+                obj.OnComponentRemoved -= gameObject_OnComponentRemoved;
+            }
+        }
+
+        void sceneControl_OnNodeSelected(object sender, SceneControl.NodeSelected e)
+        {
+            tabControl1.SelectedTab = propertiesTab;
+
+            foreach (var control in flowLayoutPanel1.Controls)
+            {
+                if (control is GameObjectDlg) ((GameObjectDlg)control).Unload();
+            }
+
+            flowLayoutPanel1.Controls.Clear();
+
+            if (e.NodeValue is Scene)
+            {
+                var scene = e.NodeValue as Scene;
+
+                var control = new SceneControlDlg();
+
+                control.Scene = openTKControl.Game.Scene;            
+                flowLayoutPanel1.Controls.Add(control);
+            }
+            else
+            {
+                var obj = e.NodeValue as GameObject;
+
+                obj.OnComponentAdded += gameObject_OnComponentAdded;
+                obj.OnComponentRemoved += gameObject_OnComponentRemoved;
+
+                var control = new GameObjectDlg();
+                control.GameObject = obj;
+
+                flowLayoutPanel1.Controls.Add(control);
+
+                foreach (var component in obj.Components)
+                {
+                    var componentPanel = new ComponentPanel();
+                    componentPanel.LoadComponent(component);
+
+                    flowLayoutPanel1.Controls.Add(componentPanel);
+                }
+            }
         }
 
         void openTKControl_OnSceneLoaded(object sender, OpenTKControl.SceneLoadedEvent e)
         {
-            sceneControl.Load(e.Scene);
+            sceneControl.LoadScene(e.Scene);
         }
 
         void openTKControl_OnObjectRemoved(object sender, OpenTKControl.ObjectRemovedEvent e)
         {
-            UpdateSceneTree();
+            sceneControl.RefreshScene();
         }
 
         void openTKControl_OnSelectObject(object sender, OpenTKControl.SelectObjectEvent e)
@@ -62,7 +115,7 @@ namespace iGL.Designer
 
         void openTKControl_OnObjectAdded(object sender, OpenTKControl.ObjectAddedEvent e)
         {
-            UpdateSceneTree();
+            sceneControl.RefreshScene();
         }
 
         private void tickTimer_Tick(object sender, EventArgs e)
@@ -123,111 +176,9 @@ namespace iGL.Designer
                 toolStripStatusLabel.Text = "Ready";
             }
 
-            /* select proper node */
-            if (sceneTree.Nodes.Count > 0)
-            {
-                SelectNode(sceneTree.Nodes[0], obj);
-            }
+            sceneControl.SelectNodeWithValue(obj);
         }
-
-        private void SelectNode(TreeNode node, GameObject obj)
-        {
-            if (node == null) return;
-
-            if (node.Tag == obj || obj == null && node.Tag is Scene)
-            {
-                sceneTree.SelectedNode = node;
-                node.BackColor = Color.Silver;
-            }
-            else
-            {
-                node.BackColor = Color.White;
-            }
-
-            foreach (var childNode in node.Nodes)
-            {
-                SelectNode(childNode as TreeNode, obj);
-            }
-        }
-
-
-        private void UpdateSceneTree()
-        {
-            sceneTree.Nodes.Clear();
-
-            var sceneNode = sceneTree.Nodes.Add("Scene");
-            sceneNode.Tag = openTKControl.Game.Scene;
-
-            foreach (var gameObject in openTKControl.Game.Scene.GameObjects.Where(g => !g.Designer))
-            {
-                AddSceneNode(sceneNode, gameObject);
-            }
-
-            sceneNode.ExpandAll();
-        }
-
-        private void AddSceneNode(TreeNode node, GameObject gameObject)
-        {
-            var newNode = node.Nodes.Add(gameObject.Name);
-            newNode.Tag = gameObject;
-
-            foreach (var child in gameObject.Children.Where(g => !g.Designer))
-            {
-                AddSceneNode(newNode, child);
-            }
-        }
-
-        private void sceneTree_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            tabControl1.SelectedTab = propertiesTab;
-         
-            foreach (var control in flowLayoutPanel1.Controls)
-            {
-                if (control is GameObjectDlg) ((GameObjectDlg)control).Unload();
-            }
-
-            flowLayoutPanel1.Controls.Clear();
-
-            if (e.Node.Tag is Scene)
-            {
-                var scene = e.Node.Tag as Scene;
-
-                var control = new SceneControlDlg();
-
-                control.Scene = openTKControl.Game.Scene;
-
-                var label = new Label();
-                label.Width = control.Width;
-                label.BackColor = Color.Silver;
-                label.BorderStyle = BorderStyle.FixedSingle;
-                label.Text = "Scene Properties";
-
-                flowLayoutPanel1.Controls.Add(label);
-                flowLayoutPanel1.Controls.Add(control);
-            }
-            else
-            {
-                var obj = e.Node.Tag as GameObject;
-
-                obj.OnComponentAdded += gameObject_OnComponentAdded;
-                obj.OnComponentRemoved += gameObject_OnComponentRemoved;
-               
-                var control = new GameObjectDlg();
-                control.GameObject = obj;
-
-                flowLayoutPanel1.Controls.Add(control);
-          
-                foreach (var component in obj.Components)
-                {
-                    var componentPanel = new ComponentPanel();
-                    componentPanel.LoadComponent(component);
-
-                    flowLayoutPanel1.Controls.Add(componentPanel);
-                }
-            }
-
-        }
-
+                     
         private void toolScale_Click(object sender, EventArgs e)
         {
             openTKControl.SetOperation(OpenTKControl.OperationType.SCALE);
@@ -251,17 +202,7 @@ namespace iGL.Designer
         private void toolPointer_Click(object sender, EventArgs e)
         {
             openTKControl.SetOperation(OpenTKControl.OperationType.NONE);
-        }
-
-        private void sceneTree_BeforeSelect(object sender, TreeViewCancelEventArgs e)
-        {
-            if (sceneTree.SelectedNode != null && sceneTree.SelectedNode.Tag is GameObject)
-            {
-                var gameObject = sceneTree.SelectedNode.Tag as GameObject;
-                gameObject.OnComponentAdded -= gameObject_OnComponentAdded;
-                gameObject.OnComponentRemoved -= gameObject_OnComponentRemoved;
-            }
-        }
+        }       
 
         void gameObject_OnComponentRemoved(object sender, Engine.Events.ComponentRemovedEvent e)
         {
@@ -332,6 +273,12 @@ namespace iGL.Designer
 
         private void Save(string filename)
         {
+            if (openTKControl.IsPlaying)
+            {
+                MessageBox.Show("Cannot save while playing.");
+                return;
+            }
+
             using (FileStream f = new FileStream(filename, FileMode.Create))
             {
                 var xml = EditorGame.Instance().SaveScene();
@@ -366,7 +313,7 @@ namespace iGL.Designer
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openTKControl.LoadScene(null);
-            sceneTree.Nodes.Clear();
+            sceneControl.Clear();
         }
 
         private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -381,6 +328,11 @@ namespace iGL.Designer
         {
             var converter = new TextureConverter();
             converter.ShowDialog();
+        }
+
+        private void sceneTree_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+
         }
 
        

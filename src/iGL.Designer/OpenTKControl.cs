@@ -71,12 +71,14 @@ namespace iGL.Designer
             DROPPING
         }
 
+        public bool IsPlaying { get; private set; }
+        public bool IsPaused { get; private set; }
+
         private bool _glLoaded = false;
         private GameObject _selectedObject;
         private Gizmo _selectionGizmo;
-        private Scene _workingScene;
-        private bool _isPaused;
-        private bool _isPlaying;
+        private Scene _workingScene;        
+       
         private Vector3 _unsnappedOperationVector;
         
         private event EventHandler<SelectObjectEvent> _selectObjectEvent;
@@ -445,11 +447,11 @@ namespace iGL.Designer
 
         public void Tick(float timeElapsed)
         {
-            if (_isPaused && _isPlaying) return;
+            if (IsPaused && IsPlaying) return;
             
             //if (timeElapsed > 0.01f) timeElapsed = 0.01f;
 
-            Game.Tick(timeElapsed, _isPlaying || Operation == OperationType.DROPPING);
+            Game.Tick(timeElapsed, IsPlaying || Operation == OperationType.DROPPING);
         }
 
         public void Render()
@@ -626,13 +628,13 @@ namespace iGL.Designer
 
         public void Play()
         {
-            if (_isPlaying && _isPaused)
+            if (IsPlaying && IsPaused)
             {
-                _isPaused = false;
+                IsPaused = false;
                 return;
             }
 
-            if (_isPlaying) return;
+            if (IsPlaying) return;
       
 
             var scene = new Scene(new Physics2d());          
@@ -646,7 +648,7 @@ namespace iGL.Designer
 
             Game.Load();         
 
-            _isPlaying = true;
+            IsPlaying = true;
 
             if (PreStabilizePhysics)
             {
@@ -671,13 +673,13 @@ namespace iGL.Designer
         
         public void Pause()
         {
-            _isPaused = true;
+            IsPaused = true;
         }
 
         public void Stop()
         {
-            _isPlaying = false;
-            _isPaused = false;
+            IsPlaying = false;
+            IsPaused = false;
 
             iGL.Engine.Game.InDesignMode = true;
 

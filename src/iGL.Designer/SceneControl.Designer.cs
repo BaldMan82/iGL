@@ -36,7 +36,6 @@
             this.resourceTree = new System.Windows.Forms.TreeView();
             this.resourceToolstrip = new System.Windows.Forms.ToolStrip();
             this.toolStripAdd = new System.Windows.Forms.ToolStripButton();
-            this.toolStripAddFont = new System.Windows.Forms.ToolStripButton();
             this.tabScene.SuspendLayout();
             this.ObjectPage.SuspendLayout();
             this.ResourcePage.SuspendLayout();
@@ -98,8 +97,7 @@
             // 
             this.resourceToolstrip.GripMargin = new System.Windows.Forms.Padding(0);
             this.resourceToolstrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripAdd,
-            this.toolStripAddFont});
+            this.toolStripAdd});
             this.resourceToolstrip.Location = new System.Drawing.Point(0, 0);
             this.resourceToolstrip.Name = "resourceToolstrip";
             this.resourceToolstrip.Size = new System.Drawing.Size(496, 25);
@@ -115,16 +113,6 @@
             this.toolStripAdd.Size = new System.Drawing.Size(23, 22);
             this.toolStripAdd.Text = "toolStripButton1";
             this.toolStripAdd.Click += new System.EventHandler(this.toolStripAdd_Click);
-            // 
-            // toolStripAddFont
-            // 
-            this.toolStripAddFont.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripAddFont.Image = ((System.Drawing.Image)(resources.GetObject("toolStripAddFont.Image")));
-            this.toolStripAddFont.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripAddFont.Name = "toolStripAddFont";
-            this.toolStripAddFont.Size = new System.Drawing.Size(23, 22);
-            this.toolStripAddFont.Text = "toolStripButton1";
-            this.toolStripAddFont.Click += new System.EventHandler(this.toolStripAddFont_Click);
             // 
             // SceneControl
             // 
@@ -153,6 +141,5 @@
         private System.Windows.Forms.ToolStrip resourceToolstrip;
         private System.Windows.Forms.ToolStripButton toolStripAdd;
         private System.Windows.Forms.TreeView resourceTree;
-        private System.Windows.Forms.ToolStripButton toolStripAddFont;
     }
 }

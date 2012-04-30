@@ -35,9 +35,13 @@ namespace iGL.Engine
     public class MeshRenderComponent : RenderComponent
     {
         private int[] _bufferIds;
+        private bool _isClone;
+
         private MeshComponent _meshComponent;
 
         public BeginMode BeginMode { get; set; }
+
+        private static Dictionary<string, MeshRenderComponent> _meshRenderComponentCache = new Dictionary<string, MeshRenderComponent>();
 
         public MeshRenderComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
 
@@ -62,45 +66,58 @@ namespace iGL.Engine
 
             if (!_meshComponent.IsLoaded) _meshComponent.Load();
 
-            /* create buffers to store vertex data */
-
-            GL.GenBuffers(2, _bufferIds);
-
-            GLVertex[] glVertices = new GLVertex[_meshComponent.Vertices.Length];
-
-            bool hasUV = _meshComponent.UV.Length == _meshComponent.Vertices.Length;
-
-            for (int i = 0; i < glVertices.Length; i++)
+            MeshRenderComponent cachedComponent;
+            if (_meshRenderComponentCache.TryGetValue(_meshComponent.Id, out cachedComponent))
             {
-                glVertices[i].X = _meshComponent.Vertices[i].X;
-                glVertices[i].Y = _meshComponent.Vertices[i].Y;
-                glVertices[i].Z = _meshComponent.Vertices[i].Z;
-                glVertices[i].NX = _meshComponent.Normals[i].X;
-                glVertices[i].NY = _meshComponent.Normals[i].Y;
-                glVertices[i].NZ = _meshComponent.Normals[i].Z;
-                
-                if (hasUV)
-                {
-                    glVertices[i].U = _meshComponent.UV[i].X * _meshComponent.Material.TextureTilingX;
-                    glVertices[i].V = _meshComponent.UV[i].Y * _meshComponent.Material.TextureTilingY;
-                }
+                /* can reuse a rendercomponent + gl buffers */
+                this._bufferIds = cachedComponent._bufferIds;
+                this._isClone = true;
             }
-
-            unsafe
+            else
             {
-                fixed (GLVertex* data = glVertices)
+
+                /* create buffers to store vertex data */
+
+                GL.GenBuffers(2, _bufferIds);
+
+                GLVertex[] glVertices = new GLVertex[_meshComponent.Vertices.Length];
+
+                bool hasUV = _meshComponent.UV.Length == _meshComponent.Vertices.Length;
+
+                for (int i = 0; i < glVertices.Length; i++)
                 {
-                    GL.BindBuffer(BufferTarget.ArrayBuffer, _bufferIds[0]);
-                    GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(glVertices.Length * sizeof(GLVertex)),
-                               (IntPtr)data, BufferUsage.StaticDraw);
+                    glVertices[i].X = _meshComponent.Vertices[i].X;
+                    glVertices[i].Y = _meshComponent.Vertices[i].Y;
+                    glVertices[i].Z = _meshComponent.Vertices[i].Z;
+                    glVertices[i].NX = _meshComponent.Normals[i].X;
+                    glVertices[i].NY = _meshComponent.Normals[i].Y;
+                    glVertices[i].NZ = _meshComponent.Normals[i].Z;
+
+                    if (hasUV)
+                    {
+                        glVertices[i].U = _meshComponent.UV[i].X * _meshComponent.Material.TextureTilingX;
+                        glVertices[i].V = _meshComponent.UV[i].Y * _meshComponent.Material.TextureTilingY;
+                    }
                 }
 
-                fixed (short* data = _meshComponent.Indices.ToArray())
+                unsafe
                 {
-                    GL.BindBuffer(BufferTarget.ElementArrayBuffer, _bufferIds[1]);
-                    GL.BufferData(BufferTarget.ElementArrayBuffer, new IntPtr(_meshComponent.Indices.Length * sizeof(short)),
-                          (IntPtr)data, BufferUsage.StaticDraw);
+                    fixed (GLVertex* data = glVertices)
+                    {
+                        GL.BindBuffer(BufferTarget.ArrayBuffer, _bufferIds[0]);
+                        GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(glVertices.Length * sizeof(GLVertex)),
+                                   (IntPtr)data, BufferUsage.StaticDraw);
+                    }
+
+                    fixed (short* data = _meshComponent.Indices.ToArray())
+                    {
+                        GL.BindBuffer(BufferTarget.ElementArrayBuffer, _bufferIds[1]);
+                        GL.BufferData(BufferTarget.ElementArrayBuffer, new IntPtr(_meshComponent.Indices.Length * sizeof(short)),
+                              (IntPtr)data, BufferUsage.StaticDraw);
+                    }
                 }
+
+                _meshRenderComponentCache.Add(_meshComponent.Id, this);
             }
 
             return true;
@@ -114,7 +131,7 @@ namespace iGL.Engine
 
         public void ReleaseBuffers()
         {
-            if (IsLoaded)
+            if (IsLoaded && !_isClone)
             {
                 GL.DeleteBuffers(2, _bufferIds);
             }
@@ -127,6 +144,7 @@ namespace iGL.Engine
             var meshRenderComponent = new MeshRenderComponent();
 
             meshRenderComponent._bufferIds = _bufferIds;
+            meshRenderComponent._isClone = true;
 
             return meshRenderComponent;
         }

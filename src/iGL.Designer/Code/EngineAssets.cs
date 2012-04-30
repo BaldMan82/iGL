@@ -74,6 +74,7 @@ namespace iGL.Designer
         {
             if (type.IsAbstract) return false;
 
+            if (type == typeof(GameObject)) return true;
             if (type.BaseType == typeof(GameObject)) return true;
             if (type.BaseType == typeof(Object)) return false;
 

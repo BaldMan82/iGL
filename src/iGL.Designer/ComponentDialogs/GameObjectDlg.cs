@@ -121,5 +121,18 @@ namespace iGL.Designer
             _txtScaleY.Text = (1.0f).ToInvariantText();
             _txtScaleZ.Text = (1.0f).ToInvariantText();
         }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            var dlg = new ComponentSelectDlg();
+
+            dlg.ShowDialog(this);
+
+            if (dlg.SelectedComponentType != null)
+            {
+                var component = Activator.CreateInstance(dlg.SelectedComponentType) as GameComponent;
+                GameObject.AddComponent(component);
+            }
+        }
     }
 }

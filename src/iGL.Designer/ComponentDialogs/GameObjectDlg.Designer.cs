@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblComponentName = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.contentPanel = new System.Windows.Forms.Panel();
+            this.cbDistanceSorting = new System.Windows.Forms.CheckBox();
+            this.txtRenderQueue = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.btnResetScale = new System.Windows.Forms.Button();
             this.btnResetRotation = new System.Windows.Forms.Button();
             this.btnResetPosition = new System.Windows.Forms.Button();
@@ -48,31 +49,13 @@
             this._txtPositionY = new System.Windows.Forms.TextBox();
             this._txtPositionX = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtRenderQueue = new System.Windows.Forms.TextBox();
-            this.cbDistanceSorting = new System.Windows.Forms.CheckBox();
-            this.panel1.SuspendLayout();
+            this.lblComponentName = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonAdd = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.contentPanel.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // lblComponentName
-            // 
-            this.lblComponentName.AutoSize = true;
-            this.lblComponentName.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lblComponentName.Location = new System.Drawing.Point(3, 8);
-            this.lblComponentName.Name = "lblComponentName";
-            this.lblComponentName.Size = new System.Drawing.Size(81, 13);
-            this.lblComponentName.TabIndex = 0;
-            this.lblComponentName.Text = "Base Properties";
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.panel1.Controls.Add(this.lblComponentName);
-            this.panel1.Location = new System.Drawing.Point(3, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(290, 31);
-            this.panel1.TabIndex = 38;
             // 
             // contentPanel
             // 
@@ -102,6 +85,32 @@
             this.contentPanel.Name = "contentPanel";
             this.contentPanel.Size = new System.Drawing.Size(290, 244);
             this.contentPanel.TabIndex = 37;
+            // 
+            // cbDistanceSorting
+            // 
+            this.cbDistanceSorting.AutoSize = true;
+            this.cbDistanceSorting.Location = new System.Drawing.Point(146, 187);
+            this.cbDistanceSorting.Name = "cbDistanceSorting";
+            this.cbDistanceSorting.Size = new System.Drawing.Size(104, 17);
+            this.cbDistanceSorting.TabIndex = 56;
+            this.cbDistanceSorting.Text = "Distance Sorting";
+            this.cbDistanceSorting.UseVisualStyleBackColor = true;
+            // 
+            // txtRenderQueue
+            // 
+            this.txtRenderQueue.Location = new System.Drawing.Point(146, 211);
+            this.txtRenderQueue.Name = "txtRenderQueue";
+            this.txtRenderQueue.Size = new System.Drawing.Size(100, 20);
+            this.txtRenderQueue.TabIndex = 55;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(9, 218);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(106, 13);
+            this.label2.TabIndex = 54;
+            this.label2.Text = "Renderqueue Priority";
             // 
             // btnResetScale
             // 
@@ -246,53 +255,66 @@
             this.label1.TabIndex = 37;
             this.label1.Text = "Position";
             // 
-            // label2
+            // lblComponentName
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 218);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(106, 13);
-            this.label2.TabIndex = 54;
-            this.label2.Text = "Renderqueue Priority";
+            this.lblComponentName.AutoSize = true;
+            this.lblComponentName.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lblComponentName.Location = new System.Drawing.Point(3, 8);
+            this.lblComponentName.Name = "lblComponentName";
+            this.lblComponentName.Size = new System.Drawing.Size(31, 13);
+            this.lblComponentName.TabIndex = 0;
+            this.lblComponentName.Text = "Base";
             // 
-            // txtRenderQueue
+            // panel1
             // 
-            this.txtRenderQueue.Location = new System.Drawing.Point(146, 211);
-            this.txtRenderQueue.Name = "txtRenderQueue";
-            this.txtRenderQueue.Size = new System.Drawing.Size(100, 20);
-            this.txtRenderQueue.TabIndex = 55;
+            this.panel1.AutoSize = true;
+            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.Location = new System.Drawing.Point(3, 32);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(0, 0);
+            this.panel1.TabIndex = 38;
             // 
-            // cbDistanceSorting
+            // buttonAdd
             // 
-            this.cbDistanceSorting.AutoSize = true;
-            this.cbDistanceSorting.Location = new System.Drawing.Point(146, 187);
-            this.cbDistanceSorting.Name = "cbDistanceSorting";
-            this.cbDistanceSorting.Size = new System.Drawing.Size(104, 17);
-            this.cbDistanceSorting.TabIndex = 56;
-            this.cbDistanceSorting.Text = "Distance Sorting";
-            this.cbDistanceSorting.UseVisualStyleBackColor = true;
+            this.buttonAdd.Location = new System.Drawing.Point(228, 3);
+            this.buttonAdd.Name = "buttonAdd";
+            this.buttonAdd.Size = new System.Drawing.Size(47, 23);
+            this.buttonAdd.TabIndex = 1;
+            this.buttonAdd.Text = "Add";
+            this.buttonAdd.UseVisualStyleBackColor = true;
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panel2.Controls.Add(this.lblComponentName);
+            this.panel2.Controls.Add(this.buttonAdd);
+            this.panel2.Location = new System.Drawing.Point(3, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(290, 31);
+            this.panel2.TabIndex = 39;
             // 
             // GameObjectDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.contentPanel);
             this.Name = "GameObjectDlg";
             this.Size = new System.Drawing.Size(298, 279);
             this.Load += new System.EventHandler(this.GameObjectDlg_Load);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.contentPanel.ResumeLayout(false);
             this.contentPanel.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label lblComponentName;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel contentPanel;
         private System.Windows.Forms.Button btnResetScale;
         private System.Windows.Forms.Button btnResetRotation;
@@ -314,6 +336,10 @@
         private System.Windows.Forms.CheckBox cbDistanceSorting;
         private System.Windows.Forms.TextBox txtRenderQueue;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblComponentName;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button buttonAdd;
+        private System.Windows.Forms.Panel panel2;
 
 
     }

@@ -52,7 +52,7 @@ namespace iGL.Designer
             if (!_loaded) return;
 
             Scene.SetCurrentLight(ddLights.SelectedItem as GameObject);
-        }
+        }              
 
         private void btnAmbient_Click(object sender, EventArgs e)
         {

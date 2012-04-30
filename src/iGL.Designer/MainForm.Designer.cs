@@ -47,7 +47,6 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.renderTimer = new System.Windows.Forms.Timer(this.components);
             this.tickTimer = new System.Windows.Forms.Timer(this.components);
-            this.sceneTree = new System.Windows.Forms.TreeView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolTranslate = new System.Windows.Forms.ToolStripButton();
             this.toolRotate = new System.Windows.Forms.ToolStripButton();
@@ -220,15 +219,6 @@
             // 
             this.tickTimer.Interval = 10;
             this.tickTimer.Tick += new System.EventHandler(this.tickTimer_Tick);
-            // 
-            // sceneTree
-            // 
-            this.sceneTree.Location = new System.Drawing.Point(12, 704);
-            this.sceneTree.Name = "sceneTree";
-            this.sceneTree.Size = new System.Drawing.Size(357, 161);
-            this.sceneTree.TabIndex = 3;
-            this.sceneTree.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.sceneTree_BeforeSelect);
-            this.sceneTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.sceneTree_AfterSelect);
             // 
             // toolStrip1
             // 
@@ -419,9 +409,9 @@
             // sceneControl
             // 
             this.sceneControl.AutoSize = true;
-            this.sceneControl.Location = new System.Drawing.Point(385, 704);
+            this.sceneControl.Location = new System.Drawing.Point(12, 704);
             this.sceneControl.Name = "sceneControl";
-            this.sceneControl.Size = new System.Drawing.Size(574, 154);
+            this.sceneControl.Size = new System.Drawing.Size(960, 161);
             this.sceneControl.TabIndex = 8;
             // 
             // openTKControl
@@ -445,7 +435,6 @@
             this.Controls.Add(this.openTKControl);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.sceneTree);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -477,7 +466,6 @@
         private System.Windows.Forms.TabPage propertiesTab;
         private System.Windows.Forms.Timer renderTimer;
         private System.Windows.Forms.Timer tickTimer;
-        private System.Windows.Forms.TreeView sceneTree;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolTranslate;

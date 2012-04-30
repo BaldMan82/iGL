@@ -128,6 +128,8 @@ namespace iGL.TestGame.GameObjects
                     norm = Vector3.Multiply(norm, distance - _slingShotRadius);
 
                     _triggerPosition -= norm;
+
+                    distance = _slingShotRadius;
                 }
 
 
@@ -177,7 +179,7 @@ namespace iGL.TestGame.GameObjects
 
             var angle = (float)(Math.Atan2((a.X * b.Y) - (b.X * a.Y), (a.X * b.X) + (a.Y * b.Y)) % (2 * Math.PI));
             _arrow2d.Rotation = new Vector3(0, 0, -angle);
-            _arrow2d.Scale = new Vector3(1+direction.Length/2.0f, 1+direction.Length, 1);
+            _arrow2d.Scale = new Vector3(1+direction.Length, 1+direction.Length, 1);
 
             float colorFactor = triggerDistance / _slingShotRadius;
 

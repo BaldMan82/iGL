@@ -69,5 +69,20 @@ namespace iGL.Designer
         {
             GameComponent.GameObject.RemoveComponent(GameComponent);
         }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void contentPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void lblComponentName_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

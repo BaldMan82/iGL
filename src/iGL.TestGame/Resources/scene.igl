@@ -2055,19 +2055,19 @@
     </GameObject>
   </Objects>
   <Resources>
-    <Resource Type="iGL.Engine.Texture, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Resource Type="iGL.Engine.Resources.Texture, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <ResourceName>iGL.TestGame.Resources.football.text</ResourceName>
       <Name>ball</Name>
     </Resource>
-    <Resource Type="iGL.Engine.Texture, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Resource Type="iGL.Engine.Resources.Texture, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <ResourceName>iGL.TestGame.Resources.tree.text</ResourceName>
       <Name>Tree</Name>
     </Resource>
-    <Resource Type="iGL.Engine.Texture, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Resource Type="iGL.Engine.Resources.Texture, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <ResourceName>iGL.TestGame.Resources.crate.text</ResourceName>
       <Name>Crate</Name>
     </Resource>
-    <Resource Type="iGL.Engine.Texture, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Resource Type="iGL.Engine.Resources.Texture, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <ResourceName>iGL.TestGame.Resources.arrow.text</ResourceName>
       <Name>Arrow</Name>
     </Resource>

@@ -51,6 +51,12 @@ namespace iGL.Engine
             var typeAttrib = element.Attribute("Type");
             if (typeAttrib != null) type = Type.GetType(typeAttrib.Value);
 
+            if (type == null)
+            {
+                /* unknown type */
+                throw new Exception("Unknown type: " + typeAttrib.Value);
+            }
+
             if (type.GetInterfaces().Contains(typeof(IXmlSerializable)))
             {
                 /* deserialize game objects */

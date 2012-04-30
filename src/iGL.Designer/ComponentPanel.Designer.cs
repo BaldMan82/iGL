@@ -45,6 +45,7 @@
             this.lblComponentName.Size = new System.Drawing.Size(35, 13);
             this.lblComponentName.TabIndex = 0;
             this.lblComponentName.Text = "label1";
+            this.lblComponentName.Click += new System.EventHandler(this.lblComponentName_Click);
             // 
             // buttonAdd
             // 
@@ -74,6 +75,7 @@
             this.contentPanel.Name = "contentPanel";
             this.contentPanel.Size = new System.Drawing.Size(0, 0);
             this.contentPanel.TabIndex = 3;
+            this.contentPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.contentPanel_Paint);
             // 
             // panel1
             // 
@@ -85,6 +87,7 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(290, 31);
             this.panel1.TabIndex = 4;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // ComponentPanel
             // 
