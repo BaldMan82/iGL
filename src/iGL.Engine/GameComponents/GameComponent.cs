@@ -70,7 +70,10 @@ namespace iGL.Engine
             }
 
             IsLoaded = InternalLoad();
-
+            if (!IsLoaded)
+            {
+                Debug.WriteLine("Not loading: " + this.GetType().Name + " of " + GameObject.Name);
+            }
             return IsLoaded;
         }
 

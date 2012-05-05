@@ -27,11 +27,13 @@ namespace iGL.TestGame.GameObjects
             RenderQueuePriority = -1;
         }
 
-        public override void Render(Matrix4 parentTransform)
+        public override void Render(bool overrideParentTransform = false)
         {
             GL.Clear(ClearBufferMask.DepthBufferBit);
 
-            base.Render(parentTransform);
+            /* give the arrow coordinates in the world, as it would be a lot of overhead to calculate
+             * position inside the game sphere */
+            base.Render(true);
         }
     }
 }

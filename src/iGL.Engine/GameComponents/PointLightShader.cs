@@ -10,7 +10,7 @@ namespace iGL.Engine
 {
     [Serializable]
     public class PointLightShader : ShaderProgram
-    {       
+    {
         public PointLightShader()
             : base(
             new List<Shader>() {                   
@@ -21,10 +21,10 @@ namespace iGL.Engine
                 new Shader(Shader.ShaderType.FS_POINTLIGHT)               
                 })
         {
-        }      
-      
+        }
+
         public void SetLight(ILight light, Vector4 position)
-        {            
+        {
 
             if (!(light is PointLight)) throw new NotSupportedException("Only pointlights supported in this shader");
 
@@ -41,6 +41,21 @@ namespace iGL.Engine
 
             loc = GetUniformLocation("u_light.specular");
             GL.Uniform4(loc, baseLight.Specular);
-        }               
+        }
+
+        public void ClearLight()
+        {
+            var loc = GetUniformLocation("u_light.position");
+            GL.Uniform4(loc, Vector4.Zero);
+
+            loc = GetUniformLocation("u_light.ambient");
+            GL.Uniform4(loc, Vector4.Zero);
+
+            loc = GetUniformLocation("u_light.diffuse");
+            GL.Uniform4(loc, Vector4.Zero);
+
+            loc = GetUniformLocation("u_light.specular");
+            GL.Uniform4(loc, Vector4.Zero);
+        }
     }
 }

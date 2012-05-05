@@ -15,6 +15,12 @@ namespace iGL.Engine
 {
     public class GameObject : Object, IXmlSerializable
     {
+        public enum CreationModeEnum
+        {
+            Additional,
+            Internal
+        }
+
         public IGL GL { get { return Game.GL; } }
 
         public IEnumerable<GameObject> Children
@@ -36,23 +42,44 @@ namespace iGL.Engine
                 return children;
             }
         }
-      
-        public bool Visible { get; set; }
-        public bool Enabled { get; set; }
+        public CreationModeEnum CreationMode { get; internal set; }
+
+        public bool Visible
+        {
+            get
+            {
+                if (Parent != null && !Parent.Visible) return false;
+                return _visible;
+            }
+            set
+            {
+                _visible = value;
+            }
+        }
+        public bool Enabled
+        {
+            get
+            {
+                if (Parent != null && !Parent.Enabled) return false;
+                return _enabled;
+            }
+            set
+            {
+                _enabled = value;
+            }
+        }
+
         public bool Designer { get; set; }
         public string Name { get; set; }
-        
+        public bool ClearsZBuffer { get; set; }
         public bool DistanceSorting { get; set; }
         public int RenderQueuePriority { get; set; }
 
         public string Id { get; set; }
-
         public Scene Scene { get; internal set; }
-
         public GameObject Parent { get; internal set; }
-
         public bool IsLoaded { get; private set; }
-
+        
         public Vector3 Position
         {
             get
@@ -74,16 +101,14 @@ namespace iGL.Engine
                 OnMoveEvent(this, moveEvent);
             }
         }
-
         public Vector3 WorldPosition
         {
             get
             {
-                var transform = GetCompositeTransform();
+                var transform = GetCompositeTransform(false);
                 return Vector3.Transform(Position, transform);
             }
         }
-
         public Vector3 Scale
         {
             get
@@ -136,12 +161,16 @@ namespace iGL.Engine
             }
         }
 
-        private List<GameObject> _children { get; set; }
-        private List<GameComponent> _components { get; set; }
+        private List<GameObject> _children;
+        private List<GameComponent> _components;
+        private bool _visible;
+        private bool _enabled;
+        
+        private bool _rigidPositionDirty = false;
 
-        internal Vector3 _position { get; set; }
-        internal Vector3 _scale { get; set; }
-        internal Vector3 _rotation { get; set; }
+        internal Vector3 _position;
+        internal Vector3 _scale;
+        internal Vector3 _rotation;
 
         internal event EventHandler<MouseButtonDownEvent> _mouseButtonDownEvent;
         internal event EventHandler<MouseButtonUpEvent> _mouseButtonUpEvent;
@@ -158,24 +187,29 @@ namespace iGL.Engine
         public GameObject(XElement xmlElement)
             : this()
         {
+            /* from here on, Init() has been executed, all componets & children should exist */
+
+            #region Load Properties
             var props = this.GetType().GetProperties().Where(p => p.GetSetMethod() != null).ToList();
 
             foreach (var prop in props)
             {
                 var element = xmlElement.Elements().FirstOrDefault(e => e.Name == prop.Name);
-                
+
                 if (element != null)
                 {
                     prop.SetValue(this, XmlHelper.FromXml(element, prop.PropertyType), null);
                 }
-            }
+            } 
+            #endregion
 
+            #region Load Components
             var componentElement = xmlElement.Elements("Components").FirstOrDefault();
             List<GameComponent> components = new List<GameComponent>();
 
             if (componentElement != null)
             {
-                components = componentElement.Elements().Select(c => XmlHelper.FromXml(c, Type.GetType(c.Name.ToString())) as GameComponent).ToList();    
+                components = componentElement.Elements().Select(c => XmlHelper.FromXml(c, Type.GetType(c.Name.ToString())) as GameComponent).ToList();
             }
 
             /* create required components */
@@ -189,20 +223,45 @@ namespace iGL.Engine
 
                     var loadedComponent = _components.Single(c => c.Id == component.Id);
                     component.CopyPublicValues(loadedComponent);
-                }                
+                }
             }
 
             /* load additional components */
             foreach (var component in components.Where(c => !_components.Any(c2 => c2.Id == c.Id)))
-            {              
+            {
                 AddComponent(component);
-            }
+            }           
+            #endregion
 
+            #region Load Children
             var childrenElement = xmlElement.Elements("Children").FirstOrDefault();
+            List<GameObject> children = new List<GameObject>();
+
             if (childrenElement != null)
             {
-
+                children = childrenElement.Elements().Select(c => XmlHelper.FromXml(c, Type.GetType(c.Name.ToString())) as GameObject).ToList();
             }
+
+            var childAttributes = this.GetType().GetCustomAttributes(typeof(RequiredChild), true).Select(o => o as RequiredChild);
+            foreach (var childAttr in childAttributes)
+            {
+                var childObject = children.FirstOrDefault(c => c.Id == childAttr.Id);
+                if (childObject != null)
+                {
+                    if (childObject.GetType() != childAttr.ChildType) throw new InvalidOperationException();
+
+                    var loadedChild = _children.Single(c => c.Id == childAttr.Id);
+                    childObject.CopyPublicValues(loadedChild);
+                }
+            }
+
+            /* load additional children */
+            foreach (var child in children.Where(c => !_children.Any(c2 => c2.Id == c.Id)))
+            {
+                AddChild(child);
+            }      
+
+            #endregion
         }
 
         public GameObject()
@@ -242,10 +301,36 @@ namespace iGL.Engine
                 }
             }
 
+            /* create required children */
+            var childAttributes = this.GetType().GetCustomAttributes(typeof(RequiredChild), true).Select(o => o as RequiredChild);
+            foreach (var childAttr in childAttributes)
+            {
+                if (!_children.Any(c => c.Id == childAttr.Id))
+                {
+                    var child = Activator.CreateInstance(childAttr.ChildType) as GameObject;
+
+                    child.Id = childAttr.Id;
+                    child.CreationMode = GameObject.CreationModeEnum.Internal;
+
+                    AddChild(child);
+                }
+            }
+
             Init();
         }
 
         protected virtual void Init() { }
+
+        public XElement ToXml(XElement element)
+        {
+            var props = this.GetType().GetProperties().Where(p => p.GetSetMethod() != null);
+            element.Add(props.Select(p => XmlHelper.ToXml(p.GetValue(this, null), p.Name)));
+
+            element.Add(new XElement("Children", Children.Select(c => XmlHelper.ToXml(c, name: "GameObject"))));
+            element.Add(new XElement("Components", Components.Select(c => XmlHelper.ToXml(c, name: "GameComponent"))));
+
+            return element;
+        }     
 
         public GameObject Clone()
         {
@@ -309,7 +394,7 @@ namespace iGL.Engine
             }
         }
 
-        public Matrix4 GetCompositeTransform()
+        public Matrix4 GetCompositeTransform(bool includeThisTransform = true)
         {
             Matrix4 parentMatrix = Matrix4.Identity;
 
@@ -318,7 +403,14 @@ namespace iGL.Engine
                 parentMatrix = Parent.GetCompositeTransform();
             }
 
-            return Transform * parentMatrix;
+            if (includeThisTransform)
+            {
+                return Transform * parentMatrix;
+            }
+            else
+            {
+                return parentMatrix;
+            }
         }
 
         public virtual void Load()
@@ -341,19 +433,30 @@ namespace iGL.Engine
 
         }
 
-        public virtual void Render(Matrix4 parentTransform)
+        public virtual void Render(bool overrideParentTransform = false)
         {
             if (!Visible) return;
 
             if (!this.IsLoaded) throw new InvalidOperationException("Game Object not loaded!");
+          
+            /* render designer objects in white ambient color */
+            var sceneColor = Scene.AmbientColor;
+            if (this.Designer) Scene.AmbientColor = new Vector4(1, 1, 1, 1);
 
             var rigidBody = Components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
 
-            /* render designer objects in white ambient color */
-            var sceneColor = Scene.AmbientColor;
-            Scene.AmbientColor = new Vector4(1, 1, 1, 1);
+            if (_children.Count > 0 && rigidBody != null)
+            {
+                UpdateGetRigidBodyOrientation();
+                UpdateTransform();                
+            }
 
-            Matrix4 thisTransform;
+            var compositeTransform = overrideParentTransform ? Transform : GetCompositeTransform();        
+
+            var renderComponents = Components.Where(c => c is RenderComponent)
+                                             .Select(c => c as RenderComponent);
+
+            Matrix4 thisTransform;            
 
             if (rigidBody != null && rigidBody.IsLoaded)
             {
@@ -363,40 +466,25 @@ namespace iGL.Engine
             }
             else
             {
-                thisTransform = Transform * parentTransform;
+                thisTransform = compositeTransform;
             }
 
             var modelviewProjection = thisTransform * Scene.CurrentCamera.ModelViewProjectionMatrix;
             Scene.ShaderProgram.SetModelViewProjectionMatrix(modelviewProjection);
 
-            foreach (var child in _children)
+            if (ClearsZBuffer)
             {
-                child.Render(thisTransform);
+                GL.Clear(ClearBufferMask.DepthBufferBit);
             }
 
-            var renderComponents = Components.Where(c => c is RenderComponent)
-                                             .Select(c => c as RenderComponent);
-
             foreach (var renderComponent in renderComponents)
-            {
+            {               
                 renderComponent.Render(thisTransform);
             }
 
             Scene.AmbientColor = sceneColor;
 
-        }
-
-        private void UpdateTransform()
-        {
-            var mPos = Matrix4.CreateTranslation(_position);
-            var mRotationX = Matrix4.CreateRotationX(_rotation.X);
-            var mRotationY = Matrix4.CreateRotationY(_rotation.Y);
-            var mRotationZ = Matrix4.CreateRotationZ(_rotation.Z);
-
-            var scale = Matrix4.Scale(Scale);
-
-            Transform = scale * mRotationX * mRotationY * mRotationZ * mPos * Matrix4.Identity;
-        }
+        }        
 
         public virtual void Tick(float timeElapsed)
         {
@@ -408,10 +496,17 @@ namespace iGL.Engine
             }
 
             _components.ForEach(gc => { if (gc.IsLoaded) gc.Tick(timeElapsed); });
+
+            _rigidPositionDirty = true;
         }
 
         public override string ToString()
         {
+            if (string.IsNullOrEmpty(Name))
+            {
+                return string.Format("[{0}] Unnamed", this.GetType().ToString());
+            }
+
             return Name;
         }
 
@@ -433,9 +528,21 @@ namespace iGL.Engine
             return null;
         }
 
+        private void UpdateTransform()
+        {
+            var mPos = Matrix4.CreateTranslation(_position);
+            var mRotationX = Matrix4.CreateRotationX(_rotation.X);
+            var mRotationY = Matrix4.CreateRotationY(_rotation.Y);
+            var mRotationZ = Matrix4.CreateRotationZ(_rotation.Z);
+
+            var scale = Matrix4.Scale(Scale);
+
+            Transform = scale * mRotationX * mRotationY * mRotationZ * mPos * Matrix4.Identity;
+        }
+
         private void UpdateGetRigidBodyOrientation()
         {
-            if (IsLoaded)
+            if (IsLoaded && _rigidPositionDirty)
             {
                 var rigidBody = this.Components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
 
@@ -461,14 +568,11 @@ namespace iGL.Engine
 
                     _rotation = rotation;
                     _position = position;
+
+                    _rigidPositionDirty = false;
                 }
             }
-        }
-
-        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-           
-        }
+        }      
 
         #region Events
 
@@ -667,17 +771,6 @@ namespace iGL.Engine
             rigidBody.RigidBody.IsActive = false;
         }
 
-        #endregion                 
-
-        public XElement ToXml(XElement element)
-        {
-            var props = this.GetType().GetProperties().Where(p => p.GetSetMethod() != null);
-            element.Add(props.Select(p => XmlHelper.ToXml(p.GetValue(this, null), p.Name)));
-
-            element.Add(new XElement("Children", Children.Select(c => XmlHelper.ToXml(c, name: "GameObject"))));
-            element.Add(new XElement("Components", Components.Select(c => XmlHelper.ToXml(c, name: "GameComponent"))));
-
-            return element;
-        }      
+        #endregion                          
     }
 }

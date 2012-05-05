@@ -70,6 +70,18 @@
     <Compile Include="ComponentDialogs\BoxColliderComponentDlg.Designer.cs">
       <DependentUpon>BoxColliderComponentDlg.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComponentDialogs\TextComponentDlg.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentDialogs\TextComponentDlg.Designer.cs">
+      <DependentUpon>TextComponentDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentDialogs\TriangleMeshColliderComponentDlg.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentDialogs\TriangleMeshColliderComponentDlg.Designer.cs">
+      <DependentUpon>TriangleMeshColliderComponentDlg.cs</DependentUpon>
+    </Compile>
     <Compile Include="ComponentDialogs\PerspectiveCameraComponentDlg.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -179,6 +191,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ComponentDialogs\BoxColliderComponentDlg.resx">
       <DependentUpon>BoxColliderComponentDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentDialogs\TextComponentDlg.resx">
+      <DependentUpon>TextComponentDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentDialogs\TriangleMeshColliderComponentDlg.resx">
+      <DependentUpon>TriangleMeshColliderComponentDlg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComponentDialogs\PerspectiveCameraComponentDlg.resx">
       <DependentUpon>PerspectiveCameraComponentDlg.cs</DependentUpon>

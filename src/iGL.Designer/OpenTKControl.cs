@@ -73,11 +73,11 @@ namespace iGL.Designer
 
         public bool IsPlaying { get; private set; }
         public bool IsPaused { get; private set; }
+        public Scene WorkingScene { get; private set; }
 
         private bool _glLoaded = false;
         private GameObject _selectedObject;
-        private Gizmo _selectionGizmo;
-        private Scene _workingScene;        
+        private Gizmo _selectionGizmo;                
        
         private Vector3 _unsnappedOperationVector;
         
@@ -173,7 +173,7 @@ namespace iGL.Designer
             try
             {
                 var instance = Activator.CreateInstance(node.Tag as Type) as GameObject;
-                var count = _workingScene.GameObjects.Count(o => o.GetType() == (Type)node.Tag);
+                var count = WorkingScene.GameObjects.Count(o => o.GetType() == (Type)node.Tag);
 
                 instance.Name = ((Type)node.Tag).Name + count.ToString();
 
@@ -181,7 +181,7 @@ namespace iGL.Designer
                 {
                     Vector4 nearPlane, farPlane;
                     var point = PointToClient(new System.Drawing.Point(e.X, e.Y));
-                    _workingScene.ScreenPointToWorld(new Engine.Math.Point(point.X, point.Y), out nearPlane, out farPlane);
+                    WorkingScene.ScreenPointToWorld(new Engine.Math.Point(point.X, point.Y), out nearPlane, out farPlane);
 
                     var position = new Vector3(nearPlane);
 
@@ -195,16 +195,16 @@ namespace iGL.Designer
                     instance.Position = pos;
                 }
 
-                _workingScene.AddGameObject(instance);
+                WorkingScene.AddGameObject(instance);
 
-                if (_workingScene.CurrentCamera == null && instance.Components.Any(c => c is CameraComponent))
+                if (WorkingScene.CurrentCamera == null && instance.Components.Any(c => c is CameraComponent))
                 {
-                    _workingScene.SetCurrentCamera(instance);
+                    WorkingScene.SetPlayCamera(instance);
                 }
 
-                if (_workingScene.CurrentLight == null && instance.Components.Any(c => c is LightComponent))
+                if (WorkingScene.CurrentLight == null && instance.Components.Any(c => c is LightComponent))
                 {
-                    _workingScene.SetCurrentLight(instance);
+                    WorkingScene.SetCurrentLight(instance);
                 }                
                 
             }
@@ -234,22 +234,28 @@ namespace iGL.Designer
 
             instance.OnMouseDown += (a, b) =>
             {
-                if (Operation == OperationType.PANVIEW ||
-                    (b.Button != MouseButton.Button1 && b.Button != MouseButton.Button2)) return;
-
-                _selectedObject = (a as GameObject).Root;
-
-                var rigidBody = _selectedObject.Components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
-
-                ((DesignPhysics)_workingScene.Physics).SelectedObject = _selectedObject;
-
-                UpdateGizmo();
-
-                if (_selectObjectEvent != null)
-                {
-                    _selectObjectEvent(this, new SelectObjectEvent() { SelectedObject = _selectedObject });
-                }
+                SelectObjectAction(a, b);
+                return;
             };
+        }
+
+        private void SelectObjectAction(object a, MouseButtonDownEvent b)
+        {
+            if (Operation == OperationType.PANVIEW ||
+                (b.Button != MouseButton.Button1 && b.Button != MouseButton.Button2)) return;
+
+            _selectedObject = (a as GameObject).Root;
+
+            var rigidBody = _selectedObject.Components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
+
+            ((DesignPhysics)WorkingScene.Physics).SelectedObject = _selectedObject;
+
+            UpdateGizmo();
+
+            if (_selectObjectEvent != null)
+            {
+                _selectObjectEvent(this, new SelectObjectEvent() { SelectedObject = _selectedObject });
+            }
         }
 
         void OpenTKControl_DragEnter(object sender, DragEventArgs e)
@@ -268,19 +274,19 @@ namespace iGL.Designer
 
             if (!EditorGame.InDesignMode) return;
 
-            if (e.Button == System.Windows.Forms.MouseButtons.Middle && _workingScene.LastNearPlaneMousePosition.HasValue)
+            if (e.Button == System.Windows.Forms.MouseButtons.Middle && WorkingScene.LastNearPlaneMousePosition.HasValue)
             {
-                var lastNear = new Vector3(_workingScene.LastNearPlaneMousePosition.Value);
+                var lastNear = new Vector3(WorkingScene.LastNearPlaneMousePosition.Value);
 
-                var lookAt = _workingScene.CurrentCamera.Target - lastNear;
+                var lookAt = WorkingScene.CurrentCamera.Target - lastNear;
                 lookAt.Normalize();
 
                 /* look around function */
-                _workingScene.CurrentCamera.Target = lastNear + lookAt * 10.0f;
+                WorkingScene.CurrentCamera.Target = lastNear + lookAt * 10.0f;
             }
 
            
-            if (_workingScene.LastMouseDownTarget == null)
+            if (WorkingScene.LastMouseDownTarget == null)
             {
                 ClearSelection();
             }
@@ -337,20 +343,20 @@ namespace iGL.Designer
 
             /* zoom camera */
 
-            if (_workingScene.CurrentCamera != null)
+            if (WorkingScene.CurrentCamera != null)
             {
-                var lookAt = _workingScene.CurrentCamera.Target - _workingScene.CurrentCamera.GameObject.Position;
+                var lookAt = WorkingScene.CurrentCamera.Target - WorkingScene.CurrentCamera.GameObject.Position;
                 lookAt.Normalize();
                 lookAt *= -(e.Delta / 200.0f);
 
-                _workingScene.CurrentCamera.Target -= lookAt;
-                _workingScene.CurrentCamera.GameObject.Position -= lookAt;
+                WorkingScene.CurrentCamera.Target -= lookAt;
+                WorkingScene.CurrentCamera.GameObject.Position -= lookAt;
             }
         }
 
         void OpenTKControl_Paint(object sender, PaintEventArgs e)
         {
-            Render();
+            if (WorkingScene.Loaded) Render();
         }
 
         public void LoadScene(string xml)
@@ -359,16 +365,16 @@ namespace iGL.Designer
 
             var physics = new DesignPhysics();
             //physics.OnCollision += new EventHandler<EventArgs>(physics_OnCollision);
-            _workingScene = new Scene(physics);
+            WorkingScene = new Scene(physics);
 
-            _workingScene.OnMouseMove += new EventHandler<Engine.Events.MouseMoveEvent>(_scene_OnMouseMove);
+            WorkingScene.OnMouseMove += new EventHandler<Engine.Events.MouseMoveEvent>(_scene_OnMouseMove);
                      
-            Game.SetScene(_workingScene);
+            Game.SetScene(WorkingScene);
 
             /* origin gizmo */
             var gizmo = new Gizmo() { ArrowLength = 30.0f, ShowUniformSphere = false };
 
-            _workingScene.AddGameObject(gizmo);
+            WorkingScene.AddGameObject(gizmo);
 
             _selectionGizmo = new Gizmo();
 
@@ -395,9 +401,9 @@ namespace iGL.Designer
             _selectionGizmo.UniformSphere.OnMouseIn += (a, b) => Cursor = Cursors.Hand;
             _selectionGizmo.UniformSphere.OnMouseOut += (a, b) => Cursor = Cursors.Arrow;
 
-            _workingScene.AddGameObject(_selectionGizmo);
+            WorkingScene.AddGameObject(_selectionGizmo);
 
-            _workingScene.OnObjectAdded += _workingScene_OnObjectAdded;
+            WorkingScene.OnObjectAdded += _workingScene_OnObjectAdded;
 
             if (!string.IsNullOrEmpty(xml))
             {
@@ -407,9 +413,10 @@ namespace iGL.Designer
             {
                 /* new scene, create a camera */
                 var camera = new PerspectiveCamera() { Name = "PerspectiveCamera" };
-                _workingScene.AddGameObject(camera);
+                WorkingScene.AddGameObject(camera);
 
-                _workingScene.SetCurrentCamera(camera);
+                WorkingScene.SetDesignCamera(camera);
+                WorkingScene.SetPlayCamera(camera);
 
                 Game.LoadScene();
              }
@@ -427,6 +434,8 @@ namespace iGL.Designer
             {
                 _objectAddedEvent(this, new ObjectAddedEvent() { AddedObject = sender as GameObject });
             }
+
+            SelectObjectAction(e.GameObject, new MouseButtonDownEvent());
         }       
 
         void physics_OnCollision(object sender, EventArgs e)
@@ -469,18 +478,18 @@ namespace iGL.Designer
         {
             if (Operation == OperationType.DROPPING) return;
 
-            if (_workingScene.MouseButtonState[MouseButton.ButtonMiddle])
+            if (WorkingScene.MouseButtonState[MouseButton.ButtonMiddle])
             {               
-                _workingScene.CurrentCamera.GameObject.Position -= e.DirectionOnNearPlane * 10.0f;
+                WorkingScene.CurrentCamera.GameObject.Position -= e.DirectionOnNearPlane * 10.0f;
                 return;
             }
 
-            if (Operation == OperationType.PANVIEW && _workingScene.MouseButtonState[MouseButton.Button1])
+            if (Operation == OperationType.PANVIEW && WorkingScene.MouseButtonState[MouseButton.Button1])
             {
-                if (_workingScene.CurrentCamera != null)
+                if (WorkingScene.CurrentCamera != null)
                 {
-                    _workingScene.CurrentCamera.GameObject.Position -= e.DirectionOnNearPlane * 5.0f;
-                    _workingScene.CurrentCamera.Target -= e.DirectionOnNearPlane * 5.0f;
+                    WorkingScene.CurrentCamera.GameObject.Position -= e.DirectionOnNearPlane * 5.0f;
+                    WorkingScene.CurrentCamera.Target -= e.DirectionOnNearPlane * 5.0f;
                 }
 
                 return;
@@ -492,15 +501,15 @@ namespace iGL.Designer
          
             var distance = 1.0f;
 
-            if (_workingScene.CurrentCamera is PerspectiveCameraComponent)
+            if (WorkingScene.CurrentCamera is PerspectiveCameraComponent)
             {
                 /* in a perspective camera, calculate the near plane / object plane ratio */
            
-                var direction = _selectedObject.Position - _workingScene.CurrentCamera.GameObject.Position;
+                var direction = _selectedObject.Position - WorkingScene.CurrentCamera.GameObject.Position;
                 var directionNorm = direction;
                 directionNorm.Normalize();
 
-                var center = _workingScene.CurrentCamera.Target - _workingScene.CurrentCamera.GameObject.Position;
+                var center = WorkingScene.CurrentCamera.Target - WorkingScene.CurrentCamera.GameObject.Position;
                 center.Normalize();
 
                 var objectDistance = Vector3.Dot(center, directionNorm) * direction.Length;
@@ -575,6 +584,20 @@ namespace iGL.Designer
                 _selectionGizmo.Enabled = true;
 
                 _selectionGizmo.Position = _selectedObject.Position;
+
+                if (WorkingScene.CurrentCamera != null)
+                {
+                    var lookAt = WorkingScene.CurrentCamera.Target - WorkingScene.CurrentCamera.GameObject.Position;
+                    lookAt.Normalize();
+
+                    var p = WorkingScene.CurrentCamera.GameObject.Position + lookAt;
+                    var planeDistance = _selectedObject.Position.PlaneDistance(p, lookAt);
+
+                    var scale = planeDistance / 200.0f;
+                    if (scale < 0.05f) scale = 0.05f;
+
+                    _selectionGizmo.Scale = new Vector3(scale);
+                }
             }
         }
 
@@ -635,7 +658,6 @@ namespace iGL.Designer
             }
 
             if (IsPlaying) return;
-      
 
             var scene = new Scene(new Physics2d());          
 
@@ -683,7 +705,7 @@ namespace iGL.Designer
 
             iGL.Engine.Game.InDesignMode = true;
 
-            Game.SetScene(_workingScene);
+            Game.SetScene(WorkingScene);
         }
 
         private void dropMenuItem_Click(object sender, EventArgs e)
@@ -722,11 +744,11 @@ namespace iGL.Designer
         private void cloneMenuItem_Click(object sender, EventArgs e)
         {
             var clone = _selectedObject.Clone();
-            var count = _workingScene.GameObjects.Count(o => o.GetType() == _selectedObject.GetType());
+            var count = WorkingScene.GameObjects.Count(o => o.GetType() == _selectedObject.GetType());
 
             clone.Name = _selectedObject.GetType().Name + count.ToString();
 
-            _workingScene.AddGameObject(clone);         
+            WorkingScene.AddGameObject(clone);         
         }
     }
 }

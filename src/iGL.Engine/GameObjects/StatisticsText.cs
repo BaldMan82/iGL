@@ -22,13 +22,14 @@ namespace iGL.Engine.GameObjects
             }
         }
 
-        public override void Render(Math.Matrix4 parentTransform)
-        {
-            GL.Clear(ClearBufferMask.DepthBufferBit);
+        public override void Render(bool overrideParentTransform = false)
+        {           
+            GL.Clear(ClearBufferMask.DepthBufferBit);           
 
-            base.Render(parentTransform);
+            base._textComponent.Text = "FPS: " + ((int)(10000000.0f / Scene.Statistics.LastRenderDuration.Ticks)).ToString();
+            base._textComponent.Reload();
 
-            Text = "FPS: " + ((int)(10000000.0f / Scene.Statistics.LastRenderDuration.Ticks)).ToString();
-        }
+            base.Render(overrideParentTransform);
+        }     
     }
 }

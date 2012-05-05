@@ -18,7 +18,26 @@ namespace iGL.Engine
 {
     public class Scene 
     {
-        public CameraComponent CurrentCamera { get; private set; }
+        public CameraComponent CurrentCamera 
+        {
+            get
+            {
+                return Game.InDesignMode ? DesignCamera : PlayCamera;
+            }
+            set
+            {
+                if (Game.InDesignMode)
+                {
+                    DesignCamera = value;
+                }
+                else
+                {
+                    PlayCamera = value;
+                }
+            }
+        }
+        public CameraComponent PlayCamera { get; private set; }
+        public CameraComponent DesignCamera { get; private set; }
         public LightComponent CurrentLight { get; private set; }
         public Statistics Statistics { get; private set; }
 
@@ -51,6 +70,7 @@ namespace iGL.Engine
         private event EventHandler<PreRenderEvent> OnPreRenderEvent;
 
         internal ShaderProgram ShaderProgram { get; set; }
+        internal Dictionary<string, MeshRenderComponent> MeshComponentCache { get; private set; }
         public IPhysics Physics { get; private set; }
 
         public Dictionary<MouseButton, bool> MouseButtonState { get; private set; }
@@ -97,12 +117,13 @@ namespace iGL.Engine
             AmbientColor = new Vector4(1, 1, 1, 1);
 
             Statistics = new Statistics();
+
+            MeshComponentCache = new Dictionary<string, MeshRenderComponent>();
         }
 
         public void Render()
         {
            
-
             if (OnPreRenderEvent != null) OnPreRenderEvent(this, new PreRenderEvent());
 
             if (CurrentCamera == null)
@@ -120,19 +141,28 @@ namespace iGL.Engine
 
             Game.GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
+            var pointLightShader = ShaderProgram as PointLightShader;
+
             if (CurrentLight != null)
             {
                 /* update shader's light parameters */
-
-                var pointLightShader = ShaderProgram as PointLightShader;
-                pointLightShader.SetLight(CurrentLight.Light, new Vector4(CurrentLight.GameObject.Position));
+               
+                pointLightShader.SetLight(CurrentLight.Light, new Vector4(CurrentLight.GameObject.WorldPosition));
+            }
+            else
+            {
+                pointLightShader.ClearLight();
             }
 
-            var sortedObjects = _gameObjects.OrderByDescending(g => g.RenderQueuePriority).ThenByDescending(g => g.DistanceSorting ? (g.Position - CurrentCamera.GameObject.Position).LengthSquared : float.MaxValue);
+            var allObjects = _gameObjects.SelectMany(g => g.AllChildren).ToList();
+            allObjects.AddRange(_gameObjects);
+
+            var sortedObjects = allObjects.OrderByDescending(g => g.RenderQueuePriority).
+                                           ThenByDescending(g => g.DistanceSorting ? (g.Position - CurrentCamera.GameObject.Position).LengthSquared : float.MaxValue);
 
             foreach (var gameObject in sortedObjects)
             {
-                gameObject.Render(Matrix4.Identity);
+                gameObject.Render();
             }
 
             Statistics.LastRenderDuration = DateTime.UtcNow - _lastRenderUtc;
@@ -268,24 +298,49 @@ namespace iGL.Engine
             }
         }
 
-        public void SetCurrentCamera(GameObject camera)
+        public void SetPlayCamera(GameObject camera)
         {
-            if (camera == null) CurrentCamera = null;
+            if (camera == null)
+            {
+                PlayCamera = null;
+                return;
+            }
 
-            if (!_gameObjects.Contains(camera)) throw new Exception("Camera is not part of this scene");
+            if (camera.Scene != this) throw new Exception("Camera is not part of this scene");
 
             var component = camera.Components.FirstOrDefault(c => c is CameraComponent) as CameraComponent;
 
             if (component == null) throw new Exception("GameObject does not have a camera component");
 
-            CurrentCamera = component;
+            PlayCamera = component;
+        }
+
+        public void SetDesignCamera(GameObject camera)
+        {
+            if (camera == null)
+            {
+                DesignCamera = null;
+                return;
+            }
+
+            if (camera.Scene != this) throw new Exception("Camera is not part of this scene");
+
+            var component = camera.Components.FirstOrDefault(c => c is CameraComponent) as CameraComponent;
+
+            if (component == null) throw new Exception("GameObject does not have a camera component");
+
+            DesignCamera = component;
         }
 
         public void SetCurrentLight(GameObject light)
         {
-            if (light == null) CurrentLight = null;
+            if (light == null)
+            {
+                CurrentLight = null;
+                return;
+            }
 
-            if (!_gameObjects.Contains(light)) throw new Exception("Light is not part of this scene");
+            if (light.Scene != this) throw new Exception("Light is not part of this scene");
 
             var component = light.Components.FirstOrDefault(c => c is LightComponent) as LightComponent;
 
@@ -295,9 +350,28 @@ namespace iGL.Engine
         }
 
         public virtual void Load()
-        {           
+        {                     
             _resources.ForEach(r => r.Load());
+
+            var gameObjectBeforeLoad = _gameObjects.SelectMany(g => g.AllChildren).ToList();
+            gameObjectBeforeLoad.AddRange(_gameObjects);
+
             _gameObjects.ForEach(g => g.Load());
+
+            var gameObjectAfterLoad = _gameObjects.SelectMany(g => g.AllChildren).ToList();
+            gameObjectAfterLoad.AddRange(_gameObjects);
+
+            if (gameObjectAfterLoad.Count != gameObjectBeforeLoad.Count)
+            {
+                /* objects have been added during load, which is illegal */
+                /* all creation should take place in Init phase or after load phase */
+
+                var newObjects = gameObjectAfterLoad.Where(g => !gameObjectBeforeLoad.Contains(g)).ToList();
+                var strb = new StringBuilder();
+                gameObjectAfterLoad.ForEach(g => strb.AppendLine(g.ToString()));
+
+                throw new NotSupportedException("Cannot create objects during load phase: " + strb.ToString());
+            }
 
             Loaded = true;
 
@@ -382,18 +456,7 @@ namespace iGL.Engine
             UpdateCurrentMousePosition();
 
             var ray = new Vector4(farPlane - nearPlane);
-
-            //RigidBody body;
-            //JVector normal;
-            //float fraction;
-
-            //Physics.World.CollisionSystem.Raycast(nearPlane.ToJitter(), ray.ToJitter(), (a, b, c) => true, out body, out normal, out fraction);
-
-            //GameObject result = null;
-            //if (body != null) result = body.Tag as GameObject;
-
-
-            /* raycast through non-rigidbodies */
+                   
             Vector3 hitLocation;
 
             GameObject result = RayCast(nearPlane, ray, out hitLocation);

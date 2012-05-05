@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="GameObjects\Arrow2d.cs" />
     <Compile Include="GameObjects\Castle.cs" />
+    <Compile Include="GameObjects\SlingshotBall3D.cs" />
     <Compile Include="GameObjects\PanViewFollowCamera3d.cs" />
     <Compile Include="GameObjects\PanViewFollowCamera.cs" />
     <Compile Include="GameObjects\SlingShot.cs" />
@@ -99,6 +100,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\test.dae" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\cone.dae" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\cylinder.dae" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

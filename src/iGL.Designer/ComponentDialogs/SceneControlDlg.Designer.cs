@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.gameObjectBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.colorDialog = new System.Windows.Forms.ColorDialog();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblComponentName = new System.Windows.Forms.Label();
@@ -41,16 +40,15 @@
             this.label3 = new System.Windows.Forms.Label();
             this.ddLights = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.ddCameras = new System.Windows.Forms.ComboBox();
+            this.ddPlayCameras = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.gameObjectBindingSource)).BeginInit();
+            this.gameObjectBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.ddDesignCameras = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gameObjectBindingSource)).BeginInit();
             this.SuspendLayout();
-            // 
-            // gameObjectBindingSource
-            // 
-            this.gameObjectBindingSource.DataSource = typeof(iGL.Engine.GameObject);
             // 
             // panel2
             // 
@@ -74,6 +72,8 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.ddDesignCameras);
+            this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.txtAmbientAlpha);
             this.panel1.Controls.Add(this.btnAmbient);
@@ -81,17 +81,17 @@
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.ddLights);
             this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.ddCameras);
+            this.panel1.Controls.Add(this.ddPlayCameras);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(0, 32);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(290, 113);
+            this.panel1.Size = new System.Drawing.Size(290, 130);
             this.panel1.TabIndex = 41;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(218, 77);
+            this.label4.Location = new System.Drawing.Point(218, 102);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(14, 13);
             this.label4.TabIndex = 23;
@@ -99,14 +99,15 @@
             // 
             // txtAmbientAlpha
             // 
-            this.txtAmbientAlpha.Location = new System.Drawing.Point(238, 74);
+            this.txtAmbientAlpha.Location = new System.Drawing.Point(238, 99);
             this.txtAmbientAlpha.Name = "txtAmbientAlpha";
             this.txtAmbientAlpha.Size = new System.Drawing.Size(42, 20);
             this.txtAmbientAlpha.TabIndex = 22;
+            this.txtAmbientAlpha.TextChanged += new System.EventHandler(this.txtAmbientAlpha_TextChanged);
             // 
             // btnAmbient
             // 
-            this.btnAmbient.Location = new System.Drawing.Point(127, 72);
+            this.btnAmbient.Location = new System.Drawing.Point(127, 97);
             this.btnAmbient.Name = "btnAmbient";
             this.btnAmbient.Size = new System.Drawing.Size(75, 23);
             this.btnAmbient.TabIndex = 21;
@@ -116,7 +117,7 @@
             // 
             // pnlAmbient
             // 
-            this.pnlAmbient.Location = new System.Drawing.Point(72, 72);
+            this.pnlAmbient.Location = new System.Drawing.Point(72, 97);
             this.pnlAmbient.Name = "pnlAmbient";
             this.pnlAmbient.Size = new System.Drawing.Size(49, 23);
             this.pnlAmbient.TabIndex = 20;
@@ -124,7 +125,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 77);
+            this.label3.Location = new System.Drawing.Point(8, 102);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(45, 13);
             this.label3.TabIndex = 19;
@@ -133,36 +134,60 @@
             // ddLights
             // 
             this.ddLights.FormattingEnabled = true;
-            this.ddLights.Location = new System.Drawing.Point(112, 37);
+            this.ddLights.Location = new System.Drawing.Point(112, 62);
             this.ddLights.Name = "ddLights";
             this.ddLights.Size = new System.Drawing.Size(158, 21);
             this.ddLights.TabIndex = 18;
+            this.ddLights.SelectedValueChanged += new System.EventHandler(this.ddLights_SelectedValueChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(5, 40);
+            this.label2.Location = new System.Drawing.Point(5, 65);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(67, 13);
             this.label2.TabIndex = 17;
             this.label2.Text = "Current Light";
             // 
-            // ddCameras
+            // ddPlayCameras
             // 
-            this.ddCameras.FormattingEnabled = true;
-            this.ddCameras.Location = new System.Drawing.Point(112, 6);
-            this.ddCameras.Name = "ddCameras";
-            this.ddCameras.Size = new System.Drawing.Size(158, 21);
-            this.ddCameras.TabIndex = 16;
+            this.ddPlayCameras.FormattingEnabled = true;
+            this.ddPlayCameras.Location = new System.Drawing.Point(112, 33);
+            this.ddPlayCameras.Name = "ddPlayCameras";
+            this.ddPlayCameras.Size = new System.Drawing.Size(158, 21);
+            this.ddPlayCameras.TabIndex = 16;
+            this.ddPlayCameras.SelectedValueChanged += new System.EventHandler(this.ddPlayCameras_SelectedValueChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(5, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(80, 13);
+            this.label1.Size = new System.Drawing.Size(79, 13);
             this.label1.TabIndex = 15;
-            this.label1.Text = "Current Camera";
+            this.label1.Text = "Design Camera";
+            // 
+            // gameObjectBindingSource
+            // 
+            this.gameObjectBindingSource.DataSource = typeof(iGL.Engine.GameObject);
+            // 
+            // ddDesignCameras
+            // 
+            this.ddDesignCameras.FormattingEnabled = true;
+            this.ddDesignCameras.Location = new System.Drawing.Point(112, 6);
+            this.ddDesignCameras.Name = "ddDesignCameras";
+            this.ddDesignCameras.Size = new System.Drawing.Size(158, 21);
+            this.ddDesignCameras.TabIndex = 25;
+            this.ddDesignCameras.SelectedIndexChanged += new System.EventHandler(this.ddDesignCameras_SelectedIndexChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(5, 36);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(66, 13);
+            this.label5.TabIndex = 24;
+            this.label5.Text = "Play Camera";
             // 
             // SceneControlDlg
             // 
@@ -173,11 +198,11 @@
             this.Name = "SceneControlDlg";
             this.Size = new System.Drawing.Size(292, 472);
             this.Load += new System.EventHandler(this.SceneControlDlg_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.gameObjectBindingSource)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gameObjectBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -196,7 +221,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox ddLights;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox ddCameras;
+        private System.Windows.Forms.ComboBox ddPlayCameras;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox ddDesignCameras;
+        private System.Windows.Forms.Label label5;
     }
 }

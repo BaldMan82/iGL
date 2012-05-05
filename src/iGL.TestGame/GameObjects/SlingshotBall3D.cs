@@ -9,68 +9,57 @@ using System.Diagnostics;
 
 namespace iGL.TestGame.GameObjects
 {
-    public class SlingshotBall : GameObject
+    [RequiredChild(typeof(Arrow2d), SlingshotBall3D.Arrow2dId)]
+    [RequiredChild(typeof(Sphere), SlingshotBall3D.DisplaySphereId)]
+    [RequiredChild(typeof(LightObject), SlingshotBall3D.LightObjectId)]
+    public class SlingshotBall3D : RigidSphere
     {
-        private Sphere _aimSphere;
-        private RigidSphere _displaySphere;
+        private Sphere _aimSphere;     
         private bool _inAimMode;
         private Vector3 _triggerPosition;
         private float _slingShotRadius = 4.0f;
-        private float _springConstant = 1000000f;
+        private float _springConstant = 100000f;
         private Arrow2d _arrow2d;
         private bool _canFire;
         private PanViewFollowCamera3d _followCamera;
         private Vector3 _lastAngularVelocity;
 
-        public GameObject _lightObject;
+        public LightObject _lightObject;
 
-        public SlingshotBall(XElement element) : base(element) { }
+        public SlingshotBall3D(XElement element) : base(element) { }
 
-        public SlingshotBall() { }       
+        public SlingshotBall3D() { }       
 
-        public override void Load()
+        private const string Arrow2dId = "e2da1056-2ff7-443f-aed1-0afd3db7b0bf";
+        private const string DisplaySphereId = "46af2307-be79-453b-a8ab-54bad0d51525";
+        private const string LightObjectId = "60af2307-be79-453b-a8ab-54bad0d51525";
+
+        protected override void Init()
         {
-            base.Load();
+            base.Init();
 
-            Scene.OnMouseMove += new EventHandler<Engine.Events.MouseMoveEvent>(Scene_OnMouseMove);
-
-            _displaySphere = new RigidSphere();
-            var rigidComponent = _displaySphere.Components.First(c => c is RigidBodyComponent) as RigidBodyComponent;
-            rigidComponent.Mass = 1000;
-            rigidComponent.KineticFriction = 1.0f;
-            rigidComponent.StaticFriction = 1.0f;
-            rigidComponent.Restitution = 0.5f;
-
-           AddChild(_displaySphere);
-
-            _aimSphere = new Sphere();
-            _aimSphere.Scale = new Vector3(5);            
+            _aimSphere = Children.First(c => c.Id == DisplaySphereId) as Sphere;
+            _aimSphere.Scale = new Vector3(5);
             _aimSphere.Material.Ambient = new Vector4(1, 0, 0, 0.5f);
             _aimSphere.Material.TextureName = "ball";
             _aimSphere.OnMouseDown += new EventHandler<Engine.Events.MouseButtonDownEvent>(_aimSphere_OnMouseDown);
             _aimSphere.OnMouseUp += new EventHandler<Engine.Events.MouseButtonUpEvent>(_aimSphere_OnMouseUp);
             _aimSphere.Visible = false;
 
-            AddChild(_aimSphere);
+            _arrow2d = Children.First(c => c.Id == Arrow2dId) as Arrow2d;
 
-            _arrow2d = new Arrow2d();               
+            _lightObject = Children.First(c => c.Id == LightObjectId) as LightObject;           
 
-            Scene.AddGameObject(_arrow2d);
+               
+        }
 
-            _lightObject = new GameObject();
-            
-            var lightComponent = new LightComponent();
-            
-            var pointLight = new PointLight();
-            pointLight.Ambient = new Vector4(0);
-            pointLight.Diffuse = new Vector4(1, 1, 1, 1);
-            lightComponent.Light = pointLight;
+        public override void Load()
+        {
+            base.Load();
 
-            _lightObject.AddComponent(lightComponent);
+            _aimSphere.Enabled = !Game.InDesignMode;        
 
-            Scene.AddGameObject(_lightObject);
-
-            Scene.OnLoaded += new EventHandler<Engine.Events.LoadedEvent>(Scene_OnLoaded);
+            if (!Game.InDesignMode) Scene.OnLoaded += new EventHandler<Engine.Events.LoadedEvent>(Scene_OnLoaded);
         }
 
          void Scene_OnLoaded(object sender, Engine.Events.LoadedEvent e)
@@ -79,23 +68,16 @@ namespace iGL.TestGame.GameObjects
             {
                 _followCamera = Scene.CurrentCamera.GameObject as PanViewFollowCamera3d;
 
-                _followCamera.Follow(_displaySphere);             
+                _followCamera.Follow(this);             
                 _followCamera.FollowingEnabled = true;
             }
 
             Scene.SetCurrentLight(_lightObject);
-        }
-
-        void Scene_OnMouseMove(object sender, Engine.Events.MouseMoveEvent e)
-        {
-            
-        }
+        }      
 
         public override void Tick(float timeElapsed)
         {
-            base.Tick(timeElapsed);
-
-            _aimSphere.Position = _displaySphere.Position;
+            base.Tick(timeElapsed);          
 
             if (_inAimMode)
             {
@@ -107,7 +89,7 @@ namespace iGL.TestGame.GameObjects
                 lookAt.Normalize();
 
                 var p = Scene.CurrentCamera.GameObject.Position + lookAt;
-                var planeDistance = _displaySphere.WorldPosition.PlaneDistance(p, lookAt);
+                var planeDistance = this.Position.PlaneDistance(p, lookAt);
 
                 var dirNearPlane = nearPlane - (Scene.CurrentCamera.GameObject.Position + lookAt);
 
@@ -120,10 +102,10 @@ namespace iGL.TestGame.GameObjects
 
                 _triggerPosition = newWorldPosition;
 
-                var distance = (_triggerPosition - _displaySphere.WorldPosition).Length;
+                var distance = (_triggerPosition - this.Position).Length;
                 if (distance > _slingShotRadius)
                 {
-                    var norm = (_triggerPosition - _displaySphere.WorldPosition);
+                    var norm = (_triggerPosition - this.Position);
                     norm.Normalize();
 
                     norm = Vector3.Multiply(norm, distance - _slingShotRadius);
@@ -133,25 +115,23 @@ namespace iGL.TestGame.GameObjects
                     distance = _slingShotRadius;
                 }
 
-
 				SetArrowPosition(distance);
                
             }
 
-
             /* damping */
-            var body = _displaySphere.Components.Single(c => c is RigidBodyComponent) as RigidBodyComponent;
+            var body = Components.Single(c => c is RigidBodyComponent) as RigidBodyComponent;
             if (_lastAngularVelocity.LengthSquared >= body.AngularVelocity.LengthSquared)
                 body.AngularVelocity = body.AngularVelocity * 0.8f;
 
             if (body.AngularVelocity.LengthSquared < 4.0f && body.LinearVelocity.LengthSquared < 4.0f)
             {
-                _displaySphere.Material.Ambient = new Vector4(0, 1, 0, 1);
+                Material.Ambient = new Vector4(0, 1, 0, 1);
                 _canFire = true;
             }
             else
             {
-                _displaySphere.Material.Ambient = new Vector4(1, 0, 0, 1);
+                Material.Ambient = new Vector4(1, 0, 0, 1);
                 _inAimMode = false;
                 _canFire = false;
                 _arrow2d.Visible = false;
@@ -160,23 +140,19 @@ namespace iGL.TestGame.GameObjects
             }
 
             _lastAngularVelocity = body.AngularVelocity;
-
-            /* light */
-
-            _lightObject.Position = _displaySphere.WorldPosition + new Vector3(0, 0, 2);
+ 
         }
 
 		void SetArrowPosition(float triggerDistance)
-		{
-			/* adjust arrow image */
+		{		
+            var direction = this.Position - _triggerPosition;
+            if (direction.LengthSquared == 0) return;
 
-            _arrow2d.Position = _displaySphere.WorldPosition;
-
-            var direction = _displaySphere.WorldPosition - _triggerPosition;
             var normDirection = direction;
             normDirection.Normalize();
 
-            _arrow2d.Position += normDirection * (_displaySphere.Scale.Y + _arrow2d.Scale.Y / 2.0f);              
+            _arrow2d.Position = this.Position;
+            _arrow2d.Position += normDirection * (Scale.Y + _arrow2d.Scale.Y / 2.0f);              
 
             Vector2 a = new Vector2(direction.X, direction.Y);
             Vector2 b = new Vector2(0, 1);
@@ -187,20 +163,20 @@ namespace iGL.TestGame.GameObjects
 
             float colorFactor = triggerDistance / _slingShotRadius;
 
-            _arrow2d.Material.Ambient = new Vector4(colorFactor, 1 - colorFactor, 0, 1);	
-			
+            _arrow2d.Material.Ambient = new Vector4(colorFactor, 1 - colorFactor, 0, 1);
+
 		}
 		
         void _aimSphere_OnMouseUp(object sender, Engine.Events.MouseButtonUpEvent e)
         {
             if (Game.InDesignMode || !_inAimMode) return;
 
-            _displaySphere.Material.Ambient = new Vector4(1, 0, 0, 1);
+            Material.Ambient = new Vector4(1, 0, 0, 1);
             _inAimMode = false;
 
-            var rigidBody = _displaySphere.Components.Single(c => c is RigidBodyComponent) as RigidBodyComponent;
+            var rigidBody = Components.Single(c => c is RigidBodyComponent) as RigidBodyComponent;
 
-            var fireDirection = _displaySphere.WorldPosition - _triggerPosition;
+            var fireDirection = this.Position - _triggerPosition;
             rigidBody.IsStatic = false;
             rigidBody.ApplyForce(fireDirection * _springConstant);
 
@@ -216,10 +192,10 @@ namespace iGL.TestGame.GameObjects
 
             if (!_canFire) return;
 
-            _displaySphere.Material.Ambient = new Vector4(0, 1, 0, 1);
+            Material.Ambient = new Vector4(0, 1, 0, 1);
             _inAimMode = true;
 
-            _triggerPosition = _displaySphere.WorldPosition;
+            _triggerPosition = this.Position;
 			
 			SetArrowPosition(0f);
 			

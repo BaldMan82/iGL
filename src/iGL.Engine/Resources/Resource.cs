@@ -26,5 +26,10 @@ namespace iGL.Engine
         {
             IsLoaded = InternalLoad();
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

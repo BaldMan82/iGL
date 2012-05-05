@@ -17,4 +17,17 @@ namespace iGL.Engine
             Id = id;
         }
     }
+
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+    public class RequiredChild : Attribute
+    {
+        public Type ChildType { get; private set; }
+        public string Id { get; private set; }
+
+        public RequiredChild(Type childType, string id)
+        {
+            ChildType = childType;
+            Id = id;
+        }
+    }
 }

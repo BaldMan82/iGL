@@ -36,13 +36,12 @@ namespace iGL.Engine
     {
         private int[] _bufferIds;
         private bool _isClone;
+        private MeshRenderComponent _clonedReference;
 
         private MeshComponent _meshComponent;
 
         public BeginMode BeginMode { get; set; }
-
-        private static Dictionary<string, MeshRenderComponent> _meshRenderComponentCache = new Dictionary<string, MeshRenderComponent>();
-
+      
         public MeshRenderComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
 
         public MeshRenderComponent() { }
@@ -67,11 +66,12 @@ namespace iGL.Engine
             if (!_meshComponent.IsLoaded) _meshComponent.Load();
 
             MeshRenderComponent cachedComponent;
-            if (_meshRenderComponentCache.TryGetValue(_meshComponent.Id, out cachedComponent))
+            if (!Game.InDesignMode &&
+                !string.IsNullOrEmpty(_meshComponent.MeshResourceName) &&
+                GameObject.Scene.MeshComponentCache.TryGetValue(_meshComponent.MeshResourceName, out cachedComponent))
             {
                 /* can reuse a rendercomponent + gl buffers */
-                this._bufferIds = cachedComponent._bufferIds;
-                this._isClone = true;
+                _clonedReference = cachedComponent;                
             }
             else
             {
@@ -117,7 +117,10 @@ namespace iGL.Engine
                     }
                 }
 
-                _meshRenderComponentCache.Add(_meshComponent.Id, this);
+                if (!Game.InDesignMode && !string.IsNullOrEmpty(_meshComponent.MeshResourceName))
+                {
+                    GameObject.Scene.MeshComponentCache.Add(_meshComponent.MeshResourceName, this);
+                }
             }
 
             return true;
@@ -126,6 +129,10 @@ namespace iGL.Engine
         public void Reload()
         {
             ReleaseBuffers();
+
+            var pair = GameObject.Scene.MeshComponentCache.FirstOrDefault(p => p.Value == this);
+            if (pair.Key != null) GameObject.Scene.MeshComponentCache.Remove(pair.Key);
+
             InternalLoad();
         }
 
@@ -166,7 +173,14 @@ namespace iGL.Engine
             int normalAttrib = shader.GetNormalAttributeLocation();
             int uvAttrib = shader.GetUVAttributeLocation();
 
-            GL.BindBuffer(BufferTarget.ArrayBuffer, _bufferIds[0]);
+            if (_clonedReference != null)
+            {
+                GL.BindBuffer(BufferTarget.ArrayBuffer, _clonedReference._bufferIds[0]);
+            }
+            else
+            {
+                GL.BindBuffer(BufferTarget.ArrayBuffer, _bufferIds[0]);
+            }
 
             GL.EnableVertexAttribArray(0);
             GL.EnableVertexAttribArray(1);
@@ -195,7 +209,15 @@ namespace iGL.Engine
                 shader.SetHasTexture(false);
             }
 
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, _bufferIds[1]);
+            if (_clonedReference != null)
+            {
+                GL.BindBuffer(BufferTarget.ElementArrayBuffer, _clonedReference._bufferIds[1]);
+            }
+            else
+            {
+                GL.BindBuffer(BufferTarget.ElementArrayBuffer, _bufferIds[1]);
+            }
+
             GL.DrawElements(BeginMode, _meshComponent.Indices.Length, DrawElementsType.UnsignedShort, 0);
 
         }

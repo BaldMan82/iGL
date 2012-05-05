@@ -294,6 +294,9 @@ namespace iGL.Designer
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            renderTimer.Stop();
+            tickTimer.Stop();         
+
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 using (FileStream f = new FileStream(openFileDialog.FileName, FileMode.Open))
@@ -306,14 +309,21 @@ namespace iGL.Designer
                     openTKControl.LoadScene(encoder.GetString(bytes));
 
                     _currentFilename = openFileDialog.FileName;
+                    sceneControl.SelectNodeWithValue(openTKControl.WorkingScene);
                 }
             }
+
+            openTKControl.Tick(0.01f);
+
+            renderTimer.Start();
+            tickTimer.Start();         
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openTKControl.LoadScene(null);
             sceneControl.Clear();
+            openTKControl.LoadScene(null);
+            sceneControl.SelectNodeWithValue(openTKControl.WorkingScene);
         }
 
         private void saveToolStripMenuItem1_Click(object sender, EventArgs e)

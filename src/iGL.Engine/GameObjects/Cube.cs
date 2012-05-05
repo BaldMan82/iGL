@@ -25,12 +25,10 @@ namespace iGL.Engine
         {
             get { return _scale.Y; }
         }
-
         public float Width
         {
             get { return _scale.X; }
         }
-
         public float Depth
         {
             get { return _scale.Z; }

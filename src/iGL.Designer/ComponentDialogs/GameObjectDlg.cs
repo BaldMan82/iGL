@@ -57,6 +57,11 @@ namespace iGL.Designer
             cbVisible.Checked = GameObject.Visible;
             cbDistanceSorting.Checked = GameObject.DistanceSorting;
 
+            txtName.Text = string.IsNullOrEmpty(GameObject.Name) ? "Unnamed" : GameObject.Name;
+            
+            var worldPos = GameObject.WorldPosition;
+            lblWorldPosition.Text = string.Format("[ {0}, {1}, {2} ]", worldPos.X, worldPos.Y, worldPos.Z);
+
             _internalUIUpdate = false;
         }
 
@@ -90,6 +95,7 @@ namespace iGL.Designer
 
             base.UpdateGameObject();
 
+            if (txtName.Text != "Unnamed") GameObject.Name = txtName.Text;
             GameObject.Position = new Vector3(_txtPositionX.TextToFloat(), _txtPositionY.TextToFloat(), _txtPositionZ.TextToFloat());
             GameObject.Rotation = new Vector3(_txtRotationX.TextToFloat(), _txtRotationY.TextToFloat(), _txtRotationZ.TextToFloat());
             GameObject.Scale = new Vector3(_txtScaleX.TextToFloat(), _txtScaleY.TextToFloat(), _txtScaleZ.TextToFloat());

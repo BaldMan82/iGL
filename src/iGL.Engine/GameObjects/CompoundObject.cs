@@ -45,11 +45,11 @@ namespace iGL.Engine
             });
         }
 
-        public override void Render(Matrix4 parentTransform)
+        public override void Render(bool overrideParentTransform = false)
         {
-            var thisTransform = Transform * parentTransform;
+            var thisTransform = GetCompositeTransform();
 
-            base.Render(parentTransform);
+            base.Render();
 
             foreach (var child in _compoundChildren)
             {
@@ -58,7 +58,7 @@ namespace iGL.Engine
 
                 child.Transform = Math.Matrix4.Scale(child.Scale) * transform;
 
-                child.Render(thisTransform);
+                child.Render();
             }
         }
     }

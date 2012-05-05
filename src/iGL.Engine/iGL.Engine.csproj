@@ -62,7 +62,9 @@
     <Compile Include="Events\RotateEvent.cs" />
     <Compile Include="Events\ScaleEvent.cs" />
     <Compile Include="GameComponents\CameraComponent.cs" />
+    <Compile Include="GameComponents\TextComponent.cs" />
     <Compile Include="GameComponents\OrthogonalCameraComponent.cs" />
+    <Compile Include="GameComponents\TriangleMeshColliderComponent.cs" />
     <Compile Include="GameObjects\StatisticsText.cs" />
     <Compile Include="GameObjects\TextObject.cs" />
     <Compile Include="GameObjects\Plane.cs" />

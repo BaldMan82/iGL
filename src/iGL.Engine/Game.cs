@@ -93,7 +93,8 @@ namespace iGL.Engine
                 XDocument doc = new XDocument();
                 XElement element = new XElement("Scene");
 
-                element.Add(new XElement("CameraId", Scene.CurrentCamera != null ? Scene.CurrentCamera.GameObject.Id : string.Empty));
+                element.Add(new XElement("PlayCameraId", Scene.PlayCamera != null ? Scene.PlayCamera.GameObject.Id : string.Empty));
+                element.Add(new XElement("DesignCameraId", Scene.DesignCamera != null ? Scene.DesignCamera.GameObject.Id : string.Empty));
                 element.Add(new XElement("LightId", Scene.CurrentLight != null ? Scene.CurrentLight.GameObject.Id : string.Empty));
                 element.Add(XmlHelper.ToXml(Scene.AmbientColor, "AmbientColor"));
 
@@ -138,16 +139,34 @@ namespace iGL.Engine
                         }
                     }
 
-                    var currentCam = doc.Root.Elements().FirstOrDefault(e => e.Name == "CameraId");
+                    var currentCam = doc.Root.Elements().FirstOrDefault(e => e.Name == "PlayCameraId");
                     if (currentCam != null && !string.IsNullOrEmpty(currentCam.Value))
                     {
-                        Scene.SetCurrentCamera(Scene.GameObjects.Single(g => g.Id == currentCam.Value));
+                        Scene.SetPlayCamera(Scene.GameObjects.Single(g => g.Id == currentCam.Value));
+                    }
+                    else
+                    {
+                        Scene.SetPlayCamera(null);
+                    }
+
+                    currentCam = doc.Root.Elements().FirstOrDefault(e => e.Name == "DesignCameraId");
+                    if (currentCam != null && !string.IsNullOrEmpty(currentCam.Value))
+                    {
+                        Scene.SetDesignCamera(Scene.GameObjects.Single(g => g.Id == currentCam.Value));
+                    }
+                    else
+                    {
+                        Scene.SetDesignCamera(null);
                     }
 
                     var currentLight = doc.Root.Elements().FirstOrDefault(e => e.Name == "LightId");
                     if (currentLight != null && !string.IsNullOrEmpty(currentLight.Value))
                     {
                         Scene.SetCurrentLight(Scene.GameObjects.Single(g => g.Id == currentLight.Value));
+                    }
+                    else
+                    {
+                        Scene.SetCurrentLight(null);
                     }
 
                     var ambient = doc.Root.Elements().FirstOrDefault(e => e.Name == "AmbientColor");
