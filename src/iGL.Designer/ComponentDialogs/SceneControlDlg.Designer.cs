@@ -33,6 +33,12 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblComponentName = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnRemoveTrigger = new System.Windows.Forms.Button();
+            this.btnAddTrigger = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.listTriggers = new System.Windows.Forms.ListBox();
+            this.ddDesignCameras = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.txtAmbientAlpha = new System.Windows.Forms.TextBox();
             this.btnAmbient = new System.Windows.Forms.Button();
@@ -43,8 +49,6 @@
             this.ddPlayCameras = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.gameObjectBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.ddDesignCameras = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gameObjectBindingSource)).BeginInit();
@@ -72,6 +76,10 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.btnRemoveTrigger);
+            this.panel1.Controls.Add(this.btnAddTrigger);
+            this.panel1.Controls.Add(this.label6);
+            this.panel1.Controls.Add(this.listTriggers);
             this.panel1.Controls.Add(this.ddDesignCameras);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.label4);
@@ -85,8 +93,64 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(0, 32);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(290, 130);
+            this.panel1.Size = new System.Drawing.Size(290, 437);
             this.panel1.TabIndex = 41;
+            // 
+            // btnRemoveTrigger
+            // 
+            this.btnRemoveTrigger.Location = new System.Drawing.Point(221, 140);
+            this.btnRemoveTrigger.Name = "btnRemoveTrigger";
+            this.btnRemoveTrigger.Size = new System.Drawing.Size(25, 23);
+            this.btnRemoveTrigger.TabIndex = 29;
+            this.btnRemoveTrigger.Text = "-";
+            this.btnRemoveTrigger.UseVisualStyleBackColor = true;
+            this.btnRemoveTrigger.Click += new System.EventHandler(this.btnRemoveTrigger_Click);
+            // 
+            // btnAddTrigger
+            // 
+            this.btnAddTrigger.Location = new System.Drawing.Point(252, 140);
+            this.btnAddTrigger.Name = "btnAddTrigger";
+            this.btnAddTrigger.Size = new System.Drawing.Size(25, 23);
+            this.btnAddTrigger.TabIndex = 28;
+            this.btnAddTrigger.Text = "+";
+            this.btnAddTrigger.UseVisualStyleBackColor = true;
+            this.btnAddTrigger.Click += new System.EventHandler(this.btnAddTrigger_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(5, 140);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(45, 13);
+            this.label6.TabIndex = 27;
+            this.label6.Text = "Triggers";
+            // 
+            // listTriggers
+            // 
+            this.listTriggers.FormattingEnabled = true;
+            this.listTriggers.Location = new System.Drawing.Point(8, 165);
+            this.listTriggers.Name = "listTriggers";
+            this.listTriggers.Size = new System.Drawing.Size(269, 173);
+            this.listTriggers.TabIndex = 26;
+            this.listTriggers.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listTriggers_MouseDoubleClick);
+            // 
+            // ddDesignCameras
+            // 
+            this.ddDesignCameras.FormattingEnabled = true;
+            this.ddDesignCameras.Location = new System.Drawing.Point(112, 6);
+            this.ddDesignCameras.Name = "ddDesignCameras";
+            this.ddDesignCameras.Size = new System.Drawing.Size(158, 21);
+            this.ddDesignCameras.TabIndex = 25;
+            this.ddDesignCameras.SelectedIndexChanged += new System.EventHandler(this.ddDesignCameras_SelectedIndexChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(5, 36);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(66, 13);
+            this.label5.TabIndex = 24;
+            this.label5.Text = "Play Camera";
             // 
             // label4
             // 
@@ -125,7 +189,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 102);
+            this.label3.Location = new System.Drawing.Point(5, 102);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(45, 13);
             this.label3.TabIndex = 19;
@@ -171,24 +235,6 @@
             // 
             this.gameObjectBindingSource.DataSource = typeof(iGL.Engine.GameObject);
             // 
-            // ddDesignCameras
-            // 
-            this.ddDesignCameras.FormattingEnabled = true;
-            this.ddDesignCameras.Location = new System.Drawing.Point(112, 6);
-            this.ddDesignCameras.Name = "ddDesignCameras";
-            this.ddDesignCameras.Size = new System.Drawing.Size(158, 21);
-            this.ddDesignCameras.TabIndex = 25;
-            this.ddDesignCameras.SelectedIndexChanged += new System.EventHandler(this.ddDesignCameras_SelectedIndexChanged);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(5, 36);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(66, 13);
-            this.label5.TabIndex = 24;
-            this.label5.Text = "Play Camera";
-            // 
             // SceneControlDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -225,5 +271,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox ddDesignCameras;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btnRemoveTrigger;
+        private System.Windows.Forms.Button btnAddTrigger;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ListBox listTriggers;
     }
 }

@@ -36,7 +36,7 @@
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(12, 227);
+            this.btnOk.Location = new System.Drawing.Point(11, 321);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(99, 23);
             this.btnOk.TabIndex = 0;
@@ -46,7 +46,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(118, 227);
+            this.btnCancel.Location = new System.Drawing.Point(118, 321);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(99, 23);
             this.btnCancel.TabIndex = 1;
@@ -59,14 +59,14 @@
             this.listComponents.FormattingEnabled = true;
             this.listComponents.Location = new System.Drawing.Point(12, 37);
             this.listComponents.Name = "listComponents";
-            this.listComponents.Size = new System.Drawing.Size(205, 173);
+            this.listComponents.Size = new System.Drawing.Size(205, 277);
             this.listComponents.TabIndex = 2;
             this.listComponents.DoubleClick += new System.EventHandler(this.listComponents_DoubleClick);
             // 
             // lblSelectComponent
             // 
             this.lblSelectComponent.AutoSize = true;
-            this.lblSelectComponent.Location = new System.Drawing.Point(13, 13);
+            this.lblSelectComponent.Location = new System.Drawing.Point(9, 9);
             this.lblSelectComponent.Name = "lblSelectComponent";
             this.lblSelectComponent.Size = new System.Drawing.Size(97, 13);
             this.lblSelectComponent.TabIndex = 3;
@@ -76,7 +76,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(229, 262);
+            this.ClientSize = new System.Drawing.Size(234, 356);
             this.ControlBox = false;
             this.Controls.Add(this.lblSelectComponent);
             this.Controls.Add(this.listComponents);

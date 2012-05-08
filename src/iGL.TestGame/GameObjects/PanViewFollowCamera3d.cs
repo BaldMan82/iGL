@@ -38,7 +38,7 @@ namespace iGL.TestGame.GameObjects
 
             CameraComponent.ClearColor = new Vector4(0.2f, 0.2f, 0.2f, 1.0f);
 
-            Position = new Vector3(0, 0, 10);
+            Position = new Vector3(0, 0, 30);
         }
 
         public override void Load()

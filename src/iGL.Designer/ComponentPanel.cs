@@ -51,20 +51,7 @@ namespace iGL.Designer
             
             contentPanel.Controls.Add(componentControl);
         }
-
-        private void buttonAdd_Click(object sender, EventArgs e)
-        {
-            var dlg = new ComponentSelectDlg();           
-
-            dlg.ShowDialog(this);
-
-            if (dlg.SelectedComponentType != null)
-            {
-                var component = Activator.CreateInstance(dlg.SelectedComponentType) as GameComponent;
-                GameComponent.GameObject.AddComponent(component);          
-            }
-        }
-
+       
         private void buttonRemove_Click(object sender, EventArgs e)
         {
             GameComponent.GameObject.RemoveComponent(GameComponent);

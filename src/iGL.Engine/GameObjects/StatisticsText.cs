@@ -23,9 +23,7 @@ namespace iGL.Engine.GameObjects
         }
 
         public override void Render(bool overrideParentTransform = false)
-        {           
-            GL.Clear(ClearBufferMask.DepthBufferBit);           
-
+        {                       
             base._textComponent.Text = "FPS: " + ((int)(10000000.0f / Scene.Statistics.LastRenderDuration.Ticks)).ToString();
             base._textComponent.Reload();
 

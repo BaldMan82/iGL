@@ -29,10 +29,9 @@
         private void InitializeComponent()
         {
             this.lblComponentName = new System.Windows.Forms.Label();
-            this.buttonAdd = new System.Windows.Forms.Button();
-            this.buttonRemove = new System.Windows.Forms.Button();
             this.contentPanel = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonRemove = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,26 +45,6 @@
             this.lblComponentName.TabIndex = 0;
             this.lblComponentName.Text = "label1";
             this.lblComponentName.Click += new System.EventHandler(this.lblComponentName_Click);
-            // 
-            // buttonAdd
-            // 
-            this.buttonAdd.Location = new System.Drawing.Point(169, 3);
-            this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(47, 23);
-            this.buttonAdd.TabIndex = 1;
-            this.buttonAdd.Text = "Add";
-            this.buttonAdd.UseVisualStyleBackColor = true;
-            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
-            // 
-            // buttonRemove
-            // 
-            this.buttonRemove.Location = new System.Drawing.Point(222, 3);
-            this.buttonRemove.Name = "buttonRemove";
-            this.buttonRemove.Size = new System.Drawing.Size(60, 23);
-            this.buttonRemove.TabIndex = 2;
-            this.buttonRemove.Text = "Remove";
-            this.buttonRemove.UseVisualStyleBackColor = true;
-            this.buttonRemove.Click += new System.EventHandler(this.buttonRemove_Click);
             // 
             // contentPanel
             // 
@@ -81,13 +60,22 @@
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ControlDark;
             this.panel1.Controls.Add(this.lblComponentName);
-            this.panel1.Controls.Add(this.buttonAdd);
             this.panel1.Controls.Add(this.buttonRemove);
             this.panel1.Location = new System.Drawing.Point(3, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(290, 31);
             this.panel1.TabIndex = 4;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // buttonRemove
+            // 
+            this.buttonRemove.Location = new System.Drawing.Point(253, 3);
+            this.buttonRemove.Name = "buttonRemove";
+            this.buttonRemove.Size = new System.Drawing.Size(29, 23);
+            this.buttonRemove.TabIndex = 2;
+            this.buttonRemove.Text = "X";
+            this.buttonRemove.UseVisualStyleBackColor = true;
+            this.buttonRemove.Click += new System.EventHandler(this.buttonRemove_Click);
             // 
             // ComponentPanel
             // 
@@ -109,9 +97,8 @@
         #endregion
 
         private System.Windows.Forms.Label lblComponentName;
-        private System.Windows.Forms.Button buttonAdd;
-        private System.Windows.Forms.Button buttonRemove;
         private System.Windows.Forms.Panel contentPanel;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button buttonRemove;
     }
 }

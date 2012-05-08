@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jitter", "iGL.Jitter\Jitter
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iGL.Designer", "iGL.Designer\iGL.Designer.csproj", "{2D91C88D-E247-4B24-B0C3-8BF0D81FDDF7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Farseer Physics", "iGL.Farseer\Farseer Physics.csproj", "{A4610E4C-DD34-428B-BABB-779CA0B5993A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -156,6 +158,26 @@ Global
 		{2D91C88D-E247-4B24-B0C3-8BF0D81FDDF7}.Release|Mixed Platforms.Build.0 = Release|x86
 		{2D91C88D-E247-4B24-B0C3-8BF0D81FDDF7}.Release|x86.ActiveCfg = Release|x86
 		{2D91C88D-E247-4B24-B0C3-8BF0D81FDDF7}.Release|x86.Build.0 = Release|x86
+		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Documentation|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Documentation|Any CPU.Build.0 = Debug|Any CPU
+		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Documentation|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Documentation|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Documentation|x86.ActiveCfg = Debug|Any CPU
+		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Nsis|Any CPU.ActiveCfg = Release|Any CPU
+		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Nsis|Any CPU.Build.0 = Release|Any CPU
+		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Nsis|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Nsis|Mixed Platforms.Build.0 = Release|Any CPU
+		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Nsis|x86.ActiveCfg = Release|Any CPU
+		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

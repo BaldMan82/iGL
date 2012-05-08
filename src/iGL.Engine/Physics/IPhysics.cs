@@ -9,7 +9,9 @@ namespace iGL.Engine
     public interface IPhysics
     {
         void Step(float timeStep);
-        void AddBody(RigidBody body);
-        void RemoveBody(RigidBody body);
+        void AddBody(object body);
+        void RemoveBody(object body);
+
+        object GetWorld();
     }
 }

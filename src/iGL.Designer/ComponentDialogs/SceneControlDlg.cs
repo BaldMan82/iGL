@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using iGL.Engine;
+using iGL.Designer.ComponentDialogs;
+using iGL.Engine.Triggers;
 
 namespace iGL.Designer
 {
@@ -20,8 +22,7 @@ namespace iGL.Designer
         public SceneControlDlg()
         {
             InitializeComponent();
-        }
-    
+        }    
 
         private void SceneControlDlg_Load(object sender, EventArgs e)
         {
@@ -45,6 +46,8 @@ namespace iGL.Designer
             txtAmbientAlpha.Text = Scene.AmbientColor.W.ToInvariantText();
 
             _loaded = true;
+
+            UpdateTriggerList();
         }
 
         private void ddLights_SelectedValueChanged(object sender, EventArgs e)
@@ -80,6 +83,59 @@ namespace iGL.Designer
         private void txtAmbientAlpha_TextChanged(object sender, EventArgs e)
         {
             Scene.AmbientColor = new Engine.Math.Vector4(Scene.AmbientColor.X, Scene.AmbientColor.Y, Scene.AmbientColor.Z, txtAmbientAlpha.TextToFloat());
-        }        
+        }
+
+        private void btnRemoveTrigger_Click(object sender, EventArgs e)
+        {
+            var selectedTrigger = listTriggers.SelectedItem as Trigger;
+            if (selectedTrigger == null) return;
+
+            Scene.RemoveTrigger(selectedTrigger);
+
+            UpdateTriggerList();
+        }
+
+        private void btnAddTrigger_Click(object sender, EventArgs e)
+        {
+            var dlg = new TriggerDlg();
+            
+            dlg.Trigger = new Trigger();
+            dlg.Scene = Scene;
+
+            if (dlg.ShowDialog(this) == DialogResult.OK)
+            {
+                Scene.AddTrigger(dlg.Trigger);
+                UpdateTriggerList();
+            }
+        }
+
+        private void UpdateTriggerList()
+        {
+            listTriggers.Items.Clear();
+
+            foreach (var trigger in Scene.Triggers)
+            {
+                listTriggers.Items.Add(trigger);
+            }
+        }
+
+        private void listTriggers_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            var dlg = new TriggerDlg();
+            var selectedTrigger = listTriggers.SelectedItem as Trigger;
+
+            var editTrigger = new Trigger();
+            selectedTrigger.CopyPublicValues(editTrigger);
+
+            dlg.Trigger = editTrigger;
+            dlg.Scene = Scene;
+
+            if (dlg.ShowDialog(this) == DialogResult.OK)
+            {
+                Scene.RemoveTrigger(selectedTrigger);
+                Scene.AddTrigger(dlg.Trigger);
+                UpdateTriggerList();
+            }
+        }
     }
 }

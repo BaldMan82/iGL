@@ -39,6 +39,7 @@ namespace iGL.TestGame.GameObjects
             base.Init();
 
             _aimSphere = Children.First(c => c.Id == DisplaySphereId) as Sphere;
+            _aimSphere.Name = "aimSphere";
             _aimSphere.Scale = new Vector3(5);
             _aimSphere.Material.Ambient = new Vector4(1, 0, 0, 0.5f);
             _aimSphere.Material.TextureName = "ball";
@@ -48,8 +49,8 @@ namespace iGL.TestGame.GameObjects
 
             _arrow2d = Children.First(c => c.Id == Arrow2dId) as Arrow2d;
 
-            _lightObject = Children.First(c => c.Id == LightObjectId) as LightObject;           
-
+            _lightObject = Children.First(c => c.Id == LightObjectId) as LightObject;
+            _lightObject.Visible = false;
                
         }
 
@@ -57,23 +58,32 @@ namespace iGL.TestGame.GameObjects
         {
             base.Load();
 
-            _aimSphere.Enabled = !Game.InDesignMode;        
+            _aimSphere.Enabled = !Game.InDesignMode;
 
-            if (!Game.InDesignMode) Scene.OnLoaded += new EventHandler<Engine.Events.LoadedEvent>(Scene_OnLoaded);
+            if (!Game.InDesignMode)
+            {
+                Scene.OnLoaded += new EventHandler<Engine.Events.LoadedEvent>(Scene_OnLoaded);
+                SetAsTarget();
+            }
         }
 
          void Scene_OnLoaded(object sender, Engine.Events.LoadedEvent e)
         {
-            if (Scene.CurrentCamera.GameObject is PanViewFollowCamera3d)
-            {
-                _followCamera = Scene.CurrentCamera.GameObject as PanViewFollowCamera3d;
+            SetAsTarget();
+        }
 
-                _followCamera.Follow(this);             
-                _followCamera.FollowingEnabled = true;
-            }
+         void SetAsTarget()
+         {
+             if (Scene.CurrentCamera.GameObject is PanViewFollowCamera3d)
+             {
+                 _followCamera = Scene.CurrentCamera.GameObject as PanViewFollowCamera3d;
 
-            Scene.SetCurrentLight(_lightObject);
-        }      
+                 _followCamera.Follow(this);
+                 _followCamera.FollowingEnabled = true;
+             }
+
+             Scene.SetCurrentLight(_lightObject);
+         }
 
         public override void Tick(float timeElapsed)
         {
@@ -145,8 +155,7 @@ namespace iGL.TestGame.GameObjects
 
 		void SetArrowPosition(float triggerDistance)
 		{		
-            var direction = this.Position - _triggerPosition;
-            if (direction.LengthSquared == 0) return;
+            var direction = this.Position - _triggerPosition;         
 
             var normDirection = direction;
             normDirection.Normalize();

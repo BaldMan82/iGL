@@ -15,7 +15,7 @@ namespace iGL.TestGame
     {
     
         public TestScene()
-            : base(new Physics2d())
+            : base(new PhysicsFarseer())
         {
             this.OnTick += new EventHandler<Engine.Events.TickEvent>(TestScene_OnTick);
         }

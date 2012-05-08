@@ -109,7 +109,12 @@ namespace iGL.Engine.Resources
 
                                         for (ulong i = 0; i < polylist.count*3; i++)
                                         {
-                                            Normals[Indices[i]] += importedNormals[normalFaces[i]];
+                                            Normals[Indices[i]] = importedNormals[normalFaces[i]];
+                                        }
+
+                                        for (ulong i = 0; i < polylist.count * 3; i++)
+                                        {
+                                            Normals[Indices[i]].Normalize();
                                         }
                                     }
 

@@ -43,12 +43,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameObjects\Arrow2d.cs" />
-    <Compile Include="GameObjects\Castle.cs" />
+    <Compile Include="GameObjects\SlingshotBallFarseer3D.cs" />
     <Compile Include="GameObjects\SlingshotBall3D.cs" />
     <Compile Include="GameObjects\PanViewFollowCamera3d.cs" />
     <Compile Include="GameObjects\PanViewFollowCamera.cs" />
-    <Compile Include="GameObjects\SlingShot.cs" />
-    <Compile Include="GameObjects\SlingshotBall.cs" />
     <Compile Include="TestGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestScene.cs" />

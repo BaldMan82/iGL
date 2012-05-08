@@ -32,7 +32,7 @@ namespace iGL.Engine
 
         public string MeshResourceName { get; set; }
 
-        private JBBox _boundingBox;
+        public JBBox BoundingBox { get; private set; }
 
         public MeshComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
 
@@ -83,8 +83,9 @@ namespace iGL.Engine
                 if (vertex.Z > vMax.Z) vMax.Z = vertex.Z;
             }
 
-            _boundingBox.Max = vMax.ToJitter();
-            _boundingBox.Min = vMin.ToJitter();
+            var box = new JBBox(vMin.ToJitter(), vMax.ToJitter());
+
+            BoundingBox = box;
 
             RefreshTexture();
 
@@ -132,7 +133,7 @@ namespace iGL.Engine
             var o = Vector3.Transform(origin, transform);
             var d = Vector3.Transform(direction, orientation);
 
-            if (_boundingBox.RayIntersect(o.ToJitter(), d.ToJitter()))
+            if (BoundingBox.RayIntersect(o.ToJitter(), d.ToJitter()))
             {
                 Vector3 r0 = o;
                 Vector3 r1 = o + (d * 1000.0f);

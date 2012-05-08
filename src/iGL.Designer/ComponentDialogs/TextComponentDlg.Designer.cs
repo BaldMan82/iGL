@@ -32,6 +32,8 @@
             this.ddFont = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtText = new System.Windows.Forms.TextBox();
+            this.txtLineLength = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -50,6 +52,7 @@
             this.ddFont.Name = "ddFont";
             this.ddFont.Size = new System.Drawing.Size(121, 21);
             this.ddFont.TabIndex = 1;
+            this.ddFont.SelectedIndexChanged += new System.EventHandler(this.ddFont_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -67,17 +70,35 @@
             this.txtText.Size = new System.Drawing.Size(100, 20);
             this.txtText.TabIndex = 3;
             // 
+            // txtLineLength
+            // 
+            this.txtLineLength.Location = new System.Drawing.Point(135, 73);
+            this.txtLineLength.Name = "txtLineLength";
+            this.txtLineLength.Size = new System.Drawing.Size(100, 20);
+            this.txtLineLength.TabIndex = 5;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(18, 76);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(66, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Line Length:";
+            // 
             // TextComponentDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.txtLineLength);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.txtText);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.ddFont);
             this.Controls.Add(this.label1);
             this.Name = "TextComponentDlg";
-            this.Size = new System.Drawing.Size(290, 89);
+            this.Size = new System.Drawing.Size(290, 105);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -89,5 +110,7 @@
         private System.Windows.Forms.ComboBox ddFont;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtText;
+        private System.Windows.Forms.TextBox txtLineLength;
+        private System.Windows.Forms.Label label3;
     }
 }

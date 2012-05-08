@@ -18,7 +18,9 @@ namespace iGL.Engine
         public string FontName { get; set; }
 
         public string Text { get; set; }
-        
+
+        public int LineLength { get; set; }
+
         public override bool InternalLoad()
         {          
             return LoadText();
@@ -26,7 +28,14 @@ namespace iGL.Engine
 
         public TextComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
 
-        public TextComponent() { }     
+        public TextComponent() { }
+
+        protected override void Init()
+        {
+            base.Init();
+
+            LineLength = 50;
+        } 
 
         public override void Tick(float timeElapsed)
         {            
@@ -57,52 +66,73 @@ namespace iGL.Engine
             var uv = new Vector2[text.Length * 6];
 
             float cursor = 0;
+            float cursorY = 0;
+            int lineCount = 0;
 
-            for (int i = 0; i < text.Length; i++)
+            var words = text.Split(' ');
+            int j = 0;
+
+            for (int w = 0; w < words.Length;w++)
             {
-                Character data;
-                int kerning;
+                var word = words[w];
+                if (w < words.Length - 1) word += ' ';
 
-                data = _font.BmpFont[text[i]];
-                char lastChar = i > 0 ? text[i - 1] : ' ';
+                if (word.Length + lineCount > LineLength)
+                {
+                    cursor = 0;
+                    cursorY += 0.25f;
+                    lineCount = 0;                   
+                }
 
-                kerning = _font.BmpFont.GetKerning(lastChar, text[i]);
+                for (int i = 0; i < word.Length; i++)
+                {
+                    Character data;
+                    int kerning;
 
-                float width = (data.Bounds.Right - data.Bounds.Left) / 100.0f;
-                float height = (data.Bounds.Bottom - data.Bounds.Top) / 100.0f;
-                float offsetX = data.Offset.X / 100.0f;
-                float offsetY = data.Offset.Y / 100.0f;
+                    data = _font.BmpFont[word[i]];
+                    char lastChar = i > 0 ? word[i - 1] : ' ';
 
-                cursor += kerning + offsetX;
+                    kerning = _font.BmpFont.GetKerning(lastChar, word[i]);
 
-                // front (+y)                                                
-                vertices[0 + i * 6] = new Vector3(width + cursor, -height - offsetY, 0);
-                vertices[1 + i * 6] = new Vector3(0 + cursor, -offsetY, 0);
-                vertices[2 + i * 6] = new Vector3(0 + cursor, -height - offsetY, 0);
-                vertices[3 + i * 6] = new Vector3(width + cursor, -height - offsetY, 0);
-                vertices[4 + i * 6] = new Vector3(width + cursor, -offsetY, 0);
-                vertices[5 + i * 6] = new Vector3(0 + cursor, -offsetY, 0);
+                    float width = (data.Bounds.Right - data.Bounds.Left) / 100.0f;
+                    float height = (data.Bounds.Bottom - data.Bounds.Top) / 100.0f;
+                    float offsetX = data.Offset.X / 100.0f;
+                    float offsetY = data.Offset.Y / 100.0f;
 
-                indices[0 + i * 6] = (short)(0 + i * 6);
-                indices[1 + i * 6] = (short)(1 + i * 6);
-                indices[2 + i * 6] = (short)(2 + i * 6);
-                indices[3 + i * 6] = (short)(3 + i * 6);
-                indices[4 + i * 6] = (short)(4 + i * 6);
-                indices[5 + i * 6] = (short)(5 + i * 6);
+                    lineCount++;                    
 
-                float uvLeft = data.Bounds.Left * 1.0f / (texture.Width * 1.0f);
-                float uvRight = data.Bounds.Right * 1.0f / (texture.Width * 1.0f);
-                float uvBottom = data.Bounds.Top * 1.0f / (texture.Height * 1.0f);
-                float uvTop = data.Bounds.Bottom * 1.0f / (texture.Height * 1.0f);
+                    cursor += kerning + offsetX;
 
-                uv[0 + i * 6] = new Vector2(uvRight, uvTop);
-                uv[1 + i * 6] = new Vector2(uvLeft, uvBottom);
-                uv[2 + i * 6] = new Vector2(uvLeft, uvTop);
-                uv[3 + i * 6] = new Vector2(uvRight, uvTop);
-                uv[4 + i * 6] = new Vector2(uvRight, uvBottom);
-                uv[5 + i * 6] = new Vector2(uvLeft, uvBottom);
+                    // front (+y)                                                
+                    vertices[0 + j * 6] = new Vector3(width + cursor, -height - offsetY - cursorY, 0);
+                    vertices[1 + j * 6] = new Vector3(0 + cursor, -offsetY - cursorY, 0);
+                    vertices[2 + j * 6] = new Vector3(0 + cursor, -height - offsetY - cursorY, 0);
+                    vertices[3 + j * 6] = new Vector3(width + cursor, -height - offsetY - cursorY, 0);
+                    vertices[4 + j * 6] = new Vector3(width + cursor, -offsetY - cursorY, 0);
+                    vertices[5 + j * 6] = new Vector3(0 + cursor, -offsetY - cursorY, 0);
 
-                cursor += (float)data.XAdvance / 100.0f;
+                    indices[0 + j * 6] = (short)(0 + j * 6);
+                    indices[1 + j * 6] = (short)(1 + j * 6);
+                    indices[2 + j * 6] = (short)(2 + j * 6);
+                    indices[3 + j * 6] = (short)(3 + j * 6);
+                    indices[4 + j * 6] = (short)(4 + j * 6);
+                    indices[5 + j * 6] = (short)(5 + j * 6);
+
+                    float uvLeft = data.Bounds.Left * 1.0f / (texture.Width * 1.0f);
+                    float uvRight = data.Bounds.Right * 1.0f / (texture.Width * 1.0f);
+                    float uvBottom = data.Bounds.Top * 1.0f / (texture.Height * 1.0f);
+                    float uvTop = data.Bounds.Bottom * 1.0f / (texture.Height * 1.0f);
+
+                    uv[0 + j * 6] = new Vector2(uvRight, uvTop);
+                    uv[1 + j * 6] = new Vector2(uvLeft, uvBottom);
+                    uv[2 + j * 6] = new Vector2(uvLeft, uvTop);
+                    uv[3 + j * 6] = new Vector2(uvRight, uvTop);
+                    uv[4 + j * 6] = new Vector2(uvRight, uvBottom);
+                    uv[5 + j * 6] = new Vector2(uvLeft, uvBottom);
+
+                    cursor += (float)data.XAdvance / 100.0f;
+                    j++;
+                }
             }
 
             /* calculate extensions and adjust to center */

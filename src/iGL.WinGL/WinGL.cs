@@ -363,6 +363,9 @@ namespace iGL
                 case Engine.BeginMode.Triangles:
                     mode = BeginMode.Triangles;
                     break;
+                case Engine.BeginMode.Lines:
+                    mode = BeginMode.Lines;
+                    break;
             }
 
             return mode;

@@ -34,7 +34,8 @@ namespace iGL.Engine
 
     public enum BeginMode
     {
-        Triangles
+        Triangles,
+        Lines
     }
 
     public enum EnableCap

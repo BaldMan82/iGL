@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using iGL.Engine.Math;
 using Jitter.LinearMath;
+using FarseerPhysics.Common;
 
 namespace iGL.Engine
 {
@@ -14,6 +15,30 @@ namespace iGL.Engine
             return new JMatrix(matrix.Row0.X, matrix.Row0.Y, matrix.Row0.Z,
                                matrix.Row1.X, matrix.Row1.Y, matrix.Row1.Z,
                                matrix.Row2.X, matrix.Row2.Y, matrix.Row2.Z);
+        }
+
+        public static Matrix4 ToOpenTK(this Transform transform)
+        {
+            return new Matrix4(transform.R.Col1.X,
+                            transform.R.Col1.Y,
+                          0f,
+                          0f,
+
+                          transform.R.Col2.X,
+                          transform.R.Col2.Y,
+                          0f,
+                          0f,
+
+                          0f,
+                          0f,
+                          1f,
+                          0.0f,
+
+                          transform.Position.X,
+                          transform.Position.Y,
+                          0, 
+                          1.0f
+                          );           
         }
 
         public static float PlaneDistance(this Vector3 point, Vector3 planePoint, Vector3 planeNormal)

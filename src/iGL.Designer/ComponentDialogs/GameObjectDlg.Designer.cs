@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.contentPanel = new System.Windows.Forms.Panel();
+            this.cbClearZBuffer = new System.Windows.Forms.CheckBox();
             this.lblWorldPosition = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.cbDistanceSorting = new System.Windows.Forms.CheckBox();
@@ -55,6 +56,7 @@
             this.buttonAdd = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.txtName = new System.Windows.Forms.TextBox();
+            this.cbAutoLoad = new System.Windows.Forms.CheckBox();
             this.contentPanel.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -63,6 +65,8 @@
             // 
             this.contentPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.contentPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.contentPanel.Controls.Add(this.cbAutoLoad);
+            this.contentPanel.Controls.Add(this.cbClearZBuffer);
             this.contentPanel.Controls.Add(this.lblWorldPosition);
             this.contentPanel.Controls.Add(this.label3);
             this.contentPanel.Controls.Add(this.cbDistanceSorting);
@@ -87,8 +91,18 @@
             this.contentPanel.Controls.Add(this.label1);
             this.contentPanel.Location = new System.Drawing.Point(3, 32);
             this.contentPanel.Name = "contentPanel";
-            this.contentPanel.Size = new System.Drawing.Size(290, 275);
+            this.contentPanel.Size = new System.Drawing.Size(290, 290);
             this.contentPanel.TabIndex = 37;
+            // 
+            // cbClearZBuffer
+            // 
+            this.cbClearZBuffer.AutoSize = true;
+            this.cbClearZBuffer.Location = new System.Drawing.Point(12, 227);
+            this.cbClearZBuffer.Name = "cbClearZBuffer";
+            this.cbClearZBuffer.Size = new System.Drawing.Size(93, 17);
+            this.cbClearZBuffer.TabIndex = 59;
+            this.cbClearZBuffer.Text = "Clears ZBuffer";
+            this.cbClearZBuffer.UseVisualStyleBackColor = true;
             // 
             // lblWorldPosition
             // 
@@ -120,7 +134,7 @@
             // 
             // txtRenderQueue
             // 
-            this.txtRenderQueue.Location = new System.Drawing.Point(146, 228);
+            this.txtRenderQueue.Location = new System.Drawing.Point(146, 252);
             this.txtRenderQueue.Name = "txtRenderQueue";
             this.txtRenderQueue.Size = new System.Drawing.Size(100, 20);
             this.txtRenderQueue.TabIndex = 55;
@@ -128,7 +142,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 235);
+            this.label2.Location = new System.Drawing.Point(9, 259);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(106, 13);
             this.label2.TabIndex = 54;
@@ -313,6 +327,16 @@
             this.txtName.Size = new System.Drawing.Size(209, 20);
             this.txtName.TabIndex = 2;
             // 
+            // cbAutoLoad
+            // 
+            this.cbAutoLoad.AutoSize = true;
+            this.cbAutoLoad.Location = new System.Drawing.Point(111, 227);
+            this.cbAutoLoad.Name = "cbAutoLoad";
+            this.cbAutoLoad.Size = new System.Drawing.Size(75, 17);
+            this.cbAutoLoad.TabIndex = 60;
+            this.cbAutoLoad.Text = "Auto Load";
+            this.cbAutoLoad.UseVisualStyleBackColor = true;
+            // 
             // GameObjectDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -321,7 +345,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.contentPanel);
             this.Name = "GameObjectDlg";
-            this.Size = new System.Drawing.Size(298, 310);
+            this.Size = new System.Drawing.Size(298, 325);
             this.Load += new System.EventHandler(this.GameObjectDlg_Load);
             this.contentPanel.ResumeLayout(false);
             this.contentPanel.PerformLayout();
@@ -361,6 +385,8 @@
         private System.Windows.Forms.Label lblWorldPosition;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.CheckBox cbClearZBuffer;
+        private System.Windows.Forms.CheckBox cbAutoLoad;
 
 
     }

@@ -13,6 +13,7 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Runtime.Serialization;
 using System.Xml.Linq;
+using iGL.Engine.Triggers;
 
 namespace iGL.Engine
 {
@@ -42,8 +43,11 @@ namespace iGL.Engine
         public Statistics Statistics { get; private set; }
 
         public GameObject LastMouseDownTarget { get { return _currentMouseDownObj; } }
+        
         public IEnumerable<GameObject> GameObjects { get { return _gameObjects.AsEnumerable(); } }
         public IEnumerable<Resource> Resources { get { return _resources.AsEnumerable(); } }
+        public IEnumerable<Trigger> Triggers { get { return _triggers.AsEnumerable(); } }
+
         public Vector4? LastNearPlaneMousePosition { get; private set; }
         public Game Game { get; internal set; }
         public bool Loaded { get; internal set; }
@@ -53,6 +57,7 @@ namespace iGL.Engine
         private DateTime _lastMouseUpdate = DateTime.MinValue;
         private List<GameObject> _gameObjects { get; set; }
         private List<Resource> _resources { get; set; }
+        private List<Trigger> _triggers { get; set; }
 
         private List<Timer> _timers = new List<Timer>();
         
@@ -98,6 +103,7 @@ namespace iGL.Engine
         {
             _gameObjects = new List<GameObject>();
             _resources = new List<Resource>();
+            _triggers = new List<Trigger>();
 
             ShaderProgram = new PointLightShader();
 
@@ -352,14 +358,17 @@ namespace iGL.Engine
         public virtual void Load()
         {                     
             _resources.ForEach(r => r.Load());
+            _triggers.ForEach(t => t.Load());
 
-            var gameObjectBeforeLoad = _gameObjects.SelectMany(g => g.AllChildren).ToList();
-            gameObjectBeforeLoad.AddRange(_gameObjects);
+            var objectsToLoad = _gameObjects.Where(g => Game.InDesignMode || g.AutoLoad);
 
-            _gameObjects.ForEach(g => g.Load());
+            var gameObjectBeforeLoad = objectsToLoad.SelectMany(g => g.AllChildren).ToList();
+            gameObjectBeforeLoad.AddRange(objectsToLoad);
 
-            var gameObjectAfterLoad = _gameObjects.SelectMany(g => g.AllChildren).ToList();
-            gameObjectAfterLoad.AddRange(_gameObjects);
+            objectsToLoad.ToList().ForEach(g => g.Load());
+
+            var gameObjectAfterLoad = objectsToLoad.SelectMany(g => g.AllChildren).ToList();
+            gameObjectAfterLoad.AddRange(objectsToLoad);
 
             if (gameObjectAfterLoad.Count != gameObjectBeforeLoad.Count)
             {
@@ -372,7 +381,7 @@ namespace iGL.Engine
 
                 throw new NotSupportedException("Cannot create objects during load phase: " + strb.ToString());
             }
-
+          
             Loaded = true;
 
             if (OnLoadedEvent != null) OnLoadedEvent(this, new LoadedEvent());
@@ -398,6 +407,21 @@ namespace iGL.Engine
             if (Loaded) resource.Load();
 
             _resources.Add(resource);
+        }
+
+        public void AddTrigger(Trigger trigger)
+        {
+            trigger.Scene = this;
+
+            if (Loaded) trigger.Load();
+
+            _triggers.Add(trigger);
+        }
+
+        public void RemoveTrigger(Trigger trigger)
+        {            
+            _triggers.Remove(trigger);
+            trigger.Dispose();
         }
 
         public void ScreenPointToWorld(Point screenPoint, out Vector4 nearPlane, out Vector4 farPlane)
@@ -478,6 +502,8 @@ namespace iGL.Engine
                 }
 
                 _currentMouseOverObj = result;
+
+                Debug.WriteLine(result.ToString());
             }
             else if (_currentMouseOverObj != null)
             {

@@ -56,6 +56,8 @@ namespace iGL.Designer
             cbEnabled.Checked = GameObject.Enabled;
             cbVisible.Checked = GameObject.Visible;
             cbDistanceSorting.Checked = GameObject.DistanceSorting;
+            cbClearZBuffer.Checked = GameObject.ClearsZBuffer;
+            cbAutoLoad.Checked = GameObject.AutoLoad;
 
             txtName.Text = string.IsNullOrEmpty(GameObject.Name) ? "Unnamed" : GameObject.Name;
             
@@ -103,6 +105,8 @@ namespace iGL.Designer
             GameObject.Enabled = cbEnabled.Checked;
             GameObject.DistanceSorting = cbDistanceSorting.Checked;
             GameObject.RenderQueuePriority = txtRenderQueue.TextToInt();
+            GameObject.ClearsZBuffer = cbClearZBuffer.Checked;
+            GameObject.AutoLoad = cbAutoLoad.Checked;
 
             _userInputUpdate = false;
         }

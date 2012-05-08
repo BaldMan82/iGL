@@ -248,8 +248,6 @@ namespace iGL.Designer
 
             var rigidBody = _selectedObject.Components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
 
-            ((DesignPhysics)WorkingScene.Physics).SelectedObject = _selectedObject;
-
             UpdateGizmo();
 
             if (_selectObjectEvent != null)
@@ -347,7 +345,7 @@ namespace iGL.Designer
             {
                 var lookAt = WorkingScene.CurrentCamera.Target - WorkingScene.CurrentCamera.GameObject.Position;
                 lookAt.Normalize();
-                lookAt *= -(e.Delta / 200.0f);
+                lookAt *= -(e.Delta / 100.0f);
 
                 WorkingScene.CurrentCamera.Target -= lookAt;
                 WorkingScene.CurrentCamera.GameObject.Position -= lookAt;
@@ -363,7 +361,7 @@ namespace iGL.Designer
         {
             ClearSelection();
 
-            var physics = new DesignPhysics();
+            var physics = new DesignFarseerPhysics();
             //physics.OnCollision += new EventHandler<EventArgs>(physics_OnCollision);
             WorkingScene = new Scene(physics);
 
@@ -488,8 +486,8 @@ namespace iGL.Designer
             {
                 if (WorkingScene.CurrentCamera != null)
                 {
-                    WorkingScene.CurrentCamera.GameObject.Position -= e.DirectionOnNearPlane * 5.0f;
-                    WorkingScene.CurrentCamera.Target -= e.DirectionOnNearPlane * 5.0f;
+                    WorkingScene.CurrentCamera.GameObject.Position -= e.DirectionOnNearPlane * 10.0f;
+                    WorkingScene.CurrentCamera.Target -= e.DirectionOnNearPlane * 10.0f;
                 }
 
                 return;
@@ -659,7 +657,7 @@ namespace iGL.Designer
 
             if (IsPlaying) return;
 
-            var scene = new Scene(new Physics2d());          
+            var scene = new Scene(new PhysicsFarseer());          
 
             iGL.Engine.Game.InDesignMode = false;
 
@@ -672,25 +670,25 @@ namespace iGL.Designer
 
             IsPlaying = true;
 
-            if (PreStabilizePhysics)
-            {
-                /* stabilize physics */
+            //if (PreStabilizePhysics)
+            //{
+            //    /* stabilize physics */
 
-                int iterations = 0;
-                var physics2 = scene.Physics as Physics2d;
+            //    int iterations = 0;
+            //    var physics2 = scene.Physics as Physics2d;
 
-                scene.Physics.Step(0.001f);
+            //    scene.Physics.Step(0.001f);
 
-                while (!physics2.CheckAllSleeping() && ++iterations < 10000)
-                {
-                    scene.Physics.Step(0.001f);
-                }
+            //    while (!physics2.CheckAllSleeping() && ++iterations < 10000)
+            //    {
+            //        scene.Physics.Step(0.001f);
+            //    }
 
-                if (physics2.CheckAllSleeping())
-                {
-                    MessageBox.Show("Stable");
-                }
-            }
+            //    if (physics2.CheckAllSleeping())
+            //    {
+            //        MessageBox.Show("Stable");
+            //    }
+            //}
         }
         
         public void Pause()

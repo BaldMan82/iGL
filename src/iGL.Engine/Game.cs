@@ -12,6 +12,7 @@ using System.Threading;
 using System.Globalization;
 using System.Xml;
 using System.Xml.Linq;
+using iGL.Engine.Triggers;
 
 namespace iGL.Engine
 {
@@ -100,6 +101,7 @@ namespace iGL.Engine
 
                 element.Add(new XElement("Objects", Scene.GameObjects.Where(g => !g.Designer).Select(go => XmlHelper.ToXml(go, "GameObject"))));
                 element.Add(new XElement("Resources", Scene.Resources.Select(res => XmlHelper.ToXml(res, "Resource"))));
+                element.Add(new XElement("Triggers", Scene.Triggers.Select(trigger => XmlHelper.ToXml(trigger, "Trigger"))));
 
                 doc.Add(element);
                  
@@ -136,6 +138,15 @@ namespace iGL.Engine
                         foreach (var resource in resources.Elements())
                         {
                             Scene.AddResource(XmlHelper.FromXml(resource, typeof(Resource)) as Resource);
+                        }
+                    }
+
+                    var triggers = doc.Root.Elements().FirstOrDefault(e => e.Name == "Triggers");
+                    if (triggers != null)
+                    {
+                        foreach (var trigger in triggers.Elements())
+                        {
+                            Scene.AddTrigger(XmlHelper.FromXml(trigger, typeof(Trigger)) as Trigger);
                         }
                     }
 

@@ -73,6 +73,7 @@ namespace iGL.Engine
         public string Name { get; set; }
         public bool ClearsZBuffer { get; set; }
         public bool DistanceSorting { get; set; }
+        public bool AutoLoad { get; set; }
         public int RenderQueuePriority { get; set; }
 
         public string Id { get; set; }
@@ -166,7 +167,7 @@ namespace iGL.Engine
         private bool _visible;
         private bool _enabled;
         
-        private bool _rigidPositionDirty = false;
+        internal bool _rigidPositionDirty = false;
 
         internal Vector3 _position;
         internal Vector3 _scale;
@@ -179,7 +180,7 @@ namespace iGL.Engine
         internal event EventHandler<ComponentAddedEvent> _componentAddedEvent;
         internal event EventHandler<ComponentRemovedEvent> _componentRemovedEvent;
         internal event EventHandler<SleepEvent> _sleepEvent;
-
+        internal event EventHandler<AnimationSignalEvent> _animationSignalEvent;
         internal event EventHandler<MoveEvent> _moveEvent;
         internal event EventHandler<ScaleEvent> _scaleEvent;
         internal event EventHandler<RotateEvent> _rotateEvent;
@@ -283,6 +284,7 @@ namespace iGL.Engine
             Visible = true;
             Enabled = true;
             Designer = false;
+            AutoLoad = true;
 
             Id = Guid.NewGuid().ToString();
 
@@ -435,7 +437,7 @@ namespace iGL.Engine
 
         public virtual void Render(bool overrideParentTransform = false)
         {
-            if (!Visible) return;
+            if (!Visible || !IsLoaded) return;
 
             if (!this.IsLoaded) throw new InvalidOperationException("Game Object not loaded!");
           
@@ -443,7 +445,7 @@ namespace iGL.Engine
             var sceneColor = Scene.AmbientColor;
             if (this.Designer) Scene.AmbientColor = new Vector4(1, 1, 1, 1);
 
-            var rigidBody = Components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
+            var rigidBody = Components.FirstOrDefault(c => c is RigidBodyBaseComponent) as RigidBodyBaseComponent;
 
             if (_children.Count > 0 && rigidBody != null)
             {
@@ -453,7 +455,7 @@ namespace iGL.Engine
 
             var compositeTransform = overrideParentTransform ? Transform : GetCompositeTransform();        
 
-            var renderComponents = Components.Where(c => c is RenderComponent)
+            var renderComponents = Components.Where(c => c is RenderComponent && c.IsLoaded)
                                              .Select(c => c as RenderComponent);
 
             Matrix4 thisTransform;            
@@ -488,7 +490,7 @@ namespace iGL.Engine
 
         public virtual void Tick(float timeElapsed)
         {
-            if (!Enabled) return;
+            if (!IsLoaded) return;
 
             foreach (var child in _children)
             {
@@ -544,7 +546,7 @@ namespace iGL.Engine
         {
             if (IsLoaded && _rigidPositionDirty)
             {
-                var rigidBody = this.Components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
+                var rigidBody = this.Components.FirstOrDefault(c => c is RigidBodyBaseComponent) as RigidBodyBaseComponent;
 
                 if (rigidBody != null && rigidBody.IsLoaded)
                 {
@@ -759,18 +761,25 @@ namespace iGL.Engine
             if (_sleepEvent != null) _sleepEvent(sender, e);
         }
 
-        #endregion        
-
-        #region Helper Methods
-
-        public void Sleep()
+        public event EventHandler<AnimationSignalEvent> OnAnimationSignal
         {
-            var rigidBody = _components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
-            if (rigidBody == null) return;
-
-            rigidBody.RigidBody.IsActive = false;
+            add
+            {
+                _animationSignalEvent += value;
+            }
+            remove
+            {
+                _animationSignalEvent -= value;
+            }
         }
 
-        #endregion                          
+        internal void OnAnimationSignalEvent(object sender, AnimationSignalEvent e)
+        {
+            if (_animationSignalEvent != null) _animationSignalEvent(sender, e);
+        }
+
+        #endregion        
+
+                         
     }
 }

@@ -23,14 +23,16 @@ namespace iGL.Designer.ComponentDialogs
         void TextComponentDlg_Load(object sender, EventArgs e)
         {
             var textComponent = Component as TextComponent;
+
+            txtText.Text = textComponent.Text;
+            txtLineLength.Text = textComponent.LineLength.ToString();
+
             var fonts = Component.GameObject.Scene.Resources.Where(r => r is iGL.Engine.Resources.Font);
             foreach (var font in fonts)
             {
                 var index = ddFont.Items.Add(font);
                 if (font.Name == textComponent.FontName) ddFont.SelectedIndex = index;
-            }
-
-            txtText.Text = textComponent.Text;
+            }            
         }
 
         public override void UpdateComponent()
@@ -47,8 +49,14 @@ namespace iGL.Designer.ComponentDialogs
             }
 
             textComponent.Text = txtText.Text;
+            textComponent.LineLength = txtLineLength.TextToInt(50);
 
             textComponent.Reload();
+        }
+
+        private void ddFont_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateComponent();
         }
     }
 }
