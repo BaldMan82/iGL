@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
@@ -19,6 +20,11 @@ namespace iGL.Engine
         {
             GameObject.OnAnimationSignalEvent(this, new Events.AnimationSignalEvent() { SignalState = Events.AnimationSignalEvent.State.Paused }); 
         }
+
+        public AnimationComponent(XElement xmlElement) : base(xmlElement) { }
+
+        public AnimationComponent() : base() { }
+        
     }
 }
 

@@ -78,9 +78,16 @@ namespace iGL.Console
         }
 
         static void gameWnd_UpdateFrame(object sender, FrameEventArgs e)
-        {           
+        {
+            Stopwatch w = new Stopwatch();
+            w.Start();
+
             game.Tick(1.0f / 100.0f);                       
             //game.Tick((float)e.Time);
+
+            w.Stop();
+
+            Debug.WriteLine("Tick: " + w.Elapsed.Ticks);
         }
 
         static void gameWnd_RenderFrame(object sender, FrameEventArgs e)

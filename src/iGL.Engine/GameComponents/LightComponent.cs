@@ -5,6 +5,7 @@ using System.Text;
 using iGL.Engine.Math;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
@@ -38,7 +39,7 @@ namespace iGL.Engine
     {
         public ILight Light { get; set; }
 
-        public LightComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        public LightComponent(XElement xmlElement) : base(xmlElement) { }
 
         public LightComponent() { }      
 

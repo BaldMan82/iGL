@@ -21,7 +21,7 @@ namespace iGL.Designer.ComponentDialogs
 
         private void MeshComponentDlg_Load(object sender, EventArgs e)
         {
-            var meshComponent = this.Component as MeshComponent;        
+            var meshComponent = this.Component as MeshComponent;
             materialDlg.Material = meshComponent.Material;
 
             comboTexture.Items.Add(string.Empty);

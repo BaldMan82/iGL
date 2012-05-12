@@ -8,6 +8,7 @@ using Jitter.LinearMath;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 using iGL.Engine.Resources;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
@@ -34,7 +35,7 @@ namespace iGL.Engine
 
         public JBBox BoundingBox { get; private set; }
 
-        public MeshComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        public MeshComponent(XElement xmlElement) : base(xmlElement) { }
 
         public MeshComponent() { }
 

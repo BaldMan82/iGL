@@ -8,6 +8,7 @@ using iGL.Engine.Math;
 using Jitter.Collision.Shapes;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
@@ -147,7 +148,7 @@ namespace iGL.Engine
 
         internal RigidBody RigidBody { get; private set; }
 
-        public RigidBodyComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        public RigidBodyComponent(XElement xmlElement) : base(xmlElement) { }
 
         public RigidBodyComponent() { }
 

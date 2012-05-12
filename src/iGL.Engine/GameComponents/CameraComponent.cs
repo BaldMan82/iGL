@@ -5,6 +5,7 @@ using System.Text;
 using iGL.Engine.Math;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
@@ -24,7 +25,7 @@ namespace iGL.Engine
         [XmlIgnore]
         public Matrix4 ModelViewProjectionMatrix { get; protected set; }
 
-        public CameraComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        public CameraComponent(XElement xmlElement) : base(xmlElement) { }
 
         public CameraComponent() { }
        

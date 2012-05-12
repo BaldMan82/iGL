@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using Jitter.Collision.Shapes;
 using System.Runtime.Serialization;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
     [Serializable]
     public class SphereColliderComponent : ColliderComponent
     {        
-        public SphereColliderComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        public SphereColliderComponent(XElement xmlElement) : base(xmlElement) { }
 
         public SphereColliderComponent() { }
 

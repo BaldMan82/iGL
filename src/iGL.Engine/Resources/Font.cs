@@ -39,7 +39,7 @@ namespace iGL.Engine.Resources
                     Scene.AddResource(texture);
                 }
                 
-                BmpFont = font;
+                BmpFont = font;                
             }
 
             return true;

@@ -217,7 +217,7 @@
             // 
             // tickTimer
             // 
-            this.tickTimer.Interval = 10;
+            this.tickTimer.Interval = 1;
             this.tickTimer.Tick += new System.EventHandler(this.tickTimer_Tick);
             // 
             // toolStrip1

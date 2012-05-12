@@ -6,15 +6,16 @@ using System.Runtime.Serialization;
 using Jitter.Collision.Shapes;
 using Jitter.Collision;
 using Jitter.LinearMath;
+using System.Xml.Linq;
 
 namespace iGL.Engine.GameComponents
 {
     [Serializable]
-    public class TriangleMeshColliderComponent : ColliderComponent
+    public class MeshColliderComponent : ColliderComponent
     {
-        public TriangleMeshColliderComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        public MeshColliderComponent(XElement xmlElement) : base(xmlElement) { }
 
-        public TriangleMeshColliderComponent() { }
+        public MeshColliderComponent() { }
 
         public override bool InternalLoad()
         {

@@ -70,6 +70,12 @@
     <Compile Include="ComponentDialogs\Farseer\BoxColliderFarseerComponentDlg.Designer.cs">
       <DependentUpon>BoxColliderFarseerComponentDlg.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComponentDialogs\Farseer\MeshColliderFarseerComponentDlg.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentDialogs\Farseer\MeshColliderFarseerComponentDlg.Designer.cs">
+      <DependentUpon>MeshColliderFarseerComponentDlg.cs</DependentUpon>
+    </Compile>
     <Compile Include="ComponentDialogs\Farseer\RigidBodyFarseerComponentDlg.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -118,11 +124,11 @@
     <Compile Include="ComponentDialogs\TextComponentDlg.Designer.cs">
       <DependentUpon>TextComponentDlg.cs</DependentUpon>
     </Compile>
-    <Compile Include="ComponentDialogs\Jitter\TriangleMeshColliderComponentDlg.cs">
+    <Compile Include="ComponentDialogs\Jitter\MeshColliderComponentDlg.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ComponentDialogs\Jitter\TriangleMeshColliderComponentDlg.Designer.cs">
-      <DependentUpon>TriangleMeshColliderComponentDlg.cs</DependentUpon>
+    <Compile Include="ComponentDialogs\Jitter\MeshColliderComponentDlg.Designer.cs">
+      <DependentUpon>MeshColliderComponentDlg.cs</DependentUpon>
     </Compile>
     <Compile Include="ComponentDialogs\PerspectiveCameraComponentDlg.cs">
       <SubType>UserControl</SubType>
@@ -234,6 +240,9 @@
     <EmbeddedResource Include="ComponentDialogs\Farseer\BoxColliderFarseerComponentDlg.resx">
       <DependentUpon>BoxColliderFarseerComponentDlg.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ComponentDialogs\Farseer\MeshColliderFarseerComponentDlg.resx">
+      <DependentUpon>MeshColliderFarseerComponentDlg.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ComponentDialogs\Farseer\RigidBodyFarseerComponentDlg.resx">
       <DependentUpon>RigidBodyFarseerComponentDlg.cs</DependentUpon>
     </EmbeddedResource>
@@ -258,8 +267,8 @@
     <EmbeddedResource Include="ComponentDialogs\TextComponentDlg.resx">
       <DependentUpon>TextComponentDlg.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ComponentDialogs\Jitter\TriangleMeshColliderComponentDlg.resx">
-      <DependentUpon>TriangleMeshColliderComponentDlg.cs</DependentUpon>
+    <EmbeddedResource Include="ComponentDialogs\Jitter\MeshColliderComponentDlg.resx">
+      <DependentUpon>MeshColliderComponentDlg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComponentDialogs\PerspectiveCameraComponentDlg.resx">
       <DependentUpon>PerspectiveCameraComponentDlg.cs</DependentUpon>

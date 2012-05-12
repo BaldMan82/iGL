@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using iGL.Engine.Math;
 using System.Runtime.Serialization;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
     public abstract class RenderComponent : GameComponent
-    {       
-        public RenderComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    {
+        public RenderComponent(XElement xmlElement) : base(xmlElement) { }
 
         public RenderComponent() { }
 

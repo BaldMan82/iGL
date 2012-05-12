@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Jitter.Collision.Shapes;
 using System.Runtime.Serialization;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
@@ -12,7 +13,7 @@ namespace iGL.Engine
     {
         internal Shape CollisionShape { get; set; }
 
-        public ColliderComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        public ColliderComponent(XElement xmlElement) : base(xmlElement) { }
         
         public ColliderComponent() { }
        

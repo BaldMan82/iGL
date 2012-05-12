@@ -4,14 +4,18 @@ using System.Linq;
 using System.Text;
 using Jitter.Collision.Shapes;
 using Jitter.LinearMath;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
     [Serializable]
     public class CompoundColliderComponent : ColliderComponent
     {
-        private List<ColliderComponent> _colliderComponents;
-        internal JVector _centerPoint;
+        private List<ColliderComponent> _colliderComponents;      
+
+        public CompoundColliderComponent(XElement xmlElement) : base(xmlElement) { }
+
+        public CompoundColliderComponent() : base() { }
 
         public CompoundColliderComponent(List<ColliderComponent> colliderComponents)            
         {

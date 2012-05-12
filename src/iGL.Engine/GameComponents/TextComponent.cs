@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 using iGL.Engine.Resources;
 using iGL.Engine.Math;
 using iGL.Engine.BitmapFont;
+using System.Xml.Linq;
 
 
 namespace iGL.Engine
@@ -26,8 +27,8 @@ namespace iGL.Engine
             return LoadText();
         }
 
-        public TextComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
-
+        public TextComponent(XElement xmlElement) : base(xmlElement) { }
+       
         public TextComponent() { }
 
         protected override void Init()
@@ -169,7 +170,7 @@ namespace iGL.Engine
 
             meshComponent.CalculateNormals();
 
-            if (GameObject.IsLoaded) meshRenderComponent.Reload();
+            if (meshRenderComponent.IsLoaded) meshRenderComponent.Reload();
 
             return true;
         }

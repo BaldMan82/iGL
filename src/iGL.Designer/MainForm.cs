@@ -57,7 +57,8 @@ namespace iGL.Designer
         }
 
         void sceneControl_OnNodeSelected(object sender, SceneControl.NodeSelected e)
-        {
+        {            
+
             tabControl1.SelectedTab = propertiesTab;
 
             foreach (var control in flowLayoutPanel1.Controls)
@@ -120,17 +121,17 @@ namespace iGL.Designer
 
         private void tickTimer_Tick(object sender, EventArgs e)
         {
-            float timePassed = (float)(DateTime.UtcNow - _lastTick).TotalSeconds;
-            //if (timePassed < (1.0f / 100.0f)) return;
-
             
-
-            openTKControl.Tick(timePassed*2);
-            _lastTick = DateTime.UtcNow;
         }
 
         private void renderTimer_Tick(object sender, EventArgs e)
         {
+            float timePassed = (float)(DateTime.UtcNow - _lastTick).TotalSeconds;
+            //if (timePassed < (1.0f / 100.0f)) return;            
+
+            openTKControl.Tick(timePassed);
+            _lastTick = DateTime.UtcNow;
+
             openTKControl.Render();
         }
 

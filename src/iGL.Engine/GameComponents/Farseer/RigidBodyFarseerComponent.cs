@@ -9,6 +9,8 @@ using FarseerPhysics.Dynamics;
 
 using Xna = Microsoft.Xna.Framework;
 using FarseerPhysics.Common;
+using System.Xml.Linq;
+using FarseerPhysics.Collision.Shapes;
 
 namespace iGL.Engine
 {
@@ -134,7 +136,7 @@ namespace iGL.Engine
 
         internal Body RigidBody { get; private set; }
 
-        public RigidBodyFarseerComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        public RigidBodyFarseerComponent(XElement xmlElement) : base(xmlElement) { }
 
         public RigidBodyFarseerComponent() { }
 
@@ -227,8 +229,16 @@ namespace iGL.Engine
             Vector3 eulerRotation;
 
             transform.EulerAngles(out eulerRotation);
-
-            RigidBody.CreateFixture(ColliderComponent.CollisionShape);
+            
+            if (ColliderComponent.CollisionShape is MultiPolygonShape)
+            {
+                var multiPoly = ColliderComponent.CollisionShape as MultiPolygonShape;
+                multiPoly.Polygons.ForEach(p => RigidBody.CreateFixture(p));
+            }
+            else
+            {
+                RigidBody.CreateFixture(ColliderComponent.CollisionShape);
+            }
 
             RigidBody.Position = new Xna.Vector2(pos.X, pos.Y);
             RigidBody.Rotation = eulerRotation.Z;

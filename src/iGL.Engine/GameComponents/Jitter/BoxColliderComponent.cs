@@ -5,6 +5,7 @@ using System.Text;
 using Jitter.Collision.Shapes;
 using Jitter.LinearMath;
 using System.Runtime.Serialization;
+using System.Xml.Linq;
 
 
 namespace iGL.Engine
@@ -18,7 +19,7 @@ namespace iGL.Engine
             return LoadCollider();
         }
 
-        public BoxColliderComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        public BoxColliderComponent(XElement xmlElement) : base(xmlElement) { }
 
         public BoxColliderComponent() { }
 

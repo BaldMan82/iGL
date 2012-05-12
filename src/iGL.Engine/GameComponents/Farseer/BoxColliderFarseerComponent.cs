@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using Microsoft.Xna.Framework;
 using FarseerPhysics.Common;
 using FarseerPhysics.Collision.Shapes;
+using System.Xml.Linq;
 
 
 namespace iGL.Engine
@@ -19,9 +20,9 @@ namespace iGL.Engine
             return LoadCollider();
         }
 
-        public BoxColliderFarseerComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        public BoxColliderFarseerComponent(XElement xmlElement) : base(xmlElement) { }
 
-        public BoxColliderFarseerComponent() { }
+        public BoxColliderFarseerComponent() : base() { }
 
         private bool LoadCollider()
         {

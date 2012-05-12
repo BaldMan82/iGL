@@ -24,7 +24,7 @@ namespace iGL.Designer
 
         private void GameObjectDlg_Load(object sender, EventArgs e)
         {
-            if (GameObject == null) throw new NotSupportedException();           
+            if (GameObject == null) throw new NotSupportedException();
 
             GameObject.OnMove += GameObject_OnMove;
             GameObject.OnRotate += GameObject_OnRotate;

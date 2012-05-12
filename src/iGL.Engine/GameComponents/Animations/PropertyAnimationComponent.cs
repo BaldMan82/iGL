@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using iGL.Engine.Math;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
@@ -22,6 +23,10 @@ namespace iGL.Engine
         private PropertyInfo _propertyInfo;
         private bool _isPlaying;
         private DateTime _tickTime;
+
+        public PropertyAnimationComponent(XElement xmlElement) : base(xmlElement) { }
+
+        public PropertyAnimationComponent() : base() { }
 
         public override void Play()
         {
@@ -85,7 +90,7 @@ namespace iGL.Engine
                     int startValue = int.Parse(StartValue);
                     int stopValue = int.Parse(StopValue);
 
-                    int value = (int)((stopValue*1.0f) * percentage);
+                    int value = (int)((stopValue * 1.0f) * percentage);
                     _propertyInfo.SetValue(this.GameObject, value, null);
                 }
                 else if (_propertyInfo.PropertyType == typeof(Vector3))

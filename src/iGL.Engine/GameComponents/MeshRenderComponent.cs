@@ -6,6 +6,7 @@ using iGL.Engine.GL;
 using iGL.Engine.Math;
 using System.Runtime.Serialization;
 using System.Runtime.InteropServices;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
@@ -41,8 +42,8 @@ namespace iGL.Engine
         private MeshComponent _meshComponent;
 
         public BeginMode BeginMode { get; set; }
-      
-        public MeshRenderComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
+
+        public MeshRenderComponent(XElement xmlElement) : base(xmlElement) { }
 
         public MeshRenderComponent() { }
 

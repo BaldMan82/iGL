@@ -10,15 +10,16 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 using System.Xml.Linq;
 using iGL.Engine.GameObjects;
+using System.Linq.Expressions;
 
 namespace iGL.Engine
-{
+{   
     public class GameObject : Object, IXmlSerializable
     {
         public enum CreationModeEnum
         {
             Additional,
-            Internal
+            Required
         }
 
         public IGL GL { get { return Game.GL; } }
@@ -185,100 +186,48 @@ namespace iGL.Engine
         internal event EventHandler<ScaleEvent> _scaleEvent;
         internal event EventHandler<RotateEvent> _rotateEvent;
 
+        private XElement _xmlElement;
+
         public GameObject(XElement xmlElement)
-            : this()
         {
-            /* from here on, Init() has been executed, all componets & children should exist */
+            BaseInit();
 
-            #region Load Properties
-            var props = this.GetType().GetProperties().Where(p => p.GetSetMethod() != null).ToList();
+           _xmlElement = xmlElement;
 
-            foreach (var prop in props)
-            {
-                var element = xmlElement.Elements().FirstOrDefault(e => e.Name == prop.Name);
+           /* set id property */
+           Id = _xmlElement.Elements("Id").Single().Value;
 
-                if (element != null)
-                {
-                    prop.SetValue(this, XmlHelper.FromXml(element, prop.PropertyType), null);
-                }
-            } 
-            #endregion
+            /* create the object tree */
+            CreateStructureFromXml();
 
-            #region Load Components
-            var componentElement = xmlElement.Elements("Components").FirstOrDefault();
-            List<GameComponent> components = new List<GameComponent>();
+            /* default init */
+            Init();
 
-            if (componentElement != null)
-            {
-                components = componentElement.Elements().Select(c => XmlHelper.FromXml(c, Type.GetType(c.Name.ToString())) as GameComponent).ToList();
-            }
+            /* load xml data (which overwrites default init props)*/
+            InitFromXml();
 
-            /* create required components */
-            var attributes = this.GetType().GetCustomAttributes(typeof(RequiredComponent), true).Select(o => o as RequiredComponent);
-            foreach (var attr in attributes)
-            {
-                var component = components.FirstOrDefault(c => c.Id == attr.Id);
-                if (component != null)
-                {
-                    if (component.GetType() != attr.ComponentType) throw new InvalidOperationException();
-
-                    var loadedComponent = _components.Single(c => c.Id == component.Id);
-                    component.CopyPublicValues(loadedComponent);
-                }
-            }
-
-            /* load additional components */
-            foreach (var component in components.Where(c => !_components.Any(c2 => c2.Id == c.Id)))
-            {
-                AddComponent(component);
-            }           
-            #endregion
-
-            #region Load Children
-            var childrenElement = xmlElement.Elements("Children").FirstOrDefault();
-            List<GameObject> children = new List<GameObject>();
-
-            if (childrenElement != null)
-            {
-                children = childrenElement.Elements().Select(c => XmlHelper.FromXml(c, Type.GetType(c.Name.ToString())) as GameObject).ToList();
-            }
-
-            var childAttributes = this.GetType().GetCustomAttributes(typeof(RequiredChild), true).Select(o => o as RequiredChild);
-            foreach (var childAttr in childAttributes)
-            {
-                var childObject = children.FirstOrDefault(c => c.Id == childAttr.Id);
-                if (childObject != null)
-                {
-                    if (childObject.GetType() != childAttr.ChildType) throw new InvalidOperationException();
-
-                    var loadedChild = _children.Single(c => c.Id == childAttr.Id);
-                    childObject.CopyPublicValues(loadedChild);
-                }
-            }
-
-            /* load additional children */
-            foreach (var child in children.Where(c => !_children.Any(c2 => c2.Id == c.Id)))
-            {
-                AddChild(child);
-            }      
-
-            #endregion
         }
 
-        public GameObject()
-            : this(string.Empty)
-        {
-
-        }
+        public GameObject() : this(string.Empty) { }
 
         public GameObject(string name)
+        {
+            BaseInit();
+
+            Name = name;
+
+            CreateDependentComponents();
+            CreateDependentChildren();
+
+            Init();
+        }
+
+        private void BaseInit()
         {
             _components = new List<GameComponent>();
             _children = new List<GameObject>();
 
             Scale = new Vector3(1.0f, 1.0f, 1.0f);
-
-            Name = name;
 
             /* default props */
             Visible = true;
@@ -287,7 +236,98 @@ namespace iGL.Engine
             AutoLoad = true;
 
             Id = Guid.NewGuid().ToString();
+        }
 
+        private void CreateStructureFromXml()
+        {            
+            #region Create Components
+            var componentElement = _xmlElement.Elements("Components").FirstOrDefault();
+            List<GameComponent> components = new List<GameComponent>();
+
+            if (componentElement != null)
+            {
+                components = componentElement.Elements().Select(c => XmlHelper.FromXml(c, Type.GetType(c.Name.ToString())) as GameComponent).ToList();
+            }
+
+            components.ForEach(c => AddComponent(c));
+
+            /* set required components */
+            var attributes = this.GetType().GetCustomAttributes(typeof(RequiredComponent), true).Select(o => o as RequiredComponent);
+            foreach (var attr in attributes)
+            {
+                var component = components.FirstOrDefault(c => c.Id == attr.Id);
+                if (component != null)
+                {
+                    if (component.GetType() != attr.ComponentType) throw new InvalidOperationException();
+
+                    component.CreationMode = GameComponent.CreationModeEnum.Required;
+                }
+            }
+
+            #endregion
+
+            #region Create children
+
+            /* create children */
+            var childrenElement = _xmlElement.Elements("Children").FirstOrDefault();
+            List<GameObject> children = new List<GameObject>();
+
+            if (childrenElement != null)
+            {
+                children = childrenElement.Elements().Select(c => XmlHelper.FromXml(c, Type.GetType(c.Name.ToString())) as GameObject).ToList();
+            }
+
+            children.ForEach(c => AddChild(c));
+
+            /* set required property */
+            var childAttributes = this.GetType().GetCustomAttributes(typeof(RequiredChild), true).Select(o => o as RequiredChild);
+            foreach (var childAttr in childAttributes)
+            {
+                var childObject = children.FirstOrDefault(c => c.Id == childAttr.Id);
+                if (childObject != null)
+                {
+                    if (childObject.GetType() != childAttr.ChildType) throw new InvalidOperationException();
+
+                    childObject.CreationMode = CreationModeEnum.Required;
+                }
+            }
+
+            #endregion
+
+            /* load additional required objects */
+            CreateDependentComponents();
+            CreateDependentChildren();
+        }
+
+        internal void InitFromXml()
+        {
+            if (_xmlElement == null) return;
+
+            #region Load Properties
+            var props = this.GetType()
+                               .GetProperties()
+                               .Where(p => p.GetSetMethod() != null && !p.GetCustomAttributes(true).Any(attr => attr is XmlIgnoreAttribute));
+
+            foreach (var prop in props)
+            {
+                var element = _xmlElement.Elements().FirstOrDefault(e => e.Name == prop.Name);
+
+                if (element != null)
+                {
+                    prop.SetValue(this, XmlHelper.FromXml(element, prop.PropertyType), null);
+                }
+            }
+            #endregion
+
+            /* init childs */
+            _children.ForEach(c => c.InitFromXml());
+
+            /* load additional components */
+            _components.ForEach(c => c.LoadFromXml());         
+        }     
+
+        private void CreateDependentComponents()
+        {
             /* create required components */
             var attributes = this.GetType().GetCustomAttributes(typeof(RequiredComponent), true).Select(o => o as RequiredComponent);
             foreach (var attr in attributes)
@@ -295,14 +335,17 @@ namespace iGL.Engine
                 if (!_components.Any(c => c.Id == attr.Id))
                 {
                     var component = Activator.CreateInstance(attr.ComponentType) as GameComponent;
-                    
+
                     component.Id = attr.Id;
-                    component.CreationMode = GameComponent.CreationModeEnum.Internal;
+                    component.CreationMode = GameComponent.CreationModeEnum.Required;
 
                     AddComponent(component);
                 }
             }
+        }
 
+        private void CreateDependentChildren()
+        {
             /* create required children */
             var childAttributes = this.GetType().GetCustomAttributes(typeof(RequiredChild), true).Select(o => o as RequiredChild);
             foreach (var childAttr in childAttributes)
@@ -312,20 +355,22 @@ namespace iGL.Engine
                     var child = Activator.CreateInstance(childAttr.ChildType) as GameObject;
 
                     child.Id = childAttr.Id;
-                    child.CreationMode = GameObject.CreationModeEnum.Internal;
+                    child.CreationMode = GameObject.CreationModeEnum.Required;
 
                     AddChild(child);
                 }
             }
 
-            Init();
-        }
+        }       
 
         protected virtual void Init() { }
 
         public XElement ToXml(XElement element)
         {
-            var props = this.GetType().GetProperties().Where(p => p.GetSetMethod() != null);
+            var props = this.GetType()
+                              .GetProperties()
+                              .Where(p => p.GetSetMethod() != null && !p.GetCustomAttributes(true).Any(attr => attr is XmlIgnoreAttribute));
+
             element.Add(props.Select(p => XmlHelper.ToXml(p.GetValue(this, null), p.Name)));
 
             element.Add(new XElement("Children", Children.Select(c => XmlHelper.ToXml(c, name: "GameObject"))));
@@ -343,7 +388,7 @@ namespace iGL.Engine
 
             obj.Id = Guid.NewGuid().ToString();
 
-            foreach (var internalComponent in this.Components.Where(c => c.CreationMode == GameComponent.CreationModeEnum.Internal))
+            foreach (var internalComponent in this.Components.Where(c => c.CreationMode == GameComponent.CreationModeEnum.Required))
             {
                 var cloneComponent = obj.Components.Single(c => c.Id == internalComponent.Id);
                 internalComponent.CopyPublicValues(cloneComponent);
@@ -778,8 +823,6 @@ namespace iGL.Engine
             if (_animationSignalEvent != null) _animationSignalEvent(sender, e);
         }
 
-        #endregion        
-
-                         
+        #endregion
     }
 }

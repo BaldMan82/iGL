@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
 using FarseerPhysics.Collision.Shapes;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
     [Serializable]
     public class SphereColliderFarseerComponent : ColliderFarseerComponent
     {        
-        public SphereColliderFarseerComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        public SphereColliderFarseerComponent(XElement xmlElement) : base(xmlElement) { }
 
         public SphereColliderFarseerComponent() { }
 

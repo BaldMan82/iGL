@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
 using FarseerPhysics.Collision.Shapes;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
@@ -12,7 +13,7 @@ namespace iGL.Engine
     {
         internal Shape CollisionShape { get; set; }
 
-        public ColliderFarseerComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        public ColliderFarseerComponent(XElement xmlElement) : base(xmlElement) { }
 
         public ColliderFarseerComponent() { }
        

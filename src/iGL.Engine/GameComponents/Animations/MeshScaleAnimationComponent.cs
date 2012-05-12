@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using iGL.Engine.GameComponents;
 using iGL.Engine.Math;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
@@ -20,6 +21,10 @@ namespace iGL.Engine
         private RigidBodyBaseComponent _rigidBodyComponent;
         private float _width;
         private float _xStart;
+
+        public MeshScaleAnimationComponent(XElement xmlElement) : base(xmlElement) { }
+
+        public MeshScaleAnimationComponent() : base() { }
 
         protected override void Init()
         {

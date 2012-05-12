@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
@@ -15,6 +16,10 @@ namespace iGL.Engine
         private bool _isPlaying;
         private int _charIndex;
         private DateTime _tickTime;
+
+        public TextAnimatorComponent(XElement xmlElement) : base(xmlElement) { }
+
+        public TextAnimatorComponent() : base() { }
 
         protected override void Init()
         {
@@ -59,7 +64,7 @@ namespace iGL.Engine
         {
             var secondsPassed = (DateTime.UtcNow - _tickTime).TotalSeconds;
             if (secondsPassed > CharacterInterval)
-            {                
+            {
                 if (_charIndex < Text.Length)
                 {
                     var c = Text[_charIndex];
@@ -82,7 +87,7 @@ namespace iGL.Engine
 
                             _tickTime = DateTime.UtcNow;
                         }
-                    }                   
+                    }
                 }
                 else
                 {
@@ -94,8 +99,8 @@ namespace iGL.Engine
         public override void Tick(float timeElapsed)
         {
             if (!_isPlaying) return;
-            
-            NextCharacter();            
+
+            NextCharacter();
         }
     }
 }

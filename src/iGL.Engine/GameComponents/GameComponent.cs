@@ -10,18 +10,20 @@ using System.Xml.Linq;
 
 namespace iGL.Engine
 {
-    public abstract class GameComponent : Object
+    public abstract class GameComponent : IXmlSerializable
     {
         public enum CreationModeEnum
         {
             Additional,
-            Internal
+            Required
         }
 
         public bool IsLoaded { get; private set; }
         public GameObject GameObject { get; internal set; }
         public CreationModeEnum CreationMode { get; internal set; }
         public string Id { get; set; }
+
+        private XElement _xmlElement;
 
         public GameComponent()
         {
@@ -31,17 +33,35 @@ namespace iGL.Engine
             Init();
         }
 
-        public GameComponent(SerializationInfo info, StreamingContext context)
-            : this()
+        public GameComponent(XElement xmlElement)
         {
-            var props = this.GetType().GetProperties().Where(p => p.GetSetMethod() != null).ToList();
+            _xmlElement = xmlElement;
+
+            /* set id property */
+            Id = _xmlElement.Elements("Id").Single().Value;
+
+            Init();
+        }
+
+        internal void LoadFromXml()
+        {
+            if (_xmlElement == null) return;
+
+            #region Load Properties
+            var props = this.GetType()
+                               .GetProperties()
+                               .Where(p => p.GetSetMethod() != null && !p.GetCustomAttributes(true).Any(attr => attr is XmlIgnoreAttribute));
 
             foreach (var prop in props)
             {
-                if (prop.GetCustomAttributes(false).Any(o => o is XmlIgnoreAttribute)) continue;
+                var element = _xmlElement.Elements().FirstOrDefault(e => e.Name == prop.Name);
 
-                prop.SetValue(this, info.GetValue(prop.Name, prop.PropertyType), null);
+                if (element != null)
+                {
+                    prop.SetValue(this, XmlHelper.FromXml(element, prop.PropertyType), null);
+                }
             }
+            #endregion
         }
 
         protected virtual void Init() { }
@@ -76,19 +96,16 @@ namespace iGL.Engine
             }
             return IsLoaded;
         }
-
-
-
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
+       
+        public XElement ToXml(XElement element)
         {
-            var props = this.GetType().GetProperties().Where(p => p.GetSetMethod() != null).ToList();
+            var props = this.GetType()
+                                .GetProperties()
+                                .Where(p => p.GetSetMethod() != null && !p.GetCustomAttributes(true).Any(attr => attr is XmlIgnoreAttribute));
 
-            foreach (var prop in props)
-            {
-                if (prop.GetCustomAttributes(false).Any(o => o is XmlIgnoreAttribute)) continue;
+            element.Add(props.Select(p => XmlHelper.ToXml(p.GetValue(this, null), p.Name)));
 
-                info.AddValue(prop.Name, prop.GetValue(this, null));
-            }
-        }           
+            return element;
+        }
     }
 }

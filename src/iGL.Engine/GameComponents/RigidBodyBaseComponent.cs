@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using iGL.Engine.Math;
 using System.Runtime.Serialization;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
@@ -13,7 +14,7 @@ namespace iGL.Engine
         
         public bool AutoReloadBody { get; set; }
 
-        public RigidBodyBaseComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        public RigidBodyBaseComponent(XElement xmlElement) : base(xmlElement) { }
         public RigidBodyBaseComponent() { }
         
     }

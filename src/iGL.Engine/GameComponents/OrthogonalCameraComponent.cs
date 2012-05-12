@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using iGL.Engine.Math;
 using System.Runtime.Serialization;
+using System.Xml.Linq;
 
 namespace iGL.Engine
 {
@@ -15,7 +16,7 @@ namespace iGL.Engine
         public float ZNear { get; set; }
         public float ZFar { get; set; }
 
-        public OrthogonalCameraComponent(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        public OrthogonalCameraComponent(XElement xmlElement) : base(xmlElement) { }
 
         public OrthogonalCameraComponent() { }
 

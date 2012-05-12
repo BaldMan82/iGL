@@ -8,6 +8,7 @@ using System.Xml.Linq;
 
 namespace iGL.Engine
 {
+
     [Serializable]
     [RequiredComponent(typeof(MeshComponent), Cube.MeshComponentId)]
     [RequiredComponent(typeof(MeshRenderComponent), Cube.MeshRenderComponentId)]
@@ -48,7 +49,7 @@ namespace iGL.Engine
         public Cube() { }
 
         protected override void Init()
-        {
+        {            
             _meshComponent = Components.Single(c => c.Id == MeshComponentId) as MeshComponent;
             _meshRenderComponent = Components.Single(c => c.Id == MeshRenderComponentId) as MeshRenderComponent;
         }

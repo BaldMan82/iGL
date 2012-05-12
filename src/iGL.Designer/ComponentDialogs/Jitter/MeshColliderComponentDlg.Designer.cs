@@ -1,6 +1,6 @@
 ﻿namespace iGL.Designer.ComponentDialogs
 {
-    partial class TriangleMeshColliderComponentDlg
+    partial class MeshColliderComponentDlg
     {
         /// <summary> 
         /// Required designer variable.

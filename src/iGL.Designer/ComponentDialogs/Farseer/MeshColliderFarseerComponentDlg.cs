@@ -11,10 +11,10 @@ using iGL.Engine.GameComponents;
 
 namespace iGL.Designer.ComponentDialogs
 {
-    [GameObjectDialog(typeof(TriangleMeshColliderComponent))]
-    public partial class TriangleMeshColliderComponentDlg : ComponentControl
+    [GameObjectDialog(typeof(MeshColliderFarseerComponent))]
+    public partial class MeshColliderFarseerComponentDlg : ComponentControl
     {
-        public TriangleMeshColliderComponentDlg()
+        public MeshColliderFarseerComponentDlg()
         {
             InitializeComponent();
         }
