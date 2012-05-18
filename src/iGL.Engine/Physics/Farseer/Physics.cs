@@ -14,7 +14,7 @@ namespace iGL.Engine
 
         public PhysicsFarseer()
         {
-            _world = new World(new Vector2(0, -100f));
+            _world = new World(new Vector2(0, -50f));
 
         }
         public void Step(float timeStep)

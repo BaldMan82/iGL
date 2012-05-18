@@ -18,7 +18,7 @@ namespace iGL.TestGame.GameObjects
         private bool _inAimMode;
         private Vector3 _triggerPosition;
         private float _slingShotRadius = 5.0f;
-        private float _springConstant = 700f;
+        private float _springConstant = 500f;
         private Arrow2d _arrow2d;
         private bool _canFire;
         private PanViewFollowCamera3d _followCamera;
@@ -51,6 +51,8 @@ namespace iGL.TestGame.GameObjects
 
             _lightObject = Children.First(c => c.Id == LightObjectId) as LightObject;
             _lightObject.Visible = false;
+            _lightObject.Enabled = false;
+                 
                
         }
 

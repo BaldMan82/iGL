@@ -218,7 +218,7 @@ namespace iGL.Engine
             {
                 GL.BindBuffer(BufferTarget.ElementArrayBuffer, _bufferIds[1]);
             }
-
+                        
             GL.DrawElements(BeginMode, _meshComponent.Indices.Length, DrawElementsType.UnsignedShort, 0);
 
         }

@@ -149,7 +149,7 @@ namespace iGL.Engine
             _isGravitySource = false;
 
             _friction = 0.6f;
-            _restitution = 0.1f;
+            _restitution = 0.2f;
 
             AutoReloadBody = true;
         }
@@ -160,7 +160,8 @@ namespace iGL.Engine
 
             if (RigidBody != null)
             {
-                GameObject.Scene.Physics.RemoveBody(RigidBody);
+                var world = GameObject.Scene.Physics.GetWorld() as World;
+                world.RemoveBody(RigidBody);
 
                 ColliderComponent = GameObject.Components.FirstOrDefault(c => c is ColliderFarseerComponent) as ColliderFarseerComponent;
                 if (ColliderComponent != null)
@@ -230,10 +231,10 @@ namespace iGL.Engine
 
             transform.EulerAngles(out eulerRotation);
             
-            if (ColliderComponent.CollisionShape is MultiPolygonShape)
+            if (ColliderComponent.CollisionShape is MultiShape)
             {
-                var multiPoly = ColliderComponent.CollisionShape as MultiPolygonShape;
-                multiPoly.Polygons.ForEach(p => RigidBody.CreateFixture(p));
+                var multiPoly = ColliderComponent.CollisionShape as MultiShape;
+                multiPoly.Shapes.ForEach(p => RigidBody.CreateFixture(p));
             }
             else
             {

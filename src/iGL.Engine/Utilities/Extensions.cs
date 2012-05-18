@@ -120,6 +120,11 @@ namespace iGL.Engine
             return new Vector3(vector.X, vector.Y, vector.Z);
         }
 
+        public static Microsoft.Xna.Framework.Vector2 ToXNA(this Vector2 vector)
+        {
+            return new Microsoft.Xna.Framework.Vector2(vector.X, vector.Y);
+        }
+
         public static void DefaultToXml(this object obj, System.Xml.XmlWriter writer)
         {
             var props = obj.GetType().GetProperties().Where(p => p.GetSetMethod() != null).ToList();

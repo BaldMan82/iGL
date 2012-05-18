@@ -64,24 +64,6 @@
     <EmbeddedResource Include="Scenes\cube.igl" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\crate.text" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\wood.text" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\tree.text" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\troll.text" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\stone.text" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\football.text" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\arrow.text" />
   </ItemGroup>
   <ItemGroup>
@@ -91,19 +73,13 @@
     <EmbeddedResource Include="Resources\bmpfont_0.text" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\benchmark.igl" />
+    <EmbeddedResource Include="Resources\rock.dae" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\bush.text" />
+    <EmbeddedResource Include="Resources\rock.text" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\test.dae" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\cone.dae" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\cylinder.dae" />
+    <EmbeddedResource Include="Resources\arrow2.text" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

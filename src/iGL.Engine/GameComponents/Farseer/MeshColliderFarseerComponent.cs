@@ -9,9 +9,9 @@ using Jitter.LinearMath;
 using System.Xml.Linq;
 using FarseerPhysics.Common.Decomposition;
 using FarseerPhysics.Common;
-using Microsoft.Xna.Framework;
 using FarseerPhysics.Common.ConvexHull;
 using FarseerPhysics.Collision.Shapes;
+using iGL.Engine.Math;
 
 namespace iGL.Engine.GameComponents
 {
@@ -40,40 +40,70 @@ namespace iGL.Engine.GameComponents
             var maxZ = meshComponent.Vertices.Max(v => v.Z);
             var scale = this.GameObject.Scale;
 
-            var multiPoly = new MultiPolygonShape(1.0f);
+            var multiShape = new MultiShape(1.0f);
+           
+            List<Vector2[]> points = new List<Vector2[]>();
 
             for (int i = 0; i < meshComponent.Indices.Length; i += 3)
             {
-                var v1 = meshComponent.Vertices[meshComponent.Indices[i]];
-                var v2 = meshComponent.Vertices[meshComponent.Indices[i + 1]];
-                var v3 = meshComponent.Vertices[meshComponent.Indices[i + 2]];
+                List<Vector2> edge = new List<Vector2>();
 
-                if (EqualWithTolerance(v1.Z, maxZ, 0.01f) &&
-                    EqualWithTolerance(v2.Z, maxZ, 0.01f) && 
-                    EqualWithTolerance(v3.Z, maxZ, 0.01f))
-                {
-                    try
-                    {
-                        var p1 = new Vector2(v1.X*GameObject.Scale.X, v1.Y*GameObject.Scale.Y);
-                        var p2 = new Vector2(v2.X*GameObject.Scale.X, v2.Y*GameObject.Scale.Y);
-                        var p3 = new Vector2(v3.X*GameObject.Scale.X, v3.Y*GameObject.Scale.Y);
+                var edge1Point = GetXYPointOfEdge(meshComponent.Vertices[meshComponent.Indices[i]], meshComponent.Vertices[meshComponent.Indices[i + 1]]);
+                var edge2Point = GetXYPointOfEdge(meshComponent.Vertices[meshComponent.Indices[i + 1]], meshComponent.Vertices[meshComponent.Indices[i + 2]]);
+                var edge3Point = GetXYPointOfEdge(meshComponent.Vertices[meshComponent.Indices[i + 2]], meshComponent.Vertices[meshComponent.Indices[i]]);
 
-                        if (EqualWithTolerance(p1, p2, 0.01f) || EqualWithTolerance(p1, p3, 0.01f) || EqualWithTolerance(p2, p3, 0.01f)) continue;
+                if (edge1Point != null) edge.Add(edge1Point.Value);
+                if (edge2Point != null) edge.Add(edge2Point.Value);
+                if (edge3Point != null) edge.Add(edge3Point.Value);
 
-                        var poly = new PolygonShape(new Vertices() { p1, p2, p3 }, 1.0f);
-
-                        multiPoly.Polygons.Add(poly);
-                    }
-                    catch
-                    {
-                        int a = 0;
-                    }
+                if (edge.Count == 2)
+                {                    
+                    points.Add(edge.ToArray());
                 }
+
             }
 
-            CollisionShape = multiPoly;
+            Vector2 center = Vector2.Zero;
+
+            for (int i = 0; i < points.Count; i++)
+            {
+                points[i][0].X *= GameObject.Scale.X;
+                points[i][0].Y *= GameObject.Scale.Y;
+
+                points[i][1].X *= GameObject.Scale.X;
+                points[i][1].Y *= GameObject.Scale.Y;
+
+                center += points[i][0] + points[i][1];
+            }
+
+            center /= (points.Count * 2);
+
+            for (int i = 0; i < points.Count; i++)
+            {
+                var edge = new EdgeShape(points[i][0].ToXNA(), points[i][1].ToXNA());
+                multiShape.Shapes.Add(edge);
+            }
+
+            CollisionShape = multiShape;
 
             return true;
+        }
+   
+        private Vector2? GetXYPointOfEdge(Vector3 p0, Vector3 p1)
+        {
+            Vector3 N = new Vector3(0, 0, 1);
+            Vector3 X = new Vector3(0, 0, 0);
+
+            float t = Vector3.Dot(N, p0) / Vector3.Dot(N, p0 - p1);
+
+            if (t >= 0 && t <= 1)
+            {
+                /* intersection on plane */
+                var point = p0 + t * (p1 - p0);
+                return new Vector2(point.X, point.Y);
+            }
+
+            return null;
         }
 
         private bool EqualWithTolerance(float value1, float value2, float tolerance)

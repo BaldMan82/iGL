@@ -142,7 +142,7 @@ namespace iGL.Designer
 
             var gameObjectsNode = _gameObjectsTree.Nodes.Add("Objects");
 
-            foreach (var gameObject in EngineAssets.Instance.GameObjects)
+            foreach (var gameObject in EngineAssets.Instance.GameObjects.OrderBy(t => t.Name.ToString()))
             {
                 var node = gameObjectsNode.Nodes.Add(gameObject.Name);
                 node.Tag = gameObject;

@@ -23,9 +23,9 @@ namespace iGL.Designer
         {
             listComponents.Items.Clear();
 
-            foreach (var component in EngineAssets.Instance.Components)
+            foreach (var component in EngineAssets.Instance.Components.Select(c => c.Name).OrderBy(c => c))
             {
-                listComponents.Items.Add(component.Name);
+                listComponents.Items.Add(component);
             }
         }
 

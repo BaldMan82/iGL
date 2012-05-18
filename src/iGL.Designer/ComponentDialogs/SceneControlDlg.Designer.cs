@@ -130,7 +130,7 @@
             this.listTriggers.FormattingEnabled = true;
             this.listTriggers.Location = new System.Drawing.Point(8, 165);
             this.listTriggers.Name = "listTriggers";
-            this.listTriggers.Size = new System.Drawing.Size(269, 173);
+            this.listTriggers.Size = new System.Drawing.Size(269, 264);
             this.listTriggers.TabIndex = 26;
             this.listTriggers.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listTriggers_MouseDoubleClick);
             // 

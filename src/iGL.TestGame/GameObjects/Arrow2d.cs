@@ -21,7 +21,7 @@ namespace iGL.TestGame.GameObjects
             DistanceSorting = true;
             Visible = false;
 
-            Material.TextureName = "Arrow";
+            Material.TextureName = "arrow";
             Material.Diffuse = new Vector4(0);
 
             RenderQueuePriority = -1;

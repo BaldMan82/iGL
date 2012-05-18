@@ -48,7 +48,7 @@ namespace iGL.Engine
                 TextureTilingX = 1,
                 TextureTilingY = 1,
                 TextureRepeatX = false,
-                TextureRepeatY = false          
+                TextureRepeatY = false
             };
 
             Vertices = new Vector3[0];
@@ -67,6 +67,9 @@ namespace iGL.Engine
                 this.Normals = meshResource.Normals;
                 this.Vertices = meshResource.Vertices;
                 this.Indices = meshResource.Indices;
+                this.UV = meshResource.UVs;
+
+                MeshXYIntersection();
             }
 
             Vector3 vMin = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
@@ -154,7 +157,7 @@ namespace iGL.Engine
                 }
 
                 if (hits.Count > 0)
-                {                    
+                {
                     hitLocation = hits.OrderBy(hit => (hit - origin).LengthSquared).First();
                     hitLocation = Vector3.Transform(hitLocation, GameObject.GetCompositeTransform());
 
@@ -191,6 +194,57 @@ namespace iGL.Engine
         public override void Tick(float timeElapsed)
         {
 
+        }
+
+        public void MeshXYIntersection()
+        {
+            List<Vector2[]> points = new List<Vector2[]>();
+
+            for (int i = 0; i < Indices.Length; i += 3)
+            {
+                List<Vector2> edge = new List<Vector2>();
+
+                var edge1Point = GetXYPointOfEdge(Vertices[Indices[i]], Vertices[Indices[i + 1]]);
+                var edge2Point = GetXYPointOfEdge(Vertices[Indices[i + 1]], Vertices[Indices[i + 2]]);
+                var edge3Point = GetXYPointOfEdge(Vertices[Indices[i + 2]], Vertices[Indices[i]]);
+
+                if (edge1Point != null) edge.Add(edge1Point.Value);
+                if (edge2Point != null) edge.Add(edge2Point.Value);
+                if (edge3Point != null) edge.Add(edge3Point.Value);
+
+                if (edge.Count == 2)
+                {
+                    points.Add(edge.ToArray());
+                }
+                
+            }
+            
+            Vector2 center = Vector2.Zero;
+
+            for (int i = 0; i < points.Count; i++)
+            {
+                center += points[i][0] + points[i][1];                
+            }
+
+            center /= (points.Count * 2);
+           
+        }
+
+        private Vector2? GetXYPointOfEdge(Vector3 p0, Vector3 p1)
+        {
+            Vector3 N = new Vector3(0, 0, 1);
+            Vector3 X = new Vector3(0, 0, 0);
+
+            float t = Vector3.Dot(N, p0) / Vector3.Dot(N, p0 - p1);
+
+            if (t >= 0 && t <= 1)
+            {
+                /* intersection on plane */
+                var point = p0 + t * (p1 - p0);
+                return new Vector2(point.X, point.Y);
+            }
+
+            return null;
         }
 
         public void CalculateNormals()

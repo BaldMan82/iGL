@@ -6,12 +6,12 @@ using FarseerPhysics.Collision.Shapes;
 
 namespace FarseerPhysics.Collision.Shapes
 {
-    public class MultiPolygonShape : Shape
+    public class MultiShape : Shape
     {
-        public List<PolygonShape> Polygons { get; set; }
-        public MultiPolygonShape(float density) : base(1.0f)
+        public List<Shape> Shapes { get; set; }
+        public MultiShape(float density) : base(1.0f)
         {
-            Polygons = new List<PolygonShape>();
+            Shapes = new List<Shape>();
         }
 
         public override int ChildCount

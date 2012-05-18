@@ -15,7 +15,8 @@ namespace iGL.Console
     {
         private static TestGame.TestGame game;
         private static GameWindow gameWnd;
-      
+        private static Stopwatch tickWatch;
+        private static Stopwatch renderWatch;
 
         static void Main(string[] args)
         {          
@@ -26,7 +27,12 @@ namespace iGL.Console
             game = new TestGame.TestGame(gl);
             gameWnd = new GameWindow(960, 640, new GraphicsMode(16, 16), "", GameWindowFlags.Fullscreen, DisplayDevice.Default,
                                   2, 0, GraphicsContextFlags.Default);
-         
+
+            tickWatch = new Stopwatch();
+            renderWatch = new Stopwatch();
+            
+            tickWatch.Start();
+            renderWatch.Start();
 
             gameWnd.Load += new EventHandler<EventArgs>(gameWnd_Load);
             gameWnd.RenderFrame += new EventHandler<FrameEventArgs>(gameWnd_RenderFrame);
@@ -35,8 +41,9 @@ namespace iGL.Console
             gameWnd.Mouse.Move += new EventHandler<OpenTK.Input.MouseMoveEventArgs>(Mouse_Move);
             gameWnd.Mouse.ButtonDown += new EventHandler<OpenTK.Input.MouseButtonEventArgs>(Mouse_ButtonDown);
             gameWnd.Mouse.ButtonUp += new EventHandler<OpenTK.Input.MouseButtonEventArgs>(Mouse_ButtonUp);
-            gameWnd.Run();             
+            gameWnd.Run();
 
+          
             System.Console.ReadLine();                      
         }
 
@@ -79,23 +86,26 @@ namespace iGL.Console
 
         static void gameWnd_UpdateFrame(object sender, FrameEventArgs e)
         {
-            Stopwatch w = new Stopwatch();
-            w.Start();
-
-            game.Tick(1.0f / 100.0f);                       
-            //game.Tick((float)e.Time);
-
-            w.Stop();
-
-            Debug.WriteLine("Tick: " + w.Elapsed.Ticks);
+            if (tickWatch.ElapsedMilliseconds >= 10)
+            {
+                game.Tick(0.01f);
+                tickWatch.Restart();
+            }
+            
         }
 
         static void gameWnd_RenderFrame(object sender, FrameEventArgs e)
         {
-            var now = DateTime.UtcNow;
 
-            game.Render();
-            ((GameWindow)sender).SwapBuffers();           
+            if (renderWatch.Elapsed.TotalSeconds > 1d / 60d)
+            {
+                renderWatch.Restart();
+
+                game.Render();
+                ((GameWindow)sender).SwapBuffers();                
+            }
+
+            //Debug.WriteLine("Render: " + w.Elapsed.Ticks);
         }
 
         static void gameWnd_Load(object sender, EventArgs e)

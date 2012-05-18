@@ -50,7 +50,7 @@
             // 
             this.contentPanel.AutoSize = true;
             this.contentPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.contentPanel.Location = new System.Drawing.Point(3, 32);
+            this.contentPanel.Location = new System.Drawing.Point(3, 28);
             this.contentPanel.Name = "contentPanel";
             this.contentPanel.Size = new System.Drawing.Size(0, 0);
             this.contentPanel.TabIndex = 3;
@@ -63,13 +63,14 @@
             this.panel1.Controls.Add(this.buttonRemove);
             this.panel1.Location = new System.Drawing.Point(3, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(290, 31);
+            this.panel1.Size = new System.Drawing.Size(290, 26);
             this.panel1.TabIndex = 4;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // buttonRemove
             // 
-            this.buttonRemove.Location = new System.Drawing.Point(253, 3);
+            this.buttonRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonRemove.Location = new System.Drawing.Point(257, 1);
             this.buttonRemove.Name = "buttonRemove";
             this.buttonRemove.Size = new System.Drawing.Size(29, 23);
             this.buttonRemove.TabIndex = 2;
@@ -86,7 +87,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.contentPanel);
             this.Name = "ComponentPanel";
-            this.Size = new System.Drawing.Size(296, 35);
+            this.Size = new System.Drawing.Size(296, 31);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
