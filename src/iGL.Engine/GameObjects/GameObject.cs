@@ -19,7 +19,8 @@ namespace iGL.Engine
         public enum CreationModeEnum
         {
             Additional,
-            Required
+            Required,
+            Runtime
         }
 
         public IGL GL { get { return Game.GL; } }
@@ -373,8 +374,8 @@ namespace iGL.Engine
 
             element.Add(props.Select(p => XmlHelper.ToXml(p.GetValue(this, null), p.Name)));
 
-            element.Add(new XElement("Children", Children.Select(c => XmlHelper.ToXml(c, name: "GameObject"))));
-            element.Add(new XElement("Components", Components.Select(c => XmlHelper.ToXml(c, name: "GameComponent"))));
+            element.Add(new XElement("Children", Children.Where(c => c.CreationMode != CreationModeEnum.Runtime).Select(c => XmlHelper.ToXml(c, name: "GameObject"))));
+            element.Add(new XElement("Components", Components.Where(c => c.CreationMode != GameComponent.CreationModeEnum.Runtime).Select(c => XmlHelper.ToXml(c, name: "GameComponent"))));
 
             return element;
         }     
@@ -462,6 +463,8 @@ namespace iGL.Engine
 
         public virtual void Load()
         {
+            if (IsLoaded) return;
+
             foreach (var child in _children)
             {
                 if (child.IsLoaded) throw new NotSupportedException("Cannot have a loaded child");

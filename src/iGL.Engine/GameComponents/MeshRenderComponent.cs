@@ -160,15 +160,19 @@ namespace iGL.Engine
         public override void Render(Matrix4 transform)
         {
             var locationInverse = transform;
+            var shader = GameObject.Scene.ShaderProgram;
 
             locationInverse.Invert();
-            locationInverse.Transpose();
-
-            var shader = GameObject.Scene.ShaderProgram;
+            locationInverse.Transpose();                                  
 
             shader.SetTransposeAdjointModelViewMatrix(locationInverse);
             shader.SetModelViewMatrix(transform);
             shader.SetMaterial(_meshComponent.Material);
+
+            locationInverse.Invert();
+            var t = transform;
+            t.Transpose();
+            shader.SetModelViewInverseMatrix(locationInverse);
 
             int vertexAttrib = shader.GetVertexAttributeLocation();
             int normalAttrib = shader.GetNormalAttributeLocation();
@@ -194,7 +198,7 @@ namespace iGL.Engine
             {
                 GL.ActiveTexture(TextureUnit.Texture0);
                 GL.BindTexture(TextureTarget.Texture2D, _meshComponent.Texture.TextureId);
-
+                
                 var wrapModeX = _meshComponent.Material.TextureRepeatX ? TextureWrapMode.Repeat : TextureWrapMode.Clamp;
                 var wrapModeY = _meshComponent.Material.TextureRepeatY ? TextureWrapMode.Repeat : TextureWrapMode.Clamp;
 
@@ -206,8 +210,30 @@ namespace iGL.Engine
             }
             else
             {
+                GL.ActiveTexture(TextureUnit.Texture0);
                 GL.BindTexture(TextureTarget.Texture2D, -1);
                 shader.SetHasTexture(false);
+            }
+
+            if (_meshComponent.NormalTexture != null)
+            {
+                GL.ActiveTexture(TextureUnit.Texture1);
+                GL.BindTexture(TextureTarget.Texture2D, _meshComponent.NormalTexture.TextureId);
+
+                var wrapModeX = _meshComponent.Material.TextureRepeatX ? TextureWrapMode.Repeat : TextureWrapMode.Clamp;
+                var wrapModeY = _meshComponent.Material.TextureRepeatY ? TextureWrapMode.Repeat : TextureWrapMode.Clamp;
+
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)wrapModeX);
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)wrapModeY);
+
+                shader.SetNormalSamplerUnit(1);
+                shader.SetHasNormalTexture(true);
+            }
+            else
+            {
+                GL.ActiveTexture(TextureUnit.Texture1);
+                GL.BindTexture(TextureTarget.Texture2D, -1);
+                shader.SetHasNormalTexture(false);
             }
 
             if (_clonedReference != null)

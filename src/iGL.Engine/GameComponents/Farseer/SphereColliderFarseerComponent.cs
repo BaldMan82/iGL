@@ -43,9 +43,9 @@ namespace iGL.Engine
             }
 
             float max = maxExtend;
-
+          
             CollisionShape = new CircleShape(maxExtend, 1.0f);
-
+            
             return true;
         }
 

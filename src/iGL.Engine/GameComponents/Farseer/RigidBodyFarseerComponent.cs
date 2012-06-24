@@ -144,7 +144,7 @@ namespace iGL.Engine
         {
             RigidBodyTransform = Matrix4.Identity;
 
-            _mass = 100.0f;
+            _mass = 1.0f;
             _isStatic = false;
             _isGravitySource = false;
 
@@ -223,8 +223,7 @@ namespace iGL.Engine
             var world = GameObject.Scene.Physics.GetWorld() as World;
             if (world == null) throw new InvalidOperationException("Not a farseer physics world.");
 
-            RigidBody = new Body(world, GameObject);
-            RigidBody.Mass = _mass;
+            RigidBody = new Body(world, GameObject);            
 
             var pos = transform.Translation();
             Vector3 eulerRotation;
@@ -240,12 +239,14 @@ namespace iGL.Engine
             {
                 RigidBody.CreateFixture(ColliderComponent.CollisionShape);
             }
+            if (!_isStatic) RigidBody.Mass = _mass;  
 
             RigidBody.Position = new Xna.Vector2(pos.X, pos.Y);
             RigidBody.Rotation = eulerRotation.Z;
             RigidBody.IsStatic = _isStatic;
             RigidBody.Restitution = _restitution;
             RigidBody.Friction = _friction;
+                    
 
             GameObject.Scene.Physics.AddBody(RigidBody);
 

@@ -19,7 +19,9 @@ struct Material {
 uniform Light u_light;
 uniform Material u_material;
 uniform lowp vec4 u_globalAmbientColor;
-uniform bool u_hasTexture;
+
+uniform float u_hasTexture;
+uniform float u_hasNormalTexture;
 
 // Varyings
 varying lowp vec4 v_ambientColor;
@@ -29,35 +31,49 @@ varying lowp vec3 v_lightVector;
 varying lowp vec2 v_uv;
 
 uniform sampler2D s_texture;
+uniform sampler2D s_normalTexture;
 
-void calcLightning(out mediump vec4 color, mediump vec4 textureColor);
+void calcLightning(out mediump vec4 color, mediump vec4 textureColor, lowp vec3 normal, lowp vec3 lightVector);
 
 void main() 
 {	
 	mediump vec4 color;
 	mediump vec4 textureColor = texture2D(s_texture, v_uv);
-	calcLightning(color, textureColor);
+	
+	lowp vec3 normal = v_normal;
+	lowp vec3 lightVector = v_lightVector;
+
+	if (u_hasNormalTexture > 0 )
+	{
+		lowp vec4 normColor = texture2D (s_normalTexture, v_uv);
+
+		normal = -vec3(normColor.r * 2.0f - 1.0f,  normColor.b * 2.0f - 1.0f, (normColor.g * 2.0f - 1.0f));		
+	}
+	
+	calcLightning(color, textureColor, normal, lightVector);
+	
 	
 	gl_FragColor = color; 
 }
 
-void calcLightning(out mediump vec4 color, mediump vec4 textureColor)
+void calcLightning(out mediump vec4 color, mediump vec4 textureColor, lowp vec3 normal, lowp vec3 lightVector)
 {
 	color = v_ambientColor;
-	if (u_hasTexture) color *= textureColor;
-
-	mediump vec3 N = normalize(v_normal);
-	mediump vec3 L = normalize(v_lightVector);
+	if (u_hasTexture > 0) color *= textureColor;	
 	
-	lowp float lambertTerm = dot(N,L);
+	mediump vec3 L = normalize(lightVector);
+	normal = normalize(normal);
+
+	lowp float lambertTerm = dot(normal,L);
 	
 	if(lambertTerm > 0.0)
-	{
+	{		
+
 		lowp vec4 addColor = u_light.diffuse * 
 		               u_material.diffuse * 
 					   lambertTerm;	
 
-		if (u_hasTexture) addColor *= textureColor;
+		if (u_hasTexture > 0) addColor *= textureColor;
 		
 		color += addColor;
 

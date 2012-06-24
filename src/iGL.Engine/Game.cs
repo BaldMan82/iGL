@@ -99,7 +99,7 @@ namespace iGL.Engine
                 element.Add(new XElement("LightId", Scene.CurrentLight != null ? Scene.CurrentLight.GameObject.Id : string.Empty));
                 element.Add(XmlHelper.ToXml(Scene.AmbientColor, "AmbientColor"));
 
-                element.Add(new XElement("Objects", Scene.GameObjects.Where(g => !g.Designer).Select(go => XmlHelper.ToXml(go, "GameObject"))));
+                element.Add(new XElement("Objects", Scene.GameObjects.Where(g => !g.Designer && g.CreationMode != GameObject.CreationModeEnum.Runtime).Select(go => XmlHelper.ToXml(go, "GameObject"))));
                 element.Add(new XElement("Resources", Scene.Resources.Select(res => XmlHelper.ToXml(res, "Resource"))));
                 element.Add(new XElement("Triggers", Scene.Triggers.Select(trigger => XmlHelper.ToXml(trigger, "Trigger"))));
 

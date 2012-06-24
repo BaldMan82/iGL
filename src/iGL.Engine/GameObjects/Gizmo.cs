@@ -102,7 +102,7 @@ namespace iGL.Engine
             mesh.UV = new Vector2[vertices.Length];
 
             mesh.Material.Ambient = new Vector4(0, 0, 1, 1);
-
+            mesh.Material.Diffuse = Vector4.Zero;
             mesh.CalculateNormals();
 
             var render = new MeshRenderComponent();
@@ -121,6 +121,7 @@ namespace iGL.Engine
             zMesh.Indices = mesh.Indices;
             zMesh.UV = mesh.UV;
             zMesh.Material.Ambient = new Vector4(1, 0, 0, 1);
+            zMesh.Material.Diffuse = Vector4.Zero;
 
             render = render.CloneForReuse();
 
@@ -138,6 +139,7 @@ namespace iGL.Engine
             xMesh.Indices = mesh.Indices;
             xMesh.UV = mesh.UV;
             xMesh.Material.Ambient = new Vector4(0, 1, 0, 1);
+            xMesh.Material.Diffuse = Vector4.Zero;
 
             render = render.CloneForReuse();
 
@@ -147,14 +149,17 @@ namespace iGL.Engine
             _xDirection.Scale = new Vector3(ArrowLength, 0.5f, 0.5f);
             _xDirection.Position = new Vector3((ArrowLength / 2.0f) - 0.25f, 0, 0);
             ((Cube)_xDirection).Material.Ambient = new Vector4(0, 1, 0, 1);
+            ((Cube)_xDirection).Material.Diffuse = Vector4.Zero;
 
             _yDirection.Scale = new Vector3(0.5f, ArrowLength, 0.5f);
             _yDirection.Position = new Vector3(0, (ArrowLength / 2.0f) - 0.25f, 0);
             ((Cube)_yDirection).Material.Ambient = new Vector4(0, 0, 1, 1);
+            ((Cube)_yDirection).Material.Diffuse = Vector4.Zero;
 
             _zDirection.Scale = new Vector3(0.5f, 0.5f, ArrowLength);
             _zDirection.Position = new Vector3(0, 0, (ArrowLength / 2.0f) - 0.25f);
             ((Cube)_zDirection).Material.Ambient = new Vector4(1, 0, 0, 1);
+            ((Cube)_zDirection).Material.Diffuse = Vector4.Zero;
 
             Scale = new Vector3(0.1f, 0.1f, 0.1f);
        

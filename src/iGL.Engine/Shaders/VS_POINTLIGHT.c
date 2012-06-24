@@ -23,13 +23,16 @@ struct Material {
 // Uniforms
 
 uniform mat4 u_modelViewMatrix;
+uniform mat4 u_modelViewInverseMatrix;
 uniform mat4 u_modelViewProjectionMatrix;
 uniform mat4 u_transposeAdjointModelViewMatrix;
 uniform lowp vec4 u_eyepos;
 
 uniform Light u_light;
 uniform Material u_material;
-uniform bool u_hasTexture;
+
+uniform float u_hasTexture;
+uniform float u_hasNormalTexture;
 
 uniform lowp vec4 u_globalAmbientColor;
 
@@ -45,10 +48,20 @@ void calcLightning();
 void main() 
 {
 	gl_Position =  u_modelViewProjectionMatrix * vec4(a_position.x, a_position.y, a_position.z, 1);
-	v_normal =  vec3(u_transposeAdjointModelViewMatrix * vec4(a_normal.x, a_normal.y, a_normal.z, 1));	
+	
+	if (u_hasNormalTexture == 0)
+	{
+		v_normal =  vec3(u_transposeAdjointModelViewMatrix * vec4(a_normal.x, a_normal.y, a_normal.z, 1));	
+	}
+
 	v_uv = a_uv;
 
 	calcLightning();	
+	
+	if (u_hasNormalTexture > 0)
+	{
+		v_lightVector = vec3(u_modelViewInverseMatrix * vec4(v_lightVector, 1));
+	}
 }
 
 void calcLightning()

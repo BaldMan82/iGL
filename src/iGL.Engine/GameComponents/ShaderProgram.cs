@@ -130,10 +130,22 @@ namespace iGL.Engine
             GL.Uniform1(loc, unit);
         }
 
+        public void SetNormalSamplerUnit(int unit)
+        {
+            var loc = GetUniformLocation("s_normalTexture");
+            GL.Uniform1(loc, unit);
+        }
+
         public void SetModelViewMatrix(Matrix4 modelView)
         {
             var loc = GetUniformLocation("u_modelViewMatrix");
             GL.UniformMatrix4(loc, false, modelView);
+        }
+
+        public void SetModelViewInverseMatrix(Matrix4 modelViewInverse)
+        {
+            var loc = GetUniformLocation("u_modelViewInverseMatrix");
+            GL.UniformMatrix4(loc, false, modelViewInverse);
         }
 
         public void SetModelViewProjectionMatrix(Matrix4 modelViewProjection)
@@ -151,7 +163,13 @@ namespace iGL.Engine
         public void SetHasTexture(bool hasTexture)
         {
             var loc = GetUniformLocation("u_hasTexture");
-            GL.Uniform1(loc, hasTexture ? 1 : 0);
+            GL.Uniform1(loc, hasTexture ? 1f : 0f);
+        }
+
+        public void SetHasNormalTexture(bool hasNormalTexture)
+        {
+            var loc = GetUniformLocation("u_hasNormalTexture");
+            GL.Uniform1(loc, hasNormalTexture ? 1f : 0f);
         }
 
         public void SetAmbientColor(Vector4 color)

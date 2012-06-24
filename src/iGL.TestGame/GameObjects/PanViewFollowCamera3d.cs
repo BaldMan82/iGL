@@ -61,7 +61,7 @@ namespace iGL.TestGame.GameObjects
             if (FollowingEnabled)
             {
                 CameraComponent.Target = Vector3.Lerp(CameraComponent.Target, _target.WorldPosition, timeElapsed * 2);             
-                CameraComponent.GameObject.Position = CameraComponent.Target + new Vector3(0, 0, 20);
+                CameraComponent.GameObject.Position = CameraComponent.Target + new Vector3(0, 0, 25);
             }
         }
 

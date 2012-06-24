@@ -22,7 +22,7 @@ namespace iGL.TestGame.GameObjects
         private Arrow2d _arrow2d;
         private bool _canFire;
         private PanViewFollowCamera3d _followCamera;
-        private Vector3 _lastAngularVelocity;
+        private Vector3 _lastAngularVelocity;      
 
         public LightObject _lightObject;
 
@@ -51,15 +51,17 @@ namespace iGL.TestGame.GameObjects
 
             _lightObject = Children.First(c => c.Id == LightObjectId) as LightObject;
             _lightObject.Visible = false;
-            _lightObject.Enabled = false;
-                 
-               
+            _lightObject.Enabled = false;          
+
+
         }
 
         public override void Load()
         {
-            base.Load();
+            var r = this.Components.First(c => c is RigidBodyFarseerComponent) as RigidBodyFarseerComponent;           
 
+            base.Load();
+        
             _aimSphere.Enabled = !Game.InDesignMode;
 
             if (!Game.InDesignMode)
@@ -70,7 +72,7 @@ namespace iGL.TestGame.GameObjects
         }
 
          void Scene_OnLoaded(object sender, Engine.Events.LoadedEvent e)
-        {
+        {           
             SetAsTarget();
         }
 
@@ -131,19 +133,26 @@ namespace iGL.TestGame.GameObjects
                
             }
 
+            
             /* damping */
             var body = Components.Single(c => c is RigidBodyFarseerComponent) as RigidBodyFarseerComponent;
-           // if (_lastAngularVelocity.LengthSquared >= body.AngularVelocity.LengthSquared)
-                body.AngularVelocity = body.AngularVelocity * 0.9f;
+            if (_lastAngularVelocity.LengthSquared >= body.AngularVelocity.LengthSquared)
+            {
+                body.AngularVelocity = body.AngularVelocity * 0.9f;              
+            }
 
             if (body.AngularVelocity.LengthSquared < 4.0f && body.LinearVelocity.LengthSquared < 4.0f)
             {
+                Material.Diffuse = new Vector4(0);
                 Material.Ambient = new Vector4(0, 1, 0, 1);
+                
                 _canFire = true;
             }
             else
             {
+                Material.Diffuse = new Vector4(0);
                 Material.Ambient = new Vector4(1, 0, 0, 1);
+
                 _inAimMode = false;
                 _canFire = false;
                 _arrow2d.Visible = false;
@@ -152,7 +161,14 @@ namespace iGL.TestGame.GameObjects
             }
 
             _lastAngularVelocity = body.AngularVelocity;
- 
+            //if (_followCamera != null)
+            //{
+            //    var cameraPos = _followCamera.Position;
+            //    var lightTransform = _lightObject.GetCompositeTransform(false);
+            //    lightTransform.Invert();
+            //    var lightPos = Vector3.Transform(cameraPos, lightTransform);
+            //    _lightObject.Position = lightPos;
+            //}
         }
 
 		void SetArrowPosition(float triggerDistance)
@@ -182,7 +198,7 @@ namespace iGL.TestGame.GameObjects
         {
             if (Game.InDesignMode || !_inAimMode) return;
 
-            Material.Ambient = new Vector4(1, 0, 0, 1);
+            //Material.Ambient = new Vector4(1, 0, 0, 1);
             _inAimMode = false;
 
             var rigidBody = Components.Single(c => c is RigidBodyFarseerComponent) as RigidBodyFarseerComponent;
@@ -190,7 +206,7 @@ namespace iGL.TestGame.GameObjects
             var fireDirection = this.Position - _triggerPosition;
             //rigidBody.IsStatic = false;
             rigidBody.ApplyForce(fireDirection * _springConstant);
-
+           
             _arrow2d.Visible = false;
 
             if (_followCamera != null) _followCamera.FollowingEnabled = true;
@@ -203,7 +219,7 @@ namespace iGL.TestGame.GameObjects
 
             if (!_canFire) return;
 
-            Material.Ambient = new Vector4(0, 1, 0, 1);
+            //Material.Ambient = new Vector4(0, 1, 0, 1);
             _inAimMode = true;
 
             _triggerPosition = this.Position;

@@ -33,6 +33,8 @@ namespace iGL.Engine.GL
 
         void Uniform1(int loc, float p);
 
+        void Uniform1(int loc, int p);
+
         void UniformMatrix4(int loc, bool transpose, Matrix4 matrix);    
 
         int GetUniformLocation(int p, string uniform);

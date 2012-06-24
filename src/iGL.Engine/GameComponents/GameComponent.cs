@@ -15,7 +15,8 @@ namespace iGL.Engine
         public enum CreationModeEnum
         {
             Additional,
-            Required
+            Required,
+            Runtime
         }
 
         public bool IsLoaded { get; private set; }

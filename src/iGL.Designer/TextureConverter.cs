@@ -53,6 +53,11 @@ namespace iGL.Designer
                                 bytes[i] = r;
                                 bytes[i + 1] = g;
                                 bytes[i + 2] = b;
+
+                                if (bytes[i + 3] != 0)
+                                {
+                                    int a = 5;
+                                }
                             }
 
                             stream.Write(bytes, 0, bytes.Length);                            

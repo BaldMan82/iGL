@@ -82,6 +82,11 @@ namespace iGL
             GL.Uniform1(loc, p);
         }
 
+        public void Uniform1(int loc, int p)
+        {
+            GL.Uniform1(loc, p);
+        }
+
         public void UniformMatrix4(int loc, bool transpose, Engine.Math.Matrix4 matrix)
         {
             float[] v = new float[16] 
@@ -231,6 +236,9 @@ namespace iGL
             {
                 case Engine.TextureUnit.Texture0:
                     unit = TextureUnit.Texture0;
+                    break;
+                case Engine.TextureUnit.Texture1:
+                    unit = TextureUnit.Texture1;
                     break;
             }
 

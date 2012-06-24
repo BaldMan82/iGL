@@ -50,7 +50,7 @@ namespace iGL.Engine
 
             var vertices = PolygonTools.CreateRectangle((vMax.X - vMin.X) / 2.0f, (vMax.Y - vMin.Y) / 2);
 
-            CollisionShape = new PolygonShape(vertices, 10.0f);
+            CollisionShape = new PolygonShape(vertices, 1.0f);
 
             return true;
         }

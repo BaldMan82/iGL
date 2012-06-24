@@ -33,6 +33,20 @@ namespace iGL.Designer
             InitializeComponent();
             sceneTree.AfterSelect += new TreeViewEventHandler(sceneTree_AfterSelect);
             sceneTree.BeforeSelect += new TreeViewCancelEventHandler(sceneTree_BeforeSelect);
+            resourceTree.NodeMouseDoubleClick += new TreeNodeMouseClickEventHandler(resourceTree_NodeMouseDoubleClick);
+        }
+
+        void resourceTree_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            var resource = _scene.Resources.FirstOrDefault(r => r.Name == e.Node.Text && r is Texture);
+            if (resource == null) return;
+
+            if (resource is Texture)
+            {
+                var dlg = new ShowTextureDlg();
+                dlg.Texture = resource as Texture;
+                dlg.ShowDialog();
+            }
         }
 
         void sceneTree_BeforeSelect(object sender, TreeViewCancelEventArgs e)

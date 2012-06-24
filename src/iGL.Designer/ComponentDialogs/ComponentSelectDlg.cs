@@ -40,6 +40,8 @@ namespace iGL.Designer
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            if (listComponents.SelectedItem == null) return;
+
             var component = EngineAssets.Instance.Components.FirstOrDefault(c => c.Name == listComponents.SelectedItem.ToString());
             SelectedComponentType = component;
 

@@ -1,0 +1,5 @@
+C:\iGL\src\ResourceImport\ResourceImport\ImportTool\bin\Debug\ImportTool.exe
+C:\iGL\src\ResourceImport\ResourceImport\ImportTool\bin\Debug\ImportTool.pdb
+C:\iGL\src\ResourceImport\ResourceImport\ImportTool\obj\x86\Debug\ImportTool.exe
+C:\iGL\src\ResourceImport\ResourceImport\ImportTool\obj\x86\Debug\ImportTool.pdb
+C:\iGL\src\ResourceImport\ResourceImport\ImportTool\obj\x86\Debug\ImportTool.csprojResolveAssemblyReference.cache

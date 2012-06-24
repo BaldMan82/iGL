@@ -30,6 +30,7 @@ namespace iGL.Engine
         public Material Material { get; set; }
 
         public Texture Texture { get; private set; }
+        public Texture NormalTexture { get; private set; }
 
         public string MeshResourceName { get; set; }
 
@@ -61,7 +62,7 @@ namespace iGL.Engine
         {
             if (!string.IsNullOrEmpty(MeshResourceName))
             {
-                var meshResource = GameObject.Scene.Resources.FirstOrDefault(t => t.Name == MeshResourceName) as ColladaMesh;
+                var meshResource = GameObject.Scene.Resources.FirstOrDefault(t => t is ColladaMesh && t.Name == MeshResourceName) as ColladaMesh;
                 if (meshResource == null) return false;
 
                 this.Normals = meshResource.Normals;
@@ -103,7 +104,8 @@ namespace iGL.Engine
 
         public void RefreshTexture()
         {
-            Texture = GameObject.Scene.Resources.FirstOrDefault(t => t.Name == Material.TextureName) as Texture;
+            Texture = GameObject.Scene.Resources.FirstOrDefault(t => t.Name == Material.TextureName && t is Texture) as Texture;
+            NormalTexture = GameObject.Scene.Resources.FirstOrDefault(t => t.Name == Material.NormalTextureName && t is Texture) as Texture;
         }
 
         public bool RayTest(Vector3 origin, Vector3 direction, out Vector3 hitLocation)

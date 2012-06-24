@@ -66,6 +66,7 @@
     <Compile Include="GameComponents\CameraComponent.cs" />
     <Compile Include="GameComponents\Farseer\BoxColliderFarseerComponent.cs" />
     <Compile Include="GameComponents\Farseer\ColliderFarseerComponent.cs" />
+    <Compile Include="GameComponents\Farseer\DistanceJointFarseer.cs" />
     <Compile Include="GameComponents\Farseer\MeshColliderFarseerComponent.cs" />
     <Compile Include="GameComponents\Farseer\RigidBodyFarseerComponent.cs" />
     <Compile Include="GameComponents\Animations\MeshScaleAnimationComponent.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="GameComponents\Animations\TextAnimatorComponent.cs" />
     <Compile Include="GameComponents\Farseer\Shapes\MultiPolygonShape.cs" />
     <Compile Include="GameComponents\Farseer\SphereColliderFarseerComponent.cs" />
+    <Compile Include="GameComponents\JointBaseComponent.cs" />
     <Compile Include="GameComponents\RigidBodyBaseComponent.cs" />
     <Compile Include="GameComponents\TextComponent.cs" />
     <Compile Include="GameComponents\OrthogonalCameraComponent.cs" />

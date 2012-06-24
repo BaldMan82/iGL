@@ -79,6 +79,11 @@ namespace iGL
 
         public void Uniform1(int loc, float p)
         {
+            GL.Uniform1(loc, p);          
+        }
+
+        public void Uniform1(int loc, int p)
+        {
             GL.Uniform1(loc, p);
         }
 
@@ -229,6 +234,9 @@ namespace iGL
             {
                 case Engine.TextureUnit.Texture0:
                     unit = TextureUnit.Texture0;
+                    break;
+                case Engine.TextureUnit.Texture1:
+                    unit = TextureUnit.Texture1;
                     break;
             }
 
