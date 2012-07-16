@@ -9,7 +9,7 @@ using Jitter.Dynamics;
 
 namespace iGL.Engine
 {
-    public class Physics2d : IPhysics
+    public class Physics2d : PhysicsBase
     {
         internal Jitter.World World { get; private set; }
 
@@ -83,13 +83,13 @@ namespace iGL.Engine
             }
         }
 
-        public void Step(float timeStep)
+        public override void Step(float timeStep)
         {
             World.Step(timeStep, false);
         }
 
 
-        public void AddBody(object body)
+        public override void AddBody(object body)
         {
             var jitterBody = body as RigidBody;
             World.AddBody(jitterBody);
@@ -101,7 +101,7 @@ namespace iGL.Engine
             }
         }
 
-        public void RemoveBody(object body)
+        public override void RemoveBody(object body)
         {
             var jitterBody = body as RigidBody;
             World.Events.DeactivatedBody -= Events_DeactivatedBody;
@@ -128,9 +128,16 @@ namespace iGL.Engine
         }
 
 
-        public object GetWorld()
+        public override object GetWorld()
         {
             return World;
+        }
+
+
+        public override event EventHandler<Events.CollisionEvent> CollisionEvent;
+
+        public override void Dispose()
+        {            
         }
     }
 }

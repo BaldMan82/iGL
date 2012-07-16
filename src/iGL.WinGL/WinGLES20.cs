@@ -77,6 +77,11 @@ namespace iGL
             GL.Uniform4(loc, vector4.X, vector4.Y, vector4.Z, vector4.W);
         }
 
+        public void Uniform3(int loc, Engine.Math.Vector3 vector3)
+        {
+            GL.Uniform3(loc, vector3.X, vector3.Y, vector3.Z);
+        }
+
         public void Uniform1(int loc, float p)
         {
             GL.Uniform1(loc, p);
@@ -108,6 +113,21 @@ namespace iGL
         public void GenBuffers(int p, int[] bufferIds)
         {
             GL.GenBuffers(p, bufferIds);
+        }
+
+        public void DeleteTexture(int id)
+        {
+            GL.DeleteTexture(id);
+        }
+
+        public void DeleteShader(int id)
+        {
+            GL.DeleteShader(id);
+        }
+
+        public void DeleteProgram(int id)
+        {
+            GL.DeleteProgram(id);
         }
 
         public void BindBuffer(Engine.BufferTarget bufferTarget, int p)

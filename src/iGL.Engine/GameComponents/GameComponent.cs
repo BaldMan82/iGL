@@ -10,7 +10,7 @@ using System.Xml.Linq;
 
 namespace iGL.Engine
 {
-    public abstract class GameComponent : IXmlSerializable
+    public abstract class GameComponent : IXmlSerializable, IDisposable
     {
         public enum CreationModeEnum
         {
@@ -107,6 +107,11 @@ namespace iGL.Engine
             element.Add(props.Select(p => XmlHelper.ToXml(p.GetValue(this, null), p.Name)));
 
             return element;
+        }
+
+        public virtual void Dispose()
+        {
+            
         }
     }
 }

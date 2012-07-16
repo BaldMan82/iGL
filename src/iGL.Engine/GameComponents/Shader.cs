@@ -9,17 +9,19 @@ using System.IO;
 namespace iGL.Engine
 {
     public class Shader
-    {
+    {        
         public enum ShaderType
         {           
-            VS_POINTLIGHT,           
-            FS_POINTLIGHT
+            VS_POINTLIGHT,  
+            VS_FUR,
+            FS_POINTLIGHT,
+            FS_FUR
         }       
 
         public string Source { get; private set; }
 
         public ShaderType Type { get; private set; }
-
+       
         public Shader(ShaderType shaderType)
         {
             Type = shaderType;

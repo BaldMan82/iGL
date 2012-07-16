@@ -26,7 +26,7 @@ uniform mat4 u_modelViewMatrix;
 uniform mat4 u_modelViewInverseMatrix;
 uniform mat4 u_modelViewProjectionMatrix;
 uniform mat4 u_transposeAdjointModelViewMatrix;
-uniform lowp vec4 u_eyepos;
+uniform lowp vec4 u_eyePos;
 
 uniform Light u_light;
 uniform Material u_material;
@@ -38,7 +38,7 @@ uniform lowp vec4 u_globalAmbientColor;
 
 varying lowp vec4 v_ambientColor;
 varying lowp vec3 v_normal;
-varying lowp vec3 v_eyepos;
+varying lowp vec3 v_eyePos;
 varying lowp vec3 v_lightVector;
 varying lowp vec2 v_uv;
 
@@ -72,5 +72,5 @@ void calcLightning()
 
 	v_ambientColor = u_material.ambient*u_globalAmbientColor  + u_material.ambient*u_light.ambient;
 	
-	v_eyepos = vec3(u_eyepos.x, u_eyepos.y, u_eyepos.z);
+	v_eyePos = vec3(u_eyePos.x, u_eyePos.y, u_eyePos.z);
 }

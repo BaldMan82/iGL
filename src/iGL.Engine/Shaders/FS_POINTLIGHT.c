@@ -26,7 +26,7 @@ uniform float u_hasNormalTexture;
 // Varyings
 varying lowp vec4 v_ambientColor;
 varying lowp vec3 v_normal;
-varying lowp vec3 v_eyepos;
+varying lowp vec3 v_eyePos;
 varying lowp vec3 v_lightVector;
 varying lowp vec2 v_uv;
 
@@ -77,12 +77,15 @@ void calcLightning(out mediump vec4 color, mediump vec4 textureColor, lowp vec3 
 		
 		color += addColor;
 
-		/*vec3 E = normalize(v_eyepos);
-		vec3 R = reflect(-L, N);
+		vec3 E = normalize(v_eyePos);
+		vec3 R = reflect(-L, -normal);
 		float specular = pow( max(dot(R, E), 0.0), 
 		                 u_material.shininess );
-		color += u_light.specular * 
+		mediump vec4 specularColor = u_light.specular * 
 		               u_material.specular * 
-					   specular;	*/
+					   specular;	
+
+		//specularColor = clamp(specularColor, 0.0, 1.0); 
+		color += specularColor;
 	}
 }

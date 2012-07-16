@@ -14,6 +14,7 @@ namespace iGL.Engine.Triggers
             AnimationPlay,
             AnimationStopped,
             AnimationPaused,
+            PlayerCollision,
             SceneLoad
         }
 
@@ -43,6 +44,7 @@ namespace iGL.Engine.Triggers
         private EventHandler<MouseButtonDownEvent> _mouseDownHandler;
         private EventHandler<AnimationSignalEvent> _animationSignalHandler;
         private EventHandler<LoadedEvent> _sceneLoadEventHandler;
+        private EventHandler<ObjectCollisionEvent> _collisionEventHandler;
 
         public void Load()
         {
@@ -63,18 +65,29 @@ namespace iGL.Engine.Triggers
                 }
                 else if (Type == TriggerType.AnimationPlay)
                 {
-                    _animationSignalHandler = (a, b) => { if (b.SignalState == Events.AnimationSignalEvent.State.Playing) ExecuteTrigger(); };
+                    _animationSignalHandler = (a, b) => { if (b.SignalState == iGL.Engine.AnimationComponent.State.Playing) ExecuteTrigger(); };
                     _sourceGameObject.OnAnimationSignal += _animationSignalHandler;
                 }
                 else if (Type == TriggerType.AnimationStopped)
                 {
-                    _animationSignalHandler = (a, b) => { if (b.SignalState == Events.AnimationSignalEvent.State.Stopped) ExecuteTrigger(); };
+                    _animationSignalHandler = (a, b) => { if (b.SignalState == iGL.Engine.AnimationComponent.State.Stopped) ExecuteTrigger(); };
                     _sourceGameObject.OnAnimationSignal += _animationSignalHandler;
                 }
                 else if (Type == TriggerType.AnimationPaused)
                 {
-                    _animationSignalHandler = (a, b) => { if (b.SignalState == Events.AnimationSignalEvent.State.Paused) ExecuteTrigger(); };
+                    _animationSignalHandler = (a, b) => { if (b.SignalState == iGL.Engine.AnimationComponent.State.Paused) ExecuteTrigger(); };
                     _sourceGameObject.OnAnimationSignal += _animationSignalHandler;
+                }
+                else if (Type == TriggerType.PlayerCollision)
+                {
+                    _collisionEventHandler = (a, b) =>
+                    {
+                        if (b.Object != null && b.Object == this.Scene.PlayerObject)
+                        {
+                            ExecuteTrigger();
+                        }
+                    };
+                    _sourceGameObject.OnObjectCollision += _collisionEventHandler;
                 }
             }
 
@@ -94,13 +107,15 @@ namespace iGL.Engine.Triggers
 
         private void ExecuteTrigger()
         {
-            if (Game.InDesignMode) return;
-            
+            if (Game.InDesignMode) return;                       
+
             if (Action == TriggerAction.PlayAnimation)
             {
                 var animationComponent = _targetGameComponent as AnimationComponent;
-                if (animationComponent != null)
+                if (animationComponent != null && !animationComponent.IsPlaying())
                 {
+                    if (!animationComponent.GameObject.IsLoaded) animationComponent.GameObject.Load();
+
                     animationComponent.Play();
                 }
             }
@@ -108,6 +123,7 @@ namespace iGL.Engine.Triggers
             {
                 if (_targetGameObject != null && !_targetGameObject.IsLoaded) _targetGameObject.Load();
             }
+
         }
 
         public void Dispose()
@@ -116,6 +132,8 @@ namespace iGL.Engine.Triggers
             {
                 _sourceGameObject.OnMouseDown -= _mouseDownHandler;
                 _sourceGameObject.OnAnimationSignal -= _animationSignalHandler;
+                _sourceGameObject.OnObjectCollision -= _collisionEventHandler;
+
                 Scene.OnLoaded -= _sceneLoadEventHandler;
             }
         }

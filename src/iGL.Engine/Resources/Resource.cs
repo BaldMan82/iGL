@@ -6,7 +6,7 @@ using iGL.Engine.GL;
 
 namespace iGL.Engine
 {
-    public abstract class Resource
+    public abstract class Resource : IDisposable
     {
         public string ResourceName { get; set; }
         public bool IsLoaded { get; private set; }
@@ -30,6 +30,10 @@ namespace iGL.Engine
         public override string ToString()
         {
             return Name;
+        }
+
+        public virtual void Dispose()
+        {           
         }
     }
 }

@@ -49,6 +49,8 @@
             this.ddPlayCameras = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.gameObjectBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.ddPlayerObjects = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gameObjectBindingSource)).BeginInit();
@@ -76,6 +78,8 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.ddPlayerObjects);
+            this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.btnRemoveTrigger);
             this.panel1.Controls.Add(this.btnAddTrigger);
             this.panel1.Controls.Add(this.label6);
@@ -93,12 +97,12 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(0, 32);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(290, 437);
+            this.panel1.Size = new System.Drawing.Size(290, 476);
             this.panel1.TabIndex = 41;
             // 
             // btnRemoveTrigger
             // 
-            this.btnRemoveTrigger.Location = new System.Drawing.Point(221, 140);
+            this.btnRemoveTrigger.Location = new System.Drawing.Point(224, 174);
             this.btnRemoveTrigger.Name = "btnRemoveTrigger";
             this.btnRemoveTrigger.Size = new System.Drawing.Size(25, 23);
             this.btnRemoveTrigger.TabIndex = 29;
@@ -108,7 +112,7 @@
             // 
             // btnAddTrigger
             // 
-            this.btnAddTrigger.Location = new System.Drawing.Point(252, 140);
+            this.btnAddTrigger.Location = new System.Drawing.Point(255, 174);
             this.btnAddTrigger.Name = "btnAddTrigger";
             this.btnAddTrigger.Size = new System.Drawing.Size(25, 23);
             this.btnAddTrigger.TabIndex = 28;
@@ -119,7 +123,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(5, 140);
+            this.label6.Location = new System.Drawing.Point(8, 174);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(45, 13);
             this.label6.TabIndex = 27;
@@ -128,7 +132,7 @@
             // listTriggers
             // 
             this.listTriggers.FormattingEnabled = true;
-            this.listTriggers.Location = new System.Drawing.Point(8, 165);
+            this.listTriggers.Location = new System.Drawing.Point(11, 199);
             this.listTriggers.Name = "listTriggers";
             this.listTriggers.Size = new System.Drawing.Size(269, 264);
             this.listTriggers.TabIndex = 26;
@@ -155,7 +159,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(218, 102);
+            this.label4.Location = new System.Drawing.Point(221, 136);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(14, 13);
             this.label4.TabIndex = 23;
@@ -163,7 +167,7 @@
             // 
             // txtAmbientAlpha
             // 
-            this.txtAmbientAlpha.Location = new System.Drawing.Point(238, 99);
+            this.txtAmbientAlpha.Location = new System.Drawing.Point(241, 133);
             this.txtAmbientAlpha.Name = "txtAmbientAlpha";
             this.txtAmbientAlpha.Size = new System.Drawing.Size(42, 20);
             this.txtAmbientAlpha.TabIndex = 22;
@@ -171,7 +175,7 @@
             // 
             // btnAmbient
             // 
-            this.btnAmbient.Location = new System.Drawing.Point(127, 97);
+            this.btnAmbient.Location = new System.Drawing.Point(130, 131);
             this.btnAmbient.Name = "btnAmbient";
             this.btnAmbient.Size = new System.Drawing.Size(75, 23);
             this.btnAmbient.TabIndex = 21;
@@ -181,7 +185,7 @@
             // 
             // pnlAmbient
             // 
-            this.pnlAmbient.Location = new System.Drawing.Point(72, 97);
+            this.pnlAmbient.Location = new System.Drawing.Point(75, 131);
             this.pnlAmbient.Name = "pnlAmbient";
             this.pnlAmbient.Size = new System.Drawing.Size(49, 23);
             this.pnlAmbient.TabIndex = 20;
@@ -189,7 +193,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(5, 102);
+            this.label3.Location = new System.Drawing.Point(8, 136);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(45, 13);
             this.label3.TabIndex = 19;
@@ -235,6 +239,24 @@
             // 
             this.gameObjectBindingSource.DataSource = typeof(iGL.Engine.GameObject);
             // 
+            // ddPlayerObjects
+            // 
+            this.ddPlayerObjects.FormattingEnabled = true;
+            this.ddPlayerObjects.Location = new System.Drawing.Point(112, 89);
+            this.ddPlayerObjects.Name = "ddPlayerObjects";
+            this.ddPlayerObjects.Size = new System.Drawing.Size(158, 21);
+            this.ddPlayerObjects.TabIndex = 31;
+            this.ddPlayerObjects.SelectedValueChanged += new System.EventHandler(this.ddPlayerObjects_SelectedValueChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(5, 92);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(70, 13);
+            this.label7.TabIndex = 30;
+            this.label7.Text = "Player Object";
+            // 
             // SceneControlDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -242,7 +264,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
             this.Name = "SceneControlDlg";
-            this.Size = new System.Drawing.Size(292, 472);
+            this.Size = new System.Drawing.Size(292, 511);
             this.Load += new System.EventHandler(this.SceneControlDlg_Load);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
@@ -275,5 +297,7 @@
         private System.Windows.Forms.Button btnAddTrigger;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ListBox listTriggers;
+        private System.Windows.Forms.ComboBox ddPlayerObjects;
+        private System.Windows.Forms.Label label7;
     }
 }

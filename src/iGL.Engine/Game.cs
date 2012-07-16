@@ -97,6 +97,8 @@ namespace iGL.Engine
                 element.Add(new XElement("PlayCameraId", Scene.PlayCamera != null ? Scene.PlayCamera.GameObject.Id : string.Empty));
                 element.Add(new XElement("DesignCameraId", Scene.DesignCamera != null ? Scene.DesignCamera.GameObject.Id : string.Empty));
                 element.Add(new XElement("LightId", Scene.CurrentLight != null ? Scene.CurrentLight.GameObject.Id : string.Empty));
+                element.Add(new XElement("PlayerObjectId", Scene.PlayerObject != null ? Scene.PlayerObject.Id : string.Empty));
+
                 element.Add(XmlHelper.ToXml(Scene.AmbientColor, "AmbientColor"));
 
                 element.Add(new XElement("Objects", Scene.GameObjects.Where(g => !g.Designer && g.CreationMode != GameObject.CreationModeEnum.Runtime).Select(go => XmlHelper.ToXml(go, "GameObject"))));
@@ -111,7 +113,7 @@ namespace iGL.Engine
             }           
         }
 
-        public void LoadScene(string xml)
+        public void PopulateScene(string xml)
         {
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
@@ -178,6 +180,16 @@ namespace iGL.Engine
                     else
                     {
                         Scene.SetCurrentLight(null);
+                    }
+
+                    var playerObject = doc.Root.Elements().FirstOrDefault(e => e.Name == "PlayerObjectId");
+                    if (playerObject != null && !string.IsNullOrEmpty(playerObject.Value))
+                    {
+                        Scene.SetPlayerObject(Scene.GameObjects.Single(g => g.Id == playerObject.Value));
+                    }
+                    else
+                    {
+                        Scene.SetPlayerObject(null);
                     }
 
                     var ambient = doc.Root.Elements().FirstOrDefault(e => e.Name == "AmbientColor");

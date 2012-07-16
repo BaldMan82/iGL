@@ -39,12 +39,16 @@ namespace iGL.Engine
             _isPlaying = true;
             _tickTime = DateTime.UtcNow;
             _startValue = GameObject.Scale;
+           
+
             _renderComponent.BeginMode = BeginMode.Lines;
 
             _ambientColor = _meshComponent.Material.Ambient;
             _meshComponent.Material.Ambient = new Vector4(1);
 
             if (_rigidBodyComponent != null) _rigidBodyComponent.AutoReloadBody = false;
+
+            GameObject.Scale = new Vector3(0);
 
             _width = _meshComponent.BoundingBox.Max.X;
             _xStart = GameObject.Position.X;

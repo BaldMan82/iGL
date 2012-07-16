@@ -50,6 +50,8 @@
             this.cbTilingRepeatY = new System.Windows.Forms.CheckBox();
             this.txtTilingX = new System.Windows.Forms.TextBox();
             this.txtTilingY = new System.Windows.Forms.TextBox();
+            this.txtShininess = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -181,7 +183,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 110);
+            this.label7.Location = new System.Drawing.Point(4, 132);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(84, 13);
             this.label7.TabIndex = 12;
@@ -190,7 +192,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(3, 136);
+            this.label8.Location = new System.Drawing.Point(4, 158);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(84, 13);
             this.label8.TabIndex = 13;
@@ -199,7 +201,7 @@
             // cbTilingRepeatX
             // 
             this.cbTilingRepeatX.AutoSize = true;
-            this.cbTilingRepeatX.Location = new System.Drawing.Point(199, 110);
+            this.cbTilingRepeatX.Location = new System.Drawing.Point(200, 132);
             this.cbTilingRepeatX.Name = "cbTilingRepeatX";
             this.cbTilingRepeatX.Size = new System.Drawing.Size(61, 17);
             this.cbTilingRepeatX.TabIndex = 14;
@@ -209,7 +211,7 @@
             // cbTilingRepeatY
             // 
             this.cbTilingRepeatY.AutoSize = true;
-            this.cbTilingRepeatY.Location = new System.Drawing.Point(199, 135);
+            this.cbTilingRepeatY.Location = new System.Drawing.Point(200, 157);
             this.cbTilingRepeatY.Name = "cbTilingRepeatY";
             this.cbTilingRepeatY.Size = new System.Drawing.Size(61, 17);
             this.cbTilingRepeatY.TabIndex = 15;
@@ -218,23 +220,41 @@
             // 
             // txtTilingX
             // 
-            this.txtTilingX.Location = new System.Drawing.Point(93, 107);
+            this.txtTilingX.Location = new System.Drawing.Point(94, 129);
             this.txtTilingX.Name = "txtTilingX";
             this.txtTilingX.Size = new System.Drawing.Size(87, 20);
             this.txtTilingX.TabIndex = 16;
             // 
             // txtTilingY
             // 
-            this.txtTilingY.Location = new System.Drawing.Point(93, 133);
+            this.txtTilingY.Location = new System.Drawing.Point(94, 155);
             this.txtTilingY.Name = "txtTilingY";
             this.txtTilingY.Size = new System.Drawing.Size(87, 20);
             this.txtTilingY.TabIndex = 17;
+            // 
+            // txtShininess
+            // 
+            this.txtShininess.Location = new System.Drawing.Point(67, 103);
+            this.txtShininess.Name = "txtShininess";
+            this.txtShininess.Size = new System.Drawing.Size(100, 20);
+            this.txtShininess.TabIndex = 18;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(3, 103);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(52, 13);
+            this.label9.TabIndex = 19;
+            this.label9.Text = "Shininess";
             // 
             // MaterialDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.txtShininess);
             this.Controls.Add(this.txtTilingY);
             this.Controls.Add(this.txtTilingX);
             this.Controls.Add(this.cbTilingRepeatY);
@@ -257,7 +277,7 @@
             this.Controls.Add(this.pnlAmbient);
             this.Controls.Add(this.label1);
             this.Name = "MaterialDlg";
-            this.Size = new System.Drawing.Size(288, 169);
+            this.Size = new System.Drawing.Size(288, 187);
             this.Load += new System.EventHandler(this.MaterialDlg_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -288,5 +308,7 @@
         private System.Windows.Forms.CheckBox cbTilingRepeatY;
         private System.Windows.Forms.TextBox txtTilingX;
         private System.Windows.Forms.TextBox txtTilingY;
+        private System.Windows.Forms.TextBox txtShininess;
+        private System.Windows.Forms.Label label9;
     }
 }

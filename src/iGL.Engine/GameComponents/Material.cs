@@ -24,5 +24,7 @@ namespace iGL.Engine
 
         public float TextureTilingX { get; set; }
         public float TextureTilingY { get; set; }
+
+        public ShaderProgram.ProgramType ShaderProgram { get; set; }
     }
 }

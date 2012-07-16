@@ -36,6 +36,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtRestitution = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.cbSensor = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -50,7 +51,7 @@
             // cbStatic
             // 
             this.cbStatic.AutoSize = true;
-            this.cbStatic.Location = new System.Drawing.Point(4, 99);
+            this.cbStatic.Location = new System.Drawing.Point(6, 99);
             this.cbStatic.Name = "cbStatic";
             this.cbStatic.Size = new System.Drawing.Size(53, 17);
             this.cbStatic.TabIndex = 1;
@@ -60,7 +61,7 @@
             // cbGravitySource
             // 
             this.cbGravitySource.AutoSize = true;
-            this.cbGravitySource.Location = new System.Drawing.Point(62, 99);
+            this.cbGravitySource.Location = new System.Drawing.Point(63, 99);
             this.cbGravitySource.Name = "cbGravitySource";
             this.cbGravitySource.Size = new System.Drawing.Size(96, 17);
             this.cbGravitySource.TabIndex = 2;
@@ -106,11 +107,22 @@
             this.label4.TabIndex = 8;
             this.label4.Text = "Restitution:";
             // 
+            // cbSensor
+            // 
+            this.cbSensor.AutoSize = true;
+            this.cbSensor.Location = new System.Drawing.Point(164, 99);
+            this.cbSensor.Name = "cbSensor";
+            this.cbSensor.Size = new System.Drawing.Size(59, 17);
+            this.cbSensor.TabIndex = 10;
+            this.cbSensor.Text = "Sensor";
+            this.cbSensor.UseVisualStyleBackColor = true;
+            // 
             // RigidBodyFarseerComponentDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.cbSensor);
             this.Controls.Add(this.txtRestitution);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtKineticFriction);
@@ -137,5 +149,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtRestitution;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox cbSensor;
     }
 }

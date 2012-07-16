@@ -13,13 +13,15 @@ namespace iGL.TestGame
 {
     public class TestScene : Scene
     {
+     
     
         public TestScene()
             : base(new PhysicsFarseer())
         {
-            this.OnTick += new EventHandler<Engine.Events.TickEvent>(TestScene_OnTick);
+            this.OnTick += new EventHandler<Engine.Events.TickEvent>(TestScene_OnTick);         
         }
 
+       
         void TestScene_OnTick(object sender, Engine.Events.TickEvent e)
         {
             
@@ -27,8 +29,7 @@ namespace iGL.TestGame
 
         public override void Load()
         {           
-            base.Load();
-        }
-      
+            base.Load();                        
+        }       
     }
 }

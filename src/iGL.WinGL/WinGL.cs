@@ -28,7 +28,7 @@ namespace iGL
                     glShaderType = ShaderType.VertexShader;
                     break;
             }
-            
+
             return GL.CreateShader(glShaderType);
         }
 
@@ -77,9 +77,14 @@ namespace iGL
             GL.Uniform4(loc, vector4.X, vector4.Y, vector4.Z, vector4.W);
         }
 
+        public void Uniform3(int loc, Engine.Math.Vector3 vector3)
+        {
+            GL.Uniform3(loc, vector3.X, vector3.Y, vector3.Z);
+        }
+
         public void Uniform1(int loc, float p)
         {
-            GL.Uniform1(loc, p);          
+            GL.Uniform1(loc, p);
         }
 
         public void Uniform1(int loc, int p)
@@ -113,10 +118,10 @@ namespace iGL
             BufferTarget target = ToBufferTarget(bufferTarget);
 
             GL.BindBuffer(target, p);
-        }     
+        }
 
         public void EnableVertexAttribArray(int vertexAttrib)
-        {            
+        {
             GL.EnableVertexAttribArray(vertexAttrib);
         }
 
@@ -147,14 +152,14 @@ namespace iGL
         public void Enable(Engine.EnableCap enableCap)
         {
             var cap = ToEnableCap(enableCap);
-            GL.Enable(cap);         
+            GL.Enable(cap);
         }
 
         public void Disable(Engine.EnableCap disableCap)
         {
             var cap = ToEnableCap(disableCap);
             GL.Disable(cap);
-           
+
         }
 
         public void UseProgram(int programId)
@@ -172,7 +177,7 @@ namespace iGL
             var s = ToBlendingFactorSrc(src);
             var d = ToBlendingFactorDest(dest);
 
-            GL.BlendFunc(s, d);           
+            GL.BlendFunc(s, d);
         }
 
         public void BufferData(Engine.BufferTarget bufferTarget, IntPtr size, IntPtr data, Engine.BufferUsage bufferUsage)
@@ -181,7 +186,7 @@ namespace iGL
             var usage = ToBufferUsage(bufferUsage);
 
             GL.BufferData(target, size, data, usage);
-        }     
+        }
 
         public void TexParameter(Engine.TextureTarget textureTarget, Engine.TextureParameterName paramName, int value)
         {
@@ -195,12 +200,27 @@ namespace iGL
         {
             var target = ToTextureTarget(textureTarget);
 
-            GL.BindTexture(target, nTexture);                  
+            GL.BindTexture(target, nTexture);
         }
 
         public int GenTexture()
         {
             return GL.GenTexture();
+        }
+
+        public void DeleteTexture(int id)
+        {
+            GL.DeleteTexture(id);
+        }
+
+        public void DeleteShader(int id)
+        {
+            GL.DeleteShader(id);
+        }
+
+        public void DeleteProgram(int id)
+        {
+            GL.DeleteProgram(id);
         }
 
         public void TexImage2D(Engine.TextureTarget textureTarget, int level, Engine.PixelInternalFormat internalformat, int width, int height, int border, Engine.PixelFormat format, Engine.PixelType type, IntPtr pixels)
@@ -291,9 +311,9 @@ namespace iGL
                 case Engine.TextureTarget.Texture2D:
                     target = TextureTarget.Texture2D;
                     break;
-            }           
+            }
 
-            return target;          
+            return target;
         }
 
         private static TextureParameterName ToTextureParameterName(Engine.TextureParameterName parameterName)
@@ -396,7 +416,7 @@ namespace iGL
         private static EnableCap ToEnableCap(Engine.EnableCap enableCap)
         {
             EnableCap cap = EnableCap.Blend;
-            
+
             switch (enableCap)
             {
                 case Engine.EnableCap.DepthTest:
@@ -404,7 +424,7 @@ namespace iGL
                     break;
                 case Engine.EnableCap.CullFace:
                     cap = EnableCap.CullFace;
-                    break;               
+                    break;
                 case Engine.EnableCap.Texture2d:
                     cap = EnableCap.Texture2D;
                     break;
@@ -451,9 +471,9 @@ namespace iGL
             }
 
             return dest;
-        }        
+        }
 
-        #endregion       
-                                
+        #endregion
+
     }
 }

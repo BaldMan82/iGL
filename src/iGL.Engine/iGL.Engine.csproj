@@ -53,7 +53,10 @@
     <Compile Include="BitmapFont\Kerning.cs" />
     <Compile Include="BitmapFont\Padding.cs" />
     <Compile Include="BitmapFont\Page.cs" />
-    <Compile Include="Events\AnimationSignalEvent.cs" />
+    <Compile Include="Events\ComponentAddedEvent.cs" />
+    <Compile Include="Events\CollisionEvent.cs" />
+    <Compile Include="Events\DisposeObjectEvent.cs" />
+    <Compile Include="Events\ObjectCollisionEvent.cs" />
     <Compile Include="Events\LoadedEvent.cs" />
     <Compile Include="Events\MouseZoomEvent.cs" />
     <Compile Include="Events\GameObjectAddedEvent.cs" />
@@ -63,7 +66,9 @@
     <Compile Include="Events\RotateEvent.cs" />
     <Compile Include="Events\ScaleEvent.cs" />
     <Compile Include="GameComponents\Animations\AnimationComponent.cs" />
+    <Compile Include="GameComponents\Animations\AlphaAnimationComponent.cs" />
     <Compile Include="GameComponents\CameraComponent.cs" />
+    <Compile Include="GameComponents\FurShader.cs" />
     <Compile Include="GameComponents\Farseer\BoxColliderFarseerComponent.cs" />
     <Compile Include="GameComponents\Farseer\ColliderFarseerComponent.cs" />
     <Compile Include="GameComponents\Farseer\DistanceJointFarseer.cs" />
@@ -92,7 +97,7 @@
     <Compile Include="Physics\Farseer\DesignPhysics.cs" />
     <Compile Include="Physics\Farseer\Physics.cs" />
     <Compile Include="Physics\Jitter\DesignPhysics.cs" />
-    <Compile Include="Events\ComponentAddedEvent.cs" />
+    <Compile Include="Events\AnimationSignalEvent.cs" />
     <Compile Include="Events\ComponentRemovedEvent.cs" />
     <Compile Include="Events\MouseButton.cs" />
     <Compile Include="Events\MouseMoveEvent.cs" />
@@ -186,6 +191,12 @@
       <Project>{AA03EF1A-94F7-4D30-AB14-2092863FF923}</Project>
       <Name>Jitter</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\FS_FUR.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\VS_FUR.c" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

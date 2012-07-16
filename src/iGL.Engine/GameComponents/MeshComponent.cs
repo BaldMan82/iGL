@@ -35,6 +35,8 @@ namespace iGL.Engine
         public string MeshResourceName { get; set; }
 
         public JBBox BoundingBox { get; private set; }
+        public Vector3 MinBox { get; private set; }
+        public Vector3 MaxBox { get; private set; }
 
         public MeshComponent(XElement xmlElement) : base(xmlElement) { }
 
@@ -91,6 +93,8 @@ namespace iGL.Engine
             var box = new JBBox(vMin.ToJitter(), vMax.ToJitter());
 
             BoundingBox = box;
+            MinBox = box.Min.ToOpenTK();
+            MaxBox = box.Max.ToOpenTK();
 
             RefreshTexture();
 

@@ -5,15 +5,9 @@ using System.Text;
 
 namespace iGL.Engine.Events
 {
-    public class AnimationSignalEvent : EventArgs
+    public class ComponentAddedEvent : EventArgs
     {
-        public enum State
-        {
-            Playing,
-            Paused,
-            Stopped
-        }
-
-        public State SignalState { get; set; }
+        public GameComponent Component { get; set; }
     }
+    
 }

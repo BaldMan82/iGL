@@ -45,7 +45,7 @@
             this.materialDlg.Location = new System.Drawing.Point(0, 16);
             this.materialDlg.Material = ((iGL.Engine.Material)(resources.GetObject("materialDlg.Material")));
             this.materialDlg.Name = "materialDlg";
-            this.materialDlg.Size = new System.Drawing.Size(290, 163);
+            this.materialDlg.Size = new System.Drawing.Size(290, 195);
             this.materialDlg.TabIndex = 0;
             // 
             // label1
@@ -61,7 +61,7 @@
             // comboTexture
             // 
             this.comboTexture.FormattingEnabled = true;
-            this.comboTexture.Location = new System.Drawing.Point(105, 188);
+            this.comboTexture.Location = new System.Drawing.Point(105, 228);
             this.comboTexture.Name = "comboTexture";
             this.comboTexture.Size = new System.Drawing.Size(121, 21);
             this.comboTexture.TabIndex = 15;
@@ -70,7 +70,7 @@
             // lblTexture
             // 
             this.lblTexture.AutoSize = true;
-            this.lblTexture.Location = new System.Drawing.Point(5, 188);
+            this.lblTexture.Location = new System.Drawing.Point(5, 228);
             this.lblTexture.Name = "lblTexture";
             this.lblTexture.Size = new System.Drawing.Size(46, 13);
             this.lblTexture.TabIndex = 14;
@@ -79,7 +79,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(5, 245);
+            this.label2.Location = new System.Drawing.Point(5, 285);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(85, 13);
             this.label2.TabIndex = 16;
@@ -88,7 +88,7 @@
             // comboMeshResource
             // 
             this.comboMeshResource.FormattingEnabled = true;
-            this.comboMeshResource.Location = new System.Drawing.Point(105, 242);
+            this.comboMeshResource.Location = new System.Drawing.Point(105, 282);
             this.comboMeshResource.Name = "comboMeshResource";
             this.comboMeshResource.Size = new System.Drawing.Size(121, 21);
             this.comboMeshResource.TabIndex = 17;
@@ -97,7 +97,7 @@
             // comboNormalMap
             // 
             this.comboNormalMap.FormattingEnabled = true;
-            this.comboNormalMap.Location = new System.Drawing.Point(105, 215);
+            this.comboNormalMap.Location = new System.Drawing.Point(105, 255);
             this.comboNormalMap.Name = "comboNormalMap";
             this.comboNormalMap.Size = new System.Drawing.Size(121, 21);
             this.comboNormalMap.TabIndex = 19;
@@ -106,7 +106,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(5, 218);
+            this.label3.Location = new System.Drawing.Point(5, 258);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(66, 13);
             this.label3.TabIndex = 18;
@@ -126,7 +126,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.materialDlg);
             this.Name = "MeshComponentDlg";
-            this.Size = new System.Drawing.Size(290, 283);
+            this.Size = new System.Drawing.Size(290, 319);
             this.Load += new System.EventHandler(this.MeshComponentDlg_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

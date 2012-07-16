@@ -5,8 +5,8 @@ using System.Text;
 
 namespace iGL.Engine.Events
 {
-    public class ComponentAddedEvent : EventArgs
+    public class AnimationSignalEvent : EventArgs
     {
-        public GameComponent Component { get; set; }
+        public iGL.Engine.AnimationComponent.State SignalState { get; set; }
     }
 }

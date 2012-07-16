@@ -17,9 +17,9 @@ using iGL.Engine.Triggers;
 
 namespace iGL.Engine
 {
-    public class Scene 
+    public class Scene : IDisposable
     {
-        public CameraComponent CurrentCamera 
+        public CameraComponent CurrentCamera
         {
             get
             {
@@ -41,9 +41,10 @@ namespace iGL.Engine
         public CameraComponent DesignCamera { get; private set; }
         public LightComponent CurrentLight { get; private set; }
         public Statistics Statistics { get; private set; }
+        public GameObject PlayerObject { get; private set; }
 
         public GameObject LastMouseDownTarget { get { return _currentMouseDownObj; } }
-        
+
         public IEnumerable<GameObject> GameObjects { get { return _gameObjects.AsEnumerable(); } }
         public IEnumerable<Resource> Resources { get { return _resources.AsEnumerable(); } }
         public IEnumerable<Trigger> Triggers { get { return _triggers.AsEnumerable(); } }
@@ -52,6 +53,7 @@ namespace iGL.Engine
         public Game Game { get; internal set; }
         public bool Loaded { get; internal set; }
         public Point MousePosition { get; private set; }
+        public bool IsDisposing { get; private set; }
 
         private TimeSpan _mouseUpdateRate = TimeSpan.FromSeconds(1.0 / 40.0);
         private DateTime _lastMouseUpdate = DateTime.MinValue;
@@ -60,7 +62,7 @@ namespace iGL.Engine
         private List<Trigger> _triggers { get; set; }
 
         private List<Timer> _timers = new List<Timer>();
-        
+
         private GameObject _currentMouseOverObj = null;
         private GameObject _currentMouseDownObj = null;
 
@@ -73,11 +75,29 @@ namespace iGL.Engine
         private event EventHandler<GameObjectAddedEvent> OnObjectAddedEvent;
         private event EventHandler<LoadedEvent> OnLoadedEvent;
         private event EventHandler<PreRenderEvent> OnPreRenderEvent;
+        private event EventHandler<CollisionEvent> OnCollisionEvent;
+        private event EventHandler<DisposeObjectEvent> OnDisposeObjectEvent;
 
-        internal ShaderProgram ShaderProgram { get; set; }
+        private MouseButtonDownEvent _mouseButtonDownEvent = new MouseButtonDownEvent();
+        private MouseButtonUpEvent _mouseButtonUpEvent = new MouseButtonUpEvent();
+        private MouseInEvent _mouseInEvent = new MouseInEvent();
+        private MouseOutEvent _mouseOutEvent = new MouseOutEvent();
+        private TickEvent _tickEvent = new TickEvent();
+        private MouseMoveEvent _mouseMoveEvent = new MouseMoveEvent();
+        private MouseZoomEvent _mouseZoomEvent = new MouseZoomEvent();
+        private GameObjectAddedEvent _gameObjectAddedEvent = new GameObjectAddedEvent();
+        private LoadedEvent _loadedEvent = new LoadedEvent();
+        private PreRenderEvent _preRenderEvent = new PreRenderEvent();
+        private CollisionEvent _collisionEvent = new CollisionEvent();
+        private ObjectCollisionEvent _objectCollisionEvent = new ObjectCollisionEvent();
+        private DisposeObjectEvent _disposeObjectEvent = new DisposeObjectEvent();
+
+        internal PointLightShader PointLightShader { get; set; }
+        internal FurShader FurShader { get; set; }
         internal Dictionary<string, MeshRenderComponent> MeshComponentCache { get; private set; }
-        public IPhysics Physics { get; private set; }
+        public PhysicsBase Physics { get; private set; }
 
+        private List<GameObject> _disposableGameObjects = new List<GameObject>();
         public Dictionary<MouseButton, bool> MouseButtonState { get; private set; }
 
         public Vector4 AmbientColor
@@ -88,10 +108,12 @@ namespace iGL.Engine
             }
             set
             {
-                ShaderProgram.SetAmbientColor(_ambientColor);
+                PointLightShader.SetAmbientColor(_ambientColor);
+                FurShader.SetAmbientColor(_ambientColor);
+
                 _ambientColor = value;
             }
-        }     
+        }
 
         public Scene()
             : this(new Physics())
@@ -99,16 +121,17 @@ namespace iGL.Engine
 
         }
 
-        public Scene(IPhysics physics)
+        public Scene(PhysicsBase physics)
         {
             _gameObjects = new List<GameObject>();
             _resources = new List<Resource>();
             _triggers = new List<Trigger>();
 
-            ShaderProgram = new PointLightShader();
+            PointLightShader = new PointLightShader();
+            PointLightShader.Load();
 
-            ShaderProgram.Load();
-            ShaderProgram.Use();
+            FurShader = new FurShader();
+            FurShader.Load();
 
             Physics = new Physics2d();
 
@@ -125,12 +148,26 @@ namespace iGL.Engine
             Statistics = new Statistics();
 
             MeshComponentCache = new Dictionary<string, MeshRenderComponent>();
+
+            Physics.CollisionEvent += new EventHandler<CollisionEvent>(Physics_CollisionEvent);
+        }
+
+        void Physics_CollisionEvent(object sender, CollisionEvent e)
+        {
+            _objectCollisionEvent.Object = e.ObjectB;
+            e.ObjectA.OnObjectCollisionEvent(this, _objectCollisionEvent);
+
+            _objectCollisionEvent.Object = e.ObjectA;
+            e.ObjectB.OnObjectCollisionEvent(this, _objectCollisionEvent);
         }
 
         public void Render()
         {
-           
-            if (OnPreRenderEvent != null) OnPreRenderEvent(this, new PreRenderEvent());
+
+            if (OnPreRenderEvent != null)
+            {
+                OnPreRenderEvent(this, _preRenderEvent);
+            }
 
             if (CurrentCamera == null)
             {
@@ -147,17 +184,22 @@ namespace iGL.Engine
 
             Game.GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            var pointLightShader = ShaderProgram as PointLightShader;
+            var pointLightShader = PointLightShader as PointLightShader;
 
             if (CurrentLight != null)
             {
                 /* update shader's light parameters */
-               
+                pointLightShader.Use();
                 pointLightShader.SetLight(CurrentLight.Light, new Vector4(CurrentLight.GameObject.WorldPosition));
+
+                FurShader.Use();
+                FurShader.SetLight(CurrentLight.Light, new Vector4(CurrentLight.GameObject.WorldPosition));
+
             }
             else
             {
                 pointLightShader.ClearLight();
+                FurShader.ClearLight();
             }
 
             var allObjects = _gameObjects.SelectMany(g => g.AllChildren).ToList();
@@ -178,8 +220,12 @@ namespace iGL.Engine
 
         public void Tick(float timeElapsed, bool tickPhysics = true)
         {
-          
-            if (OnTickEvent != null) OnTickEvent(this, new TickEvent() { Elapsed = timeElapsed });
+
+            if (OnTickEvent != null)
+            {
+                _tickEvent.Elapsed = timeElapsed;
+                OnTickEvent(this, _tickEvent);
+            }
 
             try
             {
@@ -192,25 +238,7 @@ namespace iGL.Engine
 
             _gameObjects.ForEach(g => g.Tick(timeElapsed));
 
-            var obsoleteTimers = new List<Timer>();
-
-            foreach (var timer in _timers)
-            {
-                if (timer.LastTick.Add(timer.Interval) < DateTime.UtcNow)
-                {
-                    timer.Action.Invoke();
-                    timer.LastTick = DateTime.UtcNow;
-                    if (timer.Mode == Timer.TimerMode.Once)
-                    {
-                        obsoleteTimers.Add(timer);
-                    }
-                }
-            }
-
-            foreach (var obsoleteTimer in obsoleteTimers)
-            {
-                _timers.Remove(obsoleteTimer);
-            }
+            ProcessTimers();
 
             if (DateTime.UtcNow > _lastMouseUpdate.Add(_mouseUpdateRate))
             {
@@ -221,6 +249,45 @@ namespace iGL.Engine
                 _lastMouseUpdate = DateTime.UtcNow;
             }
 
+
+            /* dispose objects marked for deletion */
+
+            _disposableGameObjects.ForEach(g =>
+            {
+                g.Dispose();
+                _gameObjects.Remove(g);
+
+                /* raise dispose event */
+                if (OnDisposeObjectEvent != null)
+                {
+                    _disposeObjectEvent.GameObject = g;
+                    OnDisposeObjectEvent(this, _disposeObjectEvent);
+                }
+            });
+
+            _disposableGameObjects.Clear();
+        }
+
+        private void ProcessTimers()
+        {
+            var obsoleteTimers = new List<Timer>();
+
+            for (int i=0;i<_timers.Count;i++)
+            {
+                var timer = _timers[i];
+
+                if (timer.LastTick.Add(timer.Interval) < DateTime.UtcNow)
+                {                   
+                    timer.LastTick = DateTime.UtcNow;
+                    if (timer.Mode == Timer.TimerMode.Once)
+                    {
+                        _timers.RemoveAt(i);
+                        i--;
+                    }
+
+                    timer.Action.Invoke();
+                }
+            }           
         }
 
         public void AddTimer(Timer timer)
@@ -304,6 +371,30 @@ namespace iGL.Engine
             }
         }
 
+        public event EventHandler<CollisionEvent> OnCollision
+        {
+            add
+            {
+                OnCollisionEvent += value;
+            }
+            remove
+            {
+                OnCollisionEvent -= value;
+            }
+        }
+
+        public event EventHandler<DisposeObjectEvent> OnDisposeObject
+        {
+            add
+            {
+                OnDisposeObjectEvent += value;
+            }
+            remove
+            {
+                OnDisposeObjectEvent -= value;
+            }
+        }
+
         public void SetPlayCamera(GameObject camera)
         {
             if (camera == null)
@@ -355,8 +446,21 @@ namespace iGL.Engine
             CurrentLight = component;
         }
 
+        public void SetPlayerObject(GameObject player)
+        {
+            if (player == null)
+            {
+                PlayerObject = null;
+                return;
+            }
+
+            if (player.Scene != this) throw new Exception("Player object is not part of this scene");
+
+            PlayerObject = player;
+        }
+
         public virtual void Load()
-        {                     
+        {
             _resources.ForEach(r => r.Load());
             _triggers.ForEach(t => t.Load());
 
@@ -381,10 +485,13 @@ namespace iGL.Engine
 
                 throw new NotSupportedException("Cannot create objects during load phase: " + strb.ToString());
             }
-          
+
             Loaded = true;
 
-            if (OnLoadedEvent != null) OnLoadedEvent(this, new LoadedEvent());
+            if (OnLoadedEvent != null)
+            {
+                OnLoadedEvent(this, _loadedEvent);
+            }
         }
 
         public void AddGameObject(GameObject gameObject)
@@ -394,10 +501,24 @@ namespace iGL.Engine
             gameObject.Scene = this;
 
             _gameObjects.Add(gameObject);
-            
+
             if (Loaded) gameObject.Load();
 
-            if (OnObjectAddedEvent != null) OnObjectAddedEvent(this, new GameObjectAddedEvent() { GameObject = gameObject });
+            if (OnObjectAddedEvent != null)
+            {
+                _gameObjectAddedEvent.GameObject = gameObject;
+                OnObjectAddedEvent(this, _gameObjectAddedEvent);
+            }
+        }
+
+        public void DisposeGameObject(GameObject gameObject)
+        {
+            if (!gameObject.IsDisposing)
+            {
+                var loadedObj = _gameObjects.First(g => g == gameObject);
+                _disposableGameObjects.Add(loadedObj);
+                loadedObj.IsDisposing = true;
+            }
         }
 
         public void AddResource(Resource resource)
@@ -419,7 +540,7 @@ namespace iGL.Engine
         }
 
         public void RemoveTrigger(Trigger trigger)
-        {            
+        {
             _triggers.Remove(trigger);
             trigger.Dispose();
         }
@@ -468,11 +589,10 @@ namespace iGL.Engine
                 {
                     if (OnMouseMoveEvent != null)
                     {
-                        OnMouseMoveEvent(this, new MouseMoveEvent()
-                        {
-                            DirectionOnNearPlane = new Vector3(direction.X, direction.Y, direction.Z),
-                            NearPlane = new Vector3(nearPlane.X, nearPlane.Y, nearPlane.Z)
-                        });
+                        _mouseMoveEvent.DirectionOnNearPlane = new Vector3(direction.X, direction.Y, direction.Z);
+                        _mouseMoveEvent.NearPlane = new Vector3(nearPlane.X, nearPlane.Y, nearPlane.Z);
+
+                        OnMouseMoveEvent(this, _mouseMoveEvent);
                     }
                 }
             }
@@ -480,7 +600,7 @@ namespace iGL.Engine
             UpdateCurrentMousePosition();
 
             var ray = new Vector4(farPlane - nearPlane);
-                   
+
             Vector3 hitLocation;
 
             GameObject result = RayCast(nearPlane, ray, out hitLocation);
@@ -502,17 +622,12 @@ namespace iGL.Engine
                 }
 
                 _currentMouseOverObj = result;
-
-                Debug.WriteLine(result.ToString());
             }
             else if (_currentMouseOverObj != null)
             {
-                Console.WriteLine("...");
-
                 _currentMouseOverObj.OnMouseOutEvent(_currentMouseOverObj, new MouseOutEvent());
                 _currentMouseOverObj = null;
             }
-
         }
 
         public GameObject RayCast(Vector4 nearPlane, Vector4 ray, out Vector3 hitLocation)
@@ -547,7 +662,7 @@ namespace iGL.Engine
                         {
                             break;
                         }
-                    }                   
+                    }
                 }
             }
 
@@ -567,7 +682,8 @@ namespace iGL.Engine
             {
                 if (_currentMouseOverObj != null)
                 {
-                    _currentMouseOverObj.OnMouseDownEvent(_currentMouseOverObj, new MouseButtonDownEvent() { Button = button });
+                    _mouseButtonDownEvent.Button = button;
+                    _currentMouseOverObj.OnMouseDownEvent(_currentMouseOverObj, _mouseButtonDownEvent);
                 }
 
                 /* can be null */
@@ -578,13 +694,15 @@ namespace iGL.Engine
                 /* send a mouse up event to the last target, even if it is not the current hover target anymore */
                 if (_currentMouseDownObj != null && _currentMouseDownObj != _currentMouseOverObj)
                 {
-                    _currentMouseDownObj.OnMouseUpEvent(_currentMouseDownObj, new MouseButtonUpEvent() { Button = button });
+                    _mouseButtonUpEvent.Button = button;
+                    _currentMouseDownObj.OnMouseUpEvent(_currentMouseDownObj, _mouseButtonUpEvent);
                 }
 
                 /* send mouse up to the current obj */
                 if (_currentMouseOverObj != null)
                 {
-                    _currentMouseOverObj.OnMouseUpEvent(_currentMouseOverObj, new MouseButtonUpEvent() { Button = button });
+                    _mouseButtonUpEvent.Button = button;
+                    _currentMouseOverObj.OnMouseUpEvent(_currentMouseOverObj, _mouseButtonUpEvent);
                 }
             }
         }
@@ -596,7 +714,11 @@ namespace iGL.Engine
 
         internal void MouseZoom(int amount)
         {
-            if (OnMouseZoomEvent != null) OnMouseZoomEvent(this, new MouseZoomEvent() { Amount = amount });
+            if (OnMouseZoomEvent != null)
+            {
+                _mouseZoomEvent.Amount = amount;
+                OnMouseZoomEvent(this, _mouseZoomEvent);
+            }
         }
 
         public void UnloadObject(GameObject gameObject)
@@ -620,7 +742,27 @@ namespace iGL.Engine
             ScreenPointToWorld(MousePosition, out nearPlane, out farPlane);
 
             LastNearPlaneMousePosition = nearPlane;
-        }      
-       
+        }
+
+
+        public void Dispose()
+        {
+            IsDisposing = true;
+
+            /* finish all timers */
+            _timers.ForEach(t => t.LastTick = DateTime.MinValue);
+            ProcessTimers();
+            _timers.Clear();
+
+            /* dispose all objects */
+            _gameObjects.ForEach(g => g.Dispose());
+            _resources.ForEach(r => r.Dispose());
+
+            _gameObjects.Clear();
+            _resources.Clear();
+
+            PointLightShader.Dispose();
+            FurShader.Dispose();
+        }
     }
 }

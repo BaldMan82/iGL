@@ -162,5 +162,10 @@ namespace iGL.Engine.Resources
             }
             return true;
         }
+
+        public override void Dispose()
+        {
+            
+        }
     }
 }

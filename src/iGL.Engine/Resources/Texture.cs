@@ -58,5 +58,10 @@ namespace iGL.Engine.Resources
 
             return false;
         }
+
+        public override void Dispose()
+        {
+            GL.DeleteTexture(TextureId);
+        }
     }
 }

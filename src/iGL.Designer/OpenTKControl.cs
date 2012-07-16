@@ -405,7 +405,7 @@ namespace iGL.Designer
 
             if (!string.IsNullOrEmpty(xml))
             {
-                Game.LoadScene(xml);
+                Game.PopulateScene(xml);
             }
             else
             {
@@ -664,7 +664,7 @@ namespace iGL.Designer
             var xml = Game.SaveScene();
 
             Game.SetScene(scene);           
-            Game.LoadScene(xml);
+            Game.PopulateScene(xml);
 
             Game.Load();         
 

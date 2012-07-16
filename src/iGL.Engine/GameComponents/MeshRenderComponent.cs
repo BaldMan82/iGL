@@ -72,7 +72,8 @@ namespace iGL.Engine
                 GameObject.Scene.MeshComponentCache.TryGetValue(_meshComponent.MeshResourceName, out cachedComponent))
             {
                 /* can reuse a rendercomponent + gl buffers */
-                _clonedReference = cachedComponent;                
+                _clonedReference = cachedComponent;
+                _isClone = true;
             }
             else
             {
@@ -139,7 +140,8 @@ namespace iGL.Engine
 
         public void ReleaseBuffers()
         {
-            if (IsLoaded && !_isClone)
+            /* only release buffers of original, not cloned object if scene is disposing */
+            if (IsLoaded && (!_isClone || GameObject.Scene.IsDisposing))
             {
                 GL.DeleteBuffers(2, _bufferIds);
             }
@@ -157,101 +159,229 @@ namespace iGL.Engine
             return meshRenderComponent;
         }
 
-        public override void Render(Matrix4 transform)
+        public override void Render(Matrix4 transform, Matrix4 modelView)
         {
-            var locationInverse = transform;
-            var shader = GameObject.Scene.ShaderProgram;
-
-            locationInverse.Invert();
-            locationInverse.Transpose();                                  
-
-            shader.SetTransposeAdjointModelViewMatrix(locationInverse);
-            shader.SetModelViewMatrix(transform);
-            shader.SetMaterial(_meshComponent.Material);
-
-            locationInverse.Invert();
-            var t = transform;
-            t.Transpose();
-            shader.SetModelViewInverseMatrix(locationInverse);
-
-            int vertexAttrib = shader.GetVertexAttributeLocation();
-            int normalAttrib = shader.GetNormalAttributeLocation();
-            int uvAttrib = shader.GetUVAttributeLocation();
-
-            if (_clonedReference != null)
+            if (_meshComponent.Material.ShaderProgram == ShaderProgram.ProgramType.POINTLIGHT)
             {
-                GL.BindBuffer(BufferTarget.ArrayBuffer, _clonedReference._bufferIds[0]);
+                var shader = GameObject.Scene.PointLightShader;
+                shader.Use();
+                shader.SetModelViewProjectionMatrix(modelView);
+
+                var locationInverse = transform;
+
+                locationInverse.Invert();
+                locationInverse.Transpose();
+
+                shader.SetTransposeAdjointModelViewMatrix(locationInverse);
+                shader.SetModelViewMatrix(transform);
+                shader.SetMaterial(_meshComponent.Material);
+                shader.SetEyePos(new Vector4(0, 0, 1, 1));
+
+                locationInverse.Invert();
+                var t = transform;
+                t.Transpose();
+                shader.SetModelViewInverseMatrix(locationInverse);
+
+                int vertexAttrib = shader.GetVertexAttributeLocation();
+                int normalAttrib = shader.GetNormalAttributeLocation();
+                int uvAttrib = shader.GetUVAttributeLocation();
+
+                if (_clonedReference != null)
+                {
+                    GL.BindBuffer(BufferTarget.ArrayBuffer, _clonedReference._bufferIds[0]);
+                }
+                else
+                {
+                    GL.BindBuffer(BufferTarget.ArrayBuffer, _bufferIds[0]);
+                }
+
+                GL.EnableVertexAttribArray(0);
+                GL.EnableVertexAttribArray(1);
+                GL.EnableVertexAttribArray(2);
+                GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 8 * sizeof(float), 0);
+                GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 8 * sizeof(float), 3 * sizeof(float));
+                GL.VertexAttribPointer(2, 2, VertexAttribPointerType.Float, false, 8 * sizeof(float), 6 * sizeof(float));
+
+                if (_meshComponent.Texture != null)
+                {
+                    GL.ActiveTexture(TextureUnit.Texture0);
+                    GL.BindTexture(TextureTarget.Texture2D, _meshComponent.Texture.TextureId);
+
+                    var wrapModeX = _meshComponent.Material.TextureRepeatX ? TextureWrapMode.Repeat : TextureWrapMode.Clamp;
+                    var wrapModeY = _meshComponent.Material.TextureRepeatY ? TextureWrapMode.Repeat : TextureWrapMode.Clamp;
+
+                    GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)wrapModeX);
+                    GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)wrapModeY);
+
+                    shader.SetSamplerUnit(0);
+                    shader.SetHasTexture(true);
+                }
+                else
+                {
+                    GL.ActiveTexture(TextureUnit.Texture0);
+                    GL.BindTexture(TextureTarget.Texture2D, -1);
+                    shader.SetHasTexture(false);
+                }
+
+                if (_meshComponent.NormalTexture != null)
+                {
+                    GL.ActiveTexture(TextureUnit.Texture1);
+                    GL.BindTexture(TextureTarget.Texture2D, _meshComponent.NormalTexture.TextureId);
+
+                    var wrapModeX = _meshComponent.Material.TextureRepeatX ? TextureWrapMode.Repeat : TextureWrapMode.Clamp;
+                    var wrapModeY = _meshComponent.Material.TextureRepeatY ? TextureWrapMode.Repeat : TextureWrapMode.Clamp;
+
+                    GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)wrapModeX);
+                    GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)wrapModeY);
+
+                    shader.SetNormalSamplerUnit(1);
+                    shader.SetHasNormalTexture(true);
+                }
+                else
+                {
+                    GL.ActiveTexture(TextureUnit.Texture1);
+                    GL.BindTexture(TextureTarget.Texture2D, -1);
+                    shader.SetHasNormalTexture(false);
+                }
+
+                if (_clonedReference != null)
+                {
+                    GL.BindBuffer(BufferTarget.ElementArrayBuffer, _clonedReference._bufferIds[1]);
+                }
+                else
+                {
+                    GL.BindBuffer(BufferTarget.ElementArrayBuffer, _bufferIds[1]);
+                }
+
+                GL.DrawElements(BeginMode, _meshComponent.Indices.Length, DrawElementsType.UnsignedShort, 0);
             }
-            else
+            else if (_meshComponent.Material.ShaderProgram == ShaderProgram.ProgramType.FUR)
             {
-                GL.BindBuffer(BufferTarget.ArrayBuffer, _bufferIds[0]);
-            }
 
-            GL.EnableVertexAttribArray(0);
-            GL.EnableVertexAttribArray(1);
-            GL.EnableVertexAttribArray(2);
-            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 8 * sizeof(float), 0);
-            GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 8 * sizeof(float), 3 * sizeof(float));
-            GL.VertexAttribPointer(2, 2, VertexAttribPointerType.Float, false, 8 * sizeof(float), 6 * sizeof(float));
 
-            if (_meshComponent.Texture != null)
-            {
-                GL.ActiveTexture(TextureUnit.Texture0);
-                GL.BindTexture(TextureTarget.Texture2D, _meshComponent.Texture.TextureId);
-                
-                var wrapModeX = _meshComponent.Material.TextureRepeatX ? TextureWrapMode.Repeat : TextureWrapMode.Clamp;
-                var wrapModeY = _meshComponent.Material.TextureRepeatY ? TextureWrapMode.Repeat : TextureWrapMode.Clamp;
+                var shader = GameObject.Scene.FurShader;
+                shader.Use();
+                shader.SetModelViewProjectionMatrix(modelView);
 
-                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)wrapModeX);
-                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)wrapModeY);
-                
-                shader.SetSamplerUnit(0);
-                shader.SetHasTexture(true);
-            }
-            else
-            {
-                GL.ActiveTexture(TextureUnit.Texture0);
-                GL.BindTexture(TextureTarget.Texture2D, -1);
-                shader.SetHasTexture(false);
-            }
+                var locationInverse = transform;
 
-            if (_meshComponent.NormalTexture != null)
-            {
-                GL.ActiveTexture(TextureUnit.Texture1);
-                GL.BindTexture(TextureTarget.Texture2D, _meshComponent.NormalTexture.TextureId);
+                locationInverse.Invert();
+                locationInverse.Transpose();
 
-                var wrapModeX = _meshComponent.Material.TextureRepeatX ? TextureWrapMode.Repeat : TextureWrapMode.Clamp;
-                var wrapModeY = _meshComponent.Material.TextureRepeatY ? TextureWrapMode.Repeat : TextureWrapMode.Clamp;
+                shader.SetTransposeAdjointModelViewMatrix(locationInverse);
+                shader.SetModelViewMatrix(transform);
+                shader.SetMaterial(_meshComponent.Material);
 
-                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)wrapModeX);
-                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)wrapModeY);
+                locationInverse.Invert();
+                var t = transform;
+                t.Transpose();
+                shader.SetModelViewInverseMatrix(locationInverse);
 
-                shader.SetNormalSamplerUnit(1);
-                shader.SetHasNormalTexture(true);
-            }
-            else
-            {
+                int vertexAttrib = shader.GetVertexAttributeLocation();
+                int normalAttrib = shader.GetNormalAttributeLocation();
+                int uvAttrib = shader.GetUVAttributeLocation();
+
+                if (_clonedReference != null)
+                {
+                    GL.BindBuffer(BufferTarget.ArrayBuffer, _clonedReference._bufferIds[0]);
+                }
+                else
+                {
+                    GL.BindBuffer(BufferTarget.ArrayBuffer, _bufferIds[0]);
+                }
+
+                GL.EnableVertexAttribArray(0);
+                GL.EnableVertexAttribArray(1);
+                GL.EnableVertexAttribArray(2);
+                GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 8 * sizeof(float), 0);
+                GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 8 * sizeof(float), 3 * sizeof(float));
+                GL.VertexAttribPointer(2, 2, VertexAttribPointerType.Float, false, 8 * sizeof(float), 6 * sizeof(float));
+
+                if (_meshComponent.Texture != null)
+                {
+                    GL.ActiveTexture(TextureUnit.Texture0);
+                    GL.BindTexture(TextureTarget.Texture2D, _meshComponent.Texture.TextureId);
+
+                    var wrapModeX = _meshComponent.Material.TextureRepeatX ? TextureWrapMode.Repeat : TextureWrapMode.Clamp;
+                    var wrapModeY = _meshComponent.Material.TextureRepeatY ? TextureWrapMode.Repeat : TextureWrapMode.Clamp;
+
+                    GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)wrapModeX);
+                    GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)wrapModeY);
+
+                    shader.SetSamplerUnit(0);
+                    shader.SetHasTexture(true);
+                }
+                else
+                {
+                    GL.ActiveTexture(TextureUnit.Texture0);
+                    GL.BindTexture(TextureTarget.Texture2D, -1);
+                    shader.SetHasTexture(false);
+                }
+
+
+                if (_clonedReference != null)
+                {
+                    GL.BindBuffer(BufferTarget.ElementArrayBuffer, _clonedReference._bufferIds[1]);
+                }
+                else
+                {
+                    GL.BindBuffer(BufferTarget.ElementArrayBuffer, _bufferIds[1]);
+                }
+
+
                 GL.ActiveTexture(TextureUnit.Texture1);
                 GL.BindTexture(TextureTarget.Texture2D, -1);
                 shader.SetHasNormalTexture(false);
-            }
 
-            if (_clonedReference != null)
-            {
-                GL.BindBuffer(BufferTarget.ElementArrayBuffer, _clonedReference._bufferIds[1]);
-            }
-            else
-            {
-                GL.BindBuffer(BufferTarget.ElementArrayBuffer, _bufferIds[1]);
-            }
-                        
-            GL.DrawElements(BeginMode, _meshComponent.Indices.Length, DrawElementsType.UnsignedShort, 0);
+                shader.SetShellIndex(0);
 
+                GL.DrawElements(BeginMode, _meshComponent.Indices.Length, DrawElementsType.UnsignedShort, 0);
+
+                //GL.Disable(EnableCap.DepthTest);
+
+                if (_meshComponent.NormalTexture != null)
+                {
+                    GL.ActiveTexture(TextureUnit.Texture1);
+                    GL.BindTexture(TextureTarget.Texture2D, _meshComponent.NormalTexture.TextureId);
+
+                    var wrapModeX = _meshComponent.Material.TextureRepeatX ? TextureWrapMode.Repeat : TextureWrapMode.Clamp;
+                    var wrapModeY = _meshComponent.Material.TextureRepeatY ? TextureWrapMode.Repeat : TextureWrapMode.Clamp;
+
+                    GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)wrapModeX);
+                    GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)wrapModeY);
+
+                    shader.SetNormalSamplerUnit(1);
+                    shader.SetHasNormalTexture(true);
+                }
+                else
+                {
+                    GL.ActiveTexture(TextureUnit.Texture1);
+                    GL.BindTexture(TextureTarget.Texture2D, -1);
+                    shader.SetHasNormalTexture(false);
+                }
+
+                /* render shells */
+                for (int i = 0; i < 10; i++)
+                {
+                    shader.SetShellIndex((i * 1.0f) / 10.0f);
+
+                    GL.DrawElements(BeginMode, _meshComponent.Indices.Length, DrawElementsType.UnsignedShort, 0);
+                }
+
+                //GL.Enable(EnableCap.DepthTest);
+            }
         }
 
         public override void Tick(float timeElapsed)
         {
 
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+
+            //ReleaseBuffers();
         }
     }
 }

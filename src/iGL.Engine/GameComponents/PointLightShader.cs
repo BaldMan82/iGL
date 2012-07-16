@@ -12,20 +12,10 @@ namespace iGL.Engine
     public class PointLightShader : ShaderProgram
     {
         public PointLightShader()
-            : base(
-            new List<Shader>() {                   
-                new Shader(Shader.ShaderType.VS_POINTLIGHT)                 
-            },
-
-            new List<Shader>() {              
-                new Shader(Shader.ShaderType.FS_POINTLIGHT)               
-                })
-        {
-        }
-
+            : base(ProgramType.POINTLIGHT, new Shader(Shader.ShaderType.VS_POINTLIGHT), new Shader(Shader.ShaderType.FS_POINTLIGHT)) { }                               
+      
         public void SetLight(ILight light, Vector4 position)
         {
-
             if (!(light is PointLight)) throw new NotSupportedException("Only pointlights supported in this shader");
 
             var baseLight = light as PointLight;

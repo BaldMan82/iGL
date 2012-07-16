@@ -31,6 +31,8 @@ namespace iGL.Engine.GL
 
         void Uniform4(int loc, Math.Vector4 vector4);
 
+        void Uniform3(int loc, Math.Vector3 vector3);
+
         void Uniform1(int loc, float p);
 
         void Uniform1(int loc, int p);
@@ -39,7 +41,7 @@ namespace iGL.Engine.GL
 
         int GetUniformLocation(int p, string uniform);
 
-        void GenBuffers(int p, int[] bufferIds);
+        void GenBuffers(int p, int[] bufferIds);        
 
         void DeleteBuffers(int p, int[] bufferIds);
 
@@ -76,5 +78,11 @@ namespace iGL.Engine.GL
         void TexImage2D(TextureTarget textureTarget, int level, PixelInternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels);
 
         void ActiveTexture(TextureUnit textureUnit);
+
+        void DeleteTexture(int id);
+
+        void DeleteShader(int id);
+
+        void DeleteProgram(int id);
     }
 }

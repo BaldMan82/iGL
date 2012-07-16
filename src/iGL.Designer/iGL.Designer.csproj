@@ -65,6 +65,12 @@
     <Compile Include="Code\EngineAssets.cs" />
     <Compile Include="Code\Extensions.cs" />
     <Compile Include="Code\GameObjectDialogAttribute.cs" />
+    <Compile Include="ComponentDialogs\Animations\AlphaAnimationComponentDlg.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentDialogs\Animations\AlphaAnimationComponentDlg.Designer.cs">
+      <DependentUpon>AlphaAnimationComponentDlg.cs</DependentUpon>
+    </Compile>
     <Compile Include="ComponentDialogs\Farseer\BoxColliderFarseerComponentDlg.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -243,6 +249,9 @@
     </Compile>
     <EmbeddedResource Include="AddResourceDlg.resx">
       <DependentUpon>AddResourceDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentDialogs\Animations\AlphaAnimationComponentDlg.resx">
+      <DependentUpon>AlphaAnimationComponentDlg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComponentDialogs\Farseer\BoxColliderFarseerComponentDlg.resx">
       <DependentUpon>BoxColliderFarseerComponentDlg.cs</DependentUpon>

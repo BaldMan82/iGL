@@ -107,6 +107,20 @@ namespace iGL.Engine
                         _propertyInfo.SetValue(this.GameObject, value, null);
                     }
                 }
+                else if (_propertyInfo.PropertyType == typeof(Vector4))
+                {
+                    var startValues = StartValue.Split(',').Select(s => float.Parse(s)).ToArray();
+                    var stopValues = StopValue.Split(',').Select(s => float.Parse(s)).ToArray();
+
+                    if (startValues.Length == 4 && stopValues.Length == 4)
+                    {
+                        var startVec = new Vector4(startValues[0], startValues[1], startValues[2], startValues[3]);
+                        var stopVec = new Vector4(stopValues[0], stopValues[1], stopValues[2], stopValues[3]);
+
+                        var value = Vector4.Lerp(startVec, stopVec, percentage);
+                        _propertyInfo.SetValue(this.GameObject, value, null);
+                    }
+                }
             }
             catch { }
 

@@ -8,7 +8,7 @@ using Jitter.LinearMath;
 
 namespace iGL.Engine
 {
-    public class DesignPhysics : IPhysics
+    public class DesignPhysics : PhysicsBase
     {
         public Jitter.World _world;
         public GameObject SelectedObject { get; set; }
@@ -33,20 +33,7 @@ namespace iGL.Engine
         {
             HadCollision = true;
             if (_collisionEvent != null) _collisionEvent(this, EventArgs.Empty);
-        }
-
-        public event EventHandler<EventArgs> OnCollision
-        {
-            add
-            {
-                _collisionEvent += value;
-            }
-            remove
-            {
-                _collisionEvent -= value;
-            }
-
-        }
+        }       
 
         void Events_PreStep(float timestep)
         {           
@@ -120,12 +107,12 @@ namespace iGL.Engine
             //}
         }
 
-        public void Step(float timeStep)
+        public override void Step(float timeStep)
         {           
            _world.Step(timeStep, false);            
         }
 
-        public void AddBody(object body)
+        public override void AddBody(object body)
         {
             var jitterBody = body as RigidBody;
 
@@ -138,7 +125,7 @@ namespace iGL.Engine
             }
         }
 
-        public void RemoveBody(object body)
+        public override void RemoveBody(object body)
         {
             var jitterBody = body as RigidBody;
             _world.Events.DeactivatedBody -= Events_DeactivatedBody;
@@ -151,9 +138,17 @@ namespace iGL.Engine
         }
 
 
-        public object GetWorld()
+        public override object GetWorld()
         {
             return _world;
+        }
+
+
+        public override event EventHandler<Events.CollisionEvent> CollisionEvent;
+
+        public override void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }

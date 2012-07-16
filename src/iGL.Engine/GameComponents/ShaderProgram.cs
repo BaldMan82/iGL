@@ -7,7 +7,7 @@ using iGL.Engine.Math;
 
 namespace iGL.Engine
 {
-    public class ShaderProgram
+    public class ShaderProgram : IDisposable
     {        
         private List<Shader> _vertexShaders;
         private List<Shader> _fragmentShaders;
@@ -16,16 +16,26 @@ namespace iGL.Engine
         public IGL GL { get { return Game.GL; } }
 
         public int ProgramId { get; private set; }
+        public int VertexShaderId { get; private set; }
+        public int FragmentShaderId { get; private set; }
 
+        public enum ProgramType
+        {
+            POINTLIGHT,
+            FUR
+        }
 
+        public ProgramType Type { get; private set; }
 
-        public ShaderProgram(Shader vertexShader, Shader fragmentShader) : 
-            this(new List<Shader>() { vertexShader }, new List<Shader>() { fragmentShader }) {}
+        public ShaderProgram(ProgramType programType, Shader vertexShader, Shader fragmentShader) : 
+            this(programType, new List<Shader>() { vertexShader }, new List<Shader>() { fragmentShader }) {}
         
-        public ShaderProgram(List<Shader> vertexShaders, List<Shader> fragmentShaders)
+        public ShaderProgram(ProgramType programType, List<Shader> vertexShaders, List<Shader> fragmentShaders)
         {
             _vertexShaders = vertexShaders;
             _fragmentShaders = fragmentShaders;
+
+            Type = programType;
 
             ProgramId = -1;
         }
@@ -50,17 +60,17 @@ namespace iGL.Engine
                 vertexProgramSource += vertexShader.Source;
             }
 
-            var vs = GL.CreateShader(ShaderType.VertexShader);
+            VertexShaderId = GL.CreateShader(ShaderType.VertexShader);
 
-            GL.ShaderSource(vs, vertexProgramSource);
+            GL.ShaderSource(VertexShaderId, vertexProgramSource);
 
-            GL.CompileShader(vs);
+            GL.CompileShader(VertexShaderId);
 
-            GL.GetShaderInfoLog(vs, out shaderLog);
+            GL.GetShaderInfoLog(VertexShaderId, out shaderLog);
 
             if (!string.IsNullOrEmpty(shaderLog) && !shaderLog.Contains("successfully compiled")) throw new Exception(shaderLog);
 
-            GL.AttachShader(ProgramId, vs);
+            GL.AttachShader(ProgramId, VertexShaderId);
 
             /* load fragment shader */
 
@@ -71,17 +81,17 @@ namespace iGL.Engine
                 fragmentShaderSource += fragmentShader.Source;
             }
 
-            var fs = GL.CreateShader(ShaderType.FragmentShader);
+            FragmentShaderId = GL.CreateShader(ShaderType.FragmentShader);
 
-            GL.ShaderSource(fs, fragmentShaderSource);
+            GL.ShaderSource(FragmentShaderId, fragmentShaderSource);
 
-            GL.CompileShader(fs);
+            GL.CompileShader(FragmentShaderId);
 
-            GL.GetShaderInfoLog(fs, out shaderLog);
+            GL.GetShaderInfoLog(FragmentShaderId, out shaderLog);
 
             if (!string.IsNullOrEmpty(shaderLog) && !shaderLog.Contains("successfully compiled")) throw new Exception(shaderLog);
 
-            GL.AttachShader(ProgramId, fs);
+            GL.AttachShader(ProgramId, FragmentShaderId);
 
             GL.BindAttribLocation(ProgramId, 0, "a_position");
             GL.BindAttribLocation(ProgramId, 1, "a_normal");
@@ -175,9 +185,14 @@ namespace iGL.Engine
         public void SetAmbientColor(Vector4 color)
         {
             var loc = GetUniformLocation("u_globalAmbientColor");
-
             GL.Uniform4(loc, color);
-        }        
+        }
+
+        public void SetEyePos(Vector4 eyePos)
+        {
+            var loc = GetUniformLocation("u_eyePos");
+            GL.Uniform4(loc, eyePos);
+        }
 
         protected int GetUniformLocation(string uniform)
         {
@@ -202,6 +217,13 @@ namespace iGL.Engine
             if (ProgramId == -1) throw new Exception("Invalid program");
 
             GL.UseProgram(ProgramId);
-        }      
+        }
+
+        public void Dispose()
+        {
+            GL.DeleteShader(VertexShaderId);
+            GL.DeleteShader(FragmentShaderId);
+            GL.DeleteProgram(ProgramId);
+        }
     }
 }

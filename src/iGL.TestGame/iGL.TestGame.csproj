@@ -47,6 +47,8 @@
     <Compile Include="GameObjects\SlingshotBall3D.cs" />
     <Compile Include="GameObjects\PanViewFollowCamera3d.cs" />
     <Compile Include="GameObjects\PanViewFollowCamera.cs" />
+    <Compile Include="GameObjects\Star.cs" />
+    <Compile Include="GameObjects\StarFlare.cs" />
     <Compile Include="TestGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestScene.cs" />
@@ -57,9 +59,7 @@
       <Name>iGL.Engine</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>$(SolutionDir)ImportTool.exe $(ProjectPath) $(ProjectDir)ResourcesDrop $(ProjectDir)Resources</PreBuildEvent>
@@ -75,6 +75,9 @@
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\arrow.text" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\ball.text" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\bg.text" />
   </ItemGroup>
   <ItemGroup>
@@ -84,10 +87,19 @@
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\bmpfont_0.text" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\box.dae" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\box.text" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\crate.text" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\fence.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\hair.text" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\level1.dae" />
@@ -99,12 +111,66 @@
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\level1text.text" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\scene.igl" />
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\level1_1.igl" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\level1_2.igl" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\level1_3.igl" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\level1_4.igl" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\level1_5.igl" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\level1_6.igl" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\level1_7.igl" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\level1_pipe.dae" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\level1_platform.dae" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\level1_platform.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\pipe.dae" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\pipe.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\plank.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\sign.text" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\star.dae" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\star.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\starflare.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\stone.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\stone2.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\stone3.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\wood.text" />
   </ItemGroup>
 </Project>

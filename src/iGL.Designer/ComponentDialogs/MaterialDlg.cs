@@ -82,6 +82,8 @@ namespace iGL.Designer.ComponentDialogs
 
             _material.TextureTilingX = txtTilingX.TextToFloat();
             _material.TextureTilingY = txtTilingY.TextToFloat();
+
+            _material.Shininess = txtShininess.TextToFloat();
         }
 
         private void MaterialDlg_Load(object sender, EventArgs e)
@@ -108,6 +110,8 @@ namespace iGL.Designer.ComponentDialogs
 
             txtTilingX.Text = _material.TextureTilingX.ToInvariantText();
             txtTilingY.Text = _material.TextureTilingY.ToInvariantText();
+
+            txtShininess.Text = _material.Shininess.ToInvariantText();
 
             _internalUpdate = false;
         }

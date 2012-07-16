@@ -42,6 +42,13 @@ namespace iGL.Designer
                 if (Scene.CurrentLight != null && Scene.CurrentLight.GameObject == l) ddLights.SelectedIndex = index;
             });
 
+            var objects = Scene.GameObjects.ToList();
+            objects.ForEach(o =>
+            {
+                int index = ddPlayerObjects.Items.Add(o);
+                if (Scene.PlayerObject != null && Scene.PlayerObject == o) ddPlayerObjects.SelectedIndex = index;
+            });
+
             pnlAmbient.BackColor = Scene.AmbientColor.ToSystemColor();
             txtAmbientAlpha.Text = Scene.AmbientColor.W.ToInvariantText();
 
@@ -78,6 +85,12 @@ namespace iGL.Designer
         {
             if (!_loaded) return;
             Scene.SetDesignCamera(ddDesignCameras.SelectedItem as GameObject);
+        }
+
+        private void ddPlayerObjects_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (!_loaded) return;
+            Scene.SetPlayerObject(ddPlayerObjects.SelectedItem as GameObject);
         }
 
         private void txtAmbientAlpha_TextChanged(object sender, EventArgs e)
@@ -136,6 +149,6 @@ namespace iGL.Designer
                 Scene.AddTrigger(dlg.Trigger);
                 UpdateTriggerList();
             }
-        }
+        }      
     }
 }
