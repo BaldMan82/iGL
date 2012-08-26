@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using iGL.Engine;
 using iGL.Engine.Resources;
+using iGL.Engine.Events;
 
 namespace iGL.Designer
 {
@@ -30,9 +31,7 @@ namespace iGL.Designer
 
         public SceneControl()
         {
-            InitializeComponent();
-            sceneTree.AfterSelect += new TreeViewEventHandler(sceneTree_AfterSelect);
-            sceneTree.BeforeSelect += new TreeViewCancelEventHandler(sceneTree_BeforeSelect);
+            InitializeComponent();           
             resourceTree.NodeMouseDoubleClick += new TreeNodeMouseClickEventHandler(resourceTree_NodeMouseDoubleClick);
         }
 
@@ -57,6 +56,11 @@ namespace iGL.Designer
         void sceneTree_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (_nodeSelectedEvent != null) _nodeSelectedEvent(this, new NodeSelected() { NodeValue = e.Node.Tag });
+
+            if (e.Node.Tag is GameObject)
+            {
+                OpenTKControl.Instance.SelectObjectAction(e.Node.Tag as GameObject, new MouseButtonDownEvent());
+            }
         }
 
         public event EventHandler<NodeSelected> OnNodeSelected
@@ -205,6 +209,41 @@ namespace iGL.Designer
         private void toolStripAddFont_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void sceneTree_MouseDown(object sender, MouseEventArgs e)
+        {
+                      
+        }
+
+        private void sceneTree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {            
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                sceneTree.SelectedNode = sceneTree.GetNodeAt(e.X, e.Y);
+                var point = new System.Drawing.Point(e.X, e.Y);
+                point = PointToScreen(point);
+                contextMenu.Show(point.X, point.Y);
+            }
+        }
+
+        private void deleteMenuItem_Click(object sender, EventArgs e)
+        {
+            var prevNode = sceneTree.SelectedNode.PrevNode;
+            OpenTKControl.Instance.deleteMenuItem_Click(sender, e);            
+        }
+
+        private void cloneMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenTKControl.Instance.cloneMenuItem_Click(sender, e);
+        }
+
+        private void sceneTree_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                deleteMenuItem_Click(sender, e);
+            }
         }
     }
 }

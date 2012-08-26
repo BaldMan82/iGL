@@ -44,7 +44,7 @@ namespace iGL.TestGame.GameObjects
             CameraComponent.ClearColor = new Vector4(0.2f, 0.2f, 0.2f, 1.0f);
 
             Position = new Vector3(0, 0, 30);
-            _distance = 25.0f;
+            _distance = 22.0f;
 
         }
 
@@ -82,7 +82,7 @@ namespace iGL.TestGame.GameObjects
 
             if (FollowingEnabled)
             {
-                var target = Vector3.Lerp(CameraComponent.Target, _target.WorldPosition + new Vector3(0, 2, 0), timeElapsed * 2);
+                var target = Vector3.Lerp(CameraComponent.Target, _target.WorldPosition + new Vector3(0, 2, 0), timeElapsed * 4.0f);
                 var position = target + new Vector3(0, 0, _distance);
 
                 var viewBounds = Math.Sin(CameraComponent.FieldOfViewRadians) * _distance;

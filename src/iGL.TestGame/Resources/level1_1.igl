@@ -3,7 +3,7 @@
   <PlayCameraId>ccb7258a-8e81-4772-b2c8-cfce0b2bb3c4</PlayCameraId>
   <DesignCameraId>fcb274fe-700d-42bc-8961-583115c36094</DesignCameraId>
   <LightId>a430f365-10b9-4c0d-8a94-2fadcb0243fd</LightId>
-  <PlayerObjectId></PlayerObjectId>
+  <PlayerObjectId>62b58009-e7e3-4772-948b-088631b94889</PlayerObjectId>
   <AmbientColor>
     <x>1</x>
     <y>1</y>
@@ -133,6 +133,7 @@
         <GameComponent Type="iGL.Engine.RigidBodyFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <Mass>1</Mass>
           <IsGravitySource>false</IsGravitySource>
+          <GravityRange>5</GravityRange>
           <IsSensor>false</IsSensor>
           <IsStatic>true</IsStatic>
           <Restitution>0.2</Restitution>
@@ -280,363 +281,6 @@
             </Specular>
           </Light>
           <Id>a7a1fffa-f12a-4a52-8e89-c79630bdf223</Id>
-        </GameComponent>
-      </Components>
-    </GameObject>
-    <GameObject Type="iGL.TestGame.GameObjects.SlingshotBallFarseer3D, iGL.TestGame, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <Rings>16</Rings>
-      <Segments>16</Segments>
-      <Visible>true</Visible>
-      <Enabled>true</Enabled>
-      <Designer>false</Designer>
-      <Name>SlingshotBallFarseer3D0</Name>
-      <ClearsZBuffer>false</ClearsZBuffer>
-      <DistanceSorting>false</DistanceSorting>
-      <AutoLoad>true</AutoLoad>
-      <RenderQueuePriority>-1</RenderQueuePriority>
-      <Id>0682f91a-8141-43b4-9617-e4216533a788</Id>
-      <Position>
-        <x>-0.5</x>
-        <y>1.82608187</y>
-        <z>0</z>
-      </Position>
-      <Scale>
-        <x>1</x>
-        <y>1</y>
-        <z>1</z>
-      </Scale>
-      <Rotation>
-        <x>0</x>
-        <y>-0</y>
-        <z>0</z>
-      </Rotation>
-      <Children>
-        <GameObject Type="iGL.Engine.LightObject, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <Light Type="iGL.Engine.PointLight, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-            <Ambient>
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-              <w>1</w>
-            </Ambient>
-            <Diffuse>
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-              <w>1</w>
-            </Diffuse>
-            <Specular>
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-              <w>0</w>
-            </Specular>
-          </Light>
-          <Visible>false</Visible>
-          <Enabled>false</Enabled>
-          <Designer>false</Designer>
-          <Name></Name>
-          <ClearsZBuffer>false</ClearsZBuffer>
-          <DistanceSorting>false</DistanceSorting>
-          <AutoLoad>true</AutoLoad>
-          <RenderQueuePriority>0</RenderQueuePriority>
-          <Id>70af2307-be79-453b-a8ab-54bad0d51525</Id>
-          <Position>
-            <x>0</x>
-            <y>0</y>
-            <z>10</z>
-          </Position>
-          <Scale>
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </Scale>
-          <Rotation>
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </Rotation>
-          <Children>
-            <GameObject Type="iGL.Engine.Sphere, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <Rings>16</Rings>
-              <Segments>16</Segments>
-              <Visible>false</Visible>
-              <Enabled>false</Enabled>
-              <Designer>false</Designer>
-              <Name></Name>
-              <ClearsZBuffer>false</ClearsZBuffer>
-              <DistanceSorting>false</DistanceSorting>
-              <AutoLoad>true</AutoLoad>
-              <RenderQueuePriority>0</RenderQueuePriority>
-              <Id>b7a1fffa-f12a-4a52-8e89-c79630bdf223</Id>
-              <Position>
-                <x>0</x>
-                <y>0</y>
-                <z>0</z>
-              </Position>
-              <Scale>
-                <x>1</x>
-                <y>1</y>
-                <z>1</z>
-              </Scale>
-              <Rotation>
-                <x>0</x>
-                <y>0</y>
-                <z>0</z>
-              </Rotation>
-              <Children />
-              <Components>
-                <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-                  <BeginMode>Triangles</BeginMode>
-                  <Id>4ed3d915-17ef-427e-bbde-7906f8375e6c</Id>
-                </GameComponent>
-                <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-                  <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-                    <Id></Id>
-                    <Ambient>
-                      <x>1</x>
-                      <y>1</y>
-                      <z>0</z>
-                      <w>1</w>
-                    </Ambient>
-                    <Diffuse>
-                      <x>0.4</x>
-                      <y>0.4</y>
-                      <z>0.4</z>
-                      <w>1</w>
-                    </Diffuse>
-                    <Specular>
-                      <x>0</x>
-                      <y>0</y>
-                      <z>0</z>
-                      <w>0</w>
-                    </Specular>
-                    <Shininess>0</Shininess>
-                    <TextureName></TextureName>
-                    <NormalTextureName></NormalTextureName>
-                    <TextureRepeatX>false</TextureRepeatX>
-                    <TextureRepeatY>false</TextureRepeatY>
-                    <TextureTilingX>1</TextureTilingX>
-                    <TextureTilingY>1</TextureTilingY>
-                    <ShaderProgram>POINTLIGHT</ShaderProgram>
-                  </Material>
-                  <MeshResourceName></MeshResourceName>
-                  <Id>54d23823-aa44-4aeb-a742-57dbe16883e4</Id>
-                </GameComponent>
-              </Components>
-            </GameObject>
-          </Children>
-          <Components>
-            <GameComponent Type="iGL.Engine.LightComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <Light Type="iGL.Engine.PointLight, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-                <Ambient>
-                  <x>0</x>
-                  <y>0</y>
-                  <z>0</z>
-                  <w>1</w>
-                </Ambient>
-                <Diffuse>
-                  <x>1</x>
-                  <y>1</y>
-                  <z>1</z>
-                  <w>1</w>
-                </Diffuse>
-                <Specular>
-                  <x>0</x>
-                  <y>0</y>
-                  <z>0</z>
-                  <w>0</w>
-                </Specular>
-              </Light>
-              <Id>a7a1fffa-f12a-4a52-8e89-c79630bdf223</Id>
-            </GameComponent>
-          </Components>
-        </GameObject>
-        <GameObject Type="iGL.TestGame.GameObjects.Arrow2d, iGL.TestGame, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <Visible>false</Visible>
-          <Enabled>true</Enabled>
-          <Designer>false</Designer>
-          <Name></Name>
-          <ClearsZBuffer>false</ClearsZBuffer>
-          <DistanceSorting>true</DistanceSorting>
-          <AutoLoad>true</AutoLoad>
-          <RenderQueuePriority>-1</RenderQueuePriority>
-          <Id>92da1056-2ff7-443f-aed1-0afd3db7b0bf</Id>
-          <Position>
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </Position>
-          <Scale>
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </Scale>
-          <Rotation>
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </Rotation>
-          <Children />
-          <Components>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>36af2307-be79-453a-a8ab-54bad0d31525</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-                <Id></Id>
-                <Ambient>
-                  <x>0</x>
-                  <y>0</y>
-                  <z>0</z>
-                  <w>1</w>
-                </Ambient>
-                <Diffuse>
-                  <x>1</x>
-                  <y>0</y>
-                  <z>0</z>
-                  <w>0</w>
-                </Diffuse>
-                <Specular>
-                  <x>0</x>
-                  <y>0</y>
-                  <z>0</z>
-                  <w>0</w>
-                </Specular>
-                <Shininess>0</Shininess>
-                <TextureName>arrow</TextureName>
-                <NormalTextureName></NormalTextureName>
-                <TextureRepeatX>false</TextureRepeatX>
-                <TextureRepeatY>false</TextureRepeatY>
-                <TextureTilingX>1</TextureTilingX>
-                <TextureTilingY>1</TextureTilingY>
-                <ShaderProgram>POINTLIGHT</ShaderProgram>
-              </Material>
-              <MeshResourceName></MeshResourceName>
-              <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
-            </GameComponent>
-          </Components>
-        </GameObject>
-        <GameObject Type="iGL.Engine.Sphere, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <Rings>16</Rings>
-          <Segments>16</Segments>
-          <Visible>false</Visible>
-          <Enabled>false</Enabled>
-          <Designer>false</Designer>
-          <Name>aimSphere</Name>
-          <ClearsZBuffer>false</ClearsZBuffer>
-          <DistanceSorting>false</DistanceSorting>
-          <AutoLoad>true</AutoLoad>
-          <RenderQueuePriority>0</RenderQueuePriority>
-          <Id>86af2307-be79-453b-a8ab-54bad0d51525</Id>
-          <Position>
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </Position>
-          <Scale>
-            <x>5</x>
-            <y>5</y>
-            <z>5</z>
-          </Scale>
-          <Rotation>
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </Rotation>
-          <Children />
-          <Components>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>4ed3d915-17ef-427e-bbde-7906f8375e6c</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-                <Id></Id>
-                <Ambient>
-                  <x>1</x>
-                  <y>0</y>
-                  <z>0</z>
-                  <w>0.5</w>
-                </Ambient>
-                <Diffuse>
-                  <x>0.4</x>
-                  <y>0.4</y>
-                  <z>0.4</z>
-                  <w>1</w>
-                </Diffuse>
-                <Specular>
-                  <x>0</x>
-                  <y>0</y>
-                  <z>0</z>
-                  <w>0</w>
-                </Specular>
-                <Shininess>0</Shininess>
-                <TextureName>ball</TextureName>
-                <NormalTextureName></NormalTextureName>
-                <TextureRepeatX>false</TextureRepeatX>
-                <TextureRepeatY>false</TextureRepeatY>
-                <TextureTilingX>1</TextureTilingX>
-                <TextureTilingY>1</TextureTilingY>
-                <ShaderProgram>POINTLIGHT</ShaderProgram>
-              </Material>
-              <MeshResourceName></MeshResourceName>
-              <Id>54d23823-aa44-4aeb-a742-57dbe16883e4</Id>
-            </GameComponent>
-          </Components>
-        </GameObject>
-      </Children>
-      <Components>
-        <GameComponent Type="iGL.Engine.RigidBodyFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <Mass>1</Mass>
-          <IsGravitySource>false</IsGravitySource>
-          <IsSensor>false</IsSensor>
-          <IsStatic>false</IsStatic>
-          <Restitution>0.2</Restitution>
-          <Friction>100</Friction>
-          <AutoReloadBody>true</AutoReloadBody>
-          <Id>5aae1f68-eace-5029-a45a-dfe3d95ec2ea</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.SphereColliderFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <Id>1a256ff2-1f46-4151-8197-8f502b4343ab</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-            <Id></Id>
-            <Ambient>
-              <x>0</x>
-              <y>1</y>
-              <z>0</z>
-              <w>1</w>
-            </Ambient>
-            <Diffuse>
-              <x>0</x>
-              <y>1</y>
-              <z>0</z>
-              <w>1</w>
-            </Diffuse>
-            <Specular>
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-              <w>0</w>
-            </Specular>
-            <Shininess>0</Shininess>
-            <TextureName></TextureName>
-            <NormalTextureName></NormalTextureName>
-            <TextureRepeatX>false</TextureRepeatX>
-            <TextureRepeatY>false</TextureRepeatY>
-            <TextureTilingX>1</TextureTilingX>
-            <TextureTilingY>1</TextureTilingY>
-            <ShaderProgram>POINTLIGHT</ShaderProgram>
-          </Material>
-          <MeshResourceName></MeshResourceName>
-          <Id>64d23823-aa44-4aeb-a742-57dbe16883e4</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>8ed3d915-18ef-427e-bbde-7906f8375e6c</Id>
         </GameComponent>
       </Components>
     </GameObject>
@@ -802,6 +446,7 @@
         <GameComponent Type="iGL.Engine.RigidBodyFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <Mass>1</Mass>
           <IsGravitySource>false</IsGravitySource>
+          <GravityRange>5</GravityRange>
           <IsSensor>true</IsSensor>
           <IsStatic>true</IsStatic>
           <Restitution>0.2</Restitution>
@@ -918,6 +563,7 @@
         <GameComponent Type="iGL.Engine.RigidBodyFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <Mass>1</Mass>
           <IsGravitySource>false</IsGravitySource>
+          <GravityRange>5</GravityRange>
           <IsSensor>true</IsSensor>
           <IsStatic>true</IsStatic>
           <Restitution>0.2</Restitution>
@@ -997,6 +643,7 @@
         <GameComponent Type="iGL.Engine.RigidBodyFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <Mass>1</Mass>
           <IsGravitySource>false</IsGravitySource>
+          <GravityRange>5</GravityRange>
           <IsSensor>true</IsSensor>
           <IsStatic>true</IsStatic>
           <Restitution>0.2</Restitution>
@@ -1076,6 +723,7 @@
         <GameComponent Type="iGL.Engine.RigidBodyFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <Mass>1</Mass>
           <IsGravitySource>false</IsGravitySource>
+          <GravityRange>5</GravityRange>
           <IsSensor>true</IsSensor>
           <IsStatic>true</IsStatic>
           <Restitution>0.2</Restitution>
@@ -1155,6 +803,7 @@
         <GameComponent Type="iGL.Engine.RigidBodyFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <Mass>1</Mass>
           <IsGravitySource>false</IsGravitySource>
+          <GravityRange>5</GravityRange>
           <IsSensor>true</IsSensor>
           <IsStatic>true</IsStatic>
           <Restitution>0.2</Restitution>
@@ -1234,6 +883,7 @@
         <GameComponent Type="iGL.Engine.RigidBodyFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <Mass>1</Mass>
           <IsGravitySource>false</IsGravitySource>
+          <GravityRange>5</GravityRange>
           <IsSensor>true</IsSensor>
           <IsStatic>true</IsStatic>
           <Restitution>0.2</Restitution>
@@ -1310,6 +960,7 @@
         <GameComponent Type="iGL.Engine.RigidBodyFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <Mass>1</Mass>
           <IsGravitySource>false</IsGravitySource>
+          <GravityRange>5</GravityRange>
           <IsSensor>true</IsSensor>
           <IsStatic>true</IsStatic>
           <Restitution>0.2</Restitution>
@@ -1334,8 +985,8 @@
       <Id>b784d40b-ec9f-41e3-97af-e5ef5e44e742</Id>
       <Position>
         <x>4.591114</x>
-        <y>2.08262849</y>
-        <z>0</z>
+        <y>2.082628</y>
+        <z>-0.5</z>
       </Position>
       <Scale>
         <x>4</x>
@@ -1401,7 +1052,7 @@
       <Position>
         <x>4.531836</x>
         <y>2.898852</y>
-        <z>0.07942411</z>
+        <z>-0.45</z>
       </Position>
       <Scale>
         <x>2.564692</x>
@@ -1411,7 +1062,7 @@
       <Rotation>
         <x>0</x>
         <y>0</y>
-        <z>0.232660249</z>
+        <z>0.2326602</z>
       </Rotation>
       <Children />
       <Components>
@@ -1462,6 +1113,7 @@
           <Text>Level 1</Text>
           <CharacterInterval>0.05</CharacterInterval>
           <LineDelay>0</LineDelay>
+          <PlayMode>Play</PlayMode>
           <Id>b95c8a6f-95d2-44e8-89fc-db07da4edb21</Id>
         </GameComponent>
       </Components>
@@ -1536,6 +1188,7 @@
         <GameComponent Type="iGL.Engine.RigidBodyFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <Mass>1</Mass>
           <IsGravitySource>false</IsGravitySource>
+          <GravityRange>5</GravityRange>
           <IsSensor>true</IsSensor>
           <IsStatic>true</IsStatic>
           <Restitution>0.2</Restitution>
@@ -1615,6 +1268,7 @@
         <GameComponent Type="iGL.Engine.RigidBodyFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <Mass>1</Mass>
           <IsGravitySource>false</IsGravitySource>
+          <GravityRange>5</GravityRange>
           <IsSensor>true</IsSensor>
           <IsStatic>true</IsStatic>
           <Restitution>0.2</Restitution>
@@ -1700,7 +1354,497 @@
 </Text>
           <CharacterInterval>0.02</CharacterInterval>
           <LineDelay>2</LineDelay>
+          <PlayMode>Play</PlayMode>
           <Id>5023d9ac-0fb0-426d-b349-9e8edbc03cd7</Id>
+        </GameComponent>
+      </Components>
+    </GameObject>
+    <GameObject Type="iGL.TestGame.GameObjects.SlingshotBallFarseer2D, iGL.TestGame, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <Visible>true</Visible>
+      <Enabled>true</Enabled>
+      <Designer>false</Designer>
+      <Name>SlingshotBallFarseer2D0</Name>
+      <ClearsZBuffer>false</ClearsZBuffer>
+      <DistanceSorting>true</DistanceSorting>
+      <AutoLoad>true</AutoLoad>
+      <RenderQueuePriority>0</RenderQueuePriority>
+      <Id>62b58009-e7e3-4772-948b-088631b94889</Id>
+      <Position>
+        <x>-0.5378122</x>
+        <y>1.49030757</y>
+        <z>0</z>
+      </Position>
+      <Scale>
+        <x>1</x>
+        <y>1</y>
+        <z>1</z>
+      </Scale>
+      <Rotation>
+        <x>0</x>
+        <y>-0</y>
+        <z>0</z>
+      </Rotation>
+      <Children>
+        <GameObject Type="iGL.TestGame.GameObjects.Arrow2d, iGL.TestGame, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Visible>false</Visible>
+          <Enabled>true</Enabled>
+          <Designer>false</Designer>
+          <Name></Name>
+          <ClearsZBuffer>false</ClearsZBuffer>
+          <DistanceSorting>true</DistanceSorting>
+          <AutoLoad>true</AutoLoad>
+          <RenderQueuePriority>-1</RenderQueuePriority>
+          <Id>92da1056-2ff7-443f-aed1-0afd3db7b0bf</Id>
+          <Position>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </Position>
+          <Scale>
+            <x>1</x>
+            <y>1</y>
+            <z>1</z>
+          </Scale>
+          <Rotation>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </Rotation>
+          <Children />
+          <Components>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>36af2307-be79-453a-a8ab-54bad0d31525</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+                <Id></Id>
+                <Ambient>
+                  <x>0</x>
+                  <y>0</y>
+                  <z>0</z>
+                  <w>1</w>
+                </Ambient>
+                <Diffuse>
+                  <x>0</x>
+                  <y>0</y>
+                  <z>0</z>
+                  <w>0</w>
+                </Diffuse>
+                <Specular>
+                  <x>0</x>
+                  <y>0</y>
+                  <z>0</z>
+                  <w>0</w>
+                </Specular>
+                <Shininess>0</Shininess>
+                <TextureName>arrow</TextureName>
+                <NormalTextureName></NormalTextureName>
+                <TextureRepeatX>false</TextureRepeatX>
+                <TextureRepeatY>false</TextureRepeatY>
+                <TextureTilingX>1</TextureTilingX>
+                <TextureTilingY>1</TextureTilingY>
+                <ShaderProgram>POINTLIGHT</ShaderProgram>
+              </Material>
+              <MeshResourceName></MeshResourceName>
+              <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
+            </GameComponent>
+          </Components>
+        </GameObject>
+        <GameObject Type="iGL.Engine.LightObject, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Light Type="iGL.Engine.PointLight, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+            <Ambient>
+              <x>1</x>
+              <y>1</y>
+              <z>1</z>
+              <w>1</w>
+            </Ambient>
+            <Diffuse>
+              <x>1</x>
+              <y>1</y>
+              <z>1</z>
+              <w>1</w>
+            </Diffuse>
+            <Specular>
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+              <w>0</w>
+            </Specular>
+          </Light>
+          <Visible>false</Visible>
+          <Enabled>false</Enabled>
+          <Designer>false</Designer>
+          <Name></Name>
+          <ClearsZBuffer>false</ClearsZBuffer>
+          <DistanceSorting>false</DistanceSorting>
+          <AutoLoad>true</AutoLoad>
+          <RenderQueuePriority>0</RenderQueuePriority>
+          <Id>70af2307-be79-453b-a8ab-54bad0d51525</Id>
+          <Position>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </Position>
+          <Scale>
+            <x>1</x>
+            <y>1</y>
+            <z>1</z>
+          </Scale>
+          <Rotation>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </Rotation>
+          <Children>
+            <GameObject Type="iGL.Engine.Sphere, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <Rings>16</Rings>
+              <Segments>16</Segments>
+              <Visible>false</Visible>
+              <Enabled>false</Enabled>
+              <Designer>false</Designer>
+              <Name></Name>
+              <ClearsZBuffer>false</ClearsZBuffer>
+              <DistanceSorting>false</DistanceSorting>
+              <AutoLoad>true</AutoLoad>
+              <RenderQueuePriority>0</RenderQueuePriority>
+              <Id>b7a1fffa-f12a-4a52-8e89-c79630bdf223</Id>
+              <Position>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </Position>
+              <Scale>
+                <x>1</x>
+                <y>1</y>
+                <z>1</z>
+              </Scale>
+              <Rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </Rotation>
+              <Children />
+              <Components>
+                <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+                  <BeginMode>Triangles</BeginMode>
+                  <Id>4ed3d915-17ef-427e-bbde-7906f8375e6c</Id>
+                </GameComponent>
+                <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+                  <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+                    <Id></Id>
+                    <Ambient>
+                      <x>1</x>
+                      <y>1</y>
+                      <z>0</z>
+                      <w>1</w>
+                    </Ambient>
+                    <Diffuse>
+                      <x>0.4</x>
+                      <y>0.4</y>
+                      <z>0.4</z>
+                      <w>1</w>
+                    </Diffuse>
+                    <Specular>
+                      <x>0</x>
+                      <y>0</y>
+                      <z>0</z>
+                      <w>0</w>
+                    </Specular>
+                    <Shininess>0</Shininess>
+                    <TextureName></TextureName>
+                    <NormalTextureName></NormalTextureName>
+                    <TextureRepeatX>false</TextureRepeatX>
+                    <TextureRepeatY>false</TextureRepeatY>
+                    <TextureTilingX>1</TextureTilingX>
+                    <TextureTilingY>1</TextureTilingY>
+                    <ShaderProgram>POINTLIGHT</ShaderProgram>
+                  </Material>
+                  <MeshResourceName></MeshResourceName>
+                  <Id>54d23823-aa44-4aeb-a742-57dbe16883e4</Id>
+                </GameComponent>
+              </Components>
+            </GameObject>
+          </Children>
+          <Components>
+            <GameComponent Type="iGL.Engine.LightComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <Light Type="iGL.Engine.PointLight, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+                <Ambient>
+                  <x>1</x>
+                  <y>1</y>
+                  <z>1</z>
+                  <w>1</w>
+                </Ambient>
+                <Diffuse>
+                  <x>1</x>
+                  <y>1</y>
+                  <z>1</z>
+                  <w>1</w>
+                </Diffuse>
+                <Specular>
+                  <x>0</x>
+                  <y>0</y>
+                  <z>0</z>
+                  <w>0</w>
+                </Specular>
+              </Light>
+              <Id>a7a1fffa-f12a-4a52-8e89-c79630bdf223</Id>
+            </GameComponent>
+          </Components>
+        </GameObject>
+        <GameObject Type="iGL.Engine.Sphere, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Rings>16</Rings>
+          <Segments>16</Segments>
+          <Visible>false</Visible>
+          <Enabled>false</Enabled>
+          <Designer>false</Designer>
+          <Name>aimSphere</Name>
+          <ClearsZBuffer>false</ClearsZBuffer>
+          <DistanceSorting>false</DistanceSorting>
+          <AutoLoad>true</AutoLoad>
+          <RenderQueuePriority>0</RenderQueuePriority>
+          <Id>86af2307-be79-453b-a8ab-54bad0d51525</Id>
+          <Position>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </Position>
+          <Scale>
+            <x>5</x>
+            <y>5</y>
+            <z>5</z>
+          </Scale>
+          <Rotation>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </Rotation>
+          <Children />
+          <Components>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>4ed3d915-17ef-427e-bbde-7906f8375e6c</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+                <Id></Id>
+                <Ambient>
+                  <x>1</x>
+                  <y>0</y>
+                  <z>0</z>
+                  <w>0.5</w>
+                </Ambient>
+                <Diffuse>
+                  <x>0.4</x>
+                  <y>0.4</y>
+                  <z>0.4</z>
+                  <w>1</w>
+                </Diffuse>
+                <Specular>
+                  <x>0</x>
+                  <y>0</y>
+                  <z>0</z>
+                  <w>0</w>
+                </Specular>
+                <Shininess>0</Shininess>
+                <TextureName>ball</TextureName>
+                <NormalTextureName></NormalTextureName>
+                <TextureRepeatX>false</TextureRepeatX>
+                <TextureRepeatY>false</TextureRepeatY>
+                <TextureTilingX>1</TextureTilingX>
+                <TextureTilingY>1</TextureTilingY>
+                <ShaderProgram>POINTLIGHT</ShaderProgram>
+              </Material>
+              <MeshResourceName></MeshResourceName>
+              <Id>54d23823-aa44-4aeb-a742-57dbe16883e4</Id>
+            </GameComponent>
+          </Components>
+        </GameObject>
+        <GameObject Type="iGL.Engine.Plane, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Visible>true</Visible>
+          <Enabled>true</Enabled>
+          <Designer>false</Designer>
+          <Name></Name>
+          <ClearsZBuffer>false</ClearsZBuffer>
+          <DistanceSorting>true</DistanceSorting>
+          <AutoLoad>true</AutoLoad>
+          <RenderQueuePriority>0</RenderQueuePriority>
+          <Id>123a1056-2ff7-443f-aed1-0afd3db7b0bf</Id>
+          <Position>
+            <x>0.219611615</x>
+            <y>0</y>
+            <z>0.108058065</z>
+          </Position>
+          <Scale>
+            <x>0.1</x>
+            <y>0.1</y>
+            <z>0.1</z>
+          </Scale>
+          <Rotation>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </Rotation>
+          <Children />
+          <Components>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>36af2307-be79-453a-a8ab-54bad0d31525</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+                <Id></Id>
+                <Ambient>
+                  <x>0</x>
+                  <y>0</y>
+                  <z>0</z>
+                  <w>1</w>
+                </Ambient>
+                <Diffuse>
+                  <x>0.4</x>
+                  <y>0.4</y>
+                  <z>0.4</z>
+                  <w>1</w>
+                </Diffuse>
+                <Specular>
+                  <x>0</x>
+                  <y>0</y>
+                  <z>0</z>
+                  <w>0</w>
+                </Specular>
+                <Shininess>0</Shininess>
+                <TextureName>eye</TextureName>
+                <NormalTextureName></NormalTextureName>
+                <TextureRepeatX>false</TextureRepeatX>
+                <TextureRepeatY>false</TextureRepeatY>
+                <TextureTilingX>1</TextureTilingX>
+                <TextureTilingY>1</TextureTilingY>
+                <ShaderProgram>POINTLIGHT</ShaderProgram>
+              </Material>
+              <MeshResourceName></MeshResourceName>
+              <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
+            </GameComponent>
+          </Components>
+        </GameObject>
+        <GameObject Type="iGL.Engine.Plane, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Visible>true</Visible>
+          <Enabled>true</Enabled>
+          <Designer>false</Designer>
+          <Name></Name>
+          <ClearsZBuffer>false</ClearsZBuffer>
+          <DistanceSorting>true</DistanceSorting>
+          <AutoLoad>true</AutoLoad>
+          <RenderQueuePriority>0</RenderQueuePriority>
+          <Id>456a1056-2ff7-443f-aed1-0afd3db7b0bf</Id>
+          <Position>
+            <x>-0.219611615</x>
+            <y>0</y>
+            <z>0.108058065</z>
+          </Position>
+          <Scale>
+            <x>0.1</x>
+            <y>0.1</y>
+            <z>0.1</z>
+          </Scale>
+          <Rotation>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </Rotation>
+          <Children />
+          <Components>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>36af2307-be79-453a-a8ab-54bad0d31525</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+                <Id></Id>
+                <Ambient>
+                  <x>0</x>
+                  <y>0</y>
+                  <z>0</z>
+                  <w>1</w>
+                </Ambient>
+                <Diffuse>
+                  <x>0.4</x>
+                  <y>0.4</y>
+                  <z>0.4</z>
+                  <w>1</w>
+                </Diffuse>
+                <Specular>
+                  <x>0</x>
+                  <y>0</y>
+                  <z>0</z>
+                  <w>0</w>
+                </Specular>
+                <Shininess>0</Shininess>
+                <TextureName>eye</TextureName>
+                <NormalTextureName></NormalTextureName>
+                <TextureRepeatX>false</TextureRepeatX>
+                <TextureRepeatY>false</TextureRepeatY>
+                <TextureTilingX>1</TextureTilingX>
+                <TextureTilingY>1</TextureTilingY>
+                <ShaderProgram>POINTLIGHT</ShaderProgram>
+              </Material>
+              <MeshResourceName></MeshResourceName>
+              <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
+            </GameComponent>
+          </Components>
+        </GameObject>
+      </Children>
+      <Components>
+        <GameComponent Type="iGL.Engine.CircleColliderFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Radius>0.5</Radius>
+          <Id>10af2307-be79-653b-a8ab-54bad0d51535</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.RigidBodyFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Mass>1</Mass>
+          <IsGravitySource>false</IsGravitySource>
+          <GravityRange>5</GravityRange>
+          <IsSensor>false</IsSensor>
+          <IsStatic>false</IsStatic>
+          <Restitution>0.2</Restitution>
+          <Friction>0.6</Friction>
+          <AutoReloadBody>true</AutoReloadBody>
+          <Id>15da1056-2ff7-443f-aed1-0afd3db7b0bf</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>36af2307-be79-453a-a8ab-54bad0d31525</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+            <Id></Id>
+            <Ambient>
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+              <w>1</w>
+            </Ambient>
+            <Diffuse>
+              <x>1</x>
+              <y>1</y>
+              <z>1</z>
+              <w>1</w>
+            </Diffuse>
+            <Specular>
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+              <w>0</w>
+            </Specular>
+            <Shininess>0</Shininess>
+            <TextureName>greenball</TextureName>
+            <NormalTextureName></NormalTextureName>
+            <TextureRepeatX>false</TextureRepeatX>
+            <TextureRepeatY>false</TextureRepeatY>
+            <TextureTilingX>1</TextureTilingX>
+            <TextureTilingY>1</TextureTilingY>
+            <ShaderProgram>POINTLIGHT</ShaderProgram>
+          </Material>
+          <MeshResourceName></MeshResourceName>
+          <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
         </GameComponent>
       </Components>
     </GameObject>
@@ -1765,6 +1909,18 @@
     <Resource Type="iGL.Engine.Resources.Font, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <ResourceName>iGL.TestGame.Resources.bmpfont.fnt</ResourceName>
       <Name>bmpfont</Name>
+    </Resource>
+    <Resource Type="iGL.Engine.Resources.Texture, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <ResourceName>iGL.TestGame.Resources.greenball.text</ResourceName>
+      <Name>greenball</Name>
+    </Resource>
+    <Resource Type="iGL.Engine.Resources.Texture, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <ResourceName>iGL.TestGame.Resources.redball.text</ResourceName>
+      <Name>redball</Name>
+    </Resource>
+    <Resource Type="iGL.Engine.Resources.Texture, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <ResourceName>iGL.TestGame.Resources.eye.text</ResourceName>
+      <Name>eye</Name>
     </Resource>
   </Resources>
   <Triggers>

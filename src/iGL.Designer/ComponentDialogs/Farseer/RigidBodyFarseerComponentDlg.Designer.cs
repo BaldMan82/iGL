@@ -37,6 +37,8 @@
             this.txtRestitution = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.cbSensor = new System.Windows.Forms.CheckBox();
+            this.txtGravityRange = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -117,11 +119,29 @@
             this.cbSensor.Text = "Sensor";
             this.cbSensor.UseVisualStyleBackColor = true;
             // 
+            // txtGravityRange
+            // 
+            this.txtGravityRange.Location = new System.Drawing.Point(123, 122);
+            this.txtGravityRange.Name = "txtGravityRange";
+            this.txtGravityRange.Size = new System.Drawing.Size(98, 20);
+            this.txtGravityRange.TabIndex = 12;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(3, 125);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(73, 13);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Gravity range:";
+            // 
             // RigidBodyFarseerComponentDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.txtGravityRange);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.cbSensor);
             this.Controls.Add(this.txtRestitution);
             this.Controls.Add(this.label4);
@@ -132,7 +152,7 @@
             this.Controls.Add(this.cbStatic);
             this.Controls.Add(this.label1);
             this.Name = "RigidBodyFarseerComponentDlg";
-            this.Size = new System.Drawing.Size(290, 130);
+            this.Size = new System.Drawing.Size(290, 150);
             this.Load += new System.EventHandler(this.RigidBodyComponentDlg_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -150,5 +170,7 @@
         private System.Windows.Forms.TextBox txtRestitution;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox cbSensor;
+        private System.Windows.Forms.TextBox txtGravityRange;
+        private System.Windows.Forms.Label label3;
     }
 }

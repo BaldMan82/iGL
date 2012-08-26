@@ -16,6 +16,8 @@ namespace iGL.Designer
 {
     public partial class OpenTKControl : OpenTK.GLControl
     {
+        public static OpenTKControl Instance;
+
         public class SelectObjectEvent : EventArgs
         {
             public GameObject SelectedObject { get; set; }
@@ -105,6 +107,8 @@ namespace iGL.Designer
 
             SnapValue = 0.25f;
             SnapValueRotation = (float)(Math.PI / 8.0);
+
+            Instance = this;
         }       
 
         protected new bool DesignMode
@@ -239,7 +243,7 @@ namespace iGL.Designer
             };
         }
 
-        private void SelectObjectAction(object a, MouseButtonDownEvent b)
+        internal void SelectObjectAction(object a, MouseButtonDownEvent b)
         {
             if (Operation == OperationType.PANVIEW ||
                 (b.Button != MouseButton.Button1 && b.Button != MouseButton.Button2)) return;
@@ -599,7 +603,7 @@ namespace iGL.Designer
             }
         }
 
-        private void deleteMenuItem_Click(object sender, EventArgs e)
+        internal void deleteMenuItem_Click(object sender, EventArgs e)
         {
             /* delete selected object */
             if (_selectedObject == null) return;
@@ -739,7 +743,7 @@ namespace iGL.Designer
             vector.Z = (float)((int)(vector.Z / SnapValueRotation)) * SnapValueRotation;
         }
 
-        private void cloneMenuItem_Click(object sender, EventArgs e)
+        internal void cloneMenuItem_Click(object sender, EventArgs e)
         {
             var clone = _selectedObject.Clone();
             var count = WorkingScene.GameObjects.Count(o => o.GetType() == _selectedObject.GetType());

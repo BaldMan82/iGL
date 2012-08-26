@@ -18,7 +18,7 @@ namespace iGL.TestGame
 
         public TestGame(IGL gl) : base(gl) 
         {
-            _level = 7;
+            _level = 1;
         }       
 
         public override void Load()

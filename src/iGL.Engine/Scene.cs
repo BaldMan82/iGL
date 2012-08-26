@@ -205,7 +205,7 @@ namespace iGL.Engine
             var allObjects = _gameObjects.SelectMany(g => g.AllChildren).ToList();
             allObjects.AddRange(_gameObjects);
 
-            var sortedObjects = allObjects.OrderByDescending(g => g.RenderQueuePriority).
+            var sortedObjects = allObjects.OrderByDescending(g => g.RenderQueuePriority).                                           
                                            ThenByDescending(g => g.DistanceSorting ? (g.Position - CurrentCamera.GameObject.Position).LengthSquared : float.MaxValue);
 
             foreach (var gameObject in sortedObjects)
@@ -236,7 +236,11 @@ namespace iGL.Engine
             }
             catch { }
 
-            _gameObjects.ForEach(g => g.Tick(timeElapsed));
+            var sortedObjects = _gameObjects.OrderByDescending(g => g.Components.Any(c => c is RigidBodyBaseComponent));
+            foreach (var gameObject in sortedObjects)
+            {
+                gameObject.Tick(timeElapsed);
+            }         
 
             ProcessTimers();
 
@@ -631,14 +635,19 @@ namespace iGL.Engine
         }
 
         public GameObject RayCast(Vector4 nearPlane, Vector4 ray, out Vector3 hitLocation)
+        {                      
+            var near = new Vector3(nearPlane);
+            var dir = new Vector3(ray);
+
+            return RayTest(ref near, ref dir, out hitLocation);
+        }
+
+        public GameObject RayTest(ref Vector3 position, ref Vector3 dir, out Vector3 hitLocation, List<GameObject> ignoreList = null)
         {
             hitLocation = new Vector3(0);
 
             float minDistance = float.MaxValue;
             GameObject result = null;
-
-            var near = new Vector3(nearPlane);
-            var dir = new Vector3(ray);
 
             var objects = _gameObjects.Where(g => g.Enabled).SelectMany(g => g.AllChildren).ToList();
             objects.AddRange(_gameObjects);
@@ -646,11 +655,11 @@ namespace iGL.Engine
             foreach (var gameObject in objects)
             {
                 Vector3 rayHitLocation;
-                var rayHit = gameObject.RayTest(near, dir, out rayHitLocation);
+                var rayHit = gameObject.RayTest(position, dir, out rayHitLocation);
 
-                if (rayHit != null)
+                if (rayHit != null && (ignoreList == null || !ignoreList.Contains(rayHit)))
                 {
-                    var distance = (rayHitLocation - near).LengthSquared;
+                    var distance = (rayHitLocation - position).LengthSquared;
 
                     if (distance < minDistance || gameObject.Parent is Gizmo)
                     {

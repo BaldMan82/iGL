@@ -16,8 +16,17 @@ namespace iGL.Engine
             Paused            
         }
 
+        public enum Mode
+        {
+            Play,
+            Repeat,
+            RepeatInverted
+        }
+
         private AnimationSignalEvent _animationSignalEvent = new AnimationSignalEvent();
+        
         public State AnimationState { get; private set; }
+        public Mode PlayMode { get; set; }
 
         public bool IsPlaying() { return AnimationState == State.Playing; }
         public bool IsPaused() { return AnimationState == State.Paused; }

@@ -23,6 +23,12 @@ namespace iGL.TestGame.GameObjects
         private bool _canFire;
         private PanViewFollowCamera3d _followCamera;
         private Vector3 _lastAngularVelocity;
+        private Vector4 _mouseDownPosition;
+        private bool _inBombMode;
+        private DateTime _triggerTime;
+        private DateTime _flickerTime;
+        private TimeSpan _triggerDuration = TimeSpan.FromSeconds(2);
+        private MeshComponent _meshComponent;
 
         public LightObject _lightObject;
 
@@ -53,6 +59,8 @@ namespace iGL.TestGame.GameObjects
             _lightObject.Visible = false;
             _lightObject.Enabled = false;
 
+            _meshComponent = this.Components.First(c => c is MeshComponent) as MeshComponent;
+            
         }
 
         public override void Load()
@@ -63,6 +71,22 @@ namespace iGL.TestGame.GameObjects
             this.Material.NormalTextureName = "";
 
             base.Load();
+
+            if (!Game.InDesignMode)
+            {
+                var lightAnim = new PropertyAnimationComponent();
+
+                lightAnim.StartValue = "0,0,0";
+                lightAnim.StopValue = "0,0,10";
+                lightAnim.DurationSeconds = 5;
+                lightAnim.PlayMode = AnimationComponent.Mode.Play;
+                lightAnim.Property = "Position";
+
+                _lightObject.AddComponent(lightAnim);
+
+                lightAnim.Play();
+            }
+
 
             //var body = Components.First(c => c is RigidBodyFarseerComponent) as RigidBodyFarseerComponent;
             //body.AutoReloadBody = false;
@@ -99,6 +123,46 @@ namespace iGL.TestGame.GameObjects
         public override void Tick(float timeElapsed)
         {           
             base.Tick(timeElapsed);
+
+            if (_inBombMode)
+            {
+                var pos = Scene.LastNearPlaneMousePosition.Value;
+
+                if ((pos - _mouseDownPosition).Length > 0.02f)
+                {
+                    _inBombMode = false;
+                    _inAimMode = true;
+                }
+                else
+                {
+                    var timeLeft = _triggerDuration - (DateTime.UtcNow - _triggerTime);
+                    if (timeLeft.TotalSeconds < 0)
+                    {
+                        var rigidBody = this.Components.First(c => c is RigidBodyFarseerComponent) as RigidBodyFarseerComponent;
+                        rigidBody.Explode();
+                    }
+                    else
+                    {
+                        var p = timeLeft.TotalSeconds / _triggerDuration.TotalSeconds;
+                        if (_flickerTime + TimeSpan.FromSeconds(p) < DateTime.UtcNow)
+                        {
+                            _flickerTime = DateTime.UtcNow;
+
+                            var flare = new StarFlare();
+
+                            flare.StartScale = new Vector3(50, 50, 50);
+                            flare.StopScale = new Vector3(0.1f, 0.1f, 0.1f);
+
+                            flare.Position = this.Position;
+                            Scene.AddGameObject(flare);
+
+                            flare.PlayAnimation();
+
+                            Scene.AddTimer(new Timer() { Action = () => Scene.DisposeGameObject(flare), Interval = TimeSpan.FromSeconds(0.2), Mode = Timer.TimerMode.Once });
+                        }
+                    }
+                }
+            }
 
             if (_inAimMode)
             {
@@ -150,16 +214,16 @@ namespace iGL.TestGame.GameObjects
 
             if (body.AngularVelocity.LengthSquared < 4.0f && body.LinearVelocity.LengthSquared < 4.0f)
             {
-                Material.Ambient = new Vector4(0, 1, 0, 1);
+                Material.Ambient = new Vector4(0, 0, 0, 1);
                 Material.Diffuse = new Vector4(0, 1, 0, 1);
 
                 _canFire = true;
             }
             else
             {
-                Material.Ambient = new Vector4(1, 0, 0, 1);
+                Material.Ambient = new Vector4(0, 0, 0, 1);
                 Material.Diffuse = new Vector4(1, 0, 0, 1);
-                //Material.Ambient = new Vector4(1, 0, 0, 1);
+                Material.Ambient = new Vector4(1, 0, 0, 1);
 
                 _inAimMode = false;
                 _canFire = false;
@@ -177,6 +241,8 @@ namespace iGL.TestGame.GameObjects
             //    var lightPos = Vector3.Transform(cameraPos, lightTransform);
             //    _lightObject.Position = lightPos;
             //}
+
+
         }
 
         void SetArrowPosition(float triggerDistance)
@@ -205,10 +271,11 @@ namespace iGL.TestGame.GameObjects
 
         void _aimSphere_OnMouseUp(object sender, Engine.Events.MouseButtonUpEvent e)
         {
-            if (Game.InDesignMode || !_inAimMode) return;
+            if (Game.InDesignMode || (!_inAimMode && !_inBombMode) ) return;
 
             //Material.Ambient = new Vector4(1, 0, 0, 1);
             _inAimMode = false;
+            _inBombMode = false;
 
             var rigidBody = Components.Single(c => c is RigidBodyFarseerComponent) as RigidBodyFarseerComponent;
 
@@ -224,14 +291,18 @@ namespace iGL.TestGame.GameObjects
 
         void _aimSphere_OnMouseDown(object sender, Engine.Events.MouseButtonDownEvent e)
         {
-
             if (Game.InDesignMode) return;
 
             if (!_canFire) return;
 
             //Material.Ambient = new Vector4(0, 1, 0, 1);
-            _inAimMode = true;
+            _inAimMode = false;
+            _inBombMode = true;
 
+            _triggerTime = DateTime.UtcNow;
+            _flickerTime = _triggerTime;
+
+            _mouseDownPosition = Scene.LastNearPlaneMousePosition.Value;
             _triggerPosition = this.Position;
 
             SetArrowPosition(0f);

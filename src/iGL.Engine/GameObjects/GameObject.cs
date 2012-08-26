@@ -295,7 +295,10 @@ namespace iGL.Engine
                 var childObject = children.FirstOrDefault(c => c.Id == childAttr.Id);
                 if (childObject != null)
                 {
-                    if (childObject.GetType() != childAttr.ChildType) throw new InvalidOperationException();
+                    if (childObject.GetType() != childAttr.ChildType)
+                    {
+                        throw new InvalidOperationException();                        
+                    }
 
                     childObject.CreationMode = CreationModeEnum.Required;
                 }
@@ -503,11 +506,11 @@ namespace iGL.Engine
 
             var rigidBody = Components.FirstOrDefault(c => c is RigidBodyBaseComponent) as RigidBodyBaseComponent;
 
-            if (_children.Count > 0 && rigidBody != null)
-            {
-                UpdateGetRigidBodyOrientation();
-                UpdateTransform();                
-            }
+            //if (_children.Count > 0 && rigidBody != null)
+            //{
+            //    UpdateGetRigidBodyOrientation();
+            //    UpdateTransform();                
+            //}
 
             var compositeTransform = overrideParentTransform ? Transform : GetCompositeTransform();        
 
@@ -546,15 +549,24 @@ namespace iGL.Engine
         public virtual void Tick(float timeElapsed)
         {
             if (!IsLoaded) return;
+           
+            _components.ForEach(gc => { if (gc.IsLoaded) gc.Tick(timeElapsed); });
+
+            _rigidPositionDirty = true;
+
+            var rigidBody = Components.FirstOrDefault(c => c is RigidBodyBaseComponent) as RigidBodyBaseComponent;
+
+            if (_children.Count > 0 && rigidBody != null)
+            {
+                UpdateGetRigidBodyOrientation();
+                UpdateTransform();
+            }
 
             foreach (var child in _children)
             {
                 child.Tick(timeElapsed);
             }
-
-            _components.ForEach(gc => { if (gc.IsLoaded) gc.Tick(timeElapsed); });
-
-            _rigidPositionDirty = true;
+            
         }
 
         public override string ToString()

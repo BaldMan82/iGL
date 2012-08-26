@@ -34,10 +34,17 @@ namespace iGL.Designer.ComponentDialogs
                 if (prop.Name == component.Property) ddProperties.SelectedIndex = index;
             }
 
+            foreach (var mode in Enum.GetNames(typeof(iGL.Engine.AnimationComponent.Mode)))
+            {
+                var index = ddAnimMode.Items.Add(mode);
+                if (component.PlayMode.ToString() == mode) ddAnimMode.SelectedIndex = index;
+            }
+
             txtStartValue.Text = component.StartValue;
             txtStopValue.Text = component.StopValue;
 
             ddProperties.SelectedIndexChanged += new EventHandler(ddProperties_SelectedIndexChanged);
+            ddAnimMode.SelectedIndexChanged += (a, b) => UpdateComponent();
         }
 
         void ddProperties_SelectedIndexChanged(object sender, EventArgs e)
@@ -52,6 +59,7 @@ namespace iGL.Designer.ComponentDialogs
             component.DurationSeconds = txtDuration.TextToFloat();
 
             component.Property = (string)ddProperties.SelectedItem;
+            component.PlayMode = (AnimationComponent.Mode)Enum.Parse(typeof(AnimationComponent.Mode), ddAnimMode.SelectedItem.ToString());
             component.StartValue = txtStartValue.Text;
             component.StopValue = txtStopValue.Text;
 

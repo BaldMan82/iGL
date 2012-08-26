@@ -79,6 +79,7 @@ namespace iGL.Designer
             }
             else
             {
+                flowLayoutPanel1.Visible = false;
                 var obj = e.NodeValue as GameObject;
 
                 obj.OnComponentAdded += gameObject_OnComponentAdded;
@@ -96,6 +97,8 @@ namespace iGL.Designer
 
                     flowLayoutPanel1.Controls.Add(componentPanel);
                 }
+
+                flowLayoutPanel1.Visible = true;
             }
         }
 

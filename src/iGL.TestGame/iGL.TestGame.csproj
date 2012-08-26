@@ -43,6 +43,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameObjects\Arrow2d.cs" />
+    <Compile Include="GameObjects\SlingshotBallFarseer2D.cs" />
+    <Compile Include="GameObjects\MagnetHalo.cs" />
+    <Compile Include="GameObjects\SphereMagnet.cs" />
+    <Compile Include="GameObjects\Bomb.cs" />
     <Compile Include="GameObjects\SlingshotBallFarseer3D.cs" />
     <Compile Include="GameObjects\SlingshotBall3D.cs" />
     <Compile Include="GameObjects\PanViewFollowCamera3d.cs" />
@@ -57,6 +61,10 @@
     <ProjectReference Include="..\iGL.Engine\iGL.Engine.csproj">
       <Project>{07392791-9B48-42BA-A316-24193A8B7F79}</Project>
       <Name>iGL.Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\iGL.Farseer\Farseer Physics.csproj">
+      <Project>{A4610E4C-DD34-428B-BABB-779CA0B5993A}</Project>
+      <Name>Farseer Physics</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
@@ -96,7 +104,13 @@
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\crate.text" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\eye.text" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\fence.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\greenball.text" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\hair.text" />
@@ -132,6 +146,9 @@
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\level1_7.igl" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\level1_8.igl" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\level1_pipe.dae" />
   </ItemGroup>
   <ItemGroup>
@@ -141,13 +158,16 @@
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\level1_platform.text" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\magnethalo.text" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\pipe.dae" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\pipe.text" />
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\plank.text" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\plank.text" />
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\redball.text" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\sign.text" />

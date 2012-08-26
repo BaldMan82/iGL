@@ -35,7 +35,7 @@ namespace iGL.Engine
         {
             base.Init();
 
-            LineLength = 50;
+            LineLength = 50;            
         } 
 
         public override void Tick(float timeElapsed)

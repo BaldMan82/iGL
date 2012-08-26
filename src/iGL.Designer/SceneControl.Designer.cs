@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SceneControl));
             this.tabScene = new System.Windows.Forms.TabControl();
             this.ObjectPage = new System.Windows.Forms.TabPage();
@@ -36,10 +37,15 @@
             this.resourceTree = new System.Windows.Forms.TreeView();
             this.resourceToolstrip = new System.Windows.Forms.ToolStrip();
             this.toolStripAdd = new System.Windows.Forms.ToolStripButton();
+            this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.dropMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cloneMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabScene.SuspendLayout();
             this.ObjectPage.SuspendLayout();
             this.ResourcePage.SuspendLayout();
             this.resourceToolstrip.SuspendLayout();
+            this.contextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabScene
@@ -72,6 +78,11 @@
             this.sceneTree.Name = "sceneTree";
             this.sceneTree.Size = new System.Drawing.Size(490, 116);
             this.sceneTree.TabIndex = 0;
+            this.sceneTree.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.sceneTree_BeforeSelect);
+            this.sceneTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.sceneTree_AfterSelect);
+            this.sceneTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.sceneTree_NodeMouseClick);
+            this.sceneTree.KeyDown += new System.Windows.Forms.KeyEventHandler(this.sceneTree_KeyDown);
+            this.sceneTree.MouseDown += new System.Windows.Forms.MouseEventHandler(this.sceneTree_MouseDown);
             // 
             // ResourcePage
             // 
@@ -114,6 +125,35 @@
             this.toolStripAdd.Text = "toolStripButton1";
             this.toolStripAdd.Click += new System.EventHandler(this.toolStripAdd_Click);
             // 
+            // contextMenu
+            // 
+            this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dropMenuItem,
+            this.cloneMenuItem,
+            this.deleteMenuItem});
+            this.contextMenu.Name = "contextMenu";
+            this.contextMenu.Size = new System.Drawing.Size(108, 70);
+            // 
+            // dropMenuItem
+            // 
+            this.dropMenuItem.Name = "dropMenuItem";
+            this.dropMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.dropMenuItem.Text = "Drop";
+            // 
+            // cloneMenuItem
+            // 
+            this.cloneMenuItem.Name = "cloneMenuItem";
+            this.cloneMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.cloneMenuItem.Text = "Clone";
+            this.cloneMenuItem.Click += new System.EventHandler(this.cloneMenuItem_Click);
+            // 
+            // deleteMenuItem
+            // 
+            this.deleteMenuItem.Name = "deleteMenuItem";
+            this.deleteMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.deleteMenuItem.Text = "Delete";
+            this.deleteMenuItem.Click += new System.EventHandler(this.deleteMenuItem_Click);
+            // 
             // SceneControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -128,6 +168,7 @@
             this.ResourcePage.PerformLayout();
             this.resourceToolstrip.ResumeLayout(false);
             this.resourceToolstrip.PerformLayout();
+            this.contextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -141,5 +182,9 @@
         private System.Windows.Forms.ToolStrip resourceToolstrip;
         private System.Windows.Forms.ToolStripButton toolStripAdd;
         private System.Windows.Forms.TreeView resourceTree;
+        private System.Windows.Forms.ContextMenuStrip contextMenu;
+        private System.Windows.Forms.ToolStripMenuItem dropMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cloneMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteMenuItem;
     }
 }

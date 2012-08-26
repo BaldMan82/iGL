@@ -28,6 +28,7 @@ namespace iGL.Designer.ComponentDialogs
             rigidBodyComponent.Friction = txtKineticFriction.TextToFloat();          
             rigidBodyComponent.Restitution = txtRestitution.TextToFloat();
             rigidBodyComponent.IsSensor = cbSensor.Checked;
+            rigidBodyComponent.GravityRange = txtGravityRange.TextToFloat();
         }
 
         private void RigidBodyComponentDlg_Load(object sender, EventArgs e)
@@ -41,6 +42,7 @@ namespace iGL.Designer.ComponentDialogs
             txtMass.Text = rigidBodyComponent.Mass.ToInvariantText();
             txtKineticFriction.Text = rigidBodyComponent.Friction.ToInvariantText();  
             txtRestitution.Text = rigidBodyComponent.Restitution.ToInvariantText();
+            txtGravityRange.Text = rigidBodyComponent.GravityRange.ToInvariantText();
         }
     }
 }

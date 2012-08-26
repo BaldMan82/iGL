@@ -36,6 +36,8 @@
             this.txtStartValue = new System.Windows.Forms.TextBox();
             this.txtStopValue = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.ddAnimMode = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -103,11 +105,30 @@
             this.label4.TabIndex = 6;
             this.label4.Text = "Stop Value:";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(16, 131);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(60, 13);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Anim Mode";
+            // 
+            // ddAnimMode
+            // 
+            this.ddAnimMode.FormattingEnabled = true;
+            this.ddAnimMode.Location = new System.Drawing.Point(109, 128);
+            this.ddAnimMode.Name = "ddAnimMode";
+            this.ddAnimMode.Size = new System.Drawing.Size(121, 21);
+            this.ddAnimMode.TabIndex = 9;
+            // 
             // PropertyAnimationComponentDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.ddAnimMode);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.txtStopValue);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtStartValue);
@@ -117,7 +138,7 @@
             this.Controls.Add(this.txtDuration);
             this.Controls.Add(this.label1);
             this.Name = "PropertyAnimationComponentDlg";
-            this.Size = new System.Drawing.Size(290, 131);
+            this.Size = new System.Drawing.Size(290, 166);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -133,6 +154,8 @@
         private System.Windows.Forms.TextBox txtStartValue;
         private System.Windows.Forms.TextBox txtStopValue;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox ddAnimMode;
 
     }
 }

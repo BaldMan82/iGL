@@ -68,6 +68,7 @@
     <Compile Include="GameComponents\Animations\AnimationComponent.cs" />
     <Compile Include="GameComponents\Animations\AlphaAnimationComponent.cs" />
     <Compile Include="GameComponents\CameraComponent.cs" />
+    <Compile Include="GameComponents\Farseer\CircleColliderFarseerComponent.cs" />
     <Compile Include="GameComponents\FurShader.cs" />
     <Compile Include="GameComponents\Farseer\BoxColliderFarseerComponent.cs" />
     <Compile Include="GameComponents\Farseer\ColliderFarseerComponent.cs" />

@@ -77,6 +77,12 @@
     <Compile Include="ComponentDialogs\Farseer\BoxColliderFarseerComponentDlg.Designer.cs">
       <DependentUpon>BoxColliderFarseerComponentDlg.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComponentDialogs\Farseer\CircleColliderFarseerComponentDlg.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentDialogs\Farseer\CircleColliderFarseerComponentDlg.Designer.cs">
+      <DependentUpon>CircleColliderFarseerComponentDlg.cs</DependentUpon>
+    </Compile>
     <Compile Include="ComponentDialogs\Farseer\MeshColliderFarseerComponentDlg.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -255,6 +261,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ComponentDialogs\Farseer\BoxColliderFarseerComponentDlg.resx">
       <DependentUpon>BoxColliderFarseerComponentDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentDialogs\Farseer\CircleColliderFarseerComponentDlg.resx">
+      <DependentUpon>CircleColliderFarseerComponentDlg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComponentDialogs\Farseer\MeshColliderFarseerComponentDlg.resx">
       <DependentUpon>MeshColliderFarseerComponentDlg.cs</DependentUpon>

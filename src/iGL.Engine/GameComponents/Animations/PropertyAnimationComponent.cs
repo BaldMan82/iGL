@@ -126,7 +126,22 @@ namespace iGL.Engine
 
             if (percentage >= 1)
             {
-                Stop();
+                if (PlayMode == AnimationComponent.Mode.RepeatInverted)
+                {
+                    var start = StartValue;
+                    StartValue = StopValue;
+                    StopValue = start;
+
+                    Play();
+                }
+                else if (PlayMode == AnimationComponent.Mode.Repeat)
+                {
+                    Play();
+                }
+                else
+                {
+                    Stop();
+                }
             }
         }
 

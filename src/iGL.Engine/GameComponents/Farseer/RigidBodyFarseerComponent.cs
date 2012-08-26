@@ -11,6 +11,7 @@ using Xna = Microsoft.Xna.Framework;
 using FarseerPhysics.Common;
 using System.Xml.Linq;
 using FarseerPhysics.Collision.Shapes;
+using FarseerPhysics.Common.PhysicsLogic;
 
 namespace iGL.Engine
 {
@@ -49,6 +50,12 @@ namespace iGL.Engine
                 _isGravitySource = value;
                 Reload();
             }
+        }
+
+        public float GravityRange
+        {
+            get;
+            set;
         }
 
         public bool IsSensor
@@ -165,6 +172,8 @@ namespace iGL.Engine
             _friction = 0.6f;
             _restitution = 0.2f;
 
+            GravityRange = 5.0f;
+
             AutoReloadBody = true;
         }
 
@@ -244,7 +253,7 @@ namespace iGL.Engine
 
             transform.EulerAngles(out eulerRotation);
 
-            if (!_isStatic)
+            //if (!_isStatic)
             {
                 RigidBody.Mass = _mass;
                 ColliderComponent.CollisionShape.Density = _mass;
@@ -266,7 +275,7 @@ namespace iGL.Engine
             RigidBody.IsStatic = _isStatic;
             RigidBody.Restitution = _restitution;
             RigidBody.Friction = _friction;
-            RigidBody.AngularDamping = 4.0f;
+            RigidBody.AngularDamping = 5.0f;
             RigidBody.UserData = GameObject;
             RigidBody.IsSensor = _isSensor;
 
@@ -288,6 +297,7 @@ namespace iGL.Engine
 
             RigidBody.IsStatic = _isStatic;
             RigidBody.Mass = _mass;
+
             ColliderComponent.CollisionShape.Density = _mass;
 
             RigidBody.Restitution = _restitution;
@@ -305,6 +315,14 @@ namespace iGL.Engine
             var mRotationY = Matrix4.CreateRotationY(this.GameObject._rotation.Y);
 
             RigidBodyTransform = Math.Matrix4.Scale(GameObject.Scale) * mRotationX * mRotationY * transform.ToOpenTK();
+        }
+
+        public void Explode()
+        {
+            var exp = new Explosion((World)GameObject.Scene.Physics.GetWorld());
+            var worldPos = this.GameObject.WorldPosition;
+
+            exp.Activate(new Xna.Vector2(worldPos.X, worldPos.Y), 10, 0.1f);
         }
 
         public override void Tick(float timeElapsed)

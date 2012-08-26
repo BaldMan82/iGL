@@ -16,7 +16,7 @@ namespace FarseerPhysics.Collision.Shapes
 
         public override int ChildCount
         {
-            get { throw new NotImplementedException(); }
+            get { return Shapes.Count; }
         }
 
         public override Shape Clone()
@@ -31,22 +31,24 @@ namespace FarseerPhysics.Collision.Shapes
 
         public override bool RayCast(out FarseerPhysics.Collision.RayCastOutput output, ref FarseerPhysics.Collision.RayCastInput input, ref FarseerPhysics.Common.Transform transform, int childIndex)
         {
-            throw new NotImplementedException();
+            output = new RayCastOutput();
+            return false;
         }
 
         public override void ComputeAABB(out FarseerPhysics.Collision.AABB aabb, ref FarseerPhysics.Common.Transform transform, int childIndex)
         {
-            throw new NotImplementedException();
+            Shapes[childIndex].ComputeAABB(out aabb, ref transform, 0);
         }
 
         public override void ComputeProperties()
         {
-            throw new NotImplementedException();
+           
         }
 
         public override float ComputeSubmergedArea(Microsoft.Xna.Framework.Vector2 normal, float offset, FarseerPhysics.Common.Transform xf, out Microsoft.Xna.Framework.Vector2 sc)
         {
-            throw new NotImplementedException();
+            sc = new Microsoft.Xna.Framework.Vector2();
+            return 0;
         }
     }
 }
