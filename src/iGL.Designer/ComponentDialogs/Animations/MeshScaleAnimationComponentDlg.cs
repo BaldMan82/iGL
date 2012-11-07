@@ -30,6 +30,7 @@ namespace iGL.Designer.ComponentDialogs
         {
             var scaleComponent = Component as MeshScaleAnimationComponent;
             scaleComponent.DurationSeconds = txtDuration.TextToFloat();
+            scaleComponent.AutoStart = cbAutoStart.Checked;
         }
 
     }

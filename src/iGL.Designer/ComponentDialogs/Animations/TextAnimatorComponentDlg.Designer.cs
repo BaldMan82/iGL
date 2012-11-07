@@ -34,6 +34,7 @@
             this.txtText = new System.Windows.Forms.TextBox();
             this.txtLineDelay = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.cbAutoStart = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -86,11 +87,22 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "Line Delay:";
             // 
+            // cbAutoStart
+            // 
+            this.cbAutoStart.AutoSize = true;
+            this.cbAutoStart.Location = new System.Drawing.Point(17, 179);
+            this.cbAutoStart.Name = "cbAutoStart";
+            this.cbAutoStart.Size = new System.Drawing.Size(71, 17);
+            this.cbAutoStart.TabIndex = 6;
+            this.cbAutoStart.Text = "Auto start";
+            this.cbAutoStart.UseVisualStyleBackColor = true;
+            // 
             // TextAnimatorComponentDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.cbAutoStart);
             this.Controls.Add(this.txtLineDelay);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtText);
@@ -98,7 +110,7 @@
             this.Controls.Add(this.txtCharacterDelay);
             this.Controls.Add(this.label1);
             this.Name = "TextAnimatorComponentDlg";
-            this.Size = new System.Drawing.Size(290, 186);
+            this.Size = new System.Drawing.Size(290, 214);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -112,6 +124,7 @@
         private System.Windows.Forms.TextBox txtText;
         private System.Windows.Forms.TextBox txtLineDelay;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox cbAutoStart;
 
     }
 }

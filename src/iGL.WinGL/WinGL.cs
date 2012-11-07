@@ -77,6 +77,11 @@ namespace iGL
             GL.Uniform4(loc, vector4.X, vector4.Y, vector4.Z, vector4.W);
         }
 
+        public void Uniform2(int loc, Engine.Math.Vector2 vector2)
+        {
+            GL.Uniform2(loc, vector2.X, vector2.Y);
+        }
+
         public void Uniform3(int loc, Engine.Math.Vector3 vector3)
         {
             GL.Uniform3(loc, vector3.X, vector3.Y, vector3.Z);
@@ -261,7 +266,7 @@ namespace iGL
             }
 
             return unit;
-        }
+        }     
 
         private static PixelType ToPixelType(Engine.PixelType pixelType)
         {
@@ -408,9 +413,13 @@ namespace iGL
                 case Engine.VertexAttribPointerType.Float:
                     type = VertexAttribPointerType.Float;
                     break;
+                case Engine.VertexAttribPointerType.Short:
+                    type = VertexAttribPointerType.Short;
+                    break;
             }
 
             return type;
+
         }
 
         private static EnableCap ToEnableCap(Engine.EnableCap enableCap)
@@ -475,5 +484,10 @@ namespace iGL
 
         #endregion
 
+
+        public void GenerateMipmap()
+        {
+            GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
+        }
     }
 }

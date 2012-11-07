@@ -33,6 +33,8 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblComponentName = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.ddPlayerObjects = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.btnRemoveTrigger = new System.Windows.Forms.Button();
             this.btnAddTrigger = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
@@ -49,8 +51,6 @@
             this.ddPlayCameras = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.gameObjectBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.ddPlayerObjects = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gameObjectBindingSource)).BeginInit();
@@ -62,7 +62,7 @@
             this.panel2.Controls.Add(this.lblComponentName);
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(290, 31);
+            this.panel2.Size = new System.Drawing.Size(290, 26);
             this.panel2.TabIndex = 40;
             // 
             // lblComponentName
@@ -95,10 +95,28 @@
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.ddPlayCameras);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(0, 32);
+            this.panel1.Location = new System.Drawing.Point(0, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(290, 476);
+            this.panel1.Size = new System.Drawing.Size(290, 484);
             this.panel1.TabIndex = 41;
+            // 
+            // ddPlayerObjects
+            // 
+            this.ddPlayerObjects.FormattingEnabled = true;
+            this.ddPlayerObjects.Location = new System.Drawing.Point(112, 89);
+            this.ddPlayerObjects.Name = "ddPlayerObjects";
+            this.ddPlayerObjects.Size = new System.Drawing.Size(158, 21);
+            this.ddPlayerObjects.TabIndex = 31;
+            this.ddPlayerObjects.SelectedValueChanged += new System.EventHandler(this.ddPlayerObjects_SelectedValueChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(5, 92);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(70, 13);
+            this.label7.TabIndex = 30;
+            this.label7.Text = "Player Object";
             // 
             // btnRemoveTrigger
             // 
@@ -238,24 +256,6 @@
             // gameObjectBindingSource
             // 
             this.gameObjectBindingSource.DataSource = typeof(iGL.Engine.GameObject);
-            // 
-            // ddPlayerObjects
-            // 
-            this.ddPlayerObjects.FormattingEnabled = true;
-            this.ddPlayerObjects.Location = new System.Drawing.Point(112, 89);
-            this.ddPlayerObjects.Name = "ddPlayerObjects";
-            this.ddPlayerObjects.Size = new System.Drawing.Size(158, 21);
-            this.ddPlayerObjects.TabIndex = 31;
-            this.ddPlayerObjects.SelectedValueChanged += new System.EventHandler(this.ddPlayerObjects_SelectedValueChanged);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(5, 92);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(70, 13);
-            this.label7.TabIndex = 30;
-            this.label7.Text = "Player Object";
             // 
             // SceneControlDlg
             // 

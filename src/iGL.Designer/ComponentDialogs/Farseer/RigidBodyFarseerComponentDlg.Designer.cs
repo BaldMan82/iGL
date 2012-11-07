@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.cbStatic = new System.Windows.Forms.CheckBox();
             this.cbGravitySource = new System.Windows.Forms.CheckBox();
             this.txtMass = new System.Windows.Forms.TextBox();
             this.txtKineticFriction = new System.Windows.Forms.TextBox();
@@ -39,6 +38,8 @@
             this.cbSensor = new System.Windows.Forms.CheckBox();
             this.txtGravityRange = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.ddBodyType = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -50,20 +51,10 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Mass:";
             // 
-            // cbStatic
-            // 
-            this.cbStatic.AutoSize = true;
-            this.cbStatic.Location = new System.Drawing.Point(6, 99);
-            this.cbStatic.Name = "cbStatic";
-            this.cbStatic.Size = new System.Drawing.Size(53, 17);
-            this.cbStatic.TabIndex = 1;
-            this.cbStatic.Text = "Static";
-            this.cbStatic.UseVisualStyleBackColor = true;
-            // 
             // cbGravitySource
             // 
             this.cbGravitySource.AutoSize = true;
-            this.cbGravitySource.Location = new System.Drawing.Point(63, 99);
+            this.cbGravitySource.Location = new System.Drawing.Point(6, 122);
             this.cbGravitySource.Name = "cbGravitySource";
             this.cbGravitySource.Size = new System.Drawing.Size(96, 17);
             this.cbGravitySource.TabIndex = 2;
@@ -112,7 +103,7 @@
             // cbSensor
             // 
             this.cbSensor.AutoSize = true;
-            this.cbSensor.Location = new System.Drawing.Point(164, 99);
+            this.cbSensor.Location = new System.Drawing.Point(108, 122);
             this.cbSensor.Name = "cbSensor";
             this.cbSensor.Size = new System.Drawing.Size(59, 17);
             this.cbSensor.TabIndex = 10;
@@ -121,7 +112,7 @@
             // 
             // txtGravityRange
             // 
-            this.txtGravityRange.Location = new System.Drawing.Point(123, 122);
+            this.txtGravityRange.Location = new System.Drawing.Point(123, 154);
             this.txtGravityRange.Name = "txtGravityRange";
             this.txtGravityRange.Size = new System.Drawing.Size(98, 20);
             this.txtGravityRange.TabIndex = 12;
@@ -129,17 +120,40 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 125);
+            this.label3.Location = new System.Drawing.Point(3, 154);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(73, 13);
             this.label3.TabIndex = 11;
             this.label3.Text = "Gravity range:";
+            // 
+            // ddBodyType
+            // 
+            this.ddBodyType.FormattingEnabled = true;
+            this.ddBodyType.Items.AddRange(new object[] {
+            "Static",
+            "Kinematic",
+            "Dynamic"});
+            this.ddBodyType.Location = new System.Drawing.Point(123, 90);
+            this.ddBodyType.Name = "ddBodyType";
+            this.ddBodyType.Size = new System.Drawing.Size(121, 21);
+            this.ddBodyType.TabIndex = 13;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(3, 93);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(57, 13);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "Body type:";
             // 
             // RigidBodyFarseerComponentDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.ddBodyType);
             this.Controls.Add(this.txtGravityRange);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.cbSensor);
@@ -149,10 +163,9 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtMass);
             this.Controls.Add(this.cbGravitySource);
-            this.Controls.Add(this.cbStatic);
             this.Controls.Add(this.label1);
             this.Name = "RigidBodyFarseerComponentDlg";
-            this.Size = new System.Drawing.Size(290, 150);
+            this.Size = new System.Drawing.Size(290, 186);
             this.Load += new System.EventHandler(this.RigidBodyComponentDlg_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -162,7 +175,6 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox cbStatic;
         private System.Windows.Forms.CheckBox cbGravitySource;
         private System.Windows.Forms.TextBox txtMass;
         private System.Windows.Forms.TextBox txtKineticFriction;
@@ -172,5 +184,7 @@
         private System.Windows.Forms.CheckBox cbSensor;
         private System.Windows.Forms.TextBox txtGravityRange;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox ddBodyType;
+        private System.Windows.Forms.Label label5;
     }
 }

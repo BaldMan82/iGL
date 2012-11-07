@@ -21,9 +21,7 @@ namespace iGL.Engine
         float _diffuseAlpha;
         float _specularAlpha;
 
-        private MeshComponent _meshComponent;
-
-        public float DurationSeconds { get; set; }
+        private MeshComponent _meshComponent;       
         
         public override void Play()
         {
@@ -47,6 +45,8 @@ namespace iGL.Engine
 
         public override bool InternalLoad()
         {
+            base.InternalLoad();
+
             _meshComponent = GameObject.Components.FirstOrDefault(c => c is MeshComponent) as MeshComponent;
 
             _ambientAlpha = _meshComponent.Material.Ambient.W;

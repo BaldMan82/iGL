@@ -113,11 +113,11 @@ namespace iGL.Engine
                     vertices[5 + j * 6] = new Vector3(0 + cursor, -offsetY - cursorY, 0);
 
                     indices[0 + j * 6] = (short)(0 + j * 6);
-                    indices[1 + j * 6] = (short)(1 + j * 6);
-                    indices[2 + j * 6] = (short)(2 + j * 6);
-                    indices[3 + j * 6] = (short)(3 + j * 6);
-                    indices[4 + j * 6] = (short)(4 + j * 6);
-                    indices[5 + j * 6] = (short)(5 + j * 6);
+					indices[1 + j * 6] = (short)(1 + j * 6);
+					indices[2 + j * 6] = (short)(2 + j * 6);
+					indices[3 + j * 6] = (short)(3 + j * 6);
+					indices[4 + j * 6] = (short)(4 + j * 6);
+					indices[5 + j * 6] = (short)(5 + j * 6);
 
                     float uvLeft = data.Bounds.Left * 1.0f / (texture.Width * 1.0f);
                     float uvRight = data.Bounds.Right * 1.0f / (texture.Width * 1.0f);

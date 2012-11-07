@@ -22,6 +22,7 @@ namespace iGL.Engine
         private float _friction { get; set; }
         private float _restitution { get; set; }
         private bool _isStatic { get; set; }
+        private bool _isKinematic { get; set; }
         private bool _isGravitySource { get; set; }
         private bool _isSensor { get; set; }
 
@@ -80,6 +81,21 @@ namespace iGL.Engine
             set
             {
                 _isStatic = value;
+                Reload();
+            }
+        }
+
+        public bool IsKinematic
+        {
+            get
+            {
+                return _isKinematic;
+            }
+            set
+            {
+                _isKinematic = value;
+                if (_isKinematic && _isStatic) _isStatic = false;
+
                 Reload();
             }
         }
@@ -144,14 +160,39 @@ namespace iGL.Engine
             }
         }
 
-        public bool IsActive
+        public override bool Sleeping
         {
             get
             {
                 if (!IsLoaded) return false;
-                return RigidBody.Awake;
+                return !RigidBody.Awake;
+            }
+            set
+            {
+                if (IsLoaded)
+                {
+                    RigidBody.Awake = !value;
+                }
             }
         }
+
+        public override bool HasContacts
+        {
+            get
+            {
+                if (RigidBody.ContactList != null)
+                {
+                    var contactEdge = RigidBody.ContactList;
+                    while (contactEdge != null)
+                    {
+                        if (contactEdge.Contact.IsTouching()) return true;
+                        contactEdge = contactEdge.Next;
+                    }
+                }
+                return false;
+            }
+        }
+        
 
         public ColliderFarseerComponent ColliderComponent { get; private set; }
 
@@ -175,6 +216,7 @@ namespace iGL.Engine
             GravityRange = 5.0f;
 
             AutoReloadBody = true;
+            
         }
 
         internal void Reload()
@@ -183,17 +225,24 @@ namespace iGL.Engine
 
             if (RigidBody != null)
             {
-                var world = GameObject.Scene.Physics.GetWorld() as World;
-                world.RemoveBody(RigidBody);
-
-                ColliderComponent = GameObject.Components.FirstOrDefault(c => c is ColliderFarseerComponent) as ColliderFarseerComponent;
-                if (ColliderComponent != null)
+                if (Game.InDesignMode)
                 {
-                    ColliderComponent.Reload();
-                    if (!LoadRigidBody()) throw new InvalidOperationException();
+                    var world = GameObject.Scene.Physics.GetWorld() as World;
+                    world.RemoveBody(RigidBody);
+
+                    ColliderComponent = GameObject.Components.FirstOrDefault(c => c is ColliderFarseerComponent) as ColliderFarseerComponent;
+                    if (ColliderComponent != null)
+                    {
+                        ColliderComponent.Reload();
+                        if (!LoadRigidBody()) throw new InvalidOperationException();
+                    }
                 }
+
+                SetRigidBodyProperties();
             }
         }
+
+
 
         public override bool InternalLoad()
         {
@@ -226,6 +275,36 @@ namespace iGL.Engine
                 if (!ColliderComponent.Load()) return false;
             }
 
+        
+
+            var world = GameObject.Scene.Physics.GetWorld() as World;
+            if (world == null) throw new InvalidOperationException("Not a farseer physics world.");
+
+            RigidBody = new Body(world, GameObject);                       
+            RigidBody.Mass = _mass;
+            ColliderComponent.CollisionShape.Density = _mass;            
+
+            if (ColliderComponent.CollisionShape is MultiShape)
+            {
+                var multiPoly = ColliderComponent.CollisionShape as MultiShape;
+                multiPoly.Shapes.ForEach(p => RigidBody.CreateFixture(p));
+            }
+            else
+            {
+                RigidBody.CreateFixture(ColliderComponent.CollisionShape);
+            }
+            
+            GameObject.Scene.Physics.AddBody(RigidBody);
+
+            SetRigidBodyProperties();
+
+            UpdateTransform();
+
+            return true;
+        }
+
+        private void SetRigidBodyProperties()
+        {
             /* create a composite transform without this object's scale */
 
             Matrix4 transform = Matrix4.Identity;
@@ -243,47 +322,22 @@ namespace iGL.Engine
                 transform = transform * parentTransform;
             }
 
-            var world = GameObject.Scene.Physics.GetWorld() as World;
-            if (world == null) throw new InvalidOperationException("Not a farseer physics world.");
-
-            RigidBody = new Body(world, GameObject);            
 
             var pos = transform.Translation();
             Vector3 eulerRotation;
 
             transform.EulerAngles(out eulerRotation);
-
-            //if (!_isStatic)
-            {
-                RigidBody.Mass = _mass;
-                ColliderComponent.CollisionShape.Density = _mass;
-            }
-
-            if (ColliderComponent.CollisionShape is MultiShape)
-            {
-                var multiPoly = ColliderComponent.CollisionShape as MultiShape;
-                multiPoly.Shapes.ForEach(p => RigidBody.CreateFixture(p));
-            }
-            else
-            {
-                RigidBody.CreateFixture(ColliderComponent.CollisionShape);
-            }
             
+            RigidBody.ResetDynamics();
 
             RigidBody.Position = new Xna.Vector2(pos.X, pos.Y);
             RigidBody.Rotation = eulerRotation.Z;
-            RigidBody.IsStatic = _isStatic;
+            RigidBody.BodyType = _isStatic ? BodyType.Static : _isKinematic ? BodyType.Kinematic : BodyType.Dynamic;
             RigidBody.Restitution = _restitution;
             RigidBody.Friction = _friction;
             RigidBody.AngularDamping = 5.0f;
             RigidBody.UserData = GameObject;
             RigidBody.IsSensor = _isSensor;
-
-            GameObject.Scene.Physics.AddBody(RigidBody);
-
-            UpdateTransform();
-
-            return true;
         }
 
         public void ApplyForce(Vector3 force)
@@ -295,16 +349,16 @@ namespace iGL.Engine
         {
             if (!IsLoaded) return;
 
-            RigidBody.IsStatic = _isStatic;
-            RigidBody.Mass = _mass;
+            //RigidBody.IsStatic = _isStatic;
+            //RigidBody.Mass = _mass;
 
-            ColliderComponent.CollisionShape.Density = _mass;
+            //ColliderComponent.CollisionShape.Density = _mass;            
 
-            RigidBody.Restitution = _restitution;
-            RigidBody.Friction = _friction;
+            //RigidBody.Restitution = _restitution;
+            //RigidBody.Friction = _friction;
         }
 
-        private void UpdateTransform()
+        internal void UpdateTransform()
         {
             /* scale must be taking into account */
             Transform transform;
@@ -335,6 +389,17 @@ namespace iGL.Engine
             base.Dispose();
             
             if (IsLoaded) GameObject.Scene.Physics.RemoveBody(RigidBody);
+        }
+
+        public void Awake()
+        {
+            RigidBody.Awake = true;
+        }
+
+        public void ClearForces()
+        {
+            RigidBody.LinearVelocity = Xna.Vector2.Zero;
+            RigidBody.AngularVelocity = 0;
         }
     }
 }

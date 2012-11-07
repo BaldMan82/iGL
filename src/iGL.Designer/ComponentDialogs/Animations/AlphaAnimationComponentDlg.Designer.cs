@@ -30,6 +30,7 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.txtDuration = new System.Windows.Forms.TextBox();
+            this.cbAutoStart = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -48,15 +49,25 @@
             this.txtDuration.Size = new System.Drawing.Size(100, 20);
             this.txtDuration.TabIndex = 1;
             // 
-            // MeshScaleAnimationComponentDlg
+            // cbAutoStart
+            // 
+            this.cbAutoStart.AutoSize = true;
+            this.cbAutoStart.Location = new System.Drawing.Point(17, 39);
+            this.cbAutoStart.Name = "cbAutoStart";
+            this.cbAutoStart.Size = new System.Drawing.Size(71, 17);
+            this.cbAutoStart.TabIndex = 2;
+            this.cbAutoStart.Text = "Auto start";
+            this.cbAutoStart.UseVisualStyleBackColor = true;
+            // 
+            // AlphaAnimationComponentDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.cbAutoStart);
             this.Controls.Add(this.txtDuration);
             this.Controls.Add(this.label1);
-            this.Name = "MeshScaleAnimationComponentDlg";
-            this.Size = new System.Drawing.Size(290, 89);
+            this.Name = "AlphaAnimationComponentDlg";
+            this.Size = new System.Drawing.Size(292, 91);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -66,6 +77,7 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtDuration;
+        private System.Windows.Forms.CheckBox cbAutoStart;
 
     }
 }

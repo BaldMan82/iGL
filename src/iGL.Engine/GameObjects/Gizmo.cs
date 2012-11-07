@@ -51,7 +51,11 @@ namespace iGL.Engine
             RenderQueuePriority = -1;
             ClearsZBuffer = true;
 
-            foreach (var child in Children) child.RenderQueuePriority = RenderQueuePriority - 1;
+            foreach (var child in Children)
+            {
+                child.RenderQueuePriority = RenderQueuePriority - 1;
+                child.Designer = true;
+            }
         }
 
         private void LoadGizmo()

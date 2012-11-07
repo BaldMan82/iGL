@@ -6,6 +6,7 @@ using iGL.Engine;
 using System.Runtime.Serialization;
 using iGL.Engine.Math;
 using System.Xml.Linq;
+using System.Diagnostics;
 
 namespace iGL.TestGame.GameObjects
 {
@@ -17,6 +18,8 @@ namespace iGL.TestGame.GameObjects
 
         public Vector3 Min { get; set; }
         public Vector3 Max { get; set; }
+
+        public float LerpFactor { get; set; }
 
         public PanViewFollowCamera3d(XElement element) : base(element) { }
 
@@ -44,8 +47,9 @@ namespace iGL.TestGame.GameObjects
             CameraComponent.ClearColor = new Vector4(0.2f, 0.2f, 0.2f, 1.0f);
 
             Position = new Vector3(0, 0, 30);
-            _distance = 22.0f;
-
+            _distance = 18.0f;
+            
+            LerpFactor = 4.0f;
         }
 
         void Scene_OnLoaded(object sender, Engine.Events.LoadedEvent e)
@@ -82,7 +86,8 @@ namespace iGL.TestGame.GameObjects
 
             if (FollowingEnabled)
             {
-                var target = Vector3.Lerp(CameraComponent.Target, _target.WorldPosition + new Vector3(0, 2, 0), timeElapsed * 4.0f);
+                var target = Vector3.Lerp(CameraComponent.Target, _target.WorldPosition + new Vector3(0, 2, 0), timeElapsed * LerpFactor);
+             
                 var position = target + new Vector3(0, 0, _distance);
 
                 var viewBounds = Math.Sin(CameraComponent.FieldOfViewRadians) * _distance;
@@ -95,7 +100,7 @@ namespace iGL.TestGame.GameObjects
                 {
                     if (Scene.Game is TestGame)
                     {
-                        ((TestGame)Scene.Game).LoadLevel();
+                        ((TestGame)Scene.Game).ReloadScene();
                     }
                 }
             }

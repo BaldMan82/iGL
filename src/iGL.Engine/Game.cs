@@ -13,13 +13,14 @@ using System.Globalization;
 using System.Xml;
 using System.Xml.Linq;
 using iGL.Engine.Triggers;
+using System.Diagnostics;
 
 namespace iGL.Engine
 {
     public abstract class Game
     {
         public Scene Scene { get; private set; }
-        public Size WindowSize { get; private set; }        
+        public Size WindowSize { get; private set; }
         public static IGL GL { get; private set; }
         public static bool InDesignMode { get; set; }
 
@@ -35,22 +36,22 @@ namespace iGL.Engine
         }
 
         public virtual void Load()
-        {          
+        {
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.Texture2d);
-            GL.Enable(EnableCap.Blend);            
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);           
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);         
         }
 
         public void MouseMove(int x, int y)
         {
-            Scene.MouseMove(x, y);           
+            Scene.MouseMove(x, y);
         }
 
         public void MouseButton(MouseButton button, bool down, int x, int y)
         {
-            Scene.UpdateMouseButton(button,down, x, y);
+            Scene.UpdateMouseButton(button, down, x, y);
         }
 
         public void MouseZoom(int amount)
@@ -83,7 +84,7 @@ namespace iGL.Engine
         public void LoadScene()
         {
             Scene.Load();
-        }       
+        }
 
         public string SaveScene()
         {
@@ -106,16 +107,67 @@ namespace iGL.Engine
                 element.Add(new XElement("Triggers", Scene.Triggers.Select(trigger => XmlHelper.ToXml(trigger, "Trigger"))));
 
                 doc.Add(element);
-                 
+
                 doc.Save(writer);
 
                 return writer.ToString();
-            }           
+            }
         }
 
-        public void PopulateScene(string xml)
+        public void ReloadScene(string xml)
+        {
+            Stopwatch w = new Stopwatch();
+            w.Start();
+
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+
+            using (var reader = new StringReader(xml))
+            {
+                XDocument doc = XDocument.Load(reader);
+                if (doc.Root.Name == "Scene")
+                {
+                    var objects = doc.Root.Elements().FirstOrDefault(e => e.Name == "Objects");
+                    if (objects != null)
+                    {
+                        var elements = objects.Elements();
+
+                        foreach (var element in elements)
+                        {
+
+                            var id = element.Elements().First(e => e.Name == "Id").Value;
+                            var gameObject = Scene.GameObjects.FirstOrDefault(g => g.Id == id);
+
+                            if (gameObject != null)
+                            {
+                                gameObject.ResetToInitValues();
+                            }
+                            else
+                            {
+                                gameObject = XmlHelper.FromXml(element, typeof(GameObject)) as GameObject;
+                                Scene.AddGameObject(gameObject);
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            Scene.FinishTimers();
+
+            Scene.FireLoadEvent();
+            Scene.Tick(0);
+
+            w.Stop();
+            Debug.WriteLine("Reload object:" + w.Elapsed.TotalMilliseconds);
+        }
+
+        public void PopulateScene(string xml, List<Resource> jumpStartResources = null, Dictionary<string, int[]> bufferCache = null)
         {
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+            if (jumpStartResources == null) jumpStartResources = new List<Resource>();
+            if (bufferCache == null) bufferCache = new Dictionary<string, int[]>();
+
+            Scene.MeshBufferCache = bufferCache;
 
             using (var reader = new StringReader(xml))
             {
@@ -139,7 +191,17 @@ namespace iGL.Engine
                     {
                         foreach (var resource in resources.Elements())
                         {
-                            Scene.AddResource(XmlHelper.FromXml(resource, typeof(Resource)) as Resource);
+                            var resourceFromXml = XmlHelper.FromXml(resource, typeof(Resource)) as Resource;
+                            var loadedResource = jumpStartResources.FirstOrDefault(r => r.ResourceName == resourceFromXml.ResourceName);
+                            if (loadedResource != null)
+                            {
+                                Scene.AddResource(loadedResource);
+                                jumpStartResources.Remove(loadedResource);
+                            }
+                            else
+                            {
+                                Scene.AddResource(resourceFromXml);
+                            }
                         }
                     }
 
@@ -198,8 +260,18 @@ namespace iGL.Engine
 
             }
 
+            jumpStartResources.ForEach(r =>
+            {
+                r.Dispose();
+                int[] buffers;
+                if (bufferCache.TryGetValue(r.ResourceName, out buffers))
+                {
+                    GL.DeleteBuffers(2, buffers);
+                }
+            });
+
             Scene.Load();
-            
+
         }
     }
 }

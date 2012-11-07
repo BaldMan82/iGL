@@ -13,7 +13,8 @@ namespace iGL.Engine
         {
             Stopped,
             Playing,
-            Paused            
+            Paused,
+            Rewinding
         }
 
         public enum Mode
@@ -24,13 +25,18 @@ namespace iGL.Engine
         }
 
         private AnimationSignalEvent _animationSignalEvent = new AnimationSignalEvent();
-        
+        private DateTime _rewindStartUtc;
+
         public State AnimationState { get; private set; }
         public Mode PlayMode { get; set; }
+        public bool AutoStart { get; set; }
+        public float DurationSeconds { get; set; }
+        public float IntervalSeconds { get; set; }
 
         public bool IsPlaying() { return AnimationState == State.Playing; }
         public bool IsPaused() { return AnimationState == State.Paused; }
         public bool IsStopped() { return AnimationState == State.Stopped; }
+        public bool IsRewinding() { return AnimationState == State.Rewinding; }
 
         public virtual void Play()
         {
@@ -51,10 +57,35 @@ namespace iGL.Engine
             GameObject.OnAnimationSignalEvent(this, _animationSignalEvent); 
         }
 
+        public virtual void Rewind()
+        {
+            _rewindStartUtc = DateTime.UtcNow;
+
+            AnimationState = State.Rewinding;
+            _animationSignalEvent.SignalState = AnimationState;
+            GameObject.OnAnimationSignalEvent(this, _animationSignalEvent); 
+        }
+
         public AnimationComponent(XElement xmlElement) : base(xmlElement) { }
 
         public AnimationComponent() : base() { }
-        
+
+
+        public override bool InternalLoad()
+        {
+            if (AutoStart && !Game.InDesignMode) Play();
+
+            return true;
+        }
+
+        public override void Tick(float timeElapsed)
+        {
+            if (AnimationState == State.Rewinding && (DateTime.UtcNow - _rewindStartUtc).TotalSeconds > IntervalSeconds)
+            {
+                Play();
+            }
+        }
+       
     }
 }
 

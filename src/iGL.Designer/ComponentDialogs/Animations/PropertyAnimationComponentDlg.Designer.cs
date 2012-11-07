@@ -38,6 +38,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.ddAnimMode = new System.Windows.Forms.ComboBox();
+            this.cbAutoStart = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -122,11 +123,22 @@
             this.ddAnimMode.Size = new System.Drawing.Size(121, 21);
             this.ddAnimMode.TabIndex = 9;
             // 
+            // cbAutoStart
+            // 
+            this.cbAutoStart.AutoSize = true;
+            this.cbAutoStart.Location = new System.Drawing.Point(19, 161);
+            this.cbAutoStart.Name = "cbAutoStart";
+            this.cbAutoStart.Size = new System.Drawing.Size(71, 17);
+            this.cbAutoStart.TabIndex = 10;
+            this.cbAutoStart.Text = "Auto start";
+            this.cbAutoStart.UseVisualStyleBackColor = true;
+            // 
             // PropertyAnimationComponentDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.cbAutoStart);
             this.Controls.Add(this.ddAnimMode);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtStopValue);
@@ -138,7 +150,7 @@
             this.Controls.Add(this.txtDuration);
             this.Controls.Add(this.label1);
             this.Name = "PropertyAnimationComponentDlg";
-            this.Size = new System.Drawing.Size(290, 166);
+            this.Size = new System.Drawing.Size(290, 190);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -156,6 +168,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox ddAnimMode;
+        private System.Windows.Forms.CheckBox cbAutoStart;
 
     }
 }

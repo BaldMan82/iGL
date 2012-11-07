@@ -210,7 +210,7 @@ namespace iGL.TestGame.GameObjects
 			
             _arrow2d.Visible = true;
 
-            if (_followCamera != null) _followCamera.FollowingEnabled = false;
+            //if (_followCamera != null) _followCamera.FollowingEnabled = false;
         }
 
     }

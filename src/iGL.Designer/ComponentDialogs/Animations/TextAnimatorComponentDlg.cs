@@ -33,6 +33,7 @@ namespace iGL.Designer.ComponentDialogs
             var component = Component as TextAnimatorComponent;
             component.CharacterInterval = txtCharacterDelay.TextToFloat();
             component.LineDelay = txtLineDelay.TextToFloat();
+            component.AutoStart = cbAutoStart.Checked;
 
             component.Text = txtText.Text;            
         }      

@@ -24,12 +24,14 @@ namespace iGL.Engine
 
     public enum DrawElementsType
     {
-        UnsignedShort
+        UnsignedShort,
+		UnsignedByte
     }
 
     public enum VertexAttribPointerType
     {
-        Float
+        Float,
+        Short
     }
 
     public enum BeginMode
@@ -83,7 +85,8 @@ namespace iGL.Engine
     public enum TextureMinFilter
     {
         Nearest = 9728,
-        Linear = 9729
+        Linear = 9729,
+		LinearMipmapLinear = 9987
     }
 
     public enum TextureMagFilter
@@ -122,5 +125,17 @@ namespace iGL.Engine
         Texture1,
         Texture2,
         Texture3    
+    }
+
+    public enum AlphaFunction
+    {
+        Never = 512,
+        Less = 513,
+        Equal = 514,
+        Lequal = 515,
+        Greater = 516,
+        Notequal = 517,
+        Gequal = 518,
+        Always = 519,
     }
 }

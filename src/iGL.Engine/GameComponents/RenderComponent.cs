@@ -14,6 +14,6 @@ namespace iGL.Engine
 
         public RenderComponent() { }
 
-        public abstract void Render(Matrix4 transform, Matrix4 modelView);
+        public abstract void Render(ref Matrix4 transform, ref Matrix4 modelView);
     }
 }

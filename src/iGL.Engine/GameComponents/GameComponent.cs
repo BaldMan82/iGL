@@ -7,6 +7,8 @@ using System.Runtime.Serialization;
 using System.Diagnostics;
 using System.Xml.Serialization;
 using System.Xml.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace iGL.Engine
 {
@@ -23,6 +25,8 @@ namespace iGL.Engine
         public GameObject GameObject { get; internal set; }
         public CreationModeEnum CreationMode { get; internal set; }
         public string Id { get; set; }
+
+        private Dictionary<MethodInfo, object> _defaultValues = new Dictionary<MethodInfo, object>();       
 
         private XElement _xmlElement;
 
@@ -44,7 +48,7 @@ namespace iGL.Engine
             Init();
         }
 
-        internal void LoadFromXml()
+        internal void InitFromXml()
         {
             if (_xmlElement == null) return;
 
@@ -53,16 +57,36 @@ namespace iGL.Engine
                                .GetProperties()
                                .Where(p => p.GetSetMethod() != null && !p.GetCustomAttributes(true).Any(attr => attr is XmlIgnoreAttribute));
 
+
+            _defaultValues = new Dictionary<MethodInfo, object>();
+
             foreach (var prop in props)
             {
                 var element = _xmlElement.Elements().FirstOrDefault(e => e.Name == prop.Name);
 
-                if (element != null)
-                {
-                    prop.SetValue(this, XmlHelper.FromXml(element, prop.PropertyType), null);
-                }
+                var setter = prop.GetSetMethod();
+
+                object value = element == null ? prop.GetValue(this, null) : XmlHelper.FromXml(element, prop.PropertyType);
+
+                _defaultValues.Add(setter, value);             
             }
+
+            foreach (var kv in _defaultValues) kv.Key.Invoke(this, new object[] { kv.Value });
+
             #endregion
+        }
+
+        internal void ResetToInitValues()
+        {
+            if (this is AnimationComponent) ((AnimationComponent)this).Stop();
+
+            foreach (var kv in _defaultValues) kv.Key.Invoke(this, new object[] { kv.Value });
+
+            if (this is AnimationComponent)
+            {
+                var anim = this as AnimationComponent;
+                if (anim.AutoStart) anim.Play();
+            }
         }
 
         protected virtual void Init() { }
@@ -97,7 +121,7 @@ namespace iGL.Engine
             }
             return IsLoaded;
         }
-       
+
         public XElement ToXml(XElement element)
         {
             var props = this.GetType()
@@ -111,7 +135,7 @@ namespace iGL.Engine
 
         public virtual void Dispose()
         {
-            
+
         }
     }
 }

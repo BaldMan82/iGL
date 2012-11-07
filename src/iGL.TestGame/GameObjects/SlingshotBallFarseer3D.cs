@@ -166,6 +166,44 @@ namespace iGL.TestGame.GameObjects
 
             if (_inAimMode)
             {
+                //var nearPlane = new Vector3(Scene.LastNearPlaneMousePosition.Value);
+
+                ///* slingshot dynamics */
+
+                //var lookAt = Scene.CurrentCamera.Target - Scene.CurrentCamera.GameObject.Position;
+                //lookAt.Normalize();
+
+                //var p = Scene.CurrentCamera.GameObject.Position + lookAt;
+                //var planeDistance = this.Position.PlaneDistance(p, lookAt);
+
+                //var dirNearPlane = nearPlane - (Scene.CurrentCamera.GameObject.Position + lookAt);
+
+                //var newWorldPosition = nearPlane + (lookAt * planeDistance);
+
+                //if (Scene.CurrentCamera is PerspectiveCameraComponent)
+                //{
+                //    newWorldPosition += (dirNearPlane * Math.Abs(planeDistance));
+                //}
+
+                //_triggerPosition = newWorldPosition;
+
+                //var distance = (_triggerPosition - this.Position).Length;
+                //if (distance > _slingShotRadius)
+                //{
+                //    var norm = (_triggerPosition - this.Position);
+                //    norm.Normalize();
+
+                //    norm = Vector3.Multiply(norm, distance - _slingShotRadius);
+
+                //    _triggerPosition -= norm;
+
+                //    distance = _slingShotRadius;
+                //}
+
+                //SetArrowPosition(distance);
+
+                // Test
+
                 var nearPlane = new Vector3(Scene.LastNearPlaneMousePosition.Value);
 
                 /* slingshot dynamics */
@@ -182,7 +220,7 @@ namespace iGL.TestGame.GameObjects
 
                 if (Scene.CurrentCamera is PerspectiveCameraComponent)
                 {
-                    newWorldPosition += (dirNearPlane * Math.Abs(planeDistance));
+                    //newWorldPosition += (dirNearPlane * Math.Abs(planeDistance));
                 }
 
                 _triggerPosition = newWorldPosition;
@@ -201,16 +239,15 @@ namespace iGL.TestGame.GameObjects
                 }
 
                 SetArrowPosition(distance);
-
             }
 
 
             /* damping */
             var body = Components.Single(c => c is RigidBodyFarseerComponent) as RigidBodyFarseerComponent;
-            if (_lastAngularVelocity.LengthSquared > body.AngularVelocity.LengthSquared)
-            {
-                body.AngularVelocity = body.AngularVelocity * 0.9f;
-            }
+            //if (_lastAngularVelocity.LengthSquared > body.AngularVelocity.LengthSquared)
+            //{
+            //    body.AngularVelocity = body.AngularVelocity * 0.9f;
+            //}
 
             if (body.AngularVelocity.LengthSquared < 4.0f && body.LinearVelocity.LengthSquared < 4.0f)
             {
@@ -285,7 +322,11 @@ namespace iGL.TestGame.GameObjects
 
             _arrow2d.Visible = false;
 
-            if (_followCamera != null) _followCamera.FollowingEnabled = true;
+            if (_followCamera != null)
+            {
+                //_followCamera.LerpFactor = 4;
+                _followCamera.FollowingEnabled = true;
+            }
 
         }
 
@@ -309,7 +350,11 @@ namespace iGL.TestGame.GameObjects
 
             _arrow2d.Visible = true;
 
-            if (_followCamera != null) _followCamera.FollowingEnabled = false;
+            if (_followCamera != null)
+            {
+                //_followCamera.LerpFactor = 0;
+               _followCamera.FollowingEnabled = false;
+            }
         }
 
     }

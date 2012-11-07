@@ -11,8 +11,10 @@ namespace iGL.Engine
     public abstract class RigidBodyBaseComponent : GameComponent
     {
         internal Matrix4 RigidBodyTransform { get; set; }
-        
+
+        public abstract bool Sleeping { get; set; }
         public bool AutoReloadBody { get; set; }
+        public abstract bool HasContacts { get; }
 
         public RigidBodyBaseComponent(XElement xmlElement) : base(xmlElement) { }
         public RigidBodyBaseComponent() { }

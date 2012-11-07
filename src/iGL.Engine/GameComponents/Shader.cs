@@ -13,9 +13,11 @@ namespace iGL.Engine
         public enum ShaderType
         {           
             VS_POINTLIGHT,  
-            VS_FUR,
+            VS_DESIGN,
+            VS_BACKGROUND,
             FS_POINTLIGHT,
-            FS_FUR
+            FS_DESIGN,
+            FS_BACKGROUND                        
         }       
 
         public string Source { get; private set; }

@@ -248,7 +248,7 @@ namespace iGL.Designer
             if (Operation == OperationType.PANVIEW ||
                 (b.Button != MouseButton.Button1 && b.Button != MouseButton.Button2)) return;
 
-            _selectedObject = (a as GameObject).Root;
+            _selectedObject = (a as GameObject);
 
             var rigidBody = _selectedObject.Components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
 
@@ -339,7 +339,7 @@ namespace iGL.Designer
 
         void OpenTKControl_MouseWheel(object sender, MouseEventArgs e)
         {
-            Game.MouseZoom(e.Delta);
+            Game.MouseZoom(e.Delta > 0 ? 1 : -1);
 
             if (!EditorGame.InDesignMode) return;
 
@@ -471,7 +471,7 @@ namespace iGL.Designer
 
             if (!_glLoaded) return;
 
-            EditorGame.Instance().Render();
+            EditorGame.Instance().Render();           
 
             SwapBuffers();
         }

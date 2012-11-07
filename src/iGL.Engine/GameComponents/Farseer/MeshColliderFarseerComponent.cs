@@ -37,6 +37,10 @@ namespace iGL.Engine.GameComponents
             }
 
             if (!meshComponent.IsLoaded) meshComponent.Load();
+            if (!meshComponent.IsLoaded) return false;
+
+            if (meshComponent.Vertices.Length == 0) return false;
+
             var maxZ = meshComponent.Vertices.Max(v => v.Z);
             var scale = this.GameObject.Scale;
 

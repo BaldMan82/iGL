@@ -19,7 +19,7 @@ namespace iGL.Designer
         {
             base.OnLoad(e);
 
-            Controls.HookAllChangeEvents(() => UpdateComponent());
+            Controls.HookAllChangeEvents(() => { if (Game.InDesignMode) { UpdateComponent(); } });
         }
 
         public virtual void UpdateComponent() { }

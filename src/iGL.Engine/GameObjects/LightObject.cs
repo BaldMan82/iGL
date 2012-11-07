@@ -13,7 +13,7 @@ namespace iGL.Engine
     {
         public LightComponent LightComponent { get; private set; }
 
-        public ILight Light { get; set; }
+        public ILight Light { get { return LightComponent.Light; } set { LightComponent.Light = value; } }
 
         private const string LightComponentId = "a7a1fffa-f12a-4a52-8e89-c79630bdf223";
         private const string LightSphereId = "b7a1fffa-f12a-4a52-8e89-c79630bdf223";

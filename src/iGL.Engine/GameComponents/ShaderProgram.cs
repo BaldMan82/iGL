@@ -22,7 +22,8 @@ namespace iGL.Engine
         public enum ProgramType
         {
             POINTLIGHT,
-            FUR
+            DESIGN,
+            BACKGROUND
         }
 
         public ProgramType Type { get; private set; }
@@ -170,22 +171,22 @@ namespace iGL.Engine
             GL.UniformMatrix4(loc, false, modelViewTransposeInverse);
         }
 
-        public void SetHasTexture(bool hasTexture)
+        public void SetShortFloatFactor(float shortFloatFactor)
         {
-            var loc = GetUniformLocation("u_hasTexture");
-            GL.Uniform1(loc, hasTexture ? 1f : 0f);
+            var loc = GetUniformLocation("u_shortFloatFactor");
+            GL.Uniform1(loc, shortFloatFactor);
         }
-
-        public void SetHasNormalTexture(bool hasNormalTexture)
-        {
-            var loc = GetUniformLocation("u_hasNormalTexture");
-            GL.Uniform1(loc, hasNormalTexture ? 1f : 0f);
-        }
-
+		
         public void SetAmbientColor(Vector4 color)
         {
             var loc = GetUniformLocation("u_globalAmbientColor");
             GL.Uniform4(loc, color);
+        }
+
+        public void SetTextureScale(Vector2 scale)
+        {
+            var loc = GetUniformLocation("u_textureScale");
+            GL.Uniform2(loc, scale);
         }
 
         public void SetEyePos(Vector4 eyePos)

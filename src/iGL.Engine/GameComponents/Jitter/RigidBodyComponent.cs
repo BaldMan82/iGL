@@ -135,13 +135,22 @@ namespace iGL.Engine
             }
         }
 
-        public bool IsActive
+        public override bool Sleeping
         {
             get
             {
                 if (!IsLoaded) return false;
                 return RigidBody.IsActive;
             }
+            set
+            {
+                RigidBody.IsActive = value;
+            }
+        }
+
+        public override bool HasContacts
+        {
+            get { return false; }
         }
 
         public ColliderComponent ColliderComponent { get; private set; }
@@ -259,8 +268,7 @@ namespace iGL.Engine
             RigidBody.Tag = GameObject;
             RigidBody.Material.Restitution = _restitution;
             RigidBody.Material.KineticFriction = _kineticFriction;
-            RigidBody.Material.StaticFriction = _staticFriction;
-            
+            RigidBody.Material.StaticFriction = _staticFriction;                       
 
             GameObject.Scene.Physics.AddBody(RigidBody);
 

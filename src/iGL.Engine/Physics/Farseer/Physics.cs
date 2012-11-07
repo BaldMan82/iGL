@@ -25,7 +25,7 @@ namespace iGL.Engine
         }
         public override void Step(float timeStep)
         {
-            ProcessGravitySources();
+            //ProcessGravitySources();
             _world.Step(timeStep);
         }
 

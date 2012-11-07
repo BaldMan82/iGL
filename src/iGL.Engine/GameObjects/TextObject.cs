@@ -41,8 +41,16 @@ namespace iGL.Engine
             _meshComponent = Components.Single(c => c.Id == MeshComponentId) as MeshComponent;
             _meshRenderComponent = Components.Single(c => c.Id == MeshRenderComponentId) as MeshRenderComponent;
             _textComponent = Components.Single(c => c.Id == TextComponentId) as TextComponent;
+            _textComponent.FontName = "bmpfont";
+            _meshComponent.Material.TextureName = "bmpfont_0.text";
 
             DistanceSorting = true;
-        }              
+        }
+
+        public void SetText(string text)
+        {
+            _textComponent.Text = text;
+            _textComponent.Reload();
+        }
     }
 }

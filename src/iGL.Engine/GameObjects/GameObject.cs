@@ -83,7 +83,13 @@ namespace iGL.Engine
         public Scene Scene { get; internal set; }
         public GameObject Parent { get; internal set; }
         public bool IsLoaded { get; private set; }
-        
+
+        private bool _compositionChanged;
+        protected RenderComponent _renderComponent;
+        protected RigidBodyBaseComponent _rigidBodyComponent;
+        protected GameObject[] _childrenArray = new GameObject[0];
+        protected GameComponent[] _componentArray = new GameComponent[0];
+
         public Vector3 Position
         {
             get
@@ -197,6 +203,8 @@ namespace iGL.Engine
 
         private XElement _xmlElement;
 
+        private Dictionary<MethodInfo, object> _defaultValues = new Dictionary<MethodInfo, object>();       
+
         public GameObject(XElement xmlElement)
         {
             BaseInit();
@@ -213,8 +221,7 @@ namespace iGL.Engine
             Init();
 
             /* load xml data (which overwrites default init props)*/
-            InitFromXml();
-
+            InitFromXml();    
         }
 
         public GameObject() : this(string.Empty) { }
@@ -229,6 +236,8 @@ namespace iGL.Engine
             CreateDependentChildren();
 
             Init();
+
+            _compositionChanged = true;
         }
 
         private void BaseInit()
@@ -312,31 +321,43 @@ namespace iGL.Engine
         }
 
         internal void InitFromXml()
-        {
+        {        
             if (_xmlElement == null) return;
 
             #region Load Properties
             var props = this.GetType()
                                .GetProperties()
-                               .Where(p => p.GetSetMethod() != null && !p.GetCustomAttributes(true).Any(attr => attr is XmlIgnoreAttribute));
+                               .Where(p => p.GetSetMethod() != null && !p.GetCustomAttributes(true).Any(attr => attr is XmlIgnoreAttribute));       
+
+            _defaultValues = new Dictionary<MethodInfo, object>();
 
             foreach (var prop in props)
-            {
+            {             
                 var element = _xmlElement.Elements().FirstOrDefault(e => e.Name == prop.Name);
+                var setter = prop.GetSetMethod();
 
-                if (element != null)
-                {
-                    prop.SetValue(this, XmlHelper.FromXml(element, prop.PropertyType), null);
-                }
+                object value = element == null ? prop.GetValue(this, null) : XmlHelper.FromXml(element, prop.PropertyType);
+
+                _defaultValues.Add(setter, value);                           
             }
             #endregion
 
+            foreach (var kv in _defaultValues) kv.Key.Invoke(this, new object[] { kv.Value });
+      
             /* init childs */
             _children.ForEach(c => c.InitFromXml());
 
             /* load additional components */
-            _components.ForEach(c => c.LoadFromXml());         
-        }     
+            _components.ForEach(c => c.InitFromXml());         
+        }
+
+        internal void ResetToInitValues()
+        {
+            foreach (var kv in _defaultValues) kv.Key.Invoke(this, new object[] { kv.Value });
+
+            _children.ForEach(c => c.ResetToInitValues());
+            _components.ForEach(c => c.ResetToInitValues());         
+        }
 
         private void CreateDependentComponents()
         {
@@ -428,6 +449,8 @@ namespace iGL.Engine
             }
 
             OnComponentAddedEvent(this, new ComponentAddedEvent() { Component = component });
+
+            _compositionChanged = true;
         }
 
         public void RemoveComponent(GameComponent component)
@@ -435,6 +458,8 @@ namespace iGL.Engine
             _components.Remove(component);
 
             OnComponentRemovedEvent(this, new ComponentRemovedEvent() { Component = component });
+
+            _compositionChanged = true;
         }
 
         public void AddChild(GameObject gameObject)
@@ -451,6 +476,8 @@ namespace iGL.Engine
 
                 gameObject.Load();
             }
+
+            _compositionChanged = true;
         }
 
         public Matrix4 GetCompositeTransform(bool includeThisTransform = true)
@@ -495,17 +522,19 @@ namespace iGL.Engine
         }
 
         public virtual void Render(bool overrideParentTransform = false)
-        {
+        {            
             if (!Visible || !IsLoaded) return;
+
+            UpdateCompositionCache();
+
+            if (_renderComponent == null && _childrenArray.Length == 0) return;
 
             if (!this.IsLoaded) throw new InvalidOperationException("Game Object not loaded!");
           
             /* render designer objects in white ambient color */
             var sceneColor = Scene.AmbientColor;
             if (this.Designer) Scene.AmbientColor = new Vector4(1, 1, 1, 1);
-
-            var rigidBody = Components.FirstOrDefault(c => c is RigidBodyBaseComponent) as RigidBodyBaseComponent;
-
+           
             //if (_children.Count > 0 && rigidBody != null)
             //{
             //    UpdateGetRigidBodyOrientation();
@@ -513,17 +542,14 @@ namespace iGL.Engine
             //}
 
             var compositeTransform = overrideParentTransform ? Transform : GetCompositeTransform();        
+      
+            Matrix4 thisTransform;
 
-            var renderComponents = Components.Where(c => c is RenderComponent && c.IsLoaded)
-                                             .Select(c => c as RenderComponent);
-
-            Matrix4 thisTransform;            
-
-            if (rigidBody != null && rigidBody.IsLoaded)
+            if (_rigidBodyComponent != null && _rigidBodyComponent.IsLoaded)
             {
                 /* when a gameobject has a rigidbody, always use this transform to render */
                 /* gameobject transform has original positioning / orientation in relation to its parent tree */
-                thisTransform = rigidBody.RigidBodyTransform;
+                thisTransform = _rigidBodyComponent.RigidBodyTransform;
             }
             else
             {
@@ -537,35 +563,50 @@ namespace iGL.Engine
                 GL.Clear(ClearBufferMask.DepthBufferBit);
             }
 
-            foreach (var renderComponent in renderComponents)
-            {               
-                renderComponent.Render(thisTransform, modelviewProjection);
+            if (_renderComponent != null)
+            {
+                _renderComponent.Render(ref thisTransform, ref modelviewProjection);
             }
 
-            Scene.AmbientColor = sceneColor;
+            /* reset ambient color */
+            //if (this.Designer) 
+                Scene.AmbientColor = sceneColor;
 
-        }        
+        }
+
+        private void UpdateCompositionCache()
+        {
+            if (!_compositionChanged) return;
+
+            _renderComponent = Components.FirstOrDefault(c => c is RenderComponent && c.IsLoaded) as RenderComponent;
+            _rigidBodyComponent = Components.FirstOrDefault(c => c is RigidBodyBaseComponent) as RigidBodyBaseComponent;
+            _childrenArray = _children.ToArray();
+            _componentArray = _components.ToArray();
+
+            _compositionChanged = false;
+
+        }
 
         public virtual void Tick(float timeElapsed)
         {
             if (!IsLoaded) return;
-           
-            _components.ForEach(gc => { if (gc.IsLoaded) gc.Tick(timeElapsed); });
 
-            _rigidPositionDirty = true;
+            UpdateCompositionCache();
 
-            var rigidBody = Components.FirstOrDefault(c => c is RigidBodyBaseComponent) as RigidBodyBaseComponent;
+            for (int i = 0; i < _componentArray.Length; i++)
+            {
+                if (_components[i].IsLoaded) _components[i].Tick(timeElapsed);
+            }            
 
-            if (_children.Count > 0 && rigidBody != null)
+            _rigidPositionDirty = _rigidBodyComponent != null && !_rigidBodyComponent.Sleeping;           
+
+            if (_children.Count > 0 && _rigidBodyComponent != null)
             {
                 UpdateGetRigidBodyOrientation();
                 UpdateTransform();
             }
 
-            foreach (var child in _children)
-            {
-                child.Tick(timeElapsed);
-            }
+            for (int i = 0; i < _childrenArray.Length; i++) _childrenArray[i].Tick(timeElapsed);
             
         }
 
@@ -613,16 +654,14 @@ namespace iGL.Engine
         {
             if (IsLoaded && _rigidPositionDirty)
             {
-                var rigidBody = this.Components.FirstOrDefault(c => c is RigidBodyBaseComponent) as RigidBodyBaseComponent;
-
-                if (rigidBody != null && rigidBody.IsLoaded)
+                if (_rigidBodyComponent != null && _rigidBodyComponent.IsLoaded)
                 {
                     Vector3 position, rotation;
 
                     if (Parent != null)
                     {
                         var composite = this.Parent.GetCompositeTransform();
-                        var rigidBodyTransform = rigidBody.RigidBodyTransform;
+                        var rigidBodyTransform = _rigidBodyComponent.RigidBodyTransform;
                         composite.Invert();
 
                         var thisTransform = rigidBodyTransform * composite;
@@ -631,8 +670,8 @@ namespace iGL.Engine
                     }
                     else
                     {
-                        position = rigidBody.RigidBodyTransform.Translation();
-                        rigidBody.RigidBodyTransform.EulerAngles(out rotation);
+                        position = _rigidBodyComponent.RigidBodyTransform.Translation();
+                        _rigidBodyComponent.RigidBodyTransform.EulerAngles(out rotation);
                     }
 
                     _rotation = rotation;

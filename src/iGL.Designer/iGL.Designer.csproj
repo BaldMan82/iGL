@@ -71,6 +71,18 @@
     <Compile Include="ComponentDialogs\Animations\AlphaAnimationComponentDlg.Designer.cs">
       <DependentUpon>AlphaAnimationComponentDlg.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComponentDialogs\Animations\BaseAnimationComponentDlg.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentDialogs\Animations\BaseAnimationComponentDlg.Designer.cs">
+      <DependentUpon>BaseAnimationComponentDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentDialogs\Animations\LinearVelocityAnimationComponentDlg.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentDialogs\Animations\LinearVelocityAnimationComponentDlg.Designer.cs">
+      <DependentUpon>LinearVelocityAnimationComponentDlg.cs</DependentUpon>
+    </Compile>
     <Compile Include="ComponentDialogs\Farseer\BoxColliderFarseerComponentDlg.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -82,6 +94,18 @@
     </Compile>
     <Compile Include="ComponentDialogs\Farseer\CircleColliderFarseerComponentDlg.Designer.cs">
       <DependentUpon>CircleColliderFarseerComponentDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentDialogs\Farseer\FixedRevoluteJointComponentDlg.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentDialogs\Farseer\FixedRevoluteJointComponentDlg.Designer.cs">
+      <DependentUpon>FixedRevoluteJointComponentDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentDialogs\Farseer\DistanceJointComponentDlg.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentDialogs\Farseer\DistanceJointComponentDlg.Designer.cs">
+      <DependentUpon>DistanceJointComponentDlg.cs</DependentUpon>
     </Compile>
     <Compile Include="ComponentDialogs\Farseer\MeshColliderFarseerComponentDlg.cs">
       <SubType>UserControl</SubType>
@@ -259,11 +283,23 @@
     <EmbeddedResource Include="ComponentDialogs\Animations\AlphaAnimationComponentDlg.resx">
       <DependentUpon>AlphaAnimationComponentDlg.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ComponentDialogs\Animations\BaseAnimationComponentDlg.resx">
+      <DependentUpon>BaseAnimationComponentDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentDialogs\Animations\LinearVelocityAnimationComponentDlg.resx">
+      <DependentUpon>LinearVelocityAnimationComponentDlg.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ComponentDialogs\Farseer\BoxColliderFarseerComponentDlg.resx">
       <DependentUpon>BoxColliderFarseerComponentDlg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComponentDialogs\Farseer\CircleColliderFarseerComponentDlg.resx">
       <DependentUpon>CircleColliderFarseerComponentDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentDialogs\Farseer\FixedRevoluteJointComponentDlg.resx">
+      <DependentUpon>FixedRevoluteJointComponentDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentDialogs\Farseer\DistanceJointComponentDlg.resx">
+      <DependentUpon>DistanceJointComponentDlg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComponentDialogs\Farseer\MeshColliderFarseerComponentDlg.resx">
       <DependentUpon>MeshColliderFarseerComponentDlg.cs</DependentUpon>

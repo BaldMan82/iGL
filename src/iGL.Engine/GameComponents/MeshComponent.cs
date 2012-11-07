@@ -108,6 +108,7 @@ namespace iGL.Engine
 
         public void RefreshTexture()
         {
+
             Texture = GameObject.Scene.Resources.FirstOrDefault(t => t.Name == Material.TextureName && t is Texture) as Texture;
             NormalTexture = GameObject.Scene.Resources.FirstOrDefault(t => t.Name == Material.NormalTextureName && t is Texture) as Texture;
         }

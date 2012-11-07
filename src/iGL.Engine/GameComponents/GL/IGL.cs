@@ -33,6 +33,8 @@ namespace iGL.Engine.GL
 
         void Uniform3(int loc, Math.Vector3 vector3);
 
+        void Uniform2(int loc, Math.Vector2 vector2);
+
         void Uniform1(int loc, float p);
 
         void Uniform1(int loc, int p);
@@ -67,7 +69,7 @@ namespace iGL.Engine.GL
 
         void Clear(ClearBufferMask mask);
 
-        void BlendFunc(BlendingFactorSrc src, BlendingFactorDest dest);
+        void BlendFunc(BlendingFactorSrc src, BlendingFactorDest dest);      
 
         void TexParameter(TextureTarget textureTarget, TextureParameterName paramName, int value);
 
@@ -78,6 +80,8 @@ namespace iGL.Engine.GL
         void TexImage2D(TextureTarget textureTarget, int level, PixelInternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels);
 
         void ActiveTexture(TextureUnit textureUnit);
+
+		void GenerateMipmap();
 
         void DeleteTexture(int id);
 

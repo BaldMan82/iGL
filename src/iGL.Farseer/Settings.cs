@@ -185,7 +185,7 @@ namespace FarseerPhysics
         /// <summary>
         /// A body cannot sleep if its linear velocity is above this tolerance.
         /// </summary>
-        public const float LinearSleepTolerance = 0.01f;
+        public const float LinearSleepTolerance = 0.1f;
 
         /// <summary>
         /// A body cannot sleep if its angular velocity is above this tolerance.

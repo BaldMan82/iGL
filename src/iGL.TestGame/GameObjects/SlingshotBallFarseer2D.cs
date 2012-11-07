@@ -21,8 +21,8 @@ namespace iGL.TestGame.GameObjects
         private Sphere _aimSphere;
         private bool _inAimMode;
         private Vector3 _triggerPosition;
-        private float _slingShotRadius = 5.0f;
-        private float _springConstant = 500f;
+        private float _slingShotRadius = 4.0f;
+        private float _springConstant = 625f;
         private Arrow2d _arrow2d;
         private bool _canFire;
         private PanViewFollowCamera3d _followCamera;
@@ -32,7 +32,7 @@ namespace iGL.TestGame.GameObjects
         private DateTime _flickerTime;
         private TimeSpan _triggerDuration = TimeSpan.FromSeconds(2);
         private MeshComponent _meshComponent;
-        private RigidBodyFarseerComponent _rigidBodyComponent;
+        internal RigidBodyFarseerComponent _rigidBodyComponent;
         private Plane _rightEye;
         private Plane _leftEye;
         private Vector3 _eyePosition = new Vector3(0.2f, 0, 0.0f);
@@ -97,42 +97,41 @@ namespace iGL.TestGame.GameObjects
 
         public override void Load()
         {
+            if (!Game.InDesignMode)
+            {
+                Scene.OnLoaded += new EventHandler<Engine.Events.LoadedEvent>(Scene_OnLoaded);              
+            }
+
+            base.Load();
+        }
+
+        void Scene_OnLoaded(object sender, Engine.Events.LoadedEvent e)
+        {
             _previousPosition = this.Position;
-        
+
             this.Material.ShaderProgram = ShaderProgram.ProgramType.POINTLIGHT;
 
             Material.TextureName = "greenball";
-            DistanceSorting = true;
-
-            base.Load();
+            DistanceSorting = true;            
 
             if (!Game.InDesignMode)
             {
                 var lightAnim = new PropertyAnimationComponent();
 
-                lightAnim.StartValue = "0,0,0";
-                lightAnim.StopValue = "0,0,10";
-                lightAnim.DurationSeconds = 5;
+                lightAnim.StartValue = "0,0,0,1";
+                lightAnim.StopValue = "1,1,1,1";
+                lightAnim.DurationSeconds = 3;
                 lightAnim.PlayMode = AnimationComponent.Mode.Play;
-                lightAnim.Property = "Position";
+                lightAnim.Property = "Light.Diffuse";
 
                 _lightObject.AddComponent(lightAnim);
 
                 lightAnim.Play();
             }
 
-            _aimSphere.Enabled = !Game.InDesignMode;
-
-            if (!Game.InDesignMode)
-            {
-                Scene.OnLoaded += new EventHandler<Engine.Events.LoadedEvent>(Scene_OnLoaded);
-                SetAsTarget();
-            }
-        }
-
-        void Scene_OnLoaded(object sender, Engine.Events.LoadedEvent e)
-        {
             SetAsTarget();
+
+            _aimSphere.Enabled = !Game.InDesignMode;
         }
 
         void SetAsTarget()
@@ -157,23 +156,30 @@ namespace iGL.TestGame.GameObjects
             if (_inAimMode)
             {
                 var nearPlane = new Vector3(Scene.LastNearPlaneMousePosition.Value);
+                var farPlane = new Vector3(Scene.LastFarPlaneMousePosition.Value);
 
                 /* slingshot dynamics */
 
                 var lookAt = Scene.CurrentCamera.Target - Scene.CurrentCamera.GameObject.Position;
                 lookAt.Normalize();
 
+                var dir = farPlane - nearPlane;
+                dir.Normalize();
+
                 var p = Scene.CurrentCamera.GameObject.Position + lookAt;
                 var planeDistance = this.Position.PlaneDistance(p, lookAt);
 
-                var dirNearPlane = nearPlane - (Scene.CurrentCamera.GameObject.Position + lookAt);
+                //var dirNearPlane = nearPlane - (Scene.CurrentCamera.GameObject.Position + lookAt);
 
-                var newWorldPosition = nearPlane + (lookAt * planeDistance);
+                var newWorldPosition = nearPlane + (dir * planeDistance);
 
-                if (Scene.CurrentCamera is PerspectiveCameraComponent)
-                {
-                    newWorldPosition += (dirNearPlane * Math.Abs(planeDistance));
-                }
+                //var worldDirection = newWorldPosition - this.Position;
+                //worldDirection.Normalize();
+
+                //if (Scene.CurrentCamera is PerspectiveCameraComponent)
+                //{
+                //    newWorldPosition += worldDirection;
+                //}
 
                 _triggerPosition = newWorldPosition;
 
@@ -206,13 +212,15 @@ namespace iGL.TestGame.GameObjects
 
 
             /* damping */
-            var body = Components.Single(c => c is RigidBodyFarseerComponent) as RigidBodyFarseerComponent;
+            var body = _rigidBodyComponent as RigidBodyFarseerComponent;
             if (_lastAngularVelocity.LengthSquared > body.AngularVelocity.LengthSquared)
             {
                 body.AngularVelocity = body.AngularVelocity * 0.9f;
             }
 
-            if (body.AngularVelocity.LengthSquared < 4.0f && body.LinearVelocity.LengthSquared < 4.0f)
+            var texture = Material.TextureName;
+
+            if (body.HasContacts)
             {
                 Material.TextureName = "greenball";         
                 _canFire = true;               
@@ -228,7 +236,7 @@ namespace iGL.TestGame.GameObjects
                 if (_followCamera != null) _followCamera.FollowingEnabled = true;
             }
 
-            _meshComponent.RefreshTexture();
+            if (texture != Material.TextureName) _meshComponent.RefreshTexture();
 
             _lastAngularVelocity = body.AngularVelocity;        
 
@@ -294,7 +302,7 @@ namespace iGL.TestGame.GameObjects
 
             _arrow2d.Visible = false;
 
-            if (_followCamera != null) _followCamera.FollowingEnabled = true;
+            //if (_followCamera != null) _followCamera.FollowingEnabled = true;
 
         }
 
@@ -316,7 +324,7 @@ namespace iGL.TestGame.GameObjects
 
             _arrow2d.Visible = true;
 
-            if (_followCamera != null) _followCamera.FollowingEnabled = false;
+            //if (_followCamera != null) _followCamera.FollowingEnabled = false;
         }
 
     }

@@ -132,10 +132,10 @@ namespace iGL.Engine.Triggers
             {
                 _sourceGameObject.OnMouseDown -= _mouseDownHandler;
                 _sourceGameObject.OnAnimationSignal -= _animationSignalHandler;
-                _sourceGameObject.OnObjectCollision -= _collisionEventHandler;
-
-                Scene.OnLoaded -= _sceneLoadEventHandler;
+                _sourceGameObject.OnObjectCollision -= _collisionEventHandler;                
             }
+
+            Scene.OnLoaded -= _sceneLoadEventHandler;
         }
     }
 }

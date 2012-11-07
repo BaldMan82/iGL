@@ -56,7 +56,7 @@ namespace iGL.Engine
         {
             // code: http://www.ogre3d.org/tikiwiki/ManualSphereMeshes
 
-            List<short> indices = new List<short>();
+			List<short> indices = new List<short>();
             List<Vector3> vertices = new List<Vector3>();
             List<Vector3> normals = new List<Vector3>();
             List<Vector2> uvs = new List<Vector2>();
@@ -88,12 +88,12 @@ namespace iGL.Engine
 
                     if (ring != Rings)
                     {
-                        indices.Add((short)(wVerticeIndex + Segments + 1));
-                        indices.Add((short)(wVerticeIndex));
-                        indices.Add((short)(wVerticeIndex + Segments));
-                        indices.Add((short)(wVerticeIndex + Segments + 1));
-                        indices.Add((short)(wVerticeIndex + 1));
-                        indices.Add((short)(wVerticeIndex));
+						indices.Add((byte)(wVerticeIndex + Segments + 1));
+						indices.Add((byte)(wVerticeIndex));
+						indices.Add((byte)(wVerticeIndex + Segments));
+						indices.Add((byte)(wVerticeIndex + Segments + 1));
+						indices.Add((byte)(wVerticeIndex + 1));
+						indices.Add((byte)(wVerticeIndex));
 
                         wVerticeIndex++;
                     }

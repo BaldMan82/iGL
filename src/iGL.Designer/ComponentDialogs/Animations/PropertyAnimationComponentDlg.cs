@@ -62,6 +62,7 @@ namespace iGL.Designer.ComponentDialogs
             component.PlayMode = (AnimationComponent.Mode)Enum.Parse(typeof(AnimationComponent.Mode), ddAnimMode.SelectedItem.ToString());
             component.StartValue = txtStartValue.Text;
             component.StopValue = txtStopValue.Text;
+            component.AutoStart = cbAutoStart.Checked;
 
         }
 

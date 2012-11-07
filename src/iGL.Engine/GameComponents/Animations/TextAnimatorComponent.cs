@@ -26,16 +26,17 @@ namespace iGL.Engine
             base.Init();
 
             Text = "Booting kernel...";
-            CharacterInterval = 0.5f;
+            CharacterInterval = 0.5f;          
+
         }
 
         public override void Play()
-        {
-            if (!IsLoaded) return;
-
+        {                     
             _isPlaying = true;
             _tickTime = DateTime.UtcNow;
+            _charIndex = 0;
             _textComponent.Text = string.Empty;
+            _textComponent.Reload();
 
             base.Play();
         }
@@ -55,9 +56,11 @@ namespace iGL.Engine
         public override bool InternalLoad()
         {
             _textComponent = GameObject.Components.FirstOrDefault(c => c is TextComponent) as TextComponent;
+            if (_textComponent == null) return false;
 
-            /* loaded if textcomponent is found */
-            return _textComponent != null;
+            base.InternalLoad();
+
+            return true;
         }
 
         private void NextCharacter()
@@ -71,8 +74,11 @@ namespace iGL.Engine
 
                     if (c != '\n')
                     {
-                        _textComponent.Text += c;
-                        _textComponent.Reload();
+						if (c != '\r')
+						{
+                        	_textComponent.Text += c;
+                        	_textComponent.Reload();
+						}
                         _charIndex++;
 
                         _tickTime = DateTime.UtcNow;

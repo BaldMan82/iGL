@@ -17,12 +17,12 @@ namespace iGL.Engine
 
         public string Property { get; set; }
         public string StartValue { get; set; }
-        public string StopValue { get; set; }
-        public float DurationSeconds { get; set; }
+        public string StopValue { get; set; }       
 
         private PropertyInfo _propertyInfo;
         private bool _isPlaying;
         private DateTime _tickTime;
+        private object _target;
 
         public PropertyAnimationComponent(XElement xmlElement) : base(xmlElement) { }
 
@@ -50,10 +50,44 @@ namespace iGL.Engine
 
         public override bool InternalLoad()
         {
-            _propertyInfo = GameObject.GetType().GetProperties().FirstOrDefault(p => p.Name == Property);
+            base.InternalLoad();
+
+            if (Property == null) return false;
+
+            var properties = Property.Split('.');
+            if (properties.Length > 0)
+            {
+                PropertyInfo prop = null;
+                _target = GameObject;
+                foreach (var property in properties)
+                {
+                    if (prop == null)
+                    {
+                        prop = GameObject.GetType().GetProperties().FirstOrDefault(p => p.Name == property);
+                    }
+                    else
+                    {
+                        _target = prop.GetValue(_target, null);
+                        if (_target == null) return false;
+
+                        prop = _target.GetType().GetProperties().FirstOrDefault(p => p.Name == property);
+                    }
+
+                    if (prop == null) return false;
+                }
+
+                _propertyInfo = prop;
+            }
+            else
+            {
+                _target = GameObject;
+                _propertyInfo = GameObject.GetType().GetProperties().FirstOrDefault(p => p.Name == Property);
+            }
 
             return _propertyInfo != null;
         }
+
+
 
         private void Step()
         {
@@ -69,7 +103,7 @@ namespace iGL.Engine
                     float stopValue = float.Parse(StopValue);
 
                     float value = stopValue * percentage;
-                    _propertyInfo.SetValue(this.GameObject, value, null);
+                    _propertyInfo.SetValue(_target, value, null);
 
                 }
                 else if (_propertyInfo.PropertyType == typeof(bool))
@@ -77,12 +111,12 @@ namespace iGL.Engine
                     if (percentage < 1)
                     {
                         bool value = bool.Parse(StartValue);
-                        _propertyInfo.SetValue(this.GameObject, value, null);
+                        _propertyInfo.SetValue(_target, value, null);
                     }
                     else
                     {
                         bool value = bool.Parse(StopValue);
-                        _propertyInfo.SetValue(this.GameObject, value, null);
+                        _propertyInfo.SetValue(_target, value, null);
                     }
                 }
                 else if (_propertyInfo.PropertyType == typeof(int))
@@ -91,12 +125,12 @@ namespace iGL.Engine
                     int stopValue = int.Parse(StopValue);
 
                     int value = (int)((stopValue * 1.0f) * percentage);
-                    _propertyInfo.SetValue(this.GameObject, value, null);
+                    _propertyInfo.SetValue(_target, value, null);
                 }
                 else if (_propertyInfo.PropertyType == typeof(Vector3))
                 {
-                    var startValues = StartValue.Split(',').Select(s => float.Parse(s)).ToArray();
-                    var stopValues = StopValue.Split(',').Select(s => float.Parse(s)).ToArray();
+                    var startValues = StartValue.Replace("(",string.Empty).Replace(")", string.Empty).Split(',').Select(s => float.Parse(s)).ToArray();
+                    var stopValues = StopValue.Replace("(", string.Empty).Replace(")", string.Empty).Split(',').Select(s => float.Parse(s)).ToArray();
 
                     if (startValues.Length == 3 && stopValues.Length == 3)
                     {
@@ -104,7 +138,7 @@ namespace iGL.Engine
                         var stopVec = new Vector3(stopValues[0], stopValues[1], stopValues[2]);
 
                         var value = Vector3.Lerp(startVec, stopVec, percentage);
-                        _propertyInfo.SetValue(this.GameObject, value, null);
+                        _propertyInfo.SetValue(_target, value, null);
                     }
                 }
                 else if (_propertyInfo.PropertyType == typeof(Vector4))
@@ -118,7 +152,7 @@ namespace iGL.Engine
                         var stopVec = new Vector4(stopValues[0], stopValues[1], stopValues[2], stopValues[3]);
 
                         var value = Vector4.Lerp(startVec, stopVec, percentage);
-                        _propertyInfo.SetValue(this.GameObject, value, null);
+                        _propertyInfo.SetValue(_target, value, null);
                     }
                 }
             }

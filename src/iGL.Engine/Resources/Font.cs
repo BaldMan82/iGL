@@ -13,11 +13,9 @@ namespace iGL.Engine.Resources
 
         protected override bool InternalLoad()
         {
-            var resourceAsm = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(asm => asm.GetManifestResourceNames().Contains(base.ResourceName));
-
-            if (resourceAsm == null) throw new Exception(base.ResourceName + " not found.");
-
-            using (var stream = resourceAsm.GetManifestResourceStream(base.ResourceName))
+            if (!Resource.AssemblyResources.Contains(base.ResourceName)) return false;
+       
+            using (var stream = Resource.ResourceAssembly.GetManifestResourceStream(base.ResourceName))
             {
                 var textReader = new StreamReader(stream);
                 var font = BitmapFont.BitmapFontLoader.LoadFontFromTextReader(textReader);

@@ -9,9 +9,7 @@ using System.Xml.Linq;
 namespace iGL.Engine
 {
     public class MeshScaleAnimationComponent : AnimationComponent
-    {
-        public float DurationSeconds { get; set; }
-
+    {      
         private DateTime _tickTime;
         private bool _isPlaying;
         private Vector3 _startValue;
@@ -72,6 +70,8 @@ namespace iGL.Engine
 
         public override bool InternalLoad()
         {
+            base.InternalLoad();
+
             _renderComponent = GameObject.Components.FirstOrDefault(c => c is MeshRenderComponent) as MeshRenderComponent;
             _meshComponent = GameObject.Components.FirstOrDefault(c => c is MeshComponent) as MeshComponent;
             _rigidBodyComponent = GameObject.Components.FirstOrDefault(c => c is RigidBodyBaseComponent) as RigidBodyBaseComponent;

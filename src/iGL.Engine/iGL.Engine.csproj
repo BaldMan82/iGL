@@ -10,29 +10,27 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>iGL.Engine</RootNamespace>
     <AssemblyName>iGL.Engine</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -67,12 +65,15 @@
     <Compile Include="Events\ScaleEvent.cs" />
     <Compile Include="GameComponents\Animations\AnimationComponent.cs" />
     <Compile Include="GameComponents\Animations\AlphaAnimationComponent.cs" />
+    <Compile Include="GameComponents\Animations\LinearVelocityAnimationComponent.cs" />
+    <Compile Include="GameComponents\BackgroundComponent.cs" />
     <Compile Include="GameComponents\CameraComponent.cs" />
+    <Compile Include="GameComponents\Animations\BackgroundShader.cs" />
     <Compile Include="GameComponents\Farseer\CircleColliderFarseerComponent.cs" />
-    <Compile Include="GameComponents\FurShader.cs" />
     <Compile Include="GameComponents\Farseer\BoxColliderFarseerComponent.cs" />
     <Compile Include="GameComponents\Farseer\ColliderFarseerComponent.cs" />
     <Compile Include="GameComponents\Farseer\DistanceJointFarseer.cs" />
+    <Compile Include="GameComponents\Farseer\FixedRevoluteJointComponent.cs" />
     <Compile Include="GameComponents\Farseer\MeshColliderFarseerComponent.cs" />
     <Compile Include="GameComponents\Farseer\RigidBodyFarseerComponent.cs" />
     <Compile Include="GameComponents\Animations\MeshScaleAnimationComponent.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="GameComponents\TextComponent.cs" />
     <Compile Include="GameComponents\OrthogonalCameraComponent.cs" />
     <Compile Include="GameComponents\Jitter\MeshColliderComponent.cs" />
+    <Compile Include="GameObjects\Background.cs" />
     <Compile Include="GameObjects\Farseer\RigidFarseerCube.cs" />
     <Compile Include="GameObjects\Farseer\RigidFarseerSphere.cs" />
     <Compile Include="GameObjects\StatisticsText.cs" />
@@ -173,16 +175,27 @@
     <Compile Include="Triggers\Trigger.cs" />
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\Timer.cs" />
+    <Compile Include="GameComponents\DesignShader.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Shaders\VS_POINTLIGHT.c" />
+    <EmbeddedResource Include="Shaders\FS_DESIGN.c" />
+    <EmbeddedResource Include="Shaders\VS_DESIGN.c" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Shaders\FS_POINTLIGHT.c" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Tests\" />
+    <EmbeddedResource Include="Shaders\VS_BACKGROUND.c" />
   </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
   <ItemGroup>
     <ProjectReference Include="..\iGL.Farseer\Farseer Physics.csproj">
       <Project>{A4610E4C-DD34-428B-BABB-779CA0B5993A}</Project>
@@ -194,17 +207,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Shaders\FS_FUR.c" />
+    <EmbeddedResource Include="Shaders\FS_BACKGROUND.c" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Shaders\VS_FUR.c" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

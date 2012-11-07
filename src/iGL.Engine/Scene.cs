@@ -50,10 +50,14 @@ namespace iGL.Engine
         public IEnumerable<Trigger> Triggers { get { return _triggers.AsEnumerable(); } }
 
         public Vector4? LastNearPlaneMousePosition { get; private set; }
+        public Vector4? LastFarPlaneMousePosition { get; private set; }
+
         public Game Game { get; internal set; }
         public bool Loaded { get; internal set; }
         public Point MousePosition { get; private set; }
         public bool IsDisposing { get; private set; }
+        public bool IsDisposingResources { get; private set; }
+        public Dictionary<string, int[]> MeshBufferCache { get; internal set; }
 
         private TimeSpan _mouseUpdateRate = TimeSpan.FromSeconds(1.0 / 40.0);
         private DateTime _lastMouseUpdate = DateTime.MinValue;
@@ -68,6 +72,8 @@ namespace iGL.Engine
 
         private Vector4 _ambientColor;
         private DateTime _lastRenderUtc;
+        private bool _compositionChanged;
+        protected GameObject[] _sortedObjectsArray;
 
         private event EventHandler<TickEvent> OnTickEvent;
         private event EventHandler<MouseMoveEvent> OnMouseMoveEvent;
@@ -93,8 +99,7 @@ namespace iGL.Engine
         private DisposeObjectEvent _disposeObjectEvent = new DisposeObjectEvent();
 
         internal PointLightShader PointLightShader { get; set; }
-        internal FurShader FurShader { get; set; }
-        internal Dictionary<string, MeshRenderComponent> MeshComponentCache { get; private set; }
+        internal DesignShader DesignShader { get; set; }
         public PhysicsBase Physics { get; private set; }
 
         private List<GameObject> _disposableGameObjects = new List<GameObject>();
@@ -109,7 +114,7 @@ namespace iGL.Engine
             set
             {
                 PointLightShader.SetAmbientColor(_ambientColor);
-                FurShader.SetAmbientColor(_ambientColor);
+                DesignShader.SetAmbientColor(_ambientColor);
 
                 _ambientColor = value;
             }
@@ -130,8 +135,8 @@ namespace iGL.Engine
             PointLightShader = new PointLightShader();
             PointLightShader.Load();
 
-            FurShader = new FurShader();
-            FurShader.Load();
+            DesignShader = new DesignShader();
+            if (Game.InDesignMode) DesignShader.Load();
 
             Physics = new Physics2d();
 
@@ -147,7 +152,7 @@ namespace iGL.Engine
 
             Statistics = new Statistics();
 
-            MeshComponentCache = new Dictionary<string, MeshRenderComponent>();
+            MeshBufferCache = new Dictionary<string, int[]>();
 
             Physics.CollisionEvent += new EventHandler<CollisionEvent>(Physics_CollisionEvent);
         }
@@ -169,6 +174,7 @@ namespace iGL.Engine
                 OnPreRenderEvent(this, _preRenderEvent);
             }
 
+
             if (CurrentCamera == null)
             {
                 /* just clear the scene */
@@ -180,8 +186,9 @@ namespace iGL.Engine
 
             }
 
-            Game.GL.ClearColor(CurrentCamera.ClearColor.X, CurrentCamera.ClearColor.Y, CurrentCamera.ClearColor.Z, CurrentCamera.ClearColor.W);
-
+            //Game.GL.ClearColor(CurrentCamera.ClearColor.X, CurrentCamera.ClearColor.Y, CurrentCamera.ClearColor.Z, CurrentCamera.ClearColor.W);
+            //Game.GL.ClearColor(122.0f/255.0f, 150.0f/255.0f, 223.0f/255.0f, 1.0f);
+            Game.GL.ClearColor(134f/255f, 159f/255f, 226/255f, 1);
             Game.GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             var pointLightShader = PointLightShader as PointLightShader;
@@ -192,34 +199,38 @@ namespace iGL.Engine
                 pointLightShader.Use();
                 pointLightShader.SetLight(CurrentLight.Light, new Vector4(CurrentLight.GameObject.WorldPosition));
 
-                FurShader.Use();
-                FurShader.SetLight(CurrentLight.Light, new Vector4(CurrentLight.GameObject.WorldPosition));
+                //FurShader.Use();
+                //FurShader.SetLight(CurrentLight.Light, new Vector4(CurrentLight.GameObject.WorldPosition));
 
             }
             else
             {
                 pointLightShader.ClearLight();
-                FurShader.ClearLight();
+                //FurShader.ClearLight();
             }
 
             var allObjects = _gameObjects.SelectMany(g => g.AllChildren).ToList();
             allObjects.AddRange(_gameObjects);
 
-            var sortedObjects = allObjects.OrderByDescending(g => g.RenderQueuePriority).                                           
-                                           ThenByDescending(g => g.DistanceSorting ? (g.Position - CurrentCamera.GameObject.Position).LengthSquared : float.MaxValue);
+            var sortedObjects = allObjects.OrderByDescending(g => g.RenderQueuePriority).
+                                           ThenByDescending(g => g.DistanceSorting ? (g.WorldPosition - CurrentCamera.GameObject.WorldPosition).LengthSquared : float.MaxValue);
 
             foreach (var gameObject in sortedObjects)
             {
+                //if (gameObject.Name.ToLower() == "background" /*|| gameObject.Name.ToLower() == "gameobject0"*/) continue;
+
                 gameObject.Render();
             }
 
             Statistics.LastRenderDuration = DateTime.UtcNow - _lastRenderUtc;
 
             _lastRenderUtc = DateTime.UtcNow;
+
         }
 
         public void Tick(float timeElapsed, bool tickPhysics = true)
         {
+            UpdateCompositionCache();
 
             if (OnTickEvent != null)
             {
@@ -236,11 +247,10 @@ namespace iGL.Engine
             }
             catch { }
 
-            var sortedObjects = _gameObjects.OrderByDescending(g => g.Components.Any(c => c is RigidBodyBaseComponent));
-            foreach (var gameObject in sortedObjects)
+            for (int i = 0; i < _sortedObjectsArray.Length; i++)
             {
-                gameObject.Tick(timeElapsed);
-            }         
+                _sortedObjectsArray[i].Tick(timeElapsed);
+            }
 
             ProcessTimers();
 
@@ -270,18 +280,29 @@ namespace iGL.Engine
             });
 
             _disposableGameObjects.Clear();
+
+            this.CurrentCamera.GameObject.Tick(0.0f);
+        }
+
+        private void UpdateCompositionCache()
+        {
+            if (!_compositionChanged) return;
+
+            _sortedObjectsArray = _gameObjects.OrderByDescending(g => g.Components.Any(c => c is RigidBodyBaseComponent)).ToArray();
+
+            _compositionChanged = false;
         }
 
         private void ProcessTimers()
         {
             var obsoleteTimers = new List<Timer>();
 
-            for (int i=0;i<_timers.Count;i++)
+            for (int i = 0; i < _timers.Count; i++)
             {
                 var timer = _timers[i];
 
                 if (timer.LastTick.Add(timer.Interval) < DateTime.UtcNow)
-                {                   
+                {
                     timer.LastTick = DateTime.UtcNow;
                     if (timer.Mode == Timer.TimerMode.Once)
                     {
@@ -291,7 +312,7 @@ namespace iGL.Engine
 
                     timer.Action.Invoke();
                 }
-            }           
+            }
         }
 
         public void AddTimer(Timer timer)
@@ -492,6 +513,11 @@ namespace iGL.Engine
 
             Loaded = true;
 
+            FireLoadEvent();
+        }
+
+        internal void FireLoadEvent()
+        {
             if (OnLoadedEvent != null)
             {
                 OnLoadedEvent(this, _loadedEvent);
@@ -513,6 +539,8 @@ namespace iGL.Engine
                 _gameObjectAddedEvent.GameObject = gameObject;
                 OnObjectAddedEvent(this, _gameObjectAddedEvent);
             }
+
+            _compositionChanged = true;
         }
 
         public void DisposeGameObject(GameObject gameObject)
@@ -635,7 +663,7 @@ namespace iGL.Engine
         }
 
         public GameObject RayCast(Vector4 nearPlane, Vector4 ray, out Vector3 hitLocation)
-        {                      
+        {
             var near = new Vector3(nearPlane);
             var dir = new Vector3(ray);
 
@@ -649,8 +677,18 @@ namespace iGL.Engine
             float minDistance = float.MaxValue;
             GameObject result = null;
 
-            var objects = _gameObjects.Where(g => g.Enabled).SelectMany(g => g.AllChildren).ToList();
-            objects.AddRange(_gameObjects);
+            List<GameObject> objects;
+
+            if (Game.InDesignMode || PlayerObject == null)
+            {
+                objects = _gameObjects.Where(g => g.Enabled).SelectMany(g => g.AllChildren).ToList();
+                objects.AddRange(_gameObjects);
+            }
+            else
+            {
+                objects = PlayerObject.AllChildren.ToList();
+                objects.Add(PlayerObject);
+            }
 
             foreach (var gameObject in objects)
             {
@@ -681,7 +719,6 @@ namespace iGL.Engine
         internal void UpdateMouseButton(MouseButton button, bool down, int x, int y)
         {
             MouseButtonState[button] = down;
-
             MousePosition = new Point(x, y);
             ProcessInteractiviy();
 
@@ -751,27 +788,43 @@ namespace iGL.Engine
             ScreenPointToWorld(MousePosition, out nearPlane, out farPlane);
 
             LastNearPlaneMousePosition = nearPlane;
+            LastFarPlaneMousePosition = farPlane;
         }
-
 
         public void Dispose()
         {
-            IsDisposing = true;
+            Dispose(true);
+        }
 
-            /* finish all timers */
-            _timers.ForEach(t => t.LastTick = DateTime.MinValue);
-            ProcessTimers();
-            _timers.Clear();
+        public void Dispose(bool disposeResources)
+        {
+            IsDisposing = true;
+            IsDisposingResources = disposeResources;
+
+            FinishTimers();
 
             /* dispose all objects */
             _gameObjects.ForEach(g => g.Dispose());
-            _resources.ForEach(r => r.Dispose());
+            if (disposeResources) _resources.ForEach(r => r.Dispose());
 
             _gameObjects.Clear();
             _resources.Clear();
 
             PointLightShader.Dispose();
-            FurShader.Dispose();
+            //FurShader.Dispose();
+
+            _triggers.ForEach(tr => tr.Dispose());
+            _triggers.Clear();
+
+            MeshBufferCache = null;
+        }
+
+        internal void FinishTimers()
+        {
+            /* finish all timers */
+            _timers.ForEach(t => t.LastTick = DateTime.MinValue);
+            ProcessTimers();
+            _timers.Clear();
         }
     }
 }

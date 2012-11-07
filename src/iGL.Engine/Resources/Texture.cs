@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using iGL.Engine.GL;
+using System.Reflection;
 
 namespace iGL.Engine.Resources
 {
     public class Texture : Resource
     {
+        
         public int TextureId { get; private set; }
 
         public int Width { get; private set; }
@@ -22,11 +24,9 @@ namespace iGL.Engine.Resources
         {
             try
             {
-                var resourceAsm = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(asm => asm.GetManifestResourceNames().Contains(base.ResourceName));
-
-                if (resourceAsm == null) throw new Exception(base.ResourceName + " not found.");
-
-                using (var stream = resourceAsm.GetManifestResourceStream(base.ResourceName))
+                if (!Resource.AssemblyResources.Contains(base.ResourceName)) return false;
+               
+                using (var stream = Resource.ResourceAssembly.GetManifestResourceStream(base.ResourceName))
                 {
                     var bytes = new byte[stream.Length - 8];
                   
@@ -50,6 +50,8 @@ namespace iGL.Engine.Resources
                             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Width, Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, (IntPtr)p);                           
                         }
                     }
+
+					//GL.GenerateMipmap();
 
                     return true;
                 }

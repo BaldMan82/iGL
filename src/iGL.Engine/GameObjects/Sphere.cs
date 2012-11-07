@@ -80,12 +80,12 @@ namespace iGL.Engine
 
                     if (ring != Rings)
                     {
-                        indices.Add((short)(wVerticeIndex + Segments + 1));
-                        indices.Add((short)(wVerticeIndex));
-                        indices.Add((short)(wVerticeIndex + Segments));
-                        indices.Add((short)(wVerticeIndex + Segments + 1));
-                        indices.Add((short)(wVerticeIndex + 1));
-                        indices.Add((short)(wVerticeIndex));
+						indices.Add((byte)(wVerticeIndex + Segments + 1));
+						indices.Add((byte)(wVerticeIndex));
+						indices.Add((byte)(wVerticeIndex + Segments));
+						indices.Add((byte)(wVerticeIndex + Segments + 1));
+						indices.Add((byte)(wVerticeIndex + 1));
+						indices.Add((byte)(wVerticeIndex));
 
                         wVerticeIndex++;                  
                     }
