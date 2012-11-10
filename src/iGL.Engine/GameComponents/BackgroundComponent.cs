@@ -15,11 +15,13 @@ namespace iGL.Engine
     public class BackgroundComponent : RenderComponent
     {
         private int[] _bufferIds;
-        private bool _isClone;
+     
         private Vector3[] _vertices;
         private Vector3[] _normals;
         private short[] _indices;
         private BackgroundShader _shader;
+        private float _distance;
+
 
         public BeginMode BeginMode { get; set; }
 
@@ -32,6 +34,8 @@ namespace iGL.Engine
             _bufferIds = new int[2];
 
             BeginMode = BeginMode.Triangles;
+
+            _distance = -5.0f;
         }
 
         public override bool InternalLoad()
@@ -47,14 +51,14 @@ namespace iGL.Engine
             };
 
             _normals = new Vector3[4] {
-                new Vector3(0,0,-1),
-                new Vector3(0,0,-1),
-                new Vector3(0,0,-1),
-                new Vector3(0,0,-1)
+                new Vector3(0,0,1),
+                new Vector3(0,0,1),
+                new Vector3(0,0,1),
+                new Vector3(0,0,1)
             };
 
             _indices = new short[6] {
-                0,1,2,0,3,1
+                2,1,0,1,3,0
             };
 
             /* create buffers to store vertex data */
@@ -90,7 +94,23 @@ namespace iGL.Engine
                 }
             }
 
+            GameObject.Position = new Vector3(0, 0, _distance);
 
+            GameObject.Scene.OnLoaded += (a, b) =>
+            {
+                if (GameObject.Scene.CurrentCamera is PerspectiveCameraComponent)
+                {
+                    var cam = GameObject.Scene.CurrentCamera as PerspectiveCameraComponent;
+                    var sin = System.Math.Sin(cam.FieldOfViewRadians);
+                    var l = (float)(sin * (System.Math.Abs(_distance) + (cam.GameObject.Position.Z)));
+                    GameObject.Scale = new Vector3(l);
+
+                    cam.GameObject.OnMove += (c, d) =>
+                    {                     
+                        GameObject.Position = new Vector3(cam.GameObject.Position.X, cam.GameObject.Position.Y, _distance);
+                    };
+                }
+            };
             return true;
         }
 
@@ -98,12 +118,13 @@ namespace iGL.Engine
         {
             _shader.Dispose();
             GL.DeleteBuffers(2, _bufferIds);
-        }
+        }       
 
         public override void Render(ref Matrix4 transform, ref Matrix4 modelView)
-        {
+        {            
             _shader.Use();
             _shader.SetLight(GameObject.Scene.CurrentLight.Light, new Vector4(GameObject.Scene.CurrentLight.GameObject.WorldPosition));
+            _shader.SetAmbientColor(GameObject.Scene.AmbientColor);
 
             _shader.SetModelViewProjectionMatrix(modelView);
 
@@ -134,7 +155,7 @@ namespace iGL.Engine
 
         public override void Tick(float timeElapsed)
         {
-
+           
         }
 
         public override void Dispose()

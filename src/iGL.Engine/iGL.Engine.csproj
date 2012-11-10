@@ -68,7 +68,7 @@
     <Compile Include="GameComponents\Animations\LinearVelocityAnimationComponent.cs" />
     <Compile Include="GameComponents\BackgroundComponent.cs" />
     <Compile Include="GameComponents\CameraComponent.cs" />
-    <Compile Include="GameComponents\Animations\BackgroundShader.cs" />
+    <Compile Include="GameComponents\BackgroundShader.cs" />
     <Compile Include="GameComponents\Farseer\CircleColliderFarseerComponent.cs" />
     <Compile Include="GameComponents\Farseer\BoxColliderFarseerComponent.cs" />
     <Compile Include="GameComponents\Farseer\ColliderFarseerComponent.cs" />

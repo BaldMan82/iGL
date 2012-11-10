@@ -83,6 +83,12 @@
     <Compile Include="ComponentDialogs\Animations\LinearVelocityAnimationComponentDlg.Designer.cs">
       <DependentUpon>LinearVelocityAnimationComponentDlg.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComponentDialogs\BackgroundComponentDlg.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentDialogs\BackgroundComponentDlg.Designer.cs">
+      <DependentUpon>BackgroundComponentDlg.cs</DependentUpon>
+    </Compile>
     <Compile Include="ComponentDialogs\Farseer\BoxColliderFarseerComponentDlg.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -288,6 +294,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ComponentDialogs\Animations\LinearVelocityAnimationComponentDlg.resx">
       <DependentUpon>LinearVelocityAnimationComponentDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentDialogs\BackgroundComponentDlg.resx">
+      <DependentUpon>BackgroundComponentDlg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComponentDialogs\Farseer\BoxColliderFarseerComponentDlg.resx">
       <DependentUpon>BoxColliderFarseerComponentDlg.cs</DependentUpon>

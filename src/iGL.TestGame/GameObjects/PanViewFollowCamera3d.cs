@@ -54,15 +54,18 @@ namespace iGL.TestGame.GameObjects
 
         void Scene_OnLoaded(object sender, Engine.Events.LoadedEvent e)
         {
-            var background = Scene.GameObjects.FirstOrDefault(g => g.Name.ToLower() == "background");
-            if (background != null)
-            {
-                var meshComponent = background.Components.First(c => c is MeshComponent) as MeshComponent;
+            //var background = Scene.GameObjects.FirstOrDefault(g => g.Name.ToLower() == "background");
+            //if (background != null)
+            //{
+            //    var meshComponent = background.Components.First(c => c is MeshComponent) as MeshComponent;
 
-                LimitX = meshComponent.MaxBox.X * background.Scale.X - (float)(Math.Sin(CameraComponent.FieldOfViewRadians) * Math.Abs(background.Position.Z));
-                LimitY = meshComponent.MaxBox.Y * background.Scale.Y - (float)(Math.Sin(CameraComponent.FieldOfViewRadians) * Math.Abs(background.Position.Z));
+            //    LimitX = meshComponent.MaxBox.X * background.Scale.X - (float)(Math.Sin(CameraComponent.FieldOfViewRadians) * Math.Abs(background.Position.Z));
+            //    LimitY = meshComponent.MaxBox.Y * background.Scale.Y - (float)(Math.Sin(CameraComponent.FieldOfViewRadians) * Math.Abs(background.Position.Z));
 
-            }
+            //}
+
+            LimitX = 100;
+            LimitY = 100;
         }
 
         public override void Load()

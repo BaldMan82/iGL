@@ -7,30 +7,28 @@ struct Light {
 	lowp vec4 specular;	
 };
 
-struct Material {
-	lowp vec4 ambient;
-	lowp vec4 diffuse;
-	lowp vec4 specular;
-	lowp float shininess;
-};
-
 // Uniforms
 uniform Light u_light;
-uniform Material u_material;
 uniform mediump vec4 u_globalAmbientColor;
-uniform mediump vec2 u_textureScale;
 
-// Varyings
 varying lowp vec4 v_ambientColor;
 varying lowp vec4 v_diffuseColor;
-varying lowp vec2 v_uv;
-
-uniform sampler2D s_texture;
+varying highp vec4 v_position;
 
 void main() 
-{	
-	lowp vec4 textureColor = texture2D(s_texture, vec2(v_uv.x*u_textureScale.x, v_uv.y*u_textureScale.y));
-	if (textureColor.a < 0.1) discard;
+{		
+	float x1 = v_position.x;
+	float x2 = 0;
+	float y1 = v_position.y + 10;
+	float y2 = 1;
 
-	gl_FragColor = v_ambientColor*textureColor + v_diffuseColor*textureColor;
+	float angle = mod(atan( (x1*y2) - (x2*y1), (x1 * x2) + (y1 * y2)),(2 * 3.1415));
+
+	if (mod(floor(angle / 0.2), 2) == 0){					 
+		gl_FragColor = v_ambientColor*vec4(0.525,0.623,0.886,1) + v_diffuseColor*vec4(0.525,0.623,0.886,1);
+	}
+	else {
+		gl_FragColor = v_ambientColor*vec4(0.478,0.588,0.874,1) + v_diffuseColor*vec4(0.478,0.588,0.874,1);
+	}
+		
 }

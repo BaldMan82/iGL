@@ -188,7 +188,8 @@ namespace iGL.Engine
 
             //Game.GL.ClearColor(CurrentCamera.ClearColor.X, CurrentCamera.ClearColor.Y, CurrentCamera.ClearColor.Z, CurrentCamera.ClearColor.W);
             //Game.GL.ClearColor(122.0f/255.0f, 150.0f/255.0f, 223.0f/255.0f, 1.0f);
-            Game.GL.ClearColor(134f/255f, 159f/255f, 226/255f, 1);
+            //Game.GL.ClearColor(134f/255f, 159f/255f, 226/255f, 1);
+            Game.GL.ClearColor(0, 0, 0, 0);
             Game.GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             var pointLightShader = PointLightShader as PointLightShader;
@@ -215,12 +216,16 @@ namespace iGL.Engine
             var sortedObjects = allObjects.OrderByDescending(g => g.RenderQueuePriority).
                                            ThenByDescending(g => g.DistanceSorting ? (g.WorldPosition - CurrentCamera.GameObject.WorldPosition).LengthSquared : float.MaxValue);
 
+            var sw = new Stopwatch();
             foreach (var gameObject in sortedObjects)
             {
-                //if (gameObject.Name.ToLower() == "background" /*|| gameObject.Name.ToLower() == "gameobject0"*/) continue;
-
+                sw.Restart();
                 gameObject.Render();
+                sw.Stop();
+
+                //Debug.WriteLine("Render obj {0}: {1}", gameObject.Name, sw.Elapsed.TotalMilliseconds);
             }
+
 
             Statistics.LastRenderDuration = DateTime.UtcNow - _lastRenderUtc;
 
