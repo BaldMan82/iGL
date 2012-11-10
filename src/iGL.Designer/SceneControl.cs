@@ -222,7 +222,7 @@ namespace iGL.Designer
             {
                 sceneTree.SelectedNode = sceneTree.GetNodeAt(e.X, e.Y);
                 var point = new System.Drawing.Point(e.X, e.Y);
-                point = PointToScreen(point);
+                point = sceneTree.PointToScreen(point);
                 contextMenu.Show(point.X, point.Y);
             }
         }
@@ -243,6 +243,32 @@ namespace iGL.Designer
             if (e.KeyCode == Keys.Delete)
             {
                 deleteMenuItem_Click(sender, e);
+            }
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var res = _scene.Resources.FirstOrDefault(r => r.Name == resourceTree.SelectedNode.Text);
+            _scene.RemoveResource(res);
+
+            LoadResourceTree();
+
+        }
+
+        private void resourceTree_MouseDown(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void resourceTree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                resourceTree.SelectedNode = resourceTree.GetNodeAt(e.X, e.Y);           
+                var point = new System.Drawing.Point(e.X, e.Y);
+                point = resourceTree.PointToScreen(point);              
+                
+                resourceContextMenu.Show(point.X, point.Y);
             }
         }
     }

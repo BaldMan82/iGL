@@ -559,6 +559,11 @@ namespace iGL.Engine
             _resources.Add(resource);
         }
 
+        public void RemoveResource(Resource resource)
+        {
+            _resources.Remove(resource);
+        }
+
         public void AddTrigger(Trigger trigger)
         {
             trigger.Scene = this;

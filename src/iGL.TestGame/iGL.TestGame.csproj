@@ -12,8 +12,7 @@
     <AssemblyName>iGL.TestGame</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
+    <TargetFrameworkProfile></TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -83,18 +82,6 @@
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\arrow.text" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\background.dae" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\background1.dae" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\background2.dae" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\bg.text" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\blue.text" />
   </ItemGroup>
   <ItemGroup>
@@ -108,9 +95,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\cube.dae" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\detailplane.dae" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\enemy.text" />

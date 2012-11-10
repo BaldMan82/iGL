@@ -12,7 +12,8 @@
     <AssemblyName>iGL.TestGame</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile></TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,9 +49,6 @@
     <Compile Include="GameObjects\SlingshotBallFarseer2D.cs" />
     <Compile Include="GameObjects\MagnetHalo.cs" />
     <Compile Include="GameObjects\SphereMagnet.cs" />
-    <Compile Include="GameObjects\Bomb.cs" />
-    <Compile Include="GameObjects\SlingshotBallFarseer3D.cs" />
-    <Compile Include="GameObjects\SlingshotBall3D.cs" />
     <Compile Include="GameObjects\PanViewFollowCamera3d.cs" />
     <Compile Include="GameObjects\PanViewFollowCamera.cs" />
     <Compile Include="GameObjects\Star.cs" />
@@ -69,9 +67,7 @@
       <Name>Farseer Physics</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>$(SolutionDir)ImportTool.exe $(ProjectPath) $(ProjectDir)ResourcesDrop $(ProjectDir)Resources</PreBuildEvent>
@@ -87,12 +83,6 @@
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\arrow.text" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\background.dae" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\bg.text" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\blue.text" />
   </ItemGroup>
   <ItemGroup>
@@ -106,9 +96,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\cube.dae" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\detailplane.dae" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\enemy.text" />
@@ -133,9 +120,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\pipe.dae" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\pipe.text" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\plank.text" />

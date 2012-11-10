@@ -286,72 +286,6 @@
         </GameComponent>
       </Components>
     </GameObject>
-    <GameObject Type="iGL.Engine.Plane, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <Visible>false</Visible>
-      <Enabled>false</Enabled>
-      <Designer>false</Designer>
-      <Name>brol</Name>
-      <ClearsZBuffer>false</ClearsZBuffer>
-      <DistanceSorting>false</DistanceSorting>
-      <AutoLoad>true</AutoLoad>
-      <RenderQueuePriority>0</RenderQueuePriority>
-      <Id>13234436-74f5-4917-b11e-ab1993a72c88</Id>
-      <Position>
-        <x>0</x>
-        <y>-8.009035</y>
-        <z>-5</z>
-      </Position>
-      <Scale>
-        <x>150</x>
-        <y>100</y>
-        <z>1</z>
-      </Scale>
-      <Rotation>
-        <x>0</x>
-        <y>0</y>
-        <z>0</z>
-      </Rotation>
-      <Children />
-      <Components>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>36af2307-be79-453a-a8ab-54bad0d31525</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-            <Id></Id>
-            <Ambient>
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-              <w>1</w>
-            </Ambient>
-            <Diffuse>
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-              <w>1</w>
-            </Diffuse>
-            <Specular>
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-              <w>0</w>
-            </Specular>
-            <Shininess>0</Shininess>
-            <TextureName>bg</TextureName>
-            <NormalTextureName></NormalTextureName>
-            <TextureRepeatX>false</TextureRepeatX>
-            <TextureRepeatY>false</TextureRepeatY>
-            <TextureTilingX>1</TextureTilingX>
-            <TextureTilingY>1</TextureTilingY>
-            <ShaderProgram>POINTLIGHT</ShaderProgram>
-          </Material>
-          <MeshResourceName></MeshResourceName>
-          <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
-        </GameComponent>
-      </Components>
-    </GameObject>
     <GameObject Type="iGL.TestGame.GameObjects.SlingshotBallFarseer2D, iGL.TestGame, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <Visible>true</Visible>
       <Enabled>true</Enabled>
@@ -1055,7 +989,7 @@
       <Visible>true</Visible>
       <Enabled>true</Enabled>
       <Designer>false</Designer>
-      <Name>GameObject2</Name>
+      <Name>Spikes</Name>
       <ClearsZBuffer>false</ClearsZBuffer>
       <DistanceSorting>false</DistanceSorting>
       <AutoLoad>true</AutoLoad>
@@ -3460,17 +3394,17 @@
       <ClearsZBuffer>false</ClearsZBuffer>
       <DistanceSorting>false</DistanceSorting>
       <AutoLoad>true</AutoLoad>
-      <RenderQueuePriority>0</RenderQueuePriority>
+      <RenderQueuePriority>2147483647</RenderQueuePriority>
       <Id>f501e943-6ad5-4903-bd06-e6b8ce4152d0</Id>
       <Position>
         <x>0</x>
         <y>0</y>
-        <z>-10</z>
+        <z>-5</z>
       </Position>
       <Scale>
-        <x>1</x>
-        <y>1</y>
-        <z>1</z>
+        <x>62.6211243</x>
+        <y>62.6211243</y>
+        <z>62.6211243</z>
       </Scale>
       <Rotation>
         <x>0</x>
@@ -3500,10 +3434,6 @@
       <Name>stone</Name>
     </Resource>
     <Resource Type="iGL.Engine.Resources.Texture, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <ResourceName>iGL.TestGame.Resources.bg.text</ResourceName>
-      <Name>bg</Name>
-    </Resource>
-    <Resource Type="iGL.Engine.Resources.Texture, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <ResourceName>iGL.TestGame.Resources.greenball.text</ResourceName>
       <Name>greenball</Name>
     </Resource>
@@ -3518,10 +3448,6 @@
     <Resource Type="iGL.Engine.Resources.Texture, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <ResourceName>iGL.TestGame.Resources.eye.text</ResourceName>
       <Name>eye</Name>
-    </Resource>
-    <Resource Type="iGL.Engine.Resources.ColladaMesh, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <ResourceName>iGL.TestGame.Resources.detailplane.dae</ResourceName>
-      <Name>detailplane</Name>
     </Resource>
     <Resource Type="iGL.Engine.Resources.Texture, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <ResourceName>iGL.TestGame.Resources.star.text</ResourceName>

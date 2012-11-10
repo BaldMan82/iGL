@@ -41,11 +41,14 @@
             this.dropMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cloneMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resourceContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabScene.SuspendLayout();
             this.ObjectPage.SuspendLayout();
             this.ResourcePage.SuspendLayout();
             this.resourceToolstrip.SuspendLayout();
             this.contextMenu.SuspendLayout();
+            this.resourceContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabScene
@@ -103,6 +106,8 @@
             this.resourceTree.Name = "resourceTree";
             this.resourceTree.Size = new System.Drawing.Size(496, 97);
             this.resourceTree.TabIndex = 2;
+            this.resourceTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.resourceTree_NodeMouseClick);
+            this.resourceTree.MouseDown += new System.Windows.Forms.MouseEventHandler(this.resourceTree_MouseDown);
             // 
             // resourceToolstrip
             // 
@@ -154,6 +159,20 @@
             this.deleteMenuItem.Text = "Delete";
             this.deleteMenuItem.Click += new System.EventHandler(this.deleteMenuItem_Click);
             // 
+            // resourceContextMenu
+            // 
+            this.resourceContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteToolStripMenuItem});
+            this.resourceContextMenu.Name = "resourceContextMenu";
+            this.resourceContextMenu.Size = new System.Drawing.Size(108, 26);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
             // SceneControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -169,6 +188,7 @@
             this.resourceToolstrip.ResumeLayout(false);
             this.resourceToolstrip.PerformLayout();
             this.contextMenu.ResumeLayout(false);
+            this.resourceContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -186,5 +206,7 @@
         private System.Windows.Forms.ToolStripMenuItem dropMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cloneMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteMenuItem;
+        private System.Windows.Forms.ContextMenuStrip resourceContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
     }
 }
