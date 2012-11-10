@@ -39,6 +39,7 @@ namespace iGL.Engine
         private int[] _bufferIds;
         private bool _isClone;
         private float _shortFloatFactor;
+        private Vector4 _eyePos = new Vector4(0, 0, 1, 1);
 
         private MeshRenderComponent _clonedReference;
 
@@ -182,23 +183,25 @@ namespace iGL.Engine
                 }
 
                 shader.Use();
-                shader.SetModelViewProjectionMatrix(modelView);
+                shader.SetModelViewProjectionMatrix(ref modelView);
 
                 var locationInverse = transform;
 
                 locationInverse.Invert();
                 locationInverse.Transpose();
 
-                shader.SetTransposeAdjointModelViewMatrix(locationInverse);
-                shader.SetModelViewMatrix(transform);
-                shader.SetMaterial(_meshComponent.Material);
-                shader.SetEyePos(new Vector4(0, 0, 1, 1));
-                shader.SetTextureScale(new Vector2(_meshComponent.Material.TextureTilingX, _meshComponent.Material.TextureTilingY));
+                shader.SetTransposeAdjointModelViewMatrix(ref locationInverse);
+                shader.SetModelViewMatrix(ref transform);
+                var material = _meshComponent.Material;
+                shader.SetMaterial(ref material);
+                shader.SetEyePos(ref _eyePos);
+
+                var textureScale = new Vector2(_meshComponent.Material.TextureTilingX, _meshComponent.Material.TextureTilingY);
+                shader.SetTextureScale(ref textureScale);
 
                 shader.SetShortFloatFactor(_shortFloatFactor);
                 GL.BindBuffer(BufferTarget.ArrayBuffer, _bufferIds[0]);
                 
-
                 GL.EnableVertexAttribArray(0);
                 GL.EnableVertexAttribArray(1);
                 GL.EnableVertexAttribArray(2);
@@ -207,9 +210,7 @@ namespace iGL.Engine
                 GL.VertexAttribPointer(2, 2, VertexAttribPointerType.Short, false, 10 * sizeof(short), 8 * sizeof(short));
 
                 if (_meshComponent.Texture != null)
-                {
-                    //GL.ActiveTexture(TextureUnit.Texture0);
-					//GL.BindTexture(TextureTarget.Texture2D, -1);
+                {                  
 					GL.BindTexture(TextureTarget.Texture2D, _meshComponent.Texture.TextureId);
 
                     var wrapModeX = _meshComponent.Material.TextureRepeatX ? TextureWrapMode.Repeat : TextureWrapMode.Clamp;
@@ -217,8 +218,7 @@ namespace iGL.Engine
 
                     GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)wrapModeX);
                     GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)wrapModeY);
-
-                    //shader.SetSamplerUnit(0);      
+                 
                 }
                 else
                 {

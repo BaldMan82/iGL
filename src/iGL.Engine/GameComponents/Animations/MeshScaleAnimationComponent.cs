@@ -48,7 +48,7 @@ namespace iGL.Engine
 
             GameObject.Scale = new Vector3(0);
 
-            _width = _meshComponent.BoundingBox.Max.X;
+            _width = _meshComponent.BoundingBox.Maximum.X;
             _xStart = GameObject.Position.X;
 
             base.Play();

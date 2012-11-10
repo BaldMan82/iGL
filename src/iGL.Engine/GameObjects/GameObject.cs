@@ -533,13 +533,7 @@ namespace iGL.Engine
           
             /* render designer objects in white ambient color */
             var sceneColor = Scene.AmbientColor;
-            if (this.Designer) Scene.AmbientColor = new Vector4(1, 1, 1, 1);
-           
-            //if (_children.Count > 0 && rigidBody != null)
-            //{
-            //    UpdateGetRigidBodyOrientation();
-            //    UpdateTransform();                
-            //}
+            if (this.Designer) Scene.AmbientColor = new Vector4(1, 1, 1, 1);                  
 
             var compositeTransform = overrideParentTransform ? Transform : GetCompositeTransform();        
       
@@ -570,7 +564,7 @@ namespace iGL.Engine
 
             /* reset ambient color */
             //if (this.Designer) 
-                Scene.AmbientColor = sceneColor;
+                //Scene.AmbientColor = sceneColor;
 
         }
 
@@ -620,7 +614,7 @@ namespace iGL.Engine
             return Name;
         }
 
-        public GameObject RayTest(Vector3 origin, Vector3 direction, out Vector3 hitLocation)
+        public GameObject RayTest(ref Vector3 origin, ref Vector3 direction, out Vector3 hitLocation)
         {
             hitLocation = new Vector3(0);           
 
@@ -629,7 +623,7 @@ namespace iGL.Engine
             var meshComponent = Components.FirstOrDefault(c => c is MeshComponent) as MeshComponent;
             if (meshComponent != null) 
             {                
-                if (meshComponent.RayTest(origin, direction, out hitLocation))
+                if (meshComponent.RayTest(ref origin, ref direction, out hitLocation))
                 {                    
                     return this;
                 }

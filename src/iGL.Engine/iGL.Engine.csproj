@@ -85,43 +85,33 @@
     <Compile Include="GameComponents\RigidBodyBaseComponent.cs" />
     <Compile Include="GameComponents\TextComponent.cs" />
     <Compile Include="GameComponents\OrthogonalCameraComponent.cs" />
-    <Compile Include="GameComponents\Jitter\MeshColliderComponent.cs" />
     <Compile Include="GameObjects\Background.cs" />
     <Compile Include="GameObjects\Farseer\RigidFarseerCube.cs" />
     <Compile Include="GameObjects\Farseer\RigidFarseerSphere.cs" />
     <Compile Include="GameObjects\StatisticsText.cs" />
     <Compile Include="GameObjects\TextObject.cs" />
     <Compile Include="GameObjects\Plane.cs" />
-    <Compile Include="GameObjects\Jitter\RigidSphere.cs" />
-    <Compile Include="GameObjects\Jitter\RigidCube.cs" />
     <Compile Include="GameObjects\OrthographicCamera.cs" />
     <Compile Include="GameObjects\XmlIgnore.cs" />
     <Compile Include="Import\Collada.cs" />
     <Compile Include="Physics\Farseer\DesignPhysics.cs" />
     <Compile Include="Physics\Farseer\Physics.cs" />
-    <Compile Include="Physics\Jitter\DesignPhysics.cs" />
     <Compile Include="Events\AnimationSignalEvent.cs" />
     <Compile Include="Events\ComponentRemovedEvent.cs" />
     <Compile Include="Events\MouseButton.cs" />
     <Compile Include="Events\MouseMoveEvent.cs" />
     <Compile Include="Events\TickEvent.cs" />
-    <Compile Include="GameComponents\Jitter\BoxColliderComponent.cs" />
-    <Compile Include="GameComponents\Jitter\ColliderComponent.cs" />
     <Compile Include="GameComponents\Color.cs" />
-    <Compile Include="GameComponents\Jitter\SphereColliderComponent.cs" />
     <Compile Include="GameComponents\GL\IGL.cs" />
     <Compile Include="GameComponents\GL\Enums.cs" />
     <Compile Include="GameComponents\PointLightShader.cs" />
     <Compile Include="GameComponents\LightComponent.cs" />
     <Compile Include="GameComponents\Material.cs" />
     <Compile Include="GameComponents\RenderComponent.cs" />
-    <Compile Include="GameComponents\Jitter\RigidBodyComponent.cs" />
     <Compile Include="GameComponents\Shader.cs" />
     <Compile Include="GameComponents\ShaderProgram.cs" />
-    <Compile Include="GameComponents\Jitter\CompoundColliderComponent.cs" />
     <Compile Include="GameObjects\PerspectiveCamera.cs" />
     <Compile Include="GameComponents\PerspectiveCameraComponent.cs" />
-    <Compile Include="GameObjects\Jitter\CompoundObject.cs" />
     <Compile Include="Events\MouseButtonDownEvent.cs" />
     <Compile Include="Events\MouseButtonUpEvent.cs" />
     <Compile Include="Events\MouseInEvent.cs" />
@@ -161,8 +151,6 @@
     <Compile Include="Math\Vector4.cs" />
     <Compile Include="Math\Vector4d.cs" />
     <Compile Include="Math\Vector4h.cs" />
-    <Compile Include="Physics\Jitter\Physics.cs" />
-    <Compile Include="Physics\Jitter\Physics2d.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ColladaMesh.cs" />
     <Compile Include="Resources\Font.cs" />
@@ -200,10 +188,6 @@
     <ProjectReference Include="..\iGL.Farseer\Farseer Physics.csproj">
       <Project>{A4610E4C-DD34-428B-BABB-779CA0B5993A}</Project>
       <Name>Farseer Physics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\iGL.Jitter\Jitter.csproj">
-      <Project>{AA03EF1A-94F7-4D30-AB14-2092863FF923}</Project>
-      <Name>Jitter</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

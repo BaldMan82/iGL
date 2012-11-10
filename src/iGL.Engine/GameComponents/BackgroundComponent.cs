@@ -111,6 +111,9 @@ namespace iGL.Engine
                     };
                 }
             };
+
+            this.GameObject.RenderQueuePriority = int.MaxValue;
+
             return true;
         }
 
@@ -121,21 +124,24 @@ namespace iGL.Engine
         }       
 
         public override void Render(ref Matrix4 transform, ref Matrix4 modelView)
-        {            
+        {          
             _shader.Use();
             _shader.SetLight(GameObject.Scene.CurrentLight.Light, new Vector4(GameObject.Scene.CurrentLight.GameObject.WorldPosition));
-            _shader.SetAmbientColor(GameObject.Scene.AmbientColor);
 
-            _shader.SetModelViewProjectionMatrix(modelView);
+            var ambientColor = GameObject.Scene.AmbientColor;
+            _shader.SetAmbientColor(ref ambientColor);
+
+            _shader.SetModelViewProjectionMatrix(ref modelView);
 
             var locationInverse = transform;
 
             locationInverse.Invert();
             locationInverse.Transpose();
 
-            _shader.SetTransposeAdjointModelViewMatrix(locationInverse);
-            _shader.SetModelViewMatrix(transform);
-            _shader.SetEyePos(new Vector4(0, 0, 1, 1));
+            _shader.SetTransposeAdjointModelViewMatrix(ref locationInverse);
+            _shader.SetModelViewMatrix(ref transform);
+            var eyePos = new Vector4(0, 0, 1, 1);
+            _shader.SetEyePos(ref eyePos);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, _bufferIds[0]);
 
@@ -148,9 +154,10 @@ namespace iGL.Engine
             GL.BindTexture(TextureTarget.Texture2D, -1);
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, _bufferIds[1]);
-
-            GL.DrawElements(BeginMode, _indices.Length, DrawElementsType.UnsignedShort, 0);
-
+           
+          
+            GL.DrawElements(BeginMode, _indices.Length, DrawElementsType.UnsignedShort, 0);           
+         
         }
 
         public override void Tick(float timeElapsed)

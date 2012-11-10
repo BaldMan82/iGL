@@ -168,18 +168,8 @@ namespace iGL.TestGame.GameObjects
 
                 var p = Scene.CurrentCamera.GameObject.Position + lookAt;
                 var planeDistance = this.Position.PlaneDistance(p, lookAt);
-
-                //var dirNearPlane = nearPlane - (Scene.CurrentCamera.GameObject.Position + lookAt);
-
+          
                 var newWorldPosition = nearPlane + (dir * planeDistance);
-
-                //var worldDirection = newWorldPosition - this.Position;
-                //worldDirection.Normalize();
-
-                //if (Scene.CurrentCamera is PerspectiveCameraComponent)
-                //{
-                //    newWorldPosition += worldDirection;
-                //}
 
                 _triggerPosition = newWorldPosition;
 
@@ -209,7 +199,6 @@ namespace iGL.TestGame.GameObjects
                     SetEyeLookatTarget(this.Position + direction);
                 }               
             }
-
 
             /* damping */
             var body = _rigidBodyComponent as RigidBodyFarseerComponent;

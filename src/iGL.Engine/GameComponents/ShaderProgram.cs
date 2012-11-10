@@ -120,7 +120,7 @@ namespace iGL.Engine
             return GL.GetAttribLocation(ProgramId, "a_uv");
         }
       
-        public void SetMaterial(Material material)
+        public void SetMaterial(ref Material material)
         {
             var loc = GetUniformLocation("u_material.ambient");
             GL.Uniform4(loc, material.Ambient);
@@ -147,25 +147,25 @@ namespace iGL.Engine
             GL.Uniform1(loc, unit);
         }
 
-        public void SetModelViewMatrix(Matrix4 modelView)
+        public void SetModelViewMatrix(ref Matrix4 modelView)
         {
             var loc = GetUniformLocation("u_modelViewMatrix");
             GL.UniformMatrix4(loc, false, modelView);
         }
 
-        public void SetModelViewInverseMatrix(Matrix4 modelViewInverse)
+        public void SetModelViewInverseMatrix(ref Matrix4 modelViewInverse)
         {
             var loc = GetUniformLocation("u_modelViewInverseMatrix");
             GL.UniformMatrix4(loc, false, modelViewInverse);
         }
 
-        public void SetModelViewProjectionMatrix(Matrix4 modelViewProjection)
+        public void SetModelViewProjectionMatrix(ref Matrix4 modelViewProjection)
         {
             var loc = GetUniformLocation("u_modelViewProjectionMatrix");
             GL.UniformMatrix4(loc, false, modelViewProjection);
         }
 
-        public void SetTransposeAdjointModelViewMatrix(Matrix4 modelViewTransposeInverse)
+        public void SetTransposeAdjointModelViewMatrix(ref Matrix4 modelViewTransposeInverse)
         {
             var loc = GetUniformLocation("u_transposeAdjointModelViewMatrix");
             GL.UniformMatrix4(loc, false, modelViewTransposeInverse);
@@ -177,19 +177,19 @@ namespace iGL.Engine
             GL.Uniform1(loc, shortFloatFactor);
         }
 		
-        public void SetAmbientColor(Vector4 color)
+        public void SetAmbientColor(ref Vector4 color)
         {
             var loc = GetUniformLocation("u_globalAmbientColor");
             GL.Uniform4(loc, color);
         }
 
-        public void SetTextureScale(Vector2 scale)
+        public void SetTextureScale(ref Vector2 scale)
         {
             var loc = GetUniformLocation("u_textureScale");
             GL.Uniform2(loc, scale);
         }
 
-        public void SetEyePos(Vector4 eyePos)
+        public void SetEyePos(ref Vector4 eyePos)
         {
             var loc = GetUniformLocation("u_eyePos");
             GL.Uniform4(loc, eyePos);

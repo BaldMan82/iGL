@@ -249,9 +249,7 @@ namespace iGL.Designer
                 (b.Button != MouseButton.Button1 && b.Button != MouseButton.Button2)) return;
 
             _selectedObject = (a as GameObject);
-
-            var rigidBody = _selectedObject.Components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
-
+       
             UpdateGizmo();
 
             if (_selectObjectEvent != null)
@@ -619,7 +617,7 @@ namespace iGL.Designer
             if (_selectedObject != null)
             {
                 deleteMenuItem.Enabled = true;
-                dropMenuItem.Enabled = _selectedObject.Components.Any(c => c is RigidBodyComponent);
+                dropMenuItem.Enabled = _selectedObject.Components.Any(c => c is RigidBodyBaseComponent);
                 cloneMenuItem.Enabled = true;
             }
             else

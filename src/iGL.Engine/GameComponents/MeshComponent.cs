@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using iGL.Engine.Math;
-using Jitter.LinearMath;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 using iGL.Engine.Resources;
@@ -34,7 +32,7 @@ namespace iGL.Engine
 
         public string MeshResourceName { get; set; }
 
-        public JBBox BoundingBox { get; private set; }
+        public Box BoundingBox { get; private set; }
         public Vector3 MinBox { get; private set; }
         public Vector3 MaxBox { get; private set; }
 
@@ -90,11 +88,11 @@ namespace iGL.Engine
                 if (vertex.Z > vMax.Z) vMax.Z = vertex.Z;
             }
 
-            var box = new JBBox(vMin.ToJitter(), vMax.ToJitter());
+            var box = new Box() { Minumum = vMin, Maximum = vMax };
 
             BoundingBox = box;
-            MinBox = box.Min.ToOpenTK();
-            MaxBox = box.Max.ToOpenTK();
+            MinBox = vMin;
+            MaxBox = vMax;
 
             RefreshTexture();
 
@@ -113,14 +111,16 @@ namespace iGL.Engine
             NormalTexture = GameObject.Scene.Resources.FirstOrDefault(t => t.Name == Material.NormalTextureName && t is Texture) as Texture;
         }
 
-        public bool RayTest(Vector3 origin, Vector3 direction, out Vector3 hitLocation)
-        {
+        public bool RayTest(ref Vector3 origin, ref Vector3 direction, out Vector3 hitLocation)
+        {          
             hitLocation = new Vector3(0);
+
+            if (!this.IsLoaded) return false;
 
             Matrix4 transform;
 
             /* if there is a rigid body active in this object, we need that transform as it will always describe its world orientation */
-            var rigidBody = GameObject.Components.FirstOrDefault(c => c is RigidBodyComponent) as RigidBodyComponent;
+            var rigidBody = GameObject.Components.FirstOrDefault(c => c is RigidBodyBaseComponent) as RigidBodyBaseComponent;
 
             if (rigidBody != null)
             {
@@ -144,7 +144,7 @@ namespace iGL.Engine
             var o = Vector3.Transform(origin, transform);
             var d = Vector3.Transform(direction, orientation);
 
-            if (BoundingBox.RayIntersect(o.ToJitter(), d.ToJitter()))
+            if (BoundingBox.RayIntersect(ref o, ref d))
             {
                 Vector3 r0 = o;
                 Vector3 r1 = o + (d * 1000.0f);
@@ -165,7 +165,8 @@ namespace iGL.Engine
 
                 if (hits.Count > 0)
                 {
-                    hitLocation = hits.OrderBy(hit => (hit - origin).LengthSquared).First();
+                    var or = origin;
+                    hitLocation = hits.OrderBy(hit => (hit - or).LengthSquared).First();
                     hitLocation = Vector3.Transform(hitLocation, GameObject.GetCompositeTransform());
 
                     return true;

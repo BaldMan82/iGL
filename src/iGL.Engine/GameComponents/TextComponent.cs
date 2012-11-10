@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Jitter.Collision.Shapes;
-using Jitter.LinearMath;
 using System.Runtime.Serialization;
 using iGL.Engine.Resources;
 using iGL.Engine.Math;

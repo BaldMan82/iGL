@@ -4,9 +4,6 @@ using System.Linq;
 using System.Text;
 using iGL.Engine.Events;
 using iGL.Engine.Math;
-using Jitter.Dynamics;
-using Jitter.LinearMath;
-using Jitter.Collision;
 using System.Diagnostics;
 using System.Xml;
 using System.IO;
@@ -113,15 +110,15 @@ namespace iGL.Engine
             }
             set
             {
-                PointLightShader.SetAmbientColor(_ambientColor);
-                DesignShader.SetAmbientColor(_ambientColor);
+                PointLightShader.SetAmbientColor(ref _ambientColor);
+                DesignShader.SetAmbientColor(ref _ambientColor);
 
                 _ambientColor = value;
             }
         }
 
         public Scene()
-            : this(new Physics())
+            : this(new PhysicsFarseer())
         {
 
         }
@@ -138,7 +135,7 @@ namespace iGL.Engine
             DesignShader = new DesignShader();
             if (Game.InDesignMode) DesignShader.Load();
 
-            Physics = new Physics2d();
+            Physics = physics;
 
             MouseButtonState = new Dictionary<MouseButton, bool>();
 
@@ -168,6 +165,8 @@ namespace iGL.Engine
 
         public void Render()
         {
+            var sw = new Stopwatch();
+            sw.Start();
 
             if (OnPreRenderEvent != null)
             {
@@ -187,8 +186,7 @@ namespace iGL.Engine
             }
 
             //Game.GL.ClearColor(CurrentCamera.ClearColor.X, CurrentCamera.ClearColor.Y, CurrentCamera.ClearColor.Z, CurrentCamera.ClearColor.W);
-            //Game.GL.ClearColor(122.0f/255.0f, 150.0f/255.0f, 223.0f/255.0f, 1.0f);
-            //Game.GL.ClearColor(134f/255f, 159f/255f, 226/255f, 1);
+       
             Game.GL.ClearColor(0, 0, 0, 0);
             Game.GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
@@ -198,16 +196,12 @@ namespace iGL.Engine
             {
                 /* update shader's light parameters */
                 pointLightShader.Use();
-                pointLightShader.SetLight(CurrentLight.Light, new Vector4(CurrentLight.GameObject.WorldPosition));
-
-                //FurShader.Use();
-                //FurShader.SetLight(CurrentLight.Light, new Vector4(CurrentLight.GameObject.WorldPosition));
+                pointLightShader.SetLight(CurrentLight.Light, new Vector4(CurrentLight.GameObject.WorldPosition));              
 
             }
             else
             {
-                pointLightShader.ClearLight();
-                //FurShader.ClearLight();
+                pointLightShader.ClearLight();              
             }
 
             var allObjects = _gameObjects.SelectMany(g => g.AllChildren).ToList();
@@ -215,17 +209,15 @@ namespace iGL.Engine
 
             var sortedObjects = allObjects.OrderByDescending(g => g.RenderQueuePriority).
                                            ThenByDescending(g => g.DistanceSorting ? (g.WorldPosition - CurrentCamera.GameObject.WorldPosition).LengthSquared : float.MaxValue);
-
-            var sw = new Stopwatch();
+           
             foreach (var gameObject in sortedObjects)
-            {
-                sw.Restart();
-                gameObject.Render();
-                sw.Stop();
-
-                //Debug.WriteLine("Render obj {0}: {1}", gameObject.Name, sw.Elapsed.TotalMilliseconds);
+            {               
+                gameObject.Render();                     
             }
 
+            sw.Stop();
+
+            //Debug.WriteLine("FPS: {0}, ms:{1}", 1000.0d / sw.Elapsed.TotalMilliseconds, sw.Elapsed.TotalMilliseconds);
 
             Statistics.LastRenderDuration = DateTime.UtcNow - _lastRenderUtc;
 
@@ -698,7 +690,7 @@ namespace iGL.Engine
             foreach (var gameObject in objects)
             {
                 Vector3 rayHitLocation;
-                var rayHit = gameObject.RayTest(position, dir, out rayHitLocation);
+                var rayHit = gameObject.RayTest(ref position, ref dir, out rayHitLocation);
 
                 if (rayHit != null && (ignoreList == null || !ignoreList.Contains(rayHit)))
                 {
