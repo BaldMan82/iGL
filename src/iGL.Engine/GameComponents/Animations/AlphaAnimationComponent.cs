@@ -57,7 +57,7 @@ namespace iGL.Engine
         }
 
         private void Step()
-        {
+       {            
             float percentage = (float)(DateTime.UtcNow - _tickTime).TotalSeconds / (DurationSeconds);
 
             if (percentage > 1) percentage = 1;

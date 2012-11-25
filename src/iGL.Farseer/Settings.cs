@@ -47,7 +47,7 @@ namespace FarseerPhysics
         /// <summary>
         /// The number of velocity iterations used in the solver.
         /// </summary>
-        public static int VelocityIterations = 8;
+        public static int VelocityIterations = 4;
 
         /// <summary>
         /// The number of position iterations used in the solver.

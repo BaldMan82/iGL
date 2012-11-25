@@ -79,6 +79,18 @@ namespace iGL.TestGame
 
             _slingShotBall = scene.GameObjects.First(g => g is SlingshotBallFarseer2D) as SlingshotBallFarseer2D;
 
+            //while (true)
+            //{
+            //    var flare = new StarFlare();
+
+            //    Scene.AddGameObject(flare);
+
+            //    flare.PlayAnimation();
+
+            //    Scene.AddTimer(new Timer() { Action = () => Scene.DisposeGameObject(flare), Interval = TimeSpan.FromSeconds(0.2), Mode = Timer.TimerMode.Once });
+            //    Scene.Tick(0.01f);
+            //}
+
             w.Stop();
             Debug.WriteLine("Loadlevel:" + w.Elapsed.TotalMilliseconds);
         }

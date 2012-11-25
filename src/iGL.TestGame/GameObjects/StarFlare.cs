@@ -77,10 +77,7 @@ namespace iGL.TestGame.GameObjects
             _alphaAnimationComponent.DurationSeconds = ColorDuration;
 
             base.Load();
-
-            Random rand = new Random((int)DateTime.UtcNow.Ticks);
-
-            this.Position = this.Position + new Vector3(0, 0, -rand.Next(10) * 1.0f / 10.0f);
+		
         }
 
         public void PlayAnimation()

@@ -22,9 +22,9 @@
       <RenderQueuePriority>0</RenderQueuePriority>
       <Id>5c6f1b2a-f4d1-48ae-a3b8-3fca3b13cdc2</Id>
       <Position>
-        <x>7.22357273</x>
-        <y>13.78527</y>
-        <z>25.6655464</z>
+        <x>-0.4224748</x>
+        <y>7.06551361</y>
+        <z>27.1123848</z>
       </Position>
       <Scale>
         <x>1</x>
@@ -44,9 +44,9 @@
           <ZNear>1</ZNear>
           <ZFar>1000</ZFar>
           <Target>
-            <x>4.895891</x>
-            <y>10.4904556</y>
-            <z>15.0847807</z>
+            <x>0.0142889619</x>
+            <y>4.998664</y>
+            <z>16.2546234</z>
           </Target>
           <Up>
             <x>0</x>
@@ -112,7 +112,7 @@
               <w>0</w>
             </Specular>
             <Shininess>0</Shininess>
-            <TextureName>stone</TextureName>
+            <TextureName>level1</TextureName>
             <NormalTextureName></NormalTextureName>
             <TextureRepeatX>false</TextureRepeatX>
             <TextureRepeatY>false</TextureRepeatY>
@@ -345,7 +345,7 @@
           <Position>
             <x>0</x>
             <y>0</y>
-            <z>5</z>
+            <z>10</z>
           </Position>
           <Scale>
             <x>1</x>
@@ -480,10 +480,6 @@
           </Rotation>
           <Children />
           <Components>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>36af2307-be79-453a-a8ab-54bad0d31525</Id>
-            </GameComponent>
             <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
                 <Id></Id>
@@ -517,6 +513,10 @@
               <MeshResourceName></MeshResourceName>
               <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
             </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>c20985cb-d085-4677-8791-31959b6a6d43</Id>
+            </GameComponent>
           </Components>
         </GameObject>
         <GameObject Type="iGL.TestGame.GameObjects.Arrow2d, iGL.TestGame, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -546,10 +546,6 @@
           </Rotation>
           <Children />
           <Components>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>36af2307-be79-453a-a8ab-54bad0d31525</Id>
-            </GameComponent>
             <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
                 <Id></Id>
@@ -583,6 +579,10 @@
               <MeshResourceName></MeshResourceName>
               <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
             </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>741c73d4-bc88-4598-ba05-d98b760cbad6</Id>
+            </GameComponent>
           </Components>
         </GameObject>
         <GameObject Type="iGL.Engine.Plane, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -612,10 +612,6 @@
           </Rotation>
           <Children />
           <Components>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>36af2307-be79-453a-a8ab-54bad0d31525</Id>
-            </GameComponent>
             <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
                 <Id></Id>
@@ -648,6 +644,10 @@
               </Material>
               <MeshResourceName></MeshResourceName>
               <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>ba41d6f6-2df1-4a39-b2cf-186c4aba9e26</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -842,6 +842,12 @@
       </Components>
     </GameObject>
     <GameObject Type="iGL.TestGame.GameObjects.Star, iGL.TestGame, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <StarColor>
+        <x>0.5019608</x>
+        <y>0.5019608</y>
+        <z>0</z>
+        <w>1</w>
+      </StarColor>
       <Visible>true</Visible>
       <Enabled>true</Enabled>
       <Designer>false</Designer>
@@ -921,9 +927,35 @@
           <AutoReloadBody>true</AutoReloadBody>
           <Id>f3dda926-cc99-4c6a-b4b6-d02b47a049fc</Id>
         </GameComponent>
+        <GameComponent Type="iGL.Engine.PropertyAnimationComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Property>StarColor</Property>
+          <StartValue>0.5019608, 0.5019608, 0, 1</StartValue>
+          <StopValue>0.5019608, 0.5019608, 0, 0</StopValue>
+          <PlayMode>Play</PlayMode>
+          <AutoStart>false</AutoStart>
+          <DurationSeconds>0.5</DurationSeconds>
+          <IntervalSeconds>0</IntervalSeconds>
+          <Id>1c728731-0f1e-4661-969f-f8b3d4cac27f</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.PropertyAnimationComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Property>Rotation</Property>
+          <StartValue>0, 0, 0</StartValue>
+          <StopValue>0, 3.14, 0</StopValue>
+          <PlayMode>Play</PlayMode>
+          <AutoStart>false</AutoStart>
+          <DurationSeconds>0.5</DurationSeconds>
+          <IntervalSeconds>0</IntervalSeconds>
+          <Id>6b728731-0f1e-4661-969f-f8b3d4cac27f</Id>
+        </GameComponent>
       </Components>
     </GameObject>
     <GameObject Type="iGL.TestGame.GameObjects.Star, iGL.TestGame, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <StarColor>
+        <x>0.5019608</x>
+        <y>0.5019608</y>
+        <z>0</z>
+        <w>1</w>
+      </StarColor>
       <Visible>true</Visible>
       <Enabled>true</Enabled>
       <Designer>false</Designer>
@@ -1003,9 +1035,35 @@
           <AutoReloadBody>true</AutoReloadBody>
           <Id>f3dda926-cc99-4c6a-b4b6-d02b47a049fc</Id>
         </GameComponent>
+        <GameComponent Type="iGL.Engine.PropertyAnimationComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Property>StarColor</Property>
+          <StartValue>0.5019608, 0.5019608, 0, 1</StartValue>
+          <StopValue>0.5019608, 0.5019608, 0, 0</StopValue>
+          <PlayMode>Play</PlayMode>
+          <AutoStart>false</AutoStart>
+          <DurationSeconds>0.5</DurationSeconds>
+          <IntervalSeconds>0</IntervalSeconds>
+          <Id>1c728731-0f1e-4661-969f-f8b3d4cac27f</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.PropertyAnimationComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Property>Rotation</Property>
+          <StartValue>0, 0, 0</StartValue>
+          <StopValue>0, 3.14, 0</StopValue>
+          <PlayMode>Play</PlayMode>
+          <AutoStart>false</AutoStart>
+          <DurationSeconds>0.5</DurationSeconds>
+          <IntervalSeconds>0</IntervalSeconds>
+          <Id>6b728731-0f1e-4661-969f-f8b3d4cac27f</Id>
+        </GameComponent>
       </Components>
     </GameObject>
     <GameObject Type="iGL.TestGame.GameObjects.Star, iGL.TestGame, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <StarColor>
+        <x>0.5019608</x>
+        <y>0.5019608</y>
+        <z>0</z>
+        <w>1</w>
+      </StarColor>
       <Visible>true</Visible>
       <Enabled>true</Enabled>
       <Designer>false</Designer>
@@ -1085,9 +1143,35 @@
           <AutoReloadBody>true</AutoReloadBody>
           <Id>f3dda926-cc99-4c6a-b4b6-d02b47a049fc</Id>
         </GameComponent>
+        <GameComponent Type="iGL.Engine.PropertyAnimationComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Property>StarColor</Property>
+          <StartValue>0.5019608, 0.5019608, 0, 1</StartValue>
+          <StopValue>0.5019608, 0.5019608, 0, 0</StopValue>
+          <PlayMode>Play</PlayMode>
+          <AutoStart>false</AutoStart>
+          <DurationSeconds>0.5</DurationSeconds>
+          <IntervalSeconds>0</IntervalSeconds>
+          <Id>1c728731-0f1e-4661-969f-f8b3d4cac27f</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.PropertyAnimationComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Property>Rotation</Property>
+          <StartValue>0, 0, 0</StartValue>
+          <StopValue>0, 3.14, 0</StopValue>
+          <PlayMode>Play</PlayMode>
+          <AutoStart>false</AutoStart>
+          <DurationSeconds>0.5</DurationSeconds>
+          <IntervalSeconds>0</IntervalSeconds>
+          <Id>6b728731-0f1e-4661-969f-f8b3d4cac27f</Id>
+        </GameComponent>
       </Components>
     </GameObject>
     <GameObject Type="iGL.TestGame.GameObjects.Star, iGL.TestGame, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <StarColor>
+        <x>0.5019608</x>
+        <y>0.5019608</y>
+        <z>0</z>
+        <w>1</w>
+      </StarColor>
       <Visible>true</Visible>
       <Enabled>true</Enabled>
       <Designer>false</Designer>
@@ -1167,9 +1251,35 @@
           <AutoReloadBody>true</AutoReloadBody>
           <Id>f3dda926-cc99-4c6a-b4b6-d02b47a049fc</Id>
         </GameComponent>
+        <GameComponent Type="iGL.Engine.PropertyAnimationComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Property>StarColor</Property>
+          <StartValue>0.5019608, 0.5019608, 0, 1</StartValue>
+          <StopValue>0.5019608, 0.5019608, 0, 0</StopValue>
+          <PlayMode>Play</PlayMode>
+          <AutoStart>false</AutoStart>
+          <DurationSeconds>0.5</DurationSeconds>
+          <IntervalSeconds>0</IntervalSeconds>
+          <Id>1c728731-0f1e-4661-969f-f8b3d4cac27f</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.PropertyAnimationComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Property>Rotation</Property>
+          <StartValue>0, 0, 0</StartValue>
+          <StopValue>0, 3.14, 0</StopValue>
+          <PlayMode>Play</PlayMode>
+          <AutoStart>false</AutoStart>
+          <DurationSeconds>0.5</DurationSeconds>
+          <IntervalSeconds>0</IntervalSeconds>
+          <Id>6b728731-0f1e-4661-969f-f8b3d4cac27f</Id>
+        </GameComponent>
       </Components>
     </GameObject>
     <GameObject Type="iGL.TestGame.GameObjects.Star, iGL.TestGame, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <StarColor>
+        <x>0.5019608</x>
+        <y>0.5019608</y>
+        <z>0</z>
+        <w>1</w>
+      </StarColor>
       <Visible>true</Visible>
       <Enabled>true</Enabled>
       <Designer>false</Designer>
@@ -1249,9 +1359,35 @@
           <AutoReloadBody>true</AutoReloadBody>
           <Id>f3dda926-cc99-4c6a-b4b6-d02b47a049fc</Id>
         </GameComponent>
+        <GameComponent Type="iGL.Engine.PropertyAnimationComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Property>StarColor</Property>
+          <StartValue>0.5019608, 0.5019608, 0, 1</StartValue>
+          <StopValue>0.5019608, 0.5019608, 0, 0</StopValue>
+          <PlayMode>Play</PlayMode>
+          <AutoStart>false</AutoStart>
+          <DurationSeconds>0.5</DurationSeconds>
+          <IntervalSeconds>0</IntervalSeconds>
+          <Id>1c728731-0f1e-4661-969f-f8b3d4cac27f</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.PropertyAnimationComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Property>Rotation</Property>
+          <StartValue>0, 0, 0</StartValue>
+          <StopValue>0, 3.14, 0</StopValue>
+          <PlayMode>Play</PlayMode>
+          <AutoStart>false</AutoStart>
+          <DurationSeconds>0.5</DurationSeconds>
+          <IntervalSeconds>0</IntervalSeconds>
+          <Id>6b728731-0f1e-4661-969f-f8b3d4cac27f</Id>
+        </GameComponent>
       </Components>
     </GameObject>
     <GameObject Type="iGL.TestGame.GameObjects.Star, iGL.TestGame, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <StarColor>
+        <x>0.5019608</x>
+        <y>0.5019608</y>
+        <z>0</z>
+        <w>1</w>
+      </StarColor>
       <Visible>true</Visible>
       <Enabled>true</Enabled>
       <Designer>false</Designer>
@@ -1331,9 +1467,35 @@
           <AutoReloadBody>true</AutoReloadBody>
           <Id>f3dda926-cc99-4c6a-b4b6-d02b47a049fc</Id>
         </GameComponent>
+        <GameComponent Type="iGL.Engine.PropertyAnimationComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Property>StarColor</Property>
+          <StartValue>0.5019608, 0.5019608, 0, 1</StartValue>
+          <StopValue>0.5019608, 0.5019608, 0, 0</StopValue>
+          <PlayMode>Play</PlayMode>
+          <AutoStart>false</AutoStart>
+          <DurationSeconds>0.5</DurationSeconds>
+          <IntervalSeconds>0</IntervalSeconds>
+          <Id>1c728731-0f1e-4661-969f-f8b3d4cac27f</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.PropertyAnimationComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Property>Rotation</Property>
+          <StartValue>0, 0, 0</StartValue>
+          <StopValue>0, 3.14, 0</StopValue>
+          <PlayMode>Play</PlayMode>
+          <AutoStart>false</AutoStart>
+          <DurationSeconds>0.5</DurationSeconds>
+          <IntervalSeconds>0</IntervalSeconds>
+          <Id>6b728731-0f1e-4661-969f-f8b3d4cac27f</Id>
+        </GameComponent>
       </Components>
     </GameObject>
     <GameObject Type="iGL.TestGame.GameObjects.Star, iGL.TestGame, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <StarColor>
+        <x>0.5019608</x>
+        <y>0.5019608</y>
+        <z>0</z>
+        <w>1</w>
+      </StarColor>
       <Visible>true</Visible>
       <Enabled>true</Enabled>
       <Designer>false</Designer>
@@ -1413,9 +1575,35 @@
           <AutoReloadBody>true</AutoReloadBody>
           <Id>f3dda926-cc99-4c6a-b4b6-d02b47a049fc</Id>
         </GameComponent>
+        <GameComponent Type="iGL.Engine.PropertyAnimationComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Property>StarColor</Property>
+          <StartValue>0.5019608, 0.5019608, 0, 1</StartValue>
+          <StopValue>0.5019608, 0.5019608, 0, 0</StopValue>
+          <PlayMode>Play</PlayMode>
+          <AutoStart>false</AutoStart>
+          <DurationSeconds>0.5</DurationSeconds>
+          <IntervalSeconds>0</IntervalSeconds>
+          <Id>1c728731-0f1e-4661-969f-f8b3d4cac27f</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.PropertyAnimationComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Property>Rotation</Property>
+          <StartValue>0, 0, 0</StartValue>
+          <StopValue>0, 3.14, 0</StopValue>
+          <PlayMode>Play</PlayMode>
+          <AutoStart>false</AutoStart>
+          <DurationSeconds>0.5</DurationSeconds>
+          <IntervalSeconds>0</IntervalSeconds>
+          <Id>6b728731-0f1e-4661-969f-f8b3d4cac27f</Id>
+        </GameComponent>
       </Components>
     </GameObject>
     <GameObject Type="iGL.TestGame.GameObjects.Star, iGL.TestGame, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <StarColor>
+        <x>0.5019608</x>
+        <y>0.5019608</y>
+        <z>0</z>
+        <w>1</w>
+      </StarColor>
       <Visible>true</Visible>
       <Enabled>true</Enabled>
       <Designer>false</Designer>
@@ -1495,9 +1683,35 @@
           <AutoReloadBody>true</AutoReloadBody>
           <Id>f3dda926-cc99-4c6a-b4b6-d02b47a049fc</Id>
         </GameComponent>
+        <GameComponent Type="iGL.Engine.PropertyAnimationComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Property>StarColor</Property>
+          <StartValue>0.5019608, 0.5019608, 0, 1</StartValue>
+          <StopValue>0.5019608, 0.5019608, 0, 0</StopValue>
+          <PlayMode>Play</PlayMode>
+          <AutoStart>false</AutoStart>
+          <DurationSeconds>0.5</DurationSeconds>
+          <IntervalSeconds>0</IntervalSeconds>
+          <Id>1c728731-0f1e-4661-969f-f8b3d4cac27f</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.PropertyAnimationComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Property>Rotation</Property>
+          <StartValue>0, 0, 0</StartValue>
+          <StopValue>0, 3.14, 0</StopValue>
+          <PlayMode>Play</PlayMode>
+          <AutoStart>false</AutoStart>
+          <DurationSeconds>0.5</DurationSeconds>
+          <IntervalSeconds>0</IntervalSeconds>
+          <Id>6b728731-0f1e-4661-969f-f8b3d4cac27f</Id>
+        </GameComponent>
       </Components>
     </GameObject>
     <GameObject Type="iGL.TestGame.GameObjects.Star, iGL.TestGame, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <StarColor>
+        <x>0.5019608</x>
+        <y>0.5019608</y>
+        <z>0</z>
+        <w>1</w>
+      </StarColor>
       <Visible>true</Visible>
       <Enabled>true</Enabled>
       <Designer>false</Designer>
@@ -1577,6 +1791,26 @@
           <AutoReloadBody>true</AutoReloadBody>
           <Id>f3dda926-cc99-4c6a-b4b6-d02b47a049fc</Id>
         </GameComponent>
+        <GameComponent Type="iGL.Engine.PropertyAnimationComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Property>StarColor</Property>
+          <StartValue>0.5019608, 0.5019608, 0, 1</StartValue>
+          <StopValue>0.5019608, 0.5019608, 0, 0</StopValue>
+          <PlayMode>Play</PlayMode>
+          <AutoStart>false</AutoStart>
+          <DurationSeconds>0.5</DurationSeconds>
+          <IntervalSeconds>0</IntervalSeconds>
+          <Id>1c728731-0f1e-4661-969f-f8b3d4cac27f</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.PropertyAnimationComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Property>Rotation</Property>
+          <StartValue>0, 0, 0</StartValue>
+          <StopValue>0, 3.14, 0</StopValue>
+          <PlayMode>Play</PlayMode>
+          <AutoStart>false</AutoStart>
+          <DurationSeconds>0.5</DurationSeconds>
+          <IntervalSeconds>0</IntervalSeconds>
+          <Id>6b728731-0f1e-4661-969f-f8b3d4cac27f</Id>
+        </GameComponent>
       </Components>
     </GameObject>
     <GameObject Type="iGL.Engine.Plane, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -1606,10 +1840,6 @@
       </Rotation>
       <Children />
       <Components>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>36af2307-be79-453a-a8ab-54bad0d31525</Id>
-        </GameComponent>
         <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
             <Id></Id>
@@ -1642,6 +1872,10 @@
           </Material>
           <MeshResourceName></MeshResourceName>
           <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>470a9d0e-58a1-48dc-8d48-722b663f0c28</Id>
         </GameComponent>
       </Components>
     </GameObject>
@@ -1907,9 +2141,9 @@
         <z>-5</z>
       </Position>
       <Scale>
-        <x>21.6838169</x>
-        <y>21.6838169</y>
-        <z>21.6838169</z>
+        <x>26.56033</x>
+        <y>17.7068863</y>
+        <z>1</z>
       </Scale>
       <Rotation>
         <x>0</x>
@@ -1993,6 +2227,14 @@
     <Resource Type="iGL.Engine.Resources.Texture, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <ResourceName>iGL.TestGame.Resources.blue.text</ResourceName>
       <Name>blue</Name>
+    </Resource>
+    <Resource Type="iGL.Engine.Resources.Texture, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <ResourceName>iGL.TestGame.Resources.bg.text</ResourceName>
+      <Name>bg</Name>
+    </Resource>
+    <Resource Type="iGL.Engine.Resources.Texture, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <ResourceName>iGL.TestGame.Resources.level1.text</ResourceName>
+      <Name>level1</Name>
     </Resource>
   </Resources>
   <Triggers />

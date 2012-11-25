@@ -26,7 +26,8 @@ namespace iGL.Engine
         public CreationModeEnum CreationMode { get; internal set; }
         public string Id { get; set; }
 
-        private Dictionary<MethodInfo, object> _defaultValues = new Dictionary<MethodInfo, object>();       
+        private Dictionary<MethodInfo, object> _defaultValues = new Dictionary<MethodInfo, object>();
+        private static Dictionary<Type, IEnumerable<PropertyInfo>> _typePropertyCache = new Dictionary<Type, IEnumerable<PropertyInfo>>();
 
         private XElement _xmlElement;
 
@@ -53,10 +54,15 @@ namespace iGL.Engine
             if (_xmlElement == null) return;
 
             #region Load Properties
-            var props = this.GetType()
+            IEnumerable<PropertyInfo> props;
+            if (!_typePropertyCache.TryGetValue(this.GetType(), out props))
+            {
+                 props = this.GetType()
                                .GetProperties()
-                               .Where(p => p.GetSetMethod() != null && !p.GetCustomAttributes(true).Any(attr => attr is XmlIgnoreAttribute));
-
+                               .Where(p => p.GetSetMethod() != null && !p.GetCustomAttributes(true).Any(attr => attr is XmlIgnoreAttribute)); 
+                
+                _typePropertyCache.Add(this.GetType(), props);
+            }        
 
             _defaultValues = new Dictionary<MethodInfo, object>();
 

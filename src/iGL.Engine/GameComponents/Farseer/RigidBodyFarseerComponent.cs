@@ -381,7 +381,10 @@ namespace iGL.Engine
 
         public override void Tick(float timeElapsed)
         {
-            UpdateTransform();
+			if (Game.InDesignMode || (RigidBody.Awake && !IsStatic && !IsSensor))
+			{
+            	UpdateTransform();
+			}
         }
 
         public override void Dispose()

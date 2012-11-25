@@ -12,6 +12,7 @@ using iGL.Engine;
 using iGL.Engine.Math;
 using System.Collections;
 using System.IO;
+using System.Diagnostics;
 
 namespace iGL.Designer
 {
@@ -20,6 +21,9 @@ namespace iGL.Designer
         private DateTime _lastRender;
         private DateTime _lastTick;
         private string _currentFilename;
+        private static Stopwatch tickWatch = new Stopwatch();
+        private static Stopwatch renderWatch = new Stopwatch();
+        private static float stepInterval = 1.0f / 100.0f;
 
         public MainForm()
         {
@@ -128,14 +132,32 @@ namespace iGL.Designer
         }
 
         private void renderTimer_Tick(object sender, EventArgs e)
-        {
-            float timePassed = (float)(DateTime.UtcNow - _lastTick).TotalSeconds;
-            //if (timePassed < (1.0f / 100.0f)) return;            
-
-            openTKControl.Tick(timePassed);
-            _lastTick = DateTime.UtcNow;
-
+        {          
             openTKControl.Render();
+
+            renderWatch.Stop();
+
+            if (renderWatch.Elapsed.TotalSeconds >= stepInterval)
+            {
+                float elapsed = (float)renderWatch.Elapsed.TotalSeconds;
+                for (float tickTime = 0f; tickTime < elapsed; tickTime += stepInterval)
+                {
+                    if (elapsed - tickTime < 0.008f && elapsed - tickTime > 0.005f)
+                    {
+                       openTKControl.Tick(elapsed - tickTime);
+                    }
+                    else
+                    {
+                        openTKControl.Tick(stepInterval);
+                    }
+                }
+
+                renderWatch.Restart();
+            }
+            else
+            {
+                renderWatch.Start();
+            }
         }
 
         private void LoadGameObjectTree()
@@ -234,7 +256,8 @@ namespace iGL.Designer
         private void toolPlay_Click(object sender, EventArgs e)
         {
             /* copy scene and play */
-
+            renderWatch.Start();
+            tickWatch.Start();
             openTKControl.Play();
         }
 
@@ -245,6 +268,8 @@ namespace iGL.Designer
 
         private void toolPause_Click(object sender, EventArgs e)
         {
+            renderWatch.Reset();
+            tickWatch.Reset();
             openTKControl.Pause();
         }
 

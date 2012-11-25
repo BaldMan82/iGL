@@ -47,7 +47,7 @@ namespace iGL.TestGame.GameObjects
             CameraComponent.ClearColor = new Vector4(0.2f, 0.2f, 0.2f, 1.0f);
 
             Position = new Vector3(0, 0, 30);
-            _distance = 18.0f;
+            _distance = 20.0f;
             
             LerpFactor = 4.0f;
         }
@@ -89,7 +89,7 @@ namespace iGL.TestGame.GameObjects
 
             if (FollowingEnabled)
             {
-                var target = Vector3.Lerp(CameraComponent.Target, _target.WorldPosition + new Vector3(0, 2, 0), timeElapsed * LerpFactor);
+                var target = Vector3.Lerp(CameraComponent.Target, _target.WorldPosition + new Vector3(0, 1, 0), timeElapsed * LerpFactor);
              
                 var position = target + new Vector3(0, 0, _distance);
 

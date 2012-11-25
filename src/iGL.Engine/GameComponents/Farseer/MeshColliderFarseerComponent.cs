@@ -9,6 +9,7 @@ using FarseerPhysics.Common;
 using FarseerPhysics.Common.ConvexHull;
 using FarseerPhysics.Collision.Shapes;
 using iGL.Engine.Math;
+using System.Diagnostics;
 
 namespace iGL.Engine.GameComponents
 {
@@ -65,9 +66,36 @@ namespace iGL.Engine.GameComponents
             }
 
             Vector2 center = Vector2.Zero;
-
+			int redundant = points.Count;
+	
             for (int i = 0; i < points.Count; i++)
             {
+				if (i > 0){
+					if (System.Math.Abs(points[i-1][1].X - points[i][0].X) < 0.1 &&
+					    System.Math.Abs(points[i-1][1].Y - points[i][0].Y) < 0.1){
+
+						var v1 = new Vector2(points[i-1][0].X, points[i-1][0].Y) - new Vector2(points[i-1][1].X, points[i-1][1].Y);
+						var v2 = new Vector2(points[i][0].X, points[i][0].Y) - new Vector2(points[i][1].X, points[i][1].Y);
+
+						float cosine = System.Math.Abs(Vector2.Dot(v1, v2)) / (v1.Length * v2.Length);
+						if (cosine >= 1f){
+							points[i-1][1].X = points[i][1].X;
+							points[i-1][1].Y = points[i][1].Y;
+							
+							redundant++;
+							points.RemoveAt(i);
+							i--;
+						}
+
+						if (cosine > 1.01f) throw new Exception();
+					}
+				}
+			}
+
+			Debug.WriteLine(points.Count + " / " + redundant);
+
+			for (int i = 0; i < points.Count; i++)
+			{
                 points[i][0].X *= GameObject.Scale.X;
                 points[i][0].Y *= GameObject.Scale.Y;
 
@@ -77,6 +105,7 @@ namespace iGL.Engine.GameComponents
                 center += points[i][0] + points[i][1];
             }
 
+		
             center /= (points.Count * 2);
 
             for (int i = 0; i < points.Count; i++)

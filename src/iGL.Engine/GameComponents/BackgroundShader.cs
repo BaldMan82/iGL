@@ -33,6 +33,12 @@ namespace iGL.Engine
 			GL.Uniform4(loc, baseLight.Specular);
 		}
 
+        public void SetCenterPoint(ref Vector2 point)
+        {
+            var loc = GetUniformLocation("u_centerPoint");
+            GL.Uniform2(loc, point);
+        }
+
         public void ClearLight()
         {
             var loc = GetUniformLocation("u_light.position");

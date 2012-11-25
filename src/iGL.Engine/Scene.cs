@@ -95,8 +95,8 @@ namespace iGL.Engine
         private ObjectCollisionEvent _objectCollisionEvent = new ObjectCollisionEvent();
         private DisposeObjectEvent _disposeObjectEvent = new DisposeObjectEvent();
 
-        internal PointLightShader PointLightShader { get; set; }
-        internal DesignShader DesignShader { get; set; }
+        public PointLightShader PointLightShader { get; set; }
+        public DesignShader DesignShader { get; set; }
         public PhysicsBase Physics { get; private set; }
 
         private List<GameObject> _disposableGameObjects = new List<GameObject>();
@@ -110,10 +110,7 @@ namespace iGL.Engine
             }
             set
             {
-                PointLightShader.SetAmbientColor(ref _ambientColor);
-                DesignShader.SetAmbientColor(ref _ambientColor);
-
-                _ambientColor = value;
+                _ambientColor = value;      
             }
         }
 
@@ -204,6 +201,9 @@ namespace iGL.Engine
                 pointLightShader.ClearLight();              
             }
 
+            PointLightShader.SetAmbientColor(ref _ambientColor);
+            DesignShader.SetAmbientColor(ref _ambientColor);          
+
             var allObjects = _gameObjects.SelectMany(g => g.AllChildren).ToList();
             allObjects.AddRange(_gameObjects);
 
@@ -260,23 +260,24 @@ namespace iGL.Engine
                 _lastMouseUpdate = DateTime.UtcNow;
             }
 
+			/* dispose objects marked for deletion */
 
-            /* dispose objects marked for deletion */
+			var disposableObject = _disposableGameObjects.FirstOrDefault();
+			if (disposableObject != null)
+			{
+				disposableObject.Dispose();
+				_gameObjects.Remove(disposableObject);
+				
+				/* raise dispose event */
+				if (OnDisposeObjectEvent != null)
+				{
+					_disposeObjectEvent.GameObject = disposableObject;
+					OnDisposeObjectEvent(this, _disposeObjectEvent);
+				}
 
-            _disposableGameObjects.ForEach(g =>
-            {
-                g.Dispose();
-                _gameObjects.Remove(g);
+				_disposableGameObjects.Remove(disposableObject);
+			}
 
-                /* raise dispose event */
-                if (OnDisposeObjectEvent != null)
-                {
-                    _disposeObjectEvent.GameObject = g;
-                    OnDisposeObjectEvent(this, _disposeObjectEvent);
-                }
-            });
-
-            _disposableGameObjects.Clear();
 
             this.CurrentCamera.GameObject.Tick(0.0f);
         }
@@ -292,8 +293,6 @@ namespace iGL.Engine
 
         private void ProcessTimers()
         {
-            var obsoleteTimers = new List<Timer>();
-
             for (int i = 0; i < _timers.Count; i++)
             {
                 var timer = _timers[i];
@@ -501,7 +500,6 @@ namespace iGL.Engine
                 /* objects have been added during load, which is illegal */
                 /* all creation should take place in Init phase or after load phase */
 
-                var newObjects = gameObjectAfterLoad.Where(g => !gameObjectBeforeLoad.Contains(g)).ToList();
                 var strb = new StringBuilder();
                 gameObjectAfterLoad.ForEach(g => strb.AppendLine(g.ToString()));
 
@@ -546,6 +544,7 @@ namespace iGL.Engine
             {
                 var loadedObj = _gameObjects.First(g => g == gameObject);
                 _disposableGameObjects.Add(loadedObj);
+
                 loadedObj.IsDisposing = true;
             }
         }
@@ -559,9 +558,9 @@ namespace iGL.Engine
             _resources.Add(resource);
         }
 
-        public void RemoveResource(Resource resource)
+        public void RemoveResource(Resource res)
         {
-            _resources.Remove(resource);
+            _resources.Remove(res);
         }
 
         public void AddTrigger(Trigger trigger)
@@ -610,8 +609,6 @@ namespace iGL.Engine
 
         private void ProcessInteractiviy()
         {
-            if (MousePosition == null) return;
-
             Vector4 nearPlane, farPlane;
             ScreenPointToWorld(MousePosition, out nearPlane, out farPlane);
 
@@ -827,6 +824,6 @@ namespace iGL.Engine
             _timers.ForEach(t => t.LastTick = DateTime.MinValue);
             ProcessTimers();
             _timers.Clear();
-        }
+        }     
     }
 }

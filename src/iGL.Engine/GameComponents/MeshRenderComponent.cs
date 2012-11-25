@@ -80,7 +80,7 @@ namespace iGL.Engine
 				_bufferIds = cachedBuffers;
                 _isClone = true;
             }
-            else
+            else if (!_isClone)
             {
 
                 /* create buffers to store vertex data */
@@ -149,7 +149,7 @@ namespace iGL.Engine
         public void ReleaseBuffers()
         {
             /* only release buffers of original, not cloned object if scene is disposing */
-			if (IsLoaded && (string.IsNullOrEmpty(_meshComponent.MeshResourceName) || GameObject.Scene.IsDisposingResources))
+			if (!_isClone && IsLoaded && (string.IsNullOrEmpty(_meshComponent.MeshResourceName) || GameObject.Scene.IsDisposingResources))
             {
                 GL.DeleteBuffers(2, _bufferIds);
             }

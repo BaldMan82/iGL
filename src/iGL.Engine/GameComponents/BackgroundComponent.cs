@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 using System.Runtime.InteropServices;
 using System.Xml.Linq;
 using System.Diagnostics;
+using iGL.Engine.Resources;
 
 namespace iGL.Engine
 {
@@ -21,7 +22,8 @@ namespace iGL.Engine
         private short[] _indices;
         private BackgroundShader _shader;
         private float _distance;
-
+        private Texture _bgTexture;
+        private Vector2 _centerPoint;
 
         public BeginMode BeginMode { get; set; }
 
@@ -102,8 +104,8 @@ namespace iGL.Engine
                 {
                     var cam = GameObject.Scene.CurrentCamera as PerspectiveCameraComponent;
                     var sin = System.Math.Sin(cam.FieldOfViewRadians);
-                    var l = (float)(sin * (System.Math.Abs(_distance) + (cam.GameObject.Position.Z)));
-                    GameObject.Scale = new Vector3(l);
+                    var l = (float)(sin * (System.Math.Abs(_distance) + (cam.GameObject.Position.Z))) - 5;
+					GameObject.Scale = new Vector3(l*cam.AspectRatio, l,1);
 
                     cam.GameObject.OnMove += (c, d) =>
                     {                     
@@ -113,6 +115,8 @@ namespace iGL.Engine
             };
 
             this.GameObject.RenderQueuePriority = int.MaxValue;
+
+            _bgTexture = GameObject.Scene.Resources.FirstOrDefault(r => r.Name == "bg" && r is Texture) as Texture;
 
             return true;
         }
@@ -124,7 +128,7 @@ namespace iGL.Engine
         }       
 
         public override void Render(ref Matrix4 transform, ref Matrix4 modelView)
-        {          
+        {  			
             _shader.Use();
             _shader.SetLight(GameObject.Scene.CurrentLight.Light, new Vector4(GameObject.Scene.CurrentLight.GameObject.WorldPosition));
 
@@ -154,7 +158,21 @@ namespace iGL.Engine
             GL.BindTexture(TextureTarget.Texture2D, -1);
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, _bufferIds[1]);
-           
+
+            if (_bgTexture != null)
+            {
+                GL.BindTexture(TextureTarget.Texture2D, _bgTexture.TextureId);
+
+                var wrapModeX = TextureWrapMode.Clamp;
+                var wrapModeY = TextureWrapMode.Clamp;
+
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)wrapModeX);
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)wrapModeY);
+
+            }
+
+            var center = new Vector2(GameObject.Position.X, GameObject.Position.Y);
+            _shader.SetCenterPoint(ref center);
           
             GL.DrawElements(BeginMode, _indices.Length, DrawElementsType.UnsignedShort, 0);           
          

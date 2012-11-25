@@ -97,7 +97,12 @@ namespace iGL.Engine
                 _meshComponent.Indices = _staticMeshComponent.Indices;
                 _meshComponent.UV = _staticMeshComponent.UV;
 
+                this.RemoveComponent(_meshRenderComponent);
+                
                 _meshRenderComponent = _staticMeshRenderComponent.CloneForReuse();
+
+                this.AddComponent(_meshRenderComponent);
+                
             }
         }
 
@@ -106,6 +111,17 @@ namespace iGL.Engine
             LoadPlane();
 
             base.Load();
+        }
+
+        public override void Dispose()
+        {
+            if (Scene.IsDisposing)
+            {
+                _staticMeshRenderComponent = null;
+                _staticMeshComponent = null;
+            }
+
+            base.Dispose();
         }
     }
 }

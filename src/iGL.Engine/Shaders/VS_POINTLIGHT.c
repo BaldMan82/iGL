@@ -1,13 +1,13 @@
 
 // Attributes
-attribute highp vec3 a_position;
-attribute highp vec3 a_normal;
-attribute highp vec2 a_uv;
+attribute mediump vec3 a_position;
+attribute mediump vec3 a_normal;
+attribute mediump vec2 a_uv;
 
 
 // Structs
 struct Light {	
-	lowp vec4 position; 
+	highp vec4 position; 
 	lowp vec4 ambient;
 	lowp vec4 diffuse;
 	lowp vec4 specular;	
@@ -26,6 +26,7 @@ uniform mat4 u_modelViewMatrix;
 uniform mat4 u_modelViewProjectionMatrix;
 uniform mat4 u_transposeAdjointModelViewMatrix;
 uniform mediump vec2 u_textureScale;
+uniform int u_blackBorder;
 
 //uniform lowp vec4 u_eyePos;
 
@@ -38,7 +39,7 @@ uniform lowp vec4 u_globalAmbientColor;
 
 varying lowp vec4 v_ambientColor;
 varying lowp vec4 v_diffuseColor;
-varying lowp vec2 v_uv;
+varying highp vec2 v_uv;
 
 void calcLightning(mediump vec4 position, mediump vec4 normal);
 
@@ -64,9 +65,10 @@ void calcLightning(mediump vec4 position, mediump vec4 normal)
 	mediump vec3 L = normalize(lightVector);
 	transformedNormal = normalize(transformedNormal);
 
-	lowp float lambertTerm = dot(transformedNormal,L);
+	highp float lambertTerm = dot(transformedNormal,L);
 	
 	v_diffuseColor = u_light.diffuse * u_material.diffuse  * clamp(lambertTerm, 0.0, 1.0);
+	
 	/*lambertTerm = 0.1;
 	if(lambertTerm > 0.0)
 	{		

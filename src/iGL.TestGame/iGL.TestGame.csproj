@@ -82,6 +82,9 @@
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\arrow.text" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\bg.text" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\blue.text" />
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +110,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\level1.dae" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\level1.text" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\level1_1.igl" />

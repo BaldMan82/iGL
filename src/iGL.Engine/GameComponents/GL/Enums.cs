@@ -86,7 +86,8 @@ namespace iGL.Engine
     {
         Nearest = 9728,
         Linear = 9729,
-		LinearMipmapLinear = 9987
+		LinearMipmapLinear = 9987,
+		NearestMipmapNearest = 9984
     }
 
     public enum TextureMagFilter

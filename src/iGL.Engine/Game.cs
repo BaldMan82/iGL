@@ -38,7 +38,7 @@ namespace iGL.Engine
         public virtual void Load()
         {
             GL.Enable(EnableCap.DepthTest);
-            GL.Enable(EnableCap.CullFace);
+            //GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.Texture2d);
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);         
@@ -60,11 +60,8 @@ namespace iGL.Engine
         }
 
         public void Render()
-        {
-            lock (typeof(Game))
-            {
-                Scene.Render();
-            }
+        {      
+			Scene.Render();       
         }
 
         public void Tick(float timeElapsed, bool tickPhysics = true)

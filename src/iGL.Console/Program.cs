@@ -17,7 +17,7 @@ namespace iGL.Console
         private static GameWindow gameWnd;
         private static Stopwatch tickWatch;
         private static Stopwatch renderWatch;
-        private static float stepInterval = 1.0f / 80.0f;
+        private static float stepInterval = 1.0f / 100.0f;
 
         static void Main(string[] args)
         {
@@ -43,7 +43,7 @@ namespace iGL.Console
             gameWnd.Mouse.ButtonDown += new EventHandler<OpenTK.Input.MouseButtonEventArgs>(Mouse_ButtonDown);
             gameWnd.Mouse.ButtonUp += new EventHandler<OpenTK.Input.MouseButtonEventArgs>(Mouse_ButtonUp);
             gameWnd.Mouse.WheelChanged += new EventHandler<OpenTK.Input.MouseWheelEventArgs>(Mouse_WheelChanged);
-            gameWnd.Run();
+            gameWnd.Run(0, 60);
 
             System.Console.ReadLine();
         }
@@ -98,36 +98,35 @@ namespace iGL.Console
 
         static void gameWnd_RenderFrame(object sender, FrameEventArgs e)
         {
-            bool runningBehind = false;
-            if (tickWatch.ElapsedMilliseconds >= (stepInterval * 0.9f)*1000.0f)
-            {
-                //System.Console.WriteLine(tickWatch.ElapsedMilliseconds);
 
-                if (tickWatch.ElapsedMilliseconds > stepInterval * 1000.0f)
-                {                    
-                    runningBehind = true;
+            game.Render();
+            ((GameWindow)sender).SwapBuffers();
+
+            renderWatch.Stop();
+
+            if (renderWatch.Elapsed.TotalSeconds >= stepInterval)
+            {
+                float elapsed = (float)renderWatch.Elapsed.TotalSeconds;
+                for (float tickTime = 0f; tickTime < elapsed; tickTime += stepInterval)
+                {
+                    if (elapsed - tickTime < 0.008f && elapsed - tickTime > 0.005f)
+                    {
+                        game.Tick(elapsed - tickTime);
+                    }
+                    else
+                    {
+                        game.Tick(stepInterval);
+                    }
                 }
 
-                game.Tick(stepInterval);
-
-                tickWatch.Restart();
-
-
+                renderWatch.Restart();
+            }
+            else
+            {
+                renderWatch.Start();
             }
 
-            if (runningBehind)
-            {
-                renderWatch.Restart();
-                return;
-            }       
-
-            if (renderWatch.Elapsed.TotalSeconds > 1d / 60d)
-            {
-                renderWatch.Restart();
-
-                game.Render();
-                ((GameWindow)sender).SwapBuffers();
-            }
+            
         }
 
         static void gameWnd_Load(object sender, EventArgs e)

@@ -183,6 +183,12 @@ namespace iGL.Engine
             GL.Uniform4(loc, color);
         }
 
+        public void SetBlackBorder(bool blackBorder)
+        {
+            var loc = GetUniformLocation("u_blackBorder");
+            GL.Uniform1(loc, blackBorder ? 1 : 0);
+        }
+
         public void SetTextureScale(ref Vector2 scale)
         {
             var loc = GetUniformLocation("u_textureScale");

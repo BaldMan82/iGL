@@ -21,8 +21,8 @@ namespace iGL.TestGame.GameObjects
         private Sphere _aimSphere;
         private bool _inAimMode;
         private Vector3 _triggerPosition;
-        private float _slingShotRadius = 4.0f;
-        private float _springConstant = 625f;
+        private float _slingShotRadius = 5.0f;
+        private float _springConstant = 325f;
         private Arrow2d _arrow2d;
         private bool _canFire;
         private PanViewFollowCamera3d _followCamera;
@@ -32,12 +32,12 @@ namespace iGL.TestGame.GameObjects
         private DateTime _flickerTime;
         private TimeSpan _triggerDuration = TimeSpan.FromSeconds(2);
         private MeshComponent _meshComponent;
-        internal RigidBodyFarseerComponent _rigidBodyComponent;
+        internal new RigidBodyFarseerComponent _rigidBodyComponent;
         private Plane _rightEye;
         private Plane _leftEye;
         private Vector3 _eyePosition = new Vector3(0.2f, 0, 0.0f);
         private Vector3 _previousPosition;
-
+        private DateTime _lastContactTime;
         public LightObject _lightObject;
         
         public SlingshotBallFarseer2D(XElement element) : base(element) { }
@@ -120,7 +120,7 @@ namespace iGL.TestGame.GameObjects
 
                 lightAnim.StartValue = "0,0,0,1";
                 lightAnim.StopValue = "1,1,1,1";
-                lightAnim.DurationSeconds = 3;
+                lightAnim.DurationSeconds = 5;
                 lightAnim.PlayMode = AnimationComponent.Mode.Play;
                 lightAnim.Property = "Light.Diffuse";
 
@@ -212,15 +212,19 @@ namespace iGL.TestGame.GameObjects
             if (body.HasContacts)
             {
                 Material.TextureName = "greenball";         
-                _canFire = true;               
+                _canFire = true;
+                _lastContactTime = DateTime.UtcNow;
             }
-            else
+            else 
             {                
-                Material.TextureName = "redball";              
+                Material.TextureName = "redball";
 
-                _inAimMode = false;
-                _canFire = false;
-                _arrow2d.Visible = false;
+                if ((DateTime.UtcNow - _lastContactTime).TotalMilliseconds > 500)
+                {
+                    _inAimMode = false;
+                    _canFire = false;
+                    _arrow2d.Visible = false;
+                }
 
                 if (_followCamera != null) _followCamera.FollowingEnabled = true;
             }
@@ -250,7 +254,7 @@ namespace iGL.TestGame.GameObjects
 
            
             float colorFactor = triggerDistance / _slingShotRadius;
-            colorFactor = (float)Math.Pow(colorFactor, 10);
+            colorFactor = (float)Math.Pow(colorFactor, 4);
             
             _arrow2d.Material.Ambient = new Vector4(colorFactor, 1 - colorFactor, 0, 1);
            
@@ -280,24 +284,26 @@ namespace iGL.TestGame.GameObjects
 
         void _aimSphere_OnMouseUp(object sender, Engine.Events.MouseButtonUpEvent e)
         {
+           
             if (Game.InDesignMode || !_inAimMode) return;
            
-            _inAimMode = false;           
-
-            var rigidBody = Components.Single(c => c is RigidBodyFarseerComponent) as RigidBodyFarseerComponent;
-
-            var fireDirection = this.Position - _triggerPosition;          
-            rigidBody.ApplyForce(fireDirection * _springConstant);
-
+            _inAimMode = false;
             _arrow2d.Visible = false;
 
-            //if (_followCamera != null) _followCamera.FollowingEnabled = true;
+            var rigidBody = Components.Single(c => c is RigidBodyFarseerComponent) as RigidBodyFarseerComponent;
+            if (rigidBody.HasContacts)
+            {
+                var fireDirection = this.Position - _triggerPosition;
+                rigidBody.ApplyForce(fireDirection * _springConstant);
+            }         
 
         }
 
         void _aimSphere_OnMouseDown(object sender, Engine.Events.MouseButtonDownEvent e)
         {
-            if (Game.InDesignMode) return;
+            var body = _rigidBodyComponent as RigidBodyFarseerComponent;
+
+            if (Game.InDesignMode || !body.HasContacts) return;
 
             if (!_canFire) return;
           

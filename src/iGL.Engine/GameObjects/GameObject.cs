@@ -90,6 +90,10 @@ namespace iGL.Engine
         protected GameObject[] _childrenArray = new GameObject[0];
         protected GameComponent[] _componentArray = new GameComponent[0];
 
+        internal static Dictionary<Type, IEnumerable<RequiredComponent>> _typeComponentCache = new Dictionary<Type, IEnumerable<RequiredComponent>>();
+        internal static Dictionary<Type, IEnumerable<RequiredChild>> _typeChildrenCache = new Dictionary<Type, IEnumerable<RequiredChild>>();
+        internal static Dictionary<Type, IEnumerable<PropertyInfo>> _typePropertyCache = new Dictionary<Type, IEnumerable<PropertyInfo>>();
+
         public Vector3 Position
         {
             get
@@ -100,6 +104,8 @@ namespace iGL.Engine
             }
             set
             {
+				if (value == _position) return;
+
                 _moveEvent.OldPosition = _position;
                 _moveEvent.NewPosition = value;
                
@@ -241,7 +247,7 @@ namespace iGL.Engine
         }
 
         private void BaseInit()
-        {
+        {          
             _components = new List<GameComponent>();
             _children = new List<GameObject>();
 
@@ -254,6 +260,22 @@ namespace iGL.Engine
             AutoLoad = true;
 
             Id = Guid.NewGuid().ToString();
+        }
+
+        internal IEnumerable<PropertyInfo> GetProperties()
+        {
+            /* cache properties */
+            IEnumerable<PropertyInfo> props;
+            if (!_typePropertyCache.TryGetValue(this.GetType(), out props))
+            {
+                props = this.GetType()
+                              .GetProperties()
+                              .Where(p => p.GetSetMethod() != null && !p.GetCustomAttributes(true).Any(attr => attr is XmlIgnoreAttribute));
+
+                _typePropertyCache.Add(this.GetType(), props);
+            }
+
+            return props;
         }
 
         private void CreateStructureFromXml()
@@ -270,8 +292,14 @@ namespace iGL.Engine
             components.ForEach(c => AddComponent(c));
 
             /* set required components */
-            var attributes = this.GetType().GetCustomAttributes(typeof(RequiredComponent), true).Select(o => o as RequiredComponent);
-            foreach (var attr in attributes)
+            IEnumerable<RequiredComponent> componentCache;
+            if (!_typeComponentCache.TryGetValue(this.GetType(), out componentCache))
+            {
+                componentCache = this.GetType().GetCustomAttributes(typeof(RequiredComponent), true).Select(o => o as RequiredComponent);
+                _typeComponentCache.Add(this.GetType(), componentCache);
+            }
+
+            foreach (var attr in componentCache)
             {
                 var component = components.FirstOrDefault(c => c.Id == attr.Id);
                 if (component != null)
@@ -298,8 +326,15 @@ namespace iGL.Engine
             children.ForEach(c => AddChild(c));
 
             /* set required property */
-            var childAttributes = this.GetType().GetCustomAttributes(typeof(RequiredChild), true).Select(o => o as RequiredChild);
-            foreach (var childAttr in childAttributes)
+
+            IEnumerable<RequiredChild> childrenCache;
+            if (!_typeChildrenCache.TryGetValue(this.GetType(), out childrenCache))
+            {
+                childrenCache = this.GetType().GetCustomAttributes(typeof(RequiredChild), true).Select(o => o as RequiredChild);
+                _typeChildrenCache.Add(this.GetType(), childrenCache);
+            }
+
+            foreach (var childAttr in childrenCache)
             {
                 var childObject = children.FirstOrDefault(c => c.Id == childAttr.Id);
                 if (childObject != null)
@@ -324,10 +359,9 @@ namespace iGL.Engine
         {        
             if (_xmlElement == null) return;
 
-            #region Load Properties
-            var props = this.GetType()
-                               .GetProperties()
-                               .Where(p => p.GetSetMethod() != null && !p.GetCustomAttributes(true).Any(attr => attr is XmlIgnoreAttribute));       
+            #region Load Properties           
+
+            var props = GetProperties();
 
             _defaultValues = new Dictionary<MethodInfo, object>();
 
@@ -362,8 +396,14 @@ namespace iGL.Engine
         private void CreateDependentComponents()
         {
             /* create required components */
-            var attributes = this.GetType().GetCustomAttributes(typeof(RequiredComponent), true).Select(o => o as RequiredComponent);
-            foreach (var attr in attributes)
+            IEnumerable<RequiredComponent> componentCache;
+            if (!_typeComponentCache.TryGetValue(this.GetType(), out componentCache))
+            {
+                componentCache = this.GetType().GetCustomAttributes(typeof(RequiredComponent), true).Select(o => o as RequiredComponent);
+                _typeComponentCache.Add(this.GetType(), componentCache);
+            }
+
+            foreach (var attr in componentCache)
             {
                 if (!_components.Any(c => c.Id == attr.Id))
                 {
@@ -380,8 +420,14 @@ namespace iGL.Engine
         private void CreateDependentChildren()
         {
             /* create required children */
-            var childAttributes = this.GetType().GetCustomAttributes(typeof(RequiredChild), true).Select(o => o as RequiredChild);
-            foreach (var childAttr in childAttributes)
+            IEnumerable<RequiredChild> childrenCache;
+            if (!_typeChildrenCache.TryGetValue(this.GetType(), out childrenCache))
+            {
+                childrenCache = this.GetType().GetCustomAttributes(typeof(RequiredChild), true).Select(o => o as RequiredChild);
+                _typeChildrenCache.Add(this.GetType(), childrenCache);
+            }
+
+            foreach (var childAttr in childrenCache)
             {
                 if (!_children.Any(c => c.Id == childAttr.Id))
                 {
@@ -444,7 +490,7 @@ namespace iGL.Engine
 
             if (IsLoaded)
             {
-                /* load all not yet loaded components (when dependencies where not met) */
+                /* load all not yet loaded components (when dependencies were not met) */
                 _components.ForEach(gc => { if (!gc.IsLoaded) gc.Load(); });
             }
 
@@ -488,6 +534,9 @@ namespace iGL.Engine
             {
                 parentMatrix = Parent.GetCompositeTransform();
             }
+			else if (includeThisTransform){
+				return Transform;
+			}
 
             if (includeThisTransform)
             {
@@ -529,14 +578,10 @@ namespace iGL.Engine
 
             if (_renderComponent == null && _childrenArray.Length == 0) return;
 
-            if (!this.IsLoaded) throw new InvalidOperationException("Game Object not loaded!");
-          
-            /* render designer objects in white ambient color */
-            var sceneColor = Scene.AmbientColor;
-            if (this.Designer) Scene.AmbientColor = new Vector4(1, 1, 1, 1);                  
+            if (!this.IsLoaded) throw new InvalidOperationException("Game Object not loaded!");                   
 
-            var compositeTransform = overrideParentTransform ? Transform : GetCompositeTransform();        
-      
+            var compositeTransform = overrideParentTransform ? Transform : GetCompositeTransform();            
+
             Matrix4 thisTransform;
 
             if (_rigidBodyComponent != null && _rigidBodyComponent.IsLoaded)
@@ -560,11 +605,7 @@ namespace iGL.Engine
             if (_renderComponent != null)
             {
                 _renderComponent.Render(ref thisTransform, ref modelviewProjection);
-            }
-
-            /* reset ambient color */
-            //if (this.Designer) 
-                //Scene.AmbientColor = sceneColor;
+            }         
 
         }
 
@@ -596,8 +637,9 @@ namespace iGL.Engine
 
             if (_children.Count > 0 && _rigidBodyComponent != null)
             {
+				var wasDirty = _rigidPositionDirty;
                 UpdateGetRigidBodyOrientation();
-                UpdateTransform();
+				if (wasDirty) UpdateTransform();
             }
 
             for (int i = 0; i < _childrenArray.Length; i++) _childrenArray[i].Tick(timeElapsed);
@@ -641,7 +683,14 @@ namespace iGL.Engine
 
             var scale = Matrix4.Scale(Scale);
 
-            Transform = scale * mRotationX * mRotationY * mRotationZ * mPos * Matrix4.Identity;
+            Transform = scale * mRotationX * mRotationY * mRotationZ * mPos;
+
+			if (_rigidBodyComponent != null) {
+				var farseerBody = _rigidBodyComponent as RigidBodyFarseerComponent;
+				if (farseerBody != null){
+					farseerBody.UpdateTransform();
+				}
+			}
         }
 
         private void UpdateGetRigidBodyOrientation()
@@ -899,12 +948,12 @@ namespace iGL.Engine
 
         public virtual void Dispose()
         {
-            foreach (var child in Children)
+            foreach (var child in _childrenArray)
             {
                 child.Dispose();
             }
 
-            foreach (var component in Components)
+            foreach (var component in _componentArray)
             {
                 component.Dispose();
             }

@@ -106,7 +106,7 @@ namespace iGL.TestGame.GameObjects
             {
                 var playerDistance = (player.WorldPosition - this.WorldPosition).Length;
 
-                if (_rigidBody.Sleeping && playerDistance < 5 && !_awakening)
+                if (_rigidBody.Sleeping && playerDistance < 8 && !_awakening)
                 {                    
                     /* should awaken */
                     _awakening = true;
@@ -136,18 +136,11 @@ namespace iGL.TestGame.GameObjects
 
                     TextObject obj = new TextObject();
                     Scene.AddGameObject(obj);
-                    obj.Position = this.WorldPosition + new Vector3(-0.25f, 2, 0);
+                    obj.Position = this.WorldPosition + new Vector3(0, 2, 0);
                     obj.Material.Ambient = new Vector4(1);
                     obj.Material.Diffuse = new Vector4(1);
                     obj.Scale = new Vector3(5);
-
-                    var textAnim = new TextAnimatorComponent();
-                    textAnim.CharacterInterval = 0.1f;
-                    textAnim.DurationSeconds = 1.0f;
-                    textAnim.Text = "??";
-                    textAnim.AutoStart = true;
-
-                    obj.AddComponent(textAnim);
+                    obj.SetText("?");
 
                     Scene.AddTimer(new Timer() { Action = () => { Scene.DisposeGameObject(obj); }, Interval = TimeSpan.FromSeconds(0.5), Mode = Timer.TimerMode.Once });
                 }

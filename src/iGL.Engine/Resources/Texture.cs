@@ -41,7 +41,7 @@ namespace iGL.Engine.Resources
                     GL.BindTexture(TextureTarget.Texture2D, TextureId);
 
                     GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
-                    GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);                  
+					GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);                  
 
                     unsafe
                     {

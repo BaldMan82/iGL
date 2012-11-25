@@ -19,7 +19,7 @@ namespace iGL.Engine
 
         public PhysicsFarseer()
         {
-            _world = new World(new Vector2(0, -53f));
+            _world = new World(new Vector2(0, -35.81f));
             _world.ContactManager.PostSolve += PostSolve;
 
         }

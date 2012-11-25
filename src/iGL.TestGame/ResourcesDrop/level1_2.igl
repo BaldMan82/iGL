@@ -166,7 +166,7 @@
           <w>0</w>
         </Specular>
       </Light>
-      <Visible>true</Visible>
+      <Visible>false</Visible>
       <Enabled>true</Enabled>
       <Designer>false</Designer>
       <Name>LightObject0</Name>
@@ -176,9 +176,9 @@
       <RenderQueuePriority>0</RenderQueuePriority>
       <Id>c5521ea4-d0df-4bae-91c4-cc6f19c2df8c</Id>
       <Position>
-        <x>-2.59677577</x>
-        <y>5.24547052</y>
-        <z>4.17481232</z>
+        <x>-2.596776</x>
+        <y>5.245471</y>
+        <z>4.174812</z>
       </Position>
       <Scale>
         <x>1</x>
@@ -194,7 +194,7 @@
         <GameObject Type="iGL.Engine.Sphere, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <Rings>16</Rings>
           <Segments>16</Segments>
-          <Visible>true</Visible>
+          <Visible>false</Visible>
           <Enabled>true</Enabled>
           <Designer>false</Designer>
           <Name></Name>
@@ -2000,7 +2000,7 @@
           <Id>09bbe6d6-0108-48f2-9e83-6fd4760040fd</Id>
         </GameComponent>
         <GameComponent Type="iGL.Engine.RigidBodyFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <Mass>0.5</Mass>
+          <Mass>0.2</Mass>
           <IsGravitySource>false</IsGravitySource>
           <GravityRange>5</GravityRange>
           <IsSensor>false</IsSensor>
@@ -2082,7 +2082,7 @@
           <Id>09bbe6d6-0108-48f2-9e83-6fd4760040fd</Id>
         </GameComponent>
         <GameComponent Type="iGL.Engine.RigidBodyFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <Mass>0.5</Mass>
+          <Mass>0.2</Mass>
           <IsGravitySource>false</IsGravitySource>
           <GravityRange>5</GravityRange>
           <IsSensor>false</IsSensor>
@@ -2164,7 +2164,7 @@
           <Id>09bbe6d6-0108-48f2-9e83-6fd4760040fd</Id>
         </GameComponent>
         <GameComponent Type="iGL.Engine.RigidBodyFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <Mass>0.5</Mass>
+          <Mass>0.2</Mass>
           <IsGravitySource>false</IsGravitySource>
           <GravityRange>5</GravityRange>
           <IsSensor>false</IsSensor>
@@ -2246,7 +2246,7 @@
           <Id>09bbe6d6-0108-48f2-9e83-6fd4760040fd</Id>
         </GameComponent>
         <GameComponent Type="iGL.Engine.RigidBodyFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <Mass>0.5</Mass>
+          <Mass>0.2</Mass>
           <IsGravitySource>false</IsGravitySource>
           <GravityRange>5</GravityRange>
           <IsSensor>false</IsSensor>
@@ -2328,7 +2328,7 @@
           <Id>09bbe6d6-0108-48f2-9e83-6fd4760040fd</Id>
         </GameComponent>
         <GameComponent Type="iGL.Engine.RigidBodyFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <Mass>0.5</Mass>
+          <Mass>0.2</Mass>
           <IsGravitySource>false</IsGravitySource>
           <GravityRange>5</GravityRange>
           <IsSensor>false</IsSensor>
@@ -2410,7 +2410,7 @@
           <Id>09bbe6d6-0108-48f2-9e83-6fd4760040fd</Id>
         </GameComponent>
         <GameComponent Type="iGL.Engine.RigidBodyFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <Mass>0.5</Mass>
+          <Mass>0.2</Mass>
           <IsGravitySource>false</IsGravitySource>
           <GravityRange>5</GravityRange>
           <IsSensor>false</IsSensor>
@@ -2492,7 +2492,7 @@
           <Id>09bbe6d6-0108-48f2-9e83-6fd4760040fd</Id>
         </GameComponent>
         <GameComponent Type="iGL.Engine.RigidBodyFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <Mass>0.5</Mass>
+          <Mass>0.2</Mass>
           <IsGravitySource>false</IsGravitySource>
           <GravityRange>5</GravityRange>
           <IsSensor>false</IsSensor>
@@ -3402,9 +3402,9 @@
         <z>-5</z>
       </Position>
       <Scale>
-        <x>62.6211243</x>
-        <y>62.6211243</y>
-        <z>62.6211243</z>
+        <x>86.43169</x>
+        <y>57.6211243</y>
+        <z>1</z>
       </Scale>
       <Rotation>
         <x>0</x>
@@ -3496,6 +3496,10 @@
     <Resource Type="iGL.Engine.Resources.Texture, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <ResourceName>iGL.TestGame.Resources.enemy.text</ResourceName>
       <Name>enemy</Name>
+    </Resource>
+    <Resource Type="iGL.Engine.Resources.Texture, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <ResourceName>iGL.TestGame.Resources.bg.text</ResourceName>
+      <Name>bg</Name>
     </Resource>
   </Resources>
   <Triggers />

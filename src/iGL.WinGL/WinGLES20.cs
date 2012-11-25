@@ -89,7 +89,7 @@ namespace iGL
 
         public void Uniform1(int loc, float p)
         {
-            GL.Uniform1(loc, p);
+            GL.Uniform1(loc, p);             
         }
 
         public void Uniform1(int loc, int p)
