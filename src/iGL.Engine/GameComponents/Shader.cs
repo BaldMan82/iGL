@@ -15,9 +15,11 @@ namespace iGL.Engine
             VS_POINTLIGHT,  
             VS_DESIGN,
             VS_BACKGROUND,
+            VS_UI,
             FS_POINTLIGHT,
             FS_DESIGN,
-            FS_BACKGROUND                        
+            FS_BACKGROUND, 
+            FS_UI           
         }       
 
         public string Source { get; private set; }

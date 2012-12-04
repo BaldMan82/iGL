@@ -74,7 +74,7 @@ namespace iGL.TestGame.GameObjects
                 /* should die */
                 var flare = new StarFlare();
 
-                flare.Position = this.Position;           
+                flare.Position = this.Position + new Vector3(0, 0, 0.5f);           
 
                 Scene.AddGameObject(flare);
 

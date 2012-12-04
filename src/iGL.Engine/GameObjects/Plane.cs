@@ -33,10 +33,7 @@ namespace iGL.Engine
 
         private MeshComponent _meshComponent;
         private MeshRenderComponent _meshRenderComponent;
-
-        private static MeshComponent _staticMeshComponent;
-        private static MeshRenderComponent _staticMeshRenderComponent;
-
+     
         private const string MeshComponentId = "e2dae056-2ff7-443f-aed1-0afd3db7b0bf";
         private const string MeshRenderComponentId = "36af2307-be79-453a-a8ab-54bad0d31525";
 
@@ -52,7 +49,17 @@ namespace iGL.Engine
 
         private void LoadPlane()
         {
-            if (_staticMeshRenderComponent == null)
+            MeshRenderComponent cachedMeshRenderComponent = null;
+            MeshComponent cachedMeshComponent = null;
+
+            GameComponent cachedComponent;
+            Scene.ComponentCache.TryGetValue(MeshRenderComponentId, out cachedComponent);
+            cachedMeshRenderComponent = cachedComponent as MeshRenderComponent;
+
+            Scene.ComponentCache.TryGetValue(MeshComponentId, out cachedComponent);
+            cachedMeshComponent = cachedComponent as MeshComponent;
+
+            if (cachedMeshRenderComponent == null)
             {
                 var halfWidth = 0.5f;
                 var halfHeight = 0.5f;             
@@ -86,20 +93,20 @@ namespace iGL.Engine
 
                 _meshComponent.CalculateNormals();
 
-                _staticMeshComponent = _meshComponent;
-                _staticMeshRenderComponent = _meshRenderComponent;
+                Scene.ComponentCache.Add(MeshRenderComponentId, _meshRenderComponent);
+                Scene.ComponentCache.Add(MeshComponentId, _meshComponent);                
             }
             else
             {
                 /* reuse vertex buffers */
-                _meshComponent.Vertices = _staticMeshComponent.Vertices;
-                _meshComponent.Normals = _staticMeshComponent.Normals;
-                _meshComponent.Indices = _staticMeshComponent.Indices;
-                _meshComponent.UV = _staticMeshComponent.UV;
+                _meshComponent.Vertices = cachedMeshComponent.Vertices;
+                _meshComponent.Normals = cachedMeshComponent.Normals;
+                _meshComponent.Indices = cachedMeshComponent.Indices;
+                _meshComponent.UV = cachedMeshComponent.UV;
 
                 this.RemoveComponent(_meshRenderComponent);
                 
-                _meshRenderComponent = _staticMeshRenderComponent.CloneForReuse();
+                _meshRenderComponent = cachedMeshRenderComponent.CloneForReuse();
 
                 this.AddComponent(_meshRenderComponent);
                 
@@ -114,13 +121,7 @@ namespace iGL.Engine
         }
 
         public override void Dispose()
-        {
-            if (Scene.IsDisposing)
-            {
-                _staticMeshRenderComponent = null;
-                _staticMeshComponent = null;
-            }
-
+        {           
             base.Dispose();
         }
     }

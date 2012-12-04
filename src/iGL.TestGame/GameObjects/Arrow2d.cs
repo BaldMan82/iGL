@@ -31,13 +31,13 @@ namespace iGL.TestGame.GameObjects
         {
             GL.Clear(ClearBufferMask.DepthBufferBit);
 
-            Scene.PointLightShader.SetBlackBorder(true);
+            Scene.Shader.SetBlackBorder(true);
             
             /* give the arrow coordinates in the world, as it would be a lot of overhead to calculate
              * position inside the game sphere */
             base.Render(true);
 
-            Scene.PointLightShader.SetBlackBorder(false);
+            Scene.Shader.SetBlackBorder(false);
         }
     }
 }

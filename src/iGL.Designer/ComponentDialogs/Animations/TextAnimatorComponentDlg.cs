@@ -26,14 +26,15 @@ namespace iGL.Designer.ComponentDialogs
             txtCharacterDelay.Text = component.CharacterInterval.ToInvariantText();
             txtLineDelay.Text = component.LineDelay.ToInvariantText();
             txtText.Lines = component.Text.Split('\n');
+
+            baseAnimationComponentDlg.AnimationComponent = component;
         }
        
         public override void UpdateComponent()
         {
             var component = Component as TextAnimatorComponent;
             component.CharacterInterval = txtCharacterDelay.TextToFloat();
-            component.LineDelay = txtLineDelay.TextToFloat();
-            component.AutoStart = cbAutoStart.Checked;
+            component.LineDelay = txtLineDelay.TextToFloat();         
 
             component.Text = txtText.Text;            
         }      

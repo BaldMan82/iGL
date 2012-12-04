@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{07392791-9B48-42BA-A316-24193A8B7F79}</ProjectGuid> 
+    <ProjectGuid>{07392791-9B48-42BA-A316-24193A8B7F79}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>iGL.Engine</RootNamespace>
@@ -67,6 +67,7 @@
     <Compile Include="GameComponents\BackgroundComponent.cs" />
     <Compile Include="GameComponents\CameraComponent.cs" />
     <Compile Include="GameComponents\BackgroundShader.cs" />
+    <Compile Include="GameComponents\UIShader.cs" />
     <Compile Include="GameComponents\Farseer\CircleColliderFarseerComponent.cs" />
     <Compile Include="GameComponents\Farseer\BoxColliderFarseerComponent.cs" />
     <Compile Include="GameComponents\Farseer\ColliderFarseerComponent.cs" />
@@ -190,5 +191,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Shaders\FS_BACKGROUND.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\VS_UI.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\FS_UI.c" />
   </ItemGroup>
 </Project>

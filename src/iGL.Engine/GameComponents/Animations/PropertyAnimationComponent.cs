@@ -71,6 +71,11 @@ namespace iGL.Engine
         {
             base.InternalLoad();
 
+            return Reload();
+        }
+
+        public bool Reload()
+        {
             if (Property == null) return false;
 
             var properties = Property.Split('.');
@@ -96,7 +101,7 @@ namespace iGL.Engine
                 }
 
                 _propertyInfo = prop;
-                _setMethod = _propertyInfo.GetSetMethod();                
+                _setMethod = _propertyInfo.GetSetMethod();
             }
             else
             {
@@ -214,10 +219,7 @@ namespace iGL.Engine
             {
                 if (PlayMode == AnimationComponent.Mode.RepeatInverted)
                 {
-                    var start = StartValue;
-                    StartValue = StopValue;
-                    StopValue = start;
-
+                    Rewind();
                     Play();
                 }
                 else if (PlayMode == AnimationComponent.Mode.Repeat)
@@ -229,6 +231,15 @@ namespace iGL.Engine
                     Stop();
                 }
             }
+        }
+
+        public void Rewind()
+        {
+            var start = StartValue;
+            StartValue = StopValue;
+            StopValue = start;
+
+            Reload();
         }
 
         public override void Tick(float timeElapsed)

@@ -16,7 +16,7 @@ namespace iGL.TestGame
      
     
         public TestScene()
-            : base(new PhysicsFarseer())
+            : base(new PhysicsFarseer(), ShaderProgram.ProgramType.POINTLIGHT)
         {
             this.OnTick += new EventHandler<Engine.Events.TickEvent>(TestScene_OnTick);         
         }

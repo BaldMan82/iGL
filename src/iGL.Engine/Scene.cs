@@ -95,12 +95,18 @@ namespace iGL.Engine
         private ObjectCollisionEvent _objectCollisionEvent = new ObjectCollisionEvent();
         private DisposeObjectEvent _disposeObjectEvent = new DisposeObjectEvent();
 
-        public PointLightShader PointLightShader { get; set; }
+        public ShaderProgram Shader { get; set; }
         public DesignShader DesignShader { get; set; }
         public PhysicsBase Physics { get; private set; }
 
         private List<GameObject> _disposableGameObjects = new List<GameObject>();
         public Dictionary<MouseButton, bool> MouseButtonState { get; private set; }
+
+        internal Dictionary<string, GameComponent> ComponentCache
+        {
+            get;
+            private set;
+        }
 
         public Vector4 AmbientColor
         {
@@ -114,20 +120,30 @@ namespace iGL.Engine
             }
         }
 
-        public Scene()
-            : this(new PhysicsFarseer())
+        public Scene(ShaderProgram.ProgramType shaderType)
+            : this(new PhysicsFarseer(), shaderType)
         {
 
         }
 
-        public Scene(PhysicsBase physics)
+        public Scene(PhysicsBase physics, ShaderProgram.ProgramType shaderType)
         {
             _gameObjects = new List<GameObject>();
             _resources = new List<Resource>();
             _triggers = new List<Trigger>();
+            ComponentCache = new Dictionary<string, GameComponent>();
 
-            PointLightShader = new PointLightShader();
-            PointLightShader.Load();
+            switch (shaderType)
+            {
+                case ShaderProgram.ProgramType.POINTLIGHT:
+                    Shader = new PointLightShader();
+                    break;
+                case ShaderProgram.ProgramType.UI:
+                    Shader = new UIShader();
+                    break;
+            }
+            
+            Shader.Load();
 
             DesignShader = new DesignShader();
             if (Game.InDesignMode) DesignShader.Load();
@@ -183,25 +199,36 @@ namespace iGL.Engine
             }
 
             //Game.GL.ClearColor(CurrentCamera.ClearColor.X, CurrentCamera.ClearColor.Y, CurrentCamera.ClearColor.Z, CurrentCamera.ClearColor.W);
-       
-            Game.GL.ClearColor(0, 0, 0, 0);
-            Game.GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            var pointLightShader = PointLightShader as PointLightShader;
-
-            if (CurrentLight != null)
+            if (Game.InDesignMode)
             {
-                /* update shader's light parameters */
-                pointLightShader.Use();
-                pointLightShader.SetLight(CurrentLight.Light, new Vector4(CurrentLight.GameObject.WorldPosition));              
-
+                Game.GL.ClearColor(1, 1, 1, 0);
+                Game.GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             }
             else
             {
-                pointLightShader.ClearLight();              
+                Game.GL.Clear(ClearBufferMask.DepthBufferBit);
             }
 
-            PointLightShader.SetAmbientColor(ref _ambientColor);
+            var pointLightShader = Shader as PointLightShader;
+
+            Shader.Use();
+
+            if (pointLightShader != null)
+            {
+                if (CurrentLight != null)
+                {
+                    /* update shader's light parameters */                
+                    pointLightShader.SetLight(CurrentLight.Light, new Vector4(CurrentLight.GameObject.WorldPosition));
+
+                }
+                else
+                {
+                    pointLightShader.ClearLight();
+                }
+            }
+
+            Shader.SetAmbientColor(ref _ambientColor);
             DesignShader.SetAmbientColor(ref _ambientColor);          
 
             var allObjects = _gameObjects.SelectMany(g => g.AllChildren).ToList();
@@ -809,7 +836,7 @@ namespace iGL.Engine
             _gameObjects.Clear();
             _resources.Clear();
 
-            PointLightShader.Dispose();
+            Shader.Dispose();
             //FurShader.Dispose();
 
             _triggers.ForEach(tr => tr.Dispose());

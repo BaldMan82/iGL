@@ -322,5 +322,13 @@ namespace iGL.TestGame.GameObjects
             //if (_followCamera != null) _followCamera.FollowingEnabled = false;
         }
 
+        public override void Render(bool overrideParentTransform = false)
+        {
+            Scene.Shader.SetBlackBorder(true);
+            
+            base.Render(overrideParentTransform);
+            
+            Scene.Shader.SetBlackBorder(false);
+        }
     }
 }

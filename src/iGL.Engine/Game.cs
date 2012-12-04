@@ -20,9 +20,17 @@ namespace iGL.Engine
     public abstract class Game
     {
         public Scene Scene { get; private set; }
+        public Scene UIScene { get; private set; }
         public Size WindowSize { get; private set; }
         public static IGL GL { get; private set; }
         public static bool InDesignMode { get; set; }
+
+        private bool _isPaused = false;
+
+        public bool IsPaused
+        {
+            get { return _isPaused; }
+        }
 
         public Game(IGL gl)
         {
@@ -47,29 +55,44 @@ namespace iGL.Engine
         public void MouseMove(int x, int y)
         {
             Scene.MouseMove(x, y);
+            if (UIScene != null) UIScene.MouseMove(x, y);
         }
 
         public void MouseButton(MouseButton button, bool down, int x, int y)
         {
             Scene.UpdateMouseButton(button, down, x, y);
+            if (UIScene != null) UIScene.UpdateMouseButton(button, down, x, y);
         }
 
         public void MouseZoom(int amount)
         {
             Scene.MouseZoom(amount);
+            if (UIScene != null) UIScene.MouseZoom(amount);
         }
 
         public void Render()
         {      
-			Scene.Render();       
+			Scene.Render();
+            if (UIScene != null) UIScene.Render();           
         }
 
         public void Tick(float timeElapsed, bool tickPhysics = true)
         {
             lock (typeof(Game))
             {
-                Scene.Tick(timeElapsed, tickPhysics);
+                if (!_isPaused) Scene.Tick(timeElapsed, tickPhysics);
+                if (UIScene != null) UIScene.Tick(timeElapsed, tickPhysics);
             }
+        }
+
+        public void Pause()
+        {
+            _isPaused = true;
+        }
+
+        public void Continue()
+        {
+            _isPaused = false;
         }
 
         public void SetScene(Scene scene)
@@ -78,9 +101,20 @@ namespace iGL.Engine
             Scene = scene;
         }
 
+        public void SetUIScene(Scene scene)
+        {
+            scene.Game = this;
+            UIScene = scene;
+        }
+
         public void LoadScene()
         {
             Scene.Load();
+        }
+
+        public void LoadUIScene()
+        {
+            UIScene.Load();
         }
 
         public string SaveScene()
@@ -160,11 +194,21 @@ namespace iGL.Engine
 
         public void PopulateScene(string xml, List<Resource> jumpStartResources = null, Dictionary<string, int[]> bufferCache = null)
         {
+            InternalPopulateScene(xml, jumpStartResources, bufferCache, Scene);
+        }
+
+        public void PopulateUIScene(string xml, List<Resource> jumpStartResources = null, Dictionary<string, int[]> bufferCache = null)
+        {
+            InternalPopulateScene(xml, jumpStartResources, bufferCache, UIScene);
+        }
+
+        private void InternalPopulateScene(string xml, List<Resource> jumpStartResources, Dictionary<string, int[]> bufferCache, Scene scene)
+        {
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             if (jumpStartResources == null) jumpStartResources = new List<Resource>();
             if (bufferCache == null) bufferCache = new Dictionary<string, int[]>();
 
-            Scene.MeshBufferCache = bufferCache;
+            scene.MeshBufferCache = bufferCache;
 
             using (var reader = new StringReader(xml))
             {
@@ -179,7 +223,7 @@ namespace iGL.Engine
                             /* deserialize game objects */
                             var gameObject = XmlHelper.FromXml(element, typeof(GameObject)) as GameObject;
 
-                            Scene.AddGameObject(gameObject);
+                            scene.AddGameObject(gameObject);
                         }
                     }
 
@@ -192,12 +236,12 @@ namespace iGL.Engine
                             var loadedResource = jumpStartResources.FirstOrDefault(r => r.ResourceName == resourceFromXml.ResourceName);
                             if (loadedResource != null)
                             {
-                                Scene.AddResource(loadedResource);
+                                scene.AddResource(loadedResource);
                                 jumpStartResources.Remove(loadedResource);
                             }
                             else
                             {
-                                Scene.AddResource(resourceFromXml);
+                                scene.AddResource(resourceFromXml);
                             }
                         }
                     }
@@ -207,52 +251,52 @@ namespace iGL.Engine
                     {
                         foreach (var trigger in triggers.Elements())
                         {
-                            Scene.AddTrigger(XmlHelper.FromXml(trigger, typeof(Trigger)) as Trigger);
+                            scene.AddTrigger(XmlHelper.FromXml(trigger, typeof(Trigger)) as Trigger);
                         }
                     }
 
                     var currentCam = doc.Root.Elements().FirstOrDefault(e => e.Name == "PlayCameraId");
                     if (currentCam != null && !string.IsNullOrEmpty(currentCam.Value))
                     {
-                        Scene.SetPlayCamera(Scene.GameObjects.Single(g => g.Id == currentCam.Value));
+                        scene.SetPlayCamera(scene.GameObjects.Single(g => g.Id == currentCam.Value));
                     }
                     else
                     {
-                        Scene.SetPlayCamera(null);
+                        scene.SetPlayCamera(null);
                     }
 
                     currentCam = doc.Root.Elements().FirstOrDefault(e => e.Name == "DesignCameraId");
                     if (currentCam != null && !string.IsNullOrEmpty(currentCam.Value))
                     {
-                        Scene.SetDesignCamera(Scene.GameObjects.Single(g => g.Id == currentCam.Value));
+                        scene.SetDesignCamera(scene.GameObjects.Single(g => g.Id == currentCam.Value));
                     }
                     else
                     {
-                        Scene.SetDesignCamera(null);
+                        scene.SetDesignCamera(null);
                     }
 
                     var currentLight = doc.Root.Elements().FirstOrDefault(e => e.Name == "LightId");
                     if (currentLight != null && !string.IsNullOrEmpty(currentLight.Value))
                     {
-                        Scene.SetCurrentLight(Scene.GameObjects.Single(g => g.Id == currentLight.Value));
+                        scene.SetCurrentLight(scene.GameObjects.Single(g => g.Id == currentLight.Value));
                     }
                     else
                     {
-                        Scene.SetCurrentLight(null);
+                        scene.SetCurrentLight(null);
                     }
 
                     var playerObject = doc.Root.Elements().FirstOrDefault(e => e.Name == "PlayerObjectId");
                     if (playerObject != null && !string.IsNullOrEmpty(playerObject.Value))
                     {
-                        Scene.SetPlayerObject(Scene.GameObjects.Single(g => g.Id == playerObject.Value));
+                        scene.SetPlayerObject(scene.GameObjects.Single(g => g.Id == playerObject.Value));
                     }
                     else
                     {
-                        Scene.SetPlayerObject(null);
+                        scene.SetPlayerObject(null);
                     }
 
                     var ambient = doc.Root.Elements().FirstOrDefault(e => e.Name == "AmbientColor");
-                    Scene.AmbientColor = (Vector4)XmlHelper.FromXml(ambient, typeof(Vector4));
+                    scene.AmbientColor = (Vector4)XmlHelper.FromXml(ambient, typeof(Vector4));
                 }
 
             }
@@ -267,8 +311,7 @@ namespace iGL.Engine
                 }
             });
 
-            Scene.Load();
-
+            scene.Load();
         }
     }
 }

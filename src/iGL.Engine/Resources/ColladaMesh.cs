@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using iGL.Engine.Import;
 using iGL.Engine.Math;
+using System.Diagnostics;
 
 namespace iGL.Engine.Resources
 {
@@ -150,6 +151,8 @@ namespace iGL.Engine.Resources
                                 Normals = normals;
                                 UVs = importedUVs;
                                 Indices = uvIndices;
+
+                                Debug.WriteLine("{0} Vertices count: {1}", this.Name, Vertices.Length.ToString());
 
                             }
                         }

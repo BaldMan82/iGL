@@ -23,7 +23,8 @@ namespace iGL.Engine
         {
             POINTLIGHT,
             DESIGN,
-            BACKGROUND
+            BACKGROUND,
+            UI
         }
 
         public ProgramType Type { get; private set; }

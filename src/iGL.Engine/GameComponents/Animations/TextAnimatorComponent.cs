@@ -12,8 +12,7 @@ namespace iGL.Engine
         public float CharacterInterval { get; set; }
         public float LineDelay { get; set; }
 
-        private TextComponent _textComponent;
-        private bool _isPlaying;
+        private TextComponent _textComponent;       
         private int _charIndex;
         private DateTime _tickTime;
 
@@ -26,13 +25,12 @@ namespace iGL.Engine
             base.Init();
 
             Text = "Booting kernel...";
-            CharacterInterval = 0.5f;          
+            CharacterInterval = 0.5f;
 
         }
 
         public override void Play()
-        {                     
-            _isPlaying = true;
+        {            
             _tickTime = DateTime.UtcNow;
             _charIndex = 0;
             _textComponent.Text = string.Empty;
@@ -42,9 +40,7 @@ namespace iGL.Engine
         }
 
         public override void Stop()
-        {
-            _isPlaying = false;
-
+        {           
             base.Stop();
         }
 
@@ -65,6 +61,8 @@ namespace iGL.Engine
 
         private void NextCharacter()
         {
+            if (AnimationState != State.Playing) return;
+
             var secondsPassed = (DateTime.UtcNow - _tickTime).TotalSeconds;
             if (secondsPassed > CharacterInterval)
             {
@@ -74,11 +72,11 @@ namespace iGL.Engine
 
                     if (c != '\n')
                     {
-						if (c != '\r')
-						{
-                        	_textComponent.Text += c;
-                        	_textComponent.Reload();
-						}
+                        if (c != '\r')
+                        {
+                            _textComponent.Text += c;
+                            _textComponent.Reload();
+                        }
                         _charIndex++;
 
                         _tickTime = DateTime.UtcNow;
@@ -97,16 +95,24 @@ namespace iGL.Engine
                 }
                 else
                 {
-                    Stop();
+                    if (PlayMode == AnimationComponent.Mode.Repeat)
+                    {
+                        Rewind();
+                    }
+                    else
+                    {
+                        Stop();
+                    }
+
                 }
             }
         }
 
         public override void Tick(float timeElapsed)
-        {
-            if (!_isPlaying) return;
-
+        {           
             NextCharacter();
+
+            base.Tick(timeElapsed);
         }
     }
 }

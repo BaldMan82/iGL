@@ -12,7 +12,8 @@
     <AssemblyName>iGL.TestGame</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile></TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UIScene.cs" />
     <Compile Include="GameObjects\Arrow2d.cs" />
     <Compile Include="GameObjects\Enemy.cs" />
     <Compile Include="GameObjects\LevelEndSensor.cs" />
@@ -112,6 +114,9 @@
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\level1.dae" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\level1.text" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\level1_1.igl" />
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +124,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\level2.dae" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\pause.text" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\pipe.dae" />
@@ -149,5 +157,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\stone.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="C:\iGL\src\iGL.TestGame\Resources\ui_level.igl" />
   </ItemGroup>
 </Project>

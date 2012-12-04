@@ -365,7 +365,7 @@ namespace iGL.Designer
 
             var physics = new DesignFarseerPhysics();
             //physics.OnCollision += new EventHandler<EventArgs>(physics_OnCollision);
-            WorkingScene = new Scene(physics);
+            WorkingScene = new Scene(physics, ShaderProgram.ProgramType.POINTLIGHT);
 
             WorkingScene.OnMouseMove += new EventHandler<Engine.Events.MouseMoveEvent>(_scene_OnMouseMove);
                      
@@ -659,7 +659,7 @@ namespace iGL.Designer
 
             if (IsPlaying) return;
 
-            var scene = new Scene(new PhysicsFarseer());          
+            var scene = new Scene(new PhysicsFarseer(), ShaderProgram.ProgramType.POINTLIGHT);          
 
             iGL.Engine.Game.InDesignMode = false;
 

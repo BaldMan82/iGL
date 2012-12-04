@@ -26,7 +26,7 @@ namespace iGL.Console
             var gl = new WinGL();
 
             game = new TestGame.TestGame(gl);
-            gameWnd = new GameWindow(960, 640, new GraphicsMode(16, 16), "", GameWindowFlags.Default, DisplayDevice.Default,
+            gameWnd = new GameWindow(1024, 768, new GraphicsMode(16, 16), "", GameWindowFlags.Default, DisplayDevice.Default,
                                   2, 0, GraphicsContextFlags.Default);
 
             tickWatch = new Stopwatch();

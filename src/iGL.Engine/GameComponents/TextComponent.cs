@@ -69,8 +69,8 @@ namespace iGL.Engine
             int lineCount = 0;
 
             var words = text.Split(' ');
-            int j = 0;
-
+            int j = text.Length - 1;
+           
             for (int w = 0; w < words.Length;w++)
             {
                 var word = words[w];
@@ -84,7 +84,8 @@ namespace iGL.Engine
                 }
 
                 for (int i = 0; i < word.Length; i++)
-                {
+                {                    
+
                     Character data;
                     int kerning;
 
@@ -93,8 +94,8 @@ namespace iGL.Engine
 
                     kerning = _font.BmpFont.GetKerning(lastChar, word[i]);
 
-                    float width = (data.Bounds.Right - data.Bounds.Left) / 100.0f;
-                    float height = (data.Bounds.Bottom - data.Bounds.Top) / 100.0f;
+                    float width = (data.Bounds.Width) / 100.0f;
+                    float height = (data.Bounds.Height) / 100.0f;
                     float offsetX = data.Offset.X / 100.0f;
                     float offsetY = data.Offset.Y / 100.0f;
 
@@ -102,13 +103,14 @@ namespace iGL.Engine
 
                     cursor += kerning + offsetX;
 
+                    var z = -j*0.001f ;
                     // front (+y)                                                
-                    vertices[0 + j * 6] = new Vector3(width + cursor, -height - offsetY - cursorY, 0);
-                    vertices[1 + j * 6] = new Vector3(0 + cursor, -offsetY - cursorY, 0);
-                    vertices[2 + j * 6] = new Vector3(0 + cursor, -height - offsetY - cursorY, 0);
-                    vertices[3 + j * 6] = new Vector3(width + cursor, -height - offsetY - cursorY, 0);
-                    vertices[4 + j * 6] = new Vector3(width + cursor, -offsetY - cursorY, 0);
-                    vertices[5 + j * 6] = new Vector3(0 + cursor, -offsetY - cursorY, 0);
+                    vertices[0 + j * 6] = new Vector3(width + cursor, -height - offsetY - cursorY, z);
+                    vertices[1 + j * 6] = new Vector3(0 + cursor, -offsetY - cursorY, z);
+                    vertices[2 + j * 6] = new Vector3(0 + cursor, -height - offsetY - cursorY, z);
+                    vertices[3 + j * 6] = new Vector3(width + cursor, -height - offsetY - cursorY, z);
+                    vertices[4 + j * 6] = new Vector3(width + cursor, -offsetY - cursorY, z);
+                    vertices[5 + j * 6] = new Vector3(0 + cursor, -offsetY - cursorY, z);
 
                     indices[0 + j * 6] = (short)(0 + j * 6);
 					indices[1 + j * 6] = (short)(1 + j * 6);
@@ -129,8 +131,9 @@ namespace iGL.Engine
                     uv[4 + j * 6] = new Vector2(uvRight, uvBottom);
                     uv[5 + j * 6] = new Vector2(uvLeft, uvBottom);
 
-                    cursor += (float)data.XAdvance / 100.0f;
-                    j++;
+                    cursor += ((float)data.XAdvance) / 75.0f;                   
+
+                    j--;
                 }
             }
 
@@ -157,7 +160,7 @@ namespace iGL.Engine
             for (int i = 0; i < vertices.Length; i++)
             {
                 var vertex = vertices[i];
-                vertices[i] = new Vector3(vertex.X - halfWidth, vertex.Y + halfHeight, 0);
+                vertices[i] = new Vector3(vertex.X - halfWidth, vertex.Y + halfHeight, vertices[i].Z);
             }
 
             meshComponent.Vertices = vertices;

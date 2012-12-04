@@ -179,22 +179,27 @@ namespace iGL.Engine
                 }
                 else
                 {
-                    shader = GameObject.Scene.PointLightShader;
+                    shader = GameObject.Scene.Shader;
                 }
 
                 shader.Use();
                 shader.SetModelViewProjectionMatrix(ref modelView);
 
-                var locationInverse = transform;
+                if (shader is PointLightShader)
+                {
+                    var locationInverse = transform;
 
-                locationInverse.Invert();
-                locationInverse.Transpose();
+                    locationInverse.Invert();
+                    locationInverse.Transpose();
 
-                shader.SetTransposeAdjointModelViewMatrix(ref locationInverse);
-                shader.SetModelViewMatrix(ref transform);
+                    shader.SetTransposeAdjointModelViewMatrix(ref locationInverse);
+                    shader.SetModelViewMatrix(ref transform);
+                  
+                    shader.SetEyePos(ref _eyePos);
+                }
+
                 var material = _meshComponent.Material;
                 shader.SetMaterial(ref material);
-                shader.SetEyePos(ref _eyePos);
 
                 var textureScale = new Vector2(_meshComponent.Material.TextureTilingX, _meshComponent.Material.TextureTilingY);
                 shader.SetTextureScale(ref textureScale);

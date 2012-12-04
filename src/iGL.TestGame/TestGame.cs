@@ -30,6 +30,19 @@ namespace iGL.TestGame
             base.Load();
 
             LoadLevel();     
+
+            /* load ui scene */
+
+            var uiScene = new UIScene();
+            SetUIScene(uiScene);
+
+            using (var textStreamReader = new StreamReader(this.GetType().Assembly.GetManifestResourceStream("iGL.TestGame.Resources.ui_level.igl")))
+            {
+                var sceneData = textStreamReader.ReadToEnd();
+                _currentSceneXML = sceneData;
+
+                PopulateUIScene(sceneData);            
+            }                    
         }
 
         public void NextLevel()

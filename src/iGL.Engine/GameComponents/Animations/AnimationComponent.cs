@@ -19,7 +19,7 @@ namespace iGL.Engine
 
         public enum Mode
         {
-            Play,
+            Play,         
             Repeat,
             RepeatInverted
         }

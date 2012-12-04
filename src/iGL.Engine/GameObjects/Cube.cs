@@ -36,10 +36,7 @@ namespace iGL.Engine
         }
 
         private MeshComponent _meshComponent;
-        private MeshRenderComponent _meshRenderComponent;
-
-        private static MeshComponent _staticMeshComponent;
-        private static MeshRenderComponent _staticMeshRenderComponent;
+        private MeshRenderComponent _meshRenderComponent;       
 
         private const string MeshComponentId = "b2dae056-2ff7-443f-aed1-0afd3db7b0be";
         private const string MeshRenderComponentId = "56af2307-be79-453a-a8ab-54bad0d21525";

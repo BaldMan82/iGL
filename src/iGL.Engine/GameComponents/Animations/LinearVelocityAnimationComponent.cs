@@ -79,6 +79,9 @@ namespace iGL.Engine
 
                         Rewind();
                     }
+                    else if (PlayMode == Mode.Repeat) {
+                        Rewind();
+                    }
                     else
                     {
                         Stop();
