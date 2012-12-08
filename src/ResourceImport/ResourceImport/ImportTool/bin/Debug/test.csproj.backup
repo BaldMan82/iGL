@@ -68,7 +68,10 @@
     <EmbeddedResource Include="Resources\arrow.text" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\arrow2.text" />
+    <EmbeddedResource Include="Resources\bg.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\blue.text" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\bmpfont.fnt" />
@@ -77,39 +80,72 @@
     <EmbeddedResource Include="Resources\bmpfont_0.text" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\cheese.dae" />
+    <EmbeddedResource Include="Resources\box.text" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\cheese.text" />
+    <EmbeddedResource Include="Resources\cube.dae" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\cheesenormal.text" />
+    <EmbeddedResource Include="Resources\enemy.text" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\crate.raw" />
+    <EmbeddedResource Include="Resources\eye.text" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\goo.dae" />
+    <EmbeddedResource Include="Resources\greenball.text" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\goo.text" />
+    <EmbeddedResource Include="Resources\level1.dae" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\gooNormal.text" />
+    <EmbeddedResource Include="Resources\level1.text" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\rock.dae" />
+    <EmbeddedResource Include="Resources\level1_1.igl" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\rock.text" />
+    <EmbeddedResource Include="Resources\level1_2.igl" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\rock.text" />
+    <EmbeddedResource Include="Resources\level2.dae" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\scene.igl" />
+    <EmbeddedResource Include="Resources\level2.text" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\tube.dae" />
+    <EmbeddedResource Include="Resources\pause.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\pipe.dae" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\pipe.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\plank.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\redball.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\sign.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\spike.dae" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\star.dae" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\star.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\starflare.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\stone.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ui_level.igl" />
   </ItemGroup>
 </Project>

@@ -202,7 +202,7 @@
           <w>0</w>
         </Specular>
       </Light>
-      <Visible>true</Visible>
+      <Visible>false</Visible>
       <Enabled>true</Enabled>
       <Designer>false</Designer>
       <Name>LightObject0</Name>
@@ -212,9 +212,9 @@
       <RenderQueuePriority>0</RenderQueuePriority>
       <Id>e4fc4a22-8c88-4529-a8e6-c56188f822e9</Id>
       <Position>
-        <x>2.51404929</x>
-        <y>1.24321127</y>
-        <z>-0.671563148</z>
+        <x>2.514049</x>
+        <y>1.243211</y>
+        <z>-0.6715631</z>
       </Position>
       <Scale>
         <x>1</x>
@@ -230,7 +230,7 @@
         <GameObject Type="iGL.Engine.Sphere, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <Rings>16</Rings>
           <Segments>16</Segments>
-          <Visible>true</Visible>
+          <Visible>false</Visible>
           <Enabled>true</Enabled>
           <Designer>false</Designer>
           <Name></Name>
@@ -322,92 +322,6 @@
         </GameComponent>
       </Components>
     </GameObject>
-    <GameObject Type="iGL.Engine.TextObject, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <Visible>true</Visible>
-      <Enabled>true</Enabled>
-      <Designer>false</Designer>
-      <Name>TextObject0</Name>
-      <ClearsZBuffer>false</ClearsZBuffer>
-      <DistanceSorting>true</DistanceSorting>
-      <AutoLoad>true</AutoLoad>
-      <RenderQueuePriority>0</RenderQueuePriority>
-      <Id>8c8a8f37-84be-48af-b41c-b16fb91749a4</Id>
-      <Position>
-        <x>-0.0156253576</x>
-        <y>4.25</y>
-        <z>-1</z>
-      </Position>
-      <Scale>
-        <x>2</x>
-        <y>2</y>
-        <z>1</z>
-      </Scale>
-      <Rotation>
-        <x>0</x>
-        <y>0</y>
-        <z>0</z>
-      </Rotation>
-      <Children />
-      <Components>
-        <GameComponent Type="iGL.Engine.TextComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <FontName>bmpfont</FontName>
-          <Text>UI Demo</Text>
-          <LineLength>50</LineLength>
-          <Id>32dae056-2ff7-643f-aed1-0afd3db7b0bf</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-            <Id></Id>
-            <Ambient>
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-              <w>1</w>
-            </Ambient>
-            <Diffuse>
-              <x>0.4</x>
-              <y>0.4</y>
-              <z>0.4</z>
-              <w>1</w>
-            </Diffuse>
-            <Specular>
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-              <w>0</w>
-            </Specular>
-            <Shininess>0</Shininess>
-            <TextureName>bmpfont_0.text</TextureName>
-            <NormalTextureName></NormalTextureName>
-            <TextureRepeatX>false</TextureRepeatX>
-            <TextureRepeatY>false</TextureRepeatY>
-            <TextureTilingX>1</TextureTilingX>
-            <TextureTilingY>1</TextureTilingY>
-            <ShaderProgram>POINTLIGHT</ShaderProgram>
-          </Material>
-          <MeshResourceName></MeshResourceName>
-          <Id>f2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>16af2307-be79-453a-a8ab-54bad0d31525</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.TextAnimatorComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <Text>RedGreen Adventure
-
-UI Staging Demo
-
-All hail the BaldMan !!</Text>
-          <CharacterInterval>0.02</CharacterInterval>
-          <LineDelay>1</LineDelay>
-          <PlayMode>Repeat</PlayMode>
-          <AutoStart>true</AutoStart>
-          <DurationSeconds>0</DurationSeconds>
-          <IntervalSeconds>1</IntervalSeconds>
-          <Id>7602dc9e-a14f-4d43-8070-84dc1a4a02f9</Id>
-        </GameComponent>
-      </Components>
-    </GameObject>
     <GameObject Type="iGL.Engine.Plane, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <Visible>false</Visible>
       <Enabled>true</Enabled>
@@ -488,6 +402,184 @@ All hail the BaldMan !!</Text>
           <BeginMode>Triangles</BeginMode>
           <Id>e8119733-c2e9-42ce-9d54-706a678696b3</Id>
         </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>71204a09-626a-4a27-aa52-b27b15b8a644</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>b8c30c4e-ea4b-4d9c-ac76-e40a1fe67bcb</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>d5eb7209-69dd-4caf-9d7a-e1b7fcc27695</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>3d2dd9f2-32e3-40ff-bbfd-03473551018b</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>1d360075-5b03-4794-a8a7-5b3e1538119b</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>1f873607-6b2f-442e-8244-1c28e2a30098</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>fa1277e2-3ae9-44a3-b5ab-0271b39ec561</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>4c3dacb8-c96e-4498-a482-ac592f3d7dfb</Id>
+        </GameComponent>
+      </Components>
+    </GameObject>
+    <GameObject Type="iGL.Engine.TextObject, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <Visible>true</Visible>
+      <Enabled>true</Enabled>
+      <Designer>false</Designer>
+      <Name>StarCount</Name>
+      <ClearsZBuffer>false</ClearsZBuffer>
+      <DistanceSorting>true</DistanceSorting>
+      <AutoLoad>true</AutoLoad>
+      <RenderQueuePriority>0</RenderQueuePriority>
+      <Id>68e2f4b7-d76a-45f2-a134-0188bf4bd19b</Id>
+      <Position>
+        <x>5.09374857</x>
+        <y>4.25</y>
+        <z>-1</z>
+      </Position>
+      <Scale>
+        <x>2</x>
+        <y>2</y>
+        <z>1</z>
+      </Scale>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+      <Children />
+      <Components>
+        <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+            <Id></Id>
+            <Ambient>
+              <x>1</x>
+              <y>1</y>
+              <z>0</z>
+              <w>1</w>
+            </Ambient>
+            <Diffuse>
+              <x>0.4</x>
+              <y>0.4</y>
+              <z>0.4</z>
+              <w>1</w>
+            </Diffuse>
+            <Specular>
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+              <w>0</w>
+            </Specular>
+            <Shininess>0</Shininess>
+            <TextureName>bmpfont_0.text</TextureName>
+            <NormalTextureName></NormalTextureName>
+            <TextureRepeatX>false</TextureRepeatX>
+            <TextureRepeatY>false</TextureRepeatY>
+            <TextureTilingX>1</TextureTilingX>
+            <TextureTilingY>1</TextureTilingY>
+            <ShaderProgram>POINTLIGHT</ShaderProgram>
+          </Material>
+          <MeshResourceName></MeshResourceName>
+          <Id>f2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>16af2307-be79-453a-a8ab-54bad0d31525</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.TextComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <FontName>bmpfont</FontName>
+          <Text>0/5</Text>
+          <LineLength>50</LineLength>
+          <Id>32dae056-2ff7-643f-aed1-0afd3db7b0bf</Id>
+        </GameComponent>
+      </Components>
+    </GameObject>
+    <GameObject Type="iGL.Engine.Plane, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <Visible>true</Visible>
+      <Enabled>true</Enabled>
+      <Designer>false</Designer>
+      <Name>Plane2</Name>
+      <ClearsZBuffer>false</ClearsZBuffer>
+      <DistanceSorting>false</DistanceSorting>
+      <AutoLoad>true</AutoLoad>
+      <RenderQueuePriority>0</RenderQueuePriority>
+      <Id>31f95f8f-c94c-4e62-ab1a-1850004ab11b</Id>
+      <Position>
+        <x>6.64062452</x>
+        <y>4.34375</y>
+        <z>-1</z>
+      </Position>
+      <Scale>
+        <x>1</x>
+        <y>1</y>
+        <z>1</z>
+      </Scale>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+      <Children />
+      <Components>
+        <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+            <Id></Id>
+            <Ambient>
+              <x>1</x>
+              <y>1</y>
+              <z>1</z>
+              <w>1</w>
+            </Ambient>
+            <Diffuse>
+              <x>0.4</x>
+              <y>0.4</y>
+              <z>0.4</z>
+              <w>1</w>
+            </Diffuse>
+            <Specular>
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+              <w>0</w>
+            </Specular>
+            <Shininess>0</Shininess>
+            <TextureName>star</TextureName>
+            <NormalTextureName></NormalTextureName>
+            <TextureRepeatX>false</TextureRepeatX>
+            <TextureRepeatY>false</TextureRepeatY>
+            <TextureTilingX>1</TextureTilingX>
+            <TextureTilingY>1</TextureTilingY>
+            <ShaderProgram>POINTLIGHT</ShaderProgram>
+          </Material>
+          <MeshResourceName></MeshResourceName>
+          <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>2cd0337f-5944-4159-9cbd-c3b394f443a5</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>9a7b918a-1dc0-4a8e-8b7e-ab1b4c8d8e89</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>8d144022-6d41-4177-9dd0-5bf4017618b7</Id>
+        </GameComponent>
       </Components>
     </GameObject>
   </Objects>
@@ -503,6 +595,10 @@ All hail the BaldMan !!</Text>
     <Resource Type="iGL.Engine.Resources.Font, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <ResourceName>iGL.TestGame.Resources.bmpfont.fnt</ResourceName>
       <Name>bmpfont</Name>
+    </Resource>
+    <Resource Type="iGL.Engine.Resources.Texture, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <ResourceName>iGL.TestGame.Resources.star.text</ResourceName>
+      <Name>star</Name>
     </Resource>
   </Resources>
   <Triggers />

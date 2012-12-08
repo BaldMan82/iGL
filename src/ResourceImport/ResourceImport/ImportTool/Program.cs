@@ -26,6 +26,7 @@ namespace ImportTool
                 string projectFile = args[0];
                 string sourceFolder = args[1];
                 string destinationFolder = args[2];
+                string destinationFolderRelative = args[3];
 
                 var files = Directory.GetFiles(sourceFolder);
 
@@ -42,6 +43,7 @@ namespace ImportTool
                     string fileName = file.Split('\\').Last();
                     string sourceFile = string.Format("{0}\\{1}", sourceFolder, fileName);
                     string destFile = string.Format("{0}\\{1}", destinationFolder, fileName);
+                    string destRelativeFile = string.Format("{0}\\{1}", destinationFolderRelative, fileName);
 
                     File.Delete(destFile);
 
@@ -49,6 +51,7 @@ namespace ImportTool
                     if (ext.ToLower() == "bmp" || ext.ToLower() == "png" || ext.ToLower() == "jpg" || ext.ToLower() == "jpeg")
                     {
                         destFile = destFile.Replace(ext, "text");
+                        destRelativeFile = destRelativeFile.Replace(ext, "text");
                         ConvertTexture(sourceFile, destFile);
                     }
                     else
@@ -68,7 +71,7 @@ namespace ImportTool
                     newGroups.Add(group);
 
                     var child = new XElement(XName.Get("EmbeddedResource", "http://schemas.microsoft.com/developer/msbuild/2003"));
-                    child.SetAttributeValue(XName.Get("Include"), destFile);
+                    child.SetAttributeValue(XName.Get("Include"), destRelativeFile);
 
                     group.Add(child);
                 }

@@ -168,7 +168,7 @@ namespace iGL.Engine
         }
 
         void Physics_CollisionEvent(object sender, CollisionEvent e)
-        {
+        {            
             _objectCollisionEvent.Object = e.ObjectB;
             e.ObjectA.OnObjectCollisionEvent(this, _objectCollisionEvent);
 

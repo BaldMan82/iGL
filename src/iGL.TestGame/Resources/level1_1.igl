@@ -22,9 +22,9 @@
       <RenderQueuePriority>0</RenderQueuePriority>
       <Id>5c6f1b2a-f4d1-48ae-a3b8-3fca3b13cdc2</Id>
       <Position>
-        <x>-0.4224748</x>
-        <y>7.06551361</y>
-        <z>27.1123848</z>
+        <x>0.146117419</x>
+        <y>4.37482262</y>
+        <z>12.9774237</z>
       </Position>
       <Scale>
         <x>1</x>
@@ -44,9 +44,9 @@
           <ZNear>1</ZNear>
           <ZFar>1000</ZFar>
           <Target>
-            <x>0.0142889619</x>
-            <y>4.998664</y>
-            <z>16.2546234</z>
+            <x>0.5828812</x>
+            <y>2.30797434</y>
+            <z>2.11967087</z>
           </Target>
           <Up>
             <x>0</x>
@@ -166,7 +166,7 @@
           <w>0</w>
         </Specular>
       </Light>
-      <Visible>true</Visible>
+      <Visible>false</Visible>
       <Enabled>true</Enabled>
       <Designer>false</Designer>
       <Name>LightObject0</Name>
@@ -525,6 +525,14 @@
               <BeginMode>Triangles</BeginMode>
               <Id>3ce1ea0c-22b2-4209-94c6-36e9008ac8bd</Id>
             </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>1ffd3eca-e782-48e8-b30f-d0104a02ac9b</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>36e52367-cdf7-4c59-8264-edf94cbb410b</Id>
+            </GameComponent>
           </Components>
         </GameObject>
         <GameObject Type="iGL.TestGame.GameObjects.Arrow2d, iGL.TestGame, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -599,6 +607,14 @@
               <BeginMode>Triangles</BeginMode>
               <Id>0f39b034-ba8e-4307-b9d4-e91bb48d4d7e</Id>
             </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>8d64488c-458c-46b4-b63d-b4a9bd39e0a1</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>918b231a-6814-4490-ba6a-5a1c37a030fe</Id>
+            </GameComponent>
           </Components>
         </GameObject>
         <GameObject Type="iGL.Engine.Plane, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -672,6 +688,14 @@
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>20077ab3-0d07-4ed3-8e3d-5caa96996806</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>2d3af0e3-81fa-4f66-8d49-8db3e2fe5c76</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>396e3fce-46bd-401e-a5bb-d42ba31965e9</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -1849,7 +1873,7 @@
       <Id>c12d586d-600a-4ce0-82bb-a4754d0ba7ad</Id>
       <Position>
         <x>6</x>
-        <y>0</y>
+        <y>0.05472044</y>
         <z>-0.5</z>
       </Position>
       <Scale>
@@ -1909,6 +1933,14 @@
           <BeginMode>Triangles</BeginMode>
           <Id>1b186ab7-44f9-49cf-8288-36ce997d4cb6</Id>
         </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>0a554ab7-2f00-4401-8788-0feb2f3d02d8</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>0e777e7c-e244-4caf-8c4c-cd9bf4292a9c</Id>
+        </GameComponent>
       </Components>
     </GameObject>
     <GameObject Type="iGL.Engine.TextObject, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -1922,19 +1954,19 @@
       <RenderQueuePriority>0</RenderQueuePriority>
       <Id>6fd43669-0317-4b91-b70c-8908c4c95c23</Id>
       <Position>
-        <x>5.842744</x>
-        <y>0.5529611</y>
-        <z>-0.35</z>
+        <x>6.060914</x>
+        <y>0.588225663</y>
+        <z>-0.49</z>
       </Position>
       <Scale>
-        <x>2</x>
+        <x>2.5</x>
         <y>2</y>
         <z>1</z>
       </Scale>
       <Rotation>
         <x>0</x>
         <y>0</y>
-        <z>0.244039565</z>
+        <z>0.2440396</z>
       </Rotation>
       <Children />
       <Components>
@@ -2168,8 +2200,8 @@
       <RenderQueuePriority>2147483647</RenderQueuePriority>
       <Id>3b8dd58a-de70-4e60-b467-7ec873f74454</Id>
       <Position>
-        <x>0</x>
-        <y>0</y>
+        <x>0.146117419</x>
+        <y>4.37482262</y>
         <z>-5</z>
       </Position>
       <Scale>

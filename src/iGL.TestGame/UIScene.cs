@@ -13,6 +13,8 @@ namespace iGL.TestGame
 {
     public class UIScene : Scene
     {
+        private TestGame _game;
+        private TextComponent _starTextComponent;
 
         public UIScene()
             : base(new PhysicsFarseer(), ShaderProgram.ProgramType.UI)
@@ -23,7 +25,12 @@ namespace iGL.TestGame
 
         void UIScene_OnTick(object sender, Engine.Events.TickEvent e)
         {
-            
+            string starText = string.Format("{0} / {1}", _game.StarsCollected, _game.TotalStarCount);
+            if (_starTextComponent.Text != starText)
+            {
+                _starTextComponent.Text = starText;
+                _starTextComponent.Reload();
+            }
         }
 
         public override void Load()
@@ -43,6 +50,10 @@ namespace iGL.TestGame
             pauseButton.OnMouseDown += new EventHandler<Engine.Events.MouseButtonDownEvent>(pauseButton_OnMouseDown);
             pauseButton.OnMouseUp += new EventHandler<Engine.Events.MouseButtonUpEvent>(pauseButton_OnMouseUp);
             pauseButton.OnMouseOut += new EventHandler<Engine.Events.MouseOutEvent>(pauseButton_OnMouseOut);
+
+            _starTextComponent = GameObjects.First(g => g.Name == "StarCount").Components.First(c => c is TextComponent) as TextComponent;
+
+            _game = this.Game as TestGame;
         }
 
         void pauseButton_OnMouseUp(object sender, Engine.Events.MouseButtonUpEvent e)

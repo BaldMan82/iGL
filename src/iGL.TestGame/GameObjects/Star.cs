@@ -95,6 +95,8 @@ namespace iGL.TestGame.GameObjects
 
             _grabbed = true;
 
+            if (Scene.Game is TestGame) ((TestGame)Scene.Game).StarsCollected++;
+
             _alphaAnimationComponent.Play();
             _rotationAnimationComponent.Play();
 

@@ -14,15 +14,17 @@ namespace iGL.TestGame
 {
     public class TestGame : Game
     {
-        private int _level;
-        private int _starCount;
+        public int TotalStarCount { get; set; }
+        public int StarsCollected { get; set; }
+
+        private int _level;        
         private bool _endingGame;
         private SlingshotBallFarseer2D _slingShotBall;
         private string _currentSceneXML;
 
         public TestGame(IGL gl) : base(gl) 
         {
-            _level = 1;
+            _level = 3;
         }       
 
         public override void Load()
@@ -38,9 +40,7 @@ namespace iGL.TestGame
 
             using (var textStreamReader = new StreamReader(this.GetType().Assembly.GetManifestResourceStream("iGL.TestGame.Resources.ui_level.igl")))
             {
-                var sceneData = textStreamReader.ReadToEnd();
-                _currentSceneXML = sceneData;
-
+                var sceneData = textStreamReader.ReadToEnd();               
                 PopulateUIScene(sceneData);            
             }                    
         }
@@ -49,7 +49,7 @@ namespace iGL.TestGame
         {
             _level++;
 
-            if (_level > 2) _level = 1;
+            if (_level > 3) _level = 1;
 
             LoadLevel();
         }
@@ -64,8 +64,7 @@ namespace iGL.TestGame
 
             if (Scene != null)
             {
-                Scene.OnDisposeObject -= TestScene_OnDisposeObject;
-				resources = Scene.Resources.ToList();
+              	resources = Scene.Resources.ToList();
 				bufferCache = Scene.MeshBufferCache;
 
                 Scene.Dispose(false);
@@ -76,8 +75,7 @@ namespace iGL.TestGame
             
             var scene = new TestScene();
             scene.OnTick += scene_OnTick;
-            scene.OnDisposeObject += TestScene_OnDisposeObject;
-          
+        
             SetScene(scene);
 
             using (var textStreamReader = new StreamReader(this.GetType().Assembly.GetManifestResourceStream(string.Format("iGL.TestGame.Resources.level1_{0}.igl", _level))))
@@ -87,9 +85,11 @@ namespace iGL.TestGame
 
                 PopulateScene(sceneData, resources, bufferCache);
 
-                _starCount = Scene.GameObjects.Where(g => g is Star).Count();
+                TotalStarCount = Scene.GameObjects.Where(g => g is Star).Count();
+                StarsCollected = 0;
+            
             }
-
+         
             _slingShotBall = scene.GameObjects.First(g => g is SlingshotBallFarseer2D) as SlingshotBallFarseer2D;
 
             //while (true)
@@ -106,15 +106,15 @@ namespace iGL.TestGame
 
             w.Stop();
             Debug.WriteLine("Loadlevel:" + w.Elapsed.TotalMilliseconds);
-        }
+        }      
 
         public void ReloadScene()
         {
             _endingGame = false;
 
             ReloadScene(_currentSceneXML);
-            _starCount = Scene.GameObjects.Where(g => g is Star).Count();
-          
+            TotalStarCount = Scene.GameObjects.Where(g => g is Star).Count();
+            StarsCollected = 0;
         }
 
         public void EndGame()
@@ -127,25 +127,9 @@ namespace iGL.TestGame
             if (Game.InDesignMode) return;
 
             if (_endingGame)
-            {               
-                //if (_slingShotBall._rigidBodyComponent.Sleeping)
-                {
-                    NextLevel();                                       
-                }
+            {                                            
+                NextLevel();                                                      
             }
-        }
-
-        void TestScene_OnDisposeObject(object sender, Engine.Events.DisposeObjectEvent e)
-        {
-            //if (e.GameObject is Star)
-            //{
-            //    _starCount--;
-
-            //    if (_starCount == 0)
-            //    {
-            //        _endingGame = true;                   
-            //    }
-            //}
         }
     }  
 }

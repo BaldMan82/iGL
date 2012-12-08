@@ -5,6 +5,7 @@ using System.Text;
 using iGL.Engine;
 using System.Xml.Linq;
 using iGL.Engine.Math;
+using System.Diagnostics;
 
 namespace iGL.TestGame.GameObjects
 {
@@ -57,6 +58,12 @@ namespace iGL.TestGame.GameObjects
 
             this.OnObjectCollision +=  Enemy_OnObjectCollision;
 
+        }
+
+        public override void Load()
+        {
+            SetEyeLookatTarget(this.WorldPosition);
+            base.Load();
         }
 
         void Enemy_OnObjectCollision(object sender, Engine.Events.ObjectCollisionEvent e)        
@@ -113,16 +120,16 @@ namespace iGL.TestGame.GameObjects
 
                     TextObject obj = new TextObject();
                     Scene.AddGameObject(obj);
-                    obj.Position = this.WorldPosition + new Vector3(-0.25f, 2, 0);
+                    obj.Position = this.WorldPosition + new Vector3(0.25f, 2, 0);
                     obj.SetText("!");
                     obj.Material.Ambient = new Vector4(1);
                     obj.Material.Diffuse = new Vector4(1);
 
                     obj.Scale = new Vector3(5);
-
+                    
                     SetEyeLookatTarget(player.WorldPosition);                
 
-                    Scene.AddTimer(new Timer() { Action = () => { Scene.DisposeGameObject(obj); _rigidBody.Sleeping = false; }, Interval = TimeSpan.FromSeconds(0.5), Mode = Timer.TimerMode.Once });
+                    Scene.AddTimer(new Timer() { Action = () => { Scene.DisposeGameObject(obj); _rigidBody.Sleeping = false; }, Interval = TimeSpan.FromSeconds(1.0), Mode = Timer.TimerMode.Once });
                     
                 }
                 else if (playerDistance >= 10 && !_rigidBody.Sleeping)
@@ -136,13 +143,13 @@ namespace iGL.TestGame.GameObjects
 
                     TextObject obj = new TextObject();
                     Scene.AddGameObject(obj);
-                    obj.Position = this.WorldPosition + new Vector3(0, 2, 0);
+                    obj.Position = this.WorldPosition + new Vector3(0.25f, 2, 0);
                     obj.Material.Ambient = new Vector4(1);
                     obj.Material.Diffuse = new Vector4(1);
                     obj.Scale = new Vector3(5);
                     obj.SetText("?");
 
-                    Scene.AddTimer(new Timer() { Action = () => { Scene.DisposeGameObject(obj); }, Interval = TimeSpan.FromSeconds(0.5), Mode = Timer.TimerMode.Once });
+                    Scene.AddTimer(new Timer() { Action = () => { Scene.DisposeGameObject(obj); }, Interval = TimeSpan.FromSeconds(1.0), Mode = Timer.TimerMode.Once });
                 }
 
                 if (!_rigidBody.Sleeping)
@@ -190,12 +197,14 @@ namespace iGL.TestGame.GameObjects
 
         }
 
-
         public override void Render(bool overrideParentTransform = false)
-        {            
-            base.Render(overrideParentTransform);
-        }
+        {
+            Scene.Shader.SetBlackBorder(true);
 
+            base.Render(overrideParentTransform);
+
+            Scene.Shader.SetBlackBorder(false);
+        }
       
     }
 }
