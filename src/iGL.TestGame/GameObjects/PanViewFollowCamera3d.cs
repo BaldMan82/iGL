@@ -64,8 +64,8 @@ namespace iGL.TestGame.GameObjects
 
             //}
 
-            LimitX = 100;
-            LimitY = 100;
+            LimitX = 120;
+            LimitY = 120;
         }
 
         public override void Load()
@@ -89,7 +89,10 @@ namespace iGL.TestGame.GameObjects
 
             if (FollowingEnabled)
             {
-                var target = Vector3.Lerp(CameraComponent.Target, _target.WorldPosition + new Vector3(0, 1, 0), timeElapsed * LerpFactor);
+                var lerp = timeElapsed * LerpFactor;
+                if (lerp > 1) lerp = 1;
+                
+                var target = Vector3.Lerp(CameraComponent.Target, _target.WorldPosition + new Vector3(0, 1, 0), lerp);
              
                 var position = target + new Vector3(0, 0, _distance);
 

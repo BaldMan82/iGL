@@ -58,12 +58,12 @@ namespace iGL.TestGame.GameObjects
             ScaleDuration = 0.2f;
             ColorDuration = 0.2f;
 
-            DistanceSorting = true;
-
         }
 
-        public override void Load()
+        public override void OverrideLoadedProperties()
         {
+            base.OverrideLoadedProperties();
+
             _scaleAnimationComponent = Components.First(c => c.Id == ScaleAnimationComponentId) as PropertyAnimationComponent;
             _scaleAnimationComponent.Property = "Scale";
             _scaleAnimationComponent.StartValue = StartScale.ToString().Replace("(", string.Empty).Replace(")", string.Empty);
@@ -76,8 +76,7 @@ namespace iGL.TestGame.GameObjects
             _alphaAnimationComponent.StopValue = StopFlareColor.ToString().Replace("(", string.Empty).Replace(")", string.Empty);
             _alphaAnimationComponent.DurationSeconds = ColorDuration;
 
-            base.Load();
-		
+            DistanceSorting = true;
         }
 
         public void PlayAnimation()
@@ -85,5 +84,12 @@ namespace iGL.TestGame.GameObjects
             _scaleAnimationComponent.Play();
             _alphaAnimationComponent.Play();
         }
+
+
+        public override void Render(bool overrideParentTransform = false)
+        {
+            base.Render(true);
+        }
+      
     }
 }

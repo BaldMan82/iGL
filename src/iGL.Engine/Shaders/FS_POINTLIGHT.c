@@ -29,7 +29,9 @@ void main()
 	else {
 		lowp vec4 finalColor = v_ambientColor*textureColor + v_diffuseColor*textureColor;
 		finalColor.a = u_material.ambient.a;
-	
+		
+		if (finalColor.a == 0) discard;
+
 		gl_FragColor = finalColor;
 	}
 	

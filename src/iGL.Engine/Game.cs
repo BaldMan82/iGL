@@ -76,13 +76,14 @@ namespace iGL.Engine
             if (UIScene != null) UIScene.Render();           
         }
 
-        public void Tick(float timeElapsed, bool tickPhysics = true)
+        public void TickPhysics(float timeElapsed)
         {
-            lock (typeof(Game))
-            {
-                if (!_isPaused) Scene.Tick(timeElapsed, tickPhysics);
-                if (UIScene != null) UIScene.Tick(timeElapsed, tickPhysics);
-            }
+            if (!_isPaused) Scene.TickPhysics(timeElapsed);
+        }
+        public void Tick(float timeElapsed)
+        {
+            if (!_isPaused) Scene.Tick(timeElapsed);
+            if (UIScene != null) UIScene.Tick(timeElapsed);    
         }
 
         public void Pause()
@@ -110,6 +111,7 @@ namespace iGL.Engine
         public void LoadScene()
         {
             Scene.Load();
+            //TickPhysics(0);
         }
 
         public void LoadUIScene()
@@ -186,7 +188,10 @@ namespace iGL.Engine
             Scene.FinishTimers();
 
             Scene.FireLoadEvent();
-            Scene.Tick(0);
+
+            /* tick once before a rendering takes place */
+
+            Tick(0);
 
             w.Stop();
             Debug.WriteLine("Reload object:" + w.Elapsed.TotalMilliseconds);
@@ -312,6 +317,7 @@ namespace iGL.Engine
             });
 
             scene.Load();
+           
         }
     }
 }

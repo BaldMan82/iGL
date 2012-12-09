@@ -44,7 +44,7 @@ namespace iGL.Engine
                 return children;
             }
         }
-        public CreationModeEnum CreationMode { get; internal set; }
+        public CreationModeEnum CreationMode { get; set; }
 
         public bool Visible
         {
@@ -390,7 +390,9 @@ namespace iGL.Engine
             foreach (var kv in _defaultValues) kv.Key.Invoke(this, new object[] { kv.Value });
 
             _children.ForEach(c => c.ResetToInitValues());
-            _components.ForEach(c => c.ResetToInitValues());         
+            _components.ForEach(c => c.ResetToInitValues());
+
+            OverrideLoadedProperties();
         }
 
         private void CreateDependentComponents()
@@ -568,6 +570,12 @@ namespace iGL.Engine
 
             IsLoaded = true;
 
+            OverrideLoadedProperties();
+        }
+
+        public virtual void OverrideLoadedProperties()
+        {
+            _rigidPositionDirty = true;
         }
 
         public virtual void Render(bool overrideParentTransform = false)
@@ -631,10 +639,13 @@ namespace iGL.Engine
             for (int i = 0; i < _componentArray.Length; i++)
             {
                 if (_components[i].IsLoaded) _components[i].Tick(timeElapsed);
-            }            
+            }
 
-            _rigidPositionDirty = _rigidBodyComponent != null && !_rigidBodyComponent.Sleeping;           
+            /* mark the position of the object as dirty if it is a rigidbody */
+            _rigidPositionDirty = _rigidBodyComponent != null &&
+                !(_rigidBodyComponent is RigidBodyFarseerComponent && ((RigidBodyFarseerComponent)_rigidBodyComponent).IsSensor && ((RigidBodyFarseerComponent)_rigidBodyComponent).IsStatic);
 
+            
             if (_children.Count > 0 && _rigidBodyComponent != null)
             {
 				var wasDirty = _rigidPositionDirty;

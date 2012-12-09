@@ -14,14 +14,14 @@ namespace iGL.Engine
         public PointLightShader()
             : base(ProgramType.POINTLIGHT, new Shader(Shader.ShaderType.VS_POINTLIGHT), new Shader(Shader.ShaderType.FS_POINTLIGHT)) { }                               
       
-		public void SetLight(ILight light, Vector4 position)
+		public void SetLight(ILight light)
 		{
 			if (!(light is PointLight)) throw new NotSupportedException("Only pointlights supported in this shader");
 			
 			var baseLight = light as PointLight;
 			
 			var loc = GetUniformLocation("u_light.position");
-			GL.Uniform4(loc, position);
+			GL.Uniform4(loc, baseLight.WorldPosition);
 			
 			loc = GetUniformLocation("u_light.ambient");
 			GL.Uniform4(loc, baseLight.Ambient);

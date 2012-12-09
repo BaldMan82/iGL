@@ -459,8 +459,12 @@ namespace iGL.Designer
             if (IsPaused && IsPlaying) return;
             
             //if (timeElapsed > 0.01f) timeElapsed = 0.01f;
+            if (IsPlaying)
+            {
+                Game.TickPhysics(timeElapsed);
+            }
 
-            Game.Tick(timeElapsed, IsPlaying || Operation == OperationType.DROPPING);
+            Game.Tick(timeElapsed);
         }
 
         public void Render()

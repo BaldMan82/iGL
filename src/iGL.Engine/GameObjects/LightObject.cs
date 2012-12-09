@@ -29,7 +29,18 @@ namespace iGL.Engine
 
             var sphere = Children.First(c => c.Id == LightSphereId) as Sphere;
             sphere.Material.Ambient = new Vector4(1, 1, 0, 1);
-            //sphere.Designer = true;            
+            sphere.Material.TextureName = "stone";
+            
+        }
+
+        public override void Tick(float timeElapsed)
+        {
+            if (Light is PointLight)
+            {
+                ((PointLight)Light).WorldPosition = new Vector4(this.Position);
+            }
+
+            base.Tick(timeElapsed);
         }
     }
 }

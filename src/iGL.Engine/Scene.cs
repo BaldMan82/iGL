@@ -219,7 +219,7 @@ namespace iGL.Engine
                 if (CurrentLight != null)
                 {
                     /* update shader's light parameters */                
-                    pointLightShader.SetLight(CurrentLight.Light, new Vector4(CurrentLight.GameObject.WorldPosition));
+                    pointLightShader.SetLight(CurrentLight.Light);
 
                 }
                 else
@@ -252,6 +252,14 @@ namespace iGL.Engine
 
         }
 
+        public void TickPhysics(float timeElapsed)
+        {           
+            float step = timeElapsed;
+            if (step > 1.0f / 100.0f) step = 1.0f / 100.0f;
+
+            Physics.Step(step);           
+        }
+
         public void Tick(float timeElapsed, bool tickPhysics = true)
         {
             UpdateCompositionCache();
@@ -260,16 +268,7 @@ namespace iGL.Engine
             {
                 _tickEvent.Elapsed = timeElapsed;
                 OnTickEvent(this, _tickEvent);
-            }
-
-            try
-            {
-                float step = timeElapsed;
-                if (step > 1.0f / 100.0f) step = 1.0f / 100.0f;
-
-                if (tickPhysics) Physics.Step(step);
-            }
-            catch { }
+            }          
 
             for (int i = 0; i < _sortedObjectsArray.Length; i++)
             {
@@ -569,10 +568,10 @@ namespace iGL.Engine
         {
             if (!gameObject.IsDisposing)
             {
-                var loadedObj = _gameObjects.First(g => g == gameObject);
-                _disposableGameObjects.Add(loadedObj);
+                //var loadedObj = _gameObjects.First(g => g == gameObject);
+                _disposableGameObjects.Add(gameObject);
 
-                loadedObj.IsDisposing = true;
+                gameObject.IsDisposing = true;
             }
         }
 

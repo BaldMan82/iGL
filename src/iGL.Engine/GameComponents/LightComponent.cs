@@ -17,6 +17,7 @@ namespace iGL.Engine
         public Vector4 Ambient { get; set; }
         public Vector4 Diffuse { get; set; }
         public Vector4 Specular { get; set; }
+        public Vector4 WorldPosition { get; set; }
 
         public System.Xml.Schema.XmlSchema GetSchema()
         {
@@ -48,7 +49,7 @@ namespace iGL.Engine
             Light = new PointLight()
                 {
                     Ambient = new Vector4(1, 1, 1, 1),
-                    Diffuse = new Vector4(1, 1, 1, 1)
+                    Diffuse = new Vector4(1, 1, 1, 1),       
                 };
         }
 

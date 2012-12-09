@@ -22,7 +22,7 @@ namespace iGL.TestGame.GameObjects
         private bool _inAimMode;
         private Vector3 _triggerPosition;
         private float _slingShotRadius = 5.0f;
-        private float _springConstant = 325f;
+        private float _springConstant = 350f;
         private Arrow2d _arrow2d;
         private bool _canFire;
         private PanViewFollowCamera3d _followCamera;
@@ -39,7 +39,7 @@ namespace iGL.TestGame.GameObjects
         private Vector3 _previousPosition;
         private DateTime _lastContactTime;
         public LightObject _lightObject;
-        
+   
         public SlingshotBallFarseer2D(XElement element) : base(element) { }
 
         public SlingshotBallFarseer2D() { }
@@ -99,10 +99,16 @@ namespace iGL.TestGame.GameObjects
         {
             if (!Game.InDesignMode)
             {
-                Scene.OnLoaded += new EventHandler<Engine.Events.LoadedEvent>(Scene_OnLoaded);              
+                Scene.OnLoaded += new EventHandler<Engine.Events.LoadedEvent>(Scene_OnLoaded);
+                Scene.OnPreRender += new EventHandler<Engine.Events.PreRenderEvent>(Scene_OnPreRender);
             }
 
             base.Load();
+
+            /* draw just after background has rendered so the player object is always visible */
+
+            RenderQueuePriority = 10000;
+
         }
 
         void Scene_OnLoaded(object sender, Engine.Events.LoadedEvent e)
@@ -132,6 +138,8 @@ namespace iGL.TestGame.GameObjects
             SetAsTarget();
 
             _aimSphere.Enabled = !Game.InDesignMode;
+
+           
         }
 
         void SetAsTarget()
@@ -148,7 +156,7 @@ namespace iGL.TestGame.GameObjects
         }
 
         public override void Tick(float timeElapsed)
-        {
+        {   
             _previousPosition = this.Position;
 
             base.Tick(timeElapsed);          
@@ -231,7 +239,9 @@ namespace iGL.TestGame.GameObjects
 
             if (texture != Material.TextureName) _meshComponent.RefreshTexture();
 
-            _lastAngularVelocity = body.AngularVelocity;        
+            _lastAngularVelocity = body.AngularVelocity;
+        
+           
 
         }
 
@@ -322,10 +332,17 @@ namespace iGL.TestGame.GameObjects
             //if (_followCamera != null) _followCamera.FollowingEnabled = false;
         }
 
+        void Scene_OnPreRender(object sender, Engine.Events.PreRenderEvent e)
+        {
+            /* override light pos */
+            ((PointLight)_lightObject.Light).WorldPosition = new Vector4(this.WorldPosition + new Vector3(0, 5, 20));
+            //((PointLightShader)Scene.Shader).SetLight(_lightObject.Light);
+        }
+
         public override void Render(bool overrideParentTransform = false)
         {
             Scene.Shader.SetBlackBorder(true);
-            
+
             base.Render(overrideParentTransform);
             
             Scene.Shader.SetBlackBorder(false);

@@ -24,7 +24,7 @@ namespace iGL.TestGame
 
         public TestGame(IGL gl) : base(gl) 
         {
-            _level = 3;
+            _level = 1;
         }       
 
         public override void Load()
@@ -92,17 +92,20 @@ namespace iGL.TestGame
          
             _slingShotBall = scene.GameObjects.First(g => g is SlingshotBallFarseer2D) as SlingshotBallFarseer2D;
 
-            //while (true)
-            //{
-            //    var flare = new StarFlare();
+           /* while (true)
+            {
+                var flare = new StarFlare();
 
-            //    Scene.AddGameObject(flare);
+                Scene.AddGameObject(flare);
+              
+                
+                flare.PlayAnimation();
 
-            //    flare.PlayAnimation();
+                Scene.DisposeGameObject(flare);
 
-            //    Scene.AddTimer(new Timer() { Action = () => Scene.DisposeGameObject(flare), Interval = TimeSpan.FromSeconds(0.2), Mode = Timer.TimerMode.Once });
-            //    Scene.Tick(0.01f);
-            //}
+                //Scene.AddTimer(new Timer() { Action = () => Scene.DisposeGameObject(flare), Interval = TimeSpan.FromSeconds(0.2), Mode = Timer.TimerMode.Once });
+                //Scene.Tick(0.01f);
+            }*/
 
             w.Stop();
             Debug.WriteLine("Loadlevel:" + w.Elapsed.TotalMilliseconds);
@@ -113,8 +116,10 @@ namespace iGL.TestGame
             _endingGame = false;
 
             ReloadScene(_currentSceneXML);
+
             TotalStarCount = Scene.GameObjects.Where(g => g is Star).Count();
             StarsCollected = 0;
+           
         }
 
         public void EndGame()

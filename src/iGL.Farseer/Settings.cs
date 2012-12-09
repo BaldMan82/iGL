@@ -180,7 +180,7 @@ namespace FarseerPhysics
         /// <summary>
         /// The time that a body must be still before it will go to sleep.
         /// </summary>
-        public const float TimeToSleep = 0.5f;
+        public const float TimeToSleep = 1.0f;
 
         /// <summary>
         /// A body cannot sleep if its linear velocity is above this tolerance.

@@ -41,7 +41,7 @@ void main()
 	mediump vec4 transformedPosition = u_modelViewMatrix*position;
 	calcLightning(transformedPosition, vec4(a_normal.x, a_normal.y, a_normal.z, 1));
 	
-	v_uv = vec2((transformedPosition.x + 100.0) / 200.0 , (100.0 - transformedPosition.y) / 200.0);
+	v_uv = vec2((transformedPosition.x + 120.0) / 240.0 , (120.0 - transformedPosition.y) / 240.0);
 }
 
 void calcLightning(mediump vec4 position, mediump vec4 normal)

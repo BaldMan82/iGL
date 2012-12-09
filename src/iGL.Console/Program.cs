@@ -43,7 +43,7 @@ namespace iGL.Console
             gameWnd.Mouse.ButtonDown += new EventHandler<OpenTK.Input.MouseButtonEventArgs>(Mouse_ButtonDown);
             gameWnd.Mouse.ButtonUp += new EventHandler<OpenTK.Input.MouseButtonEventArgs>(Mouse_ButtonUp);
             gameWnd.Mouse.WheelChanged += new EventHandler<OpenTK.Input.MouseWheelEventArgs>(Mouse_WheelChanged);
-            gameWnd.Run(0, 60);
+            gameWnd.Run(60, 60);
 
             System.Console.ReadLine();
         }
@@ -98,8 +98,9 @@ namespace iGL.Console
 
         static void gameWnd_RenderFrame(object sender, FrameEventArgs e)
         {
-
+          
             game.Render();
+
             ((GameWindow)sender).SwapBuffers();
 
             renderWatch.Stop();
@@ -107,15 +108,19 @@ namespace iGL.Console
             if (renderWatch.Elapsed.TotalSeconds >= stepInterval)
             {
                 float elapsed = (float)renderWatch.Elapsed.TotalSeconds;
+
+                game.Tick(elapsed);
+
                 for (float tickTime = 0f; tickTime < elapsed; tickTime += stepInterval)
                 {
                     if (elapsed - tickTime < 0.008f && elapsed - tickTime > 0.005f)
                     {
-                        game.Tick(elapsed - tickTime);
+                        game.TickPhysics(elapsed - tickTime);
                     }
                     else
                     {
-                        game.Tick(stepInterval);
+                        game.TickPhysics(elapsed);
+                      
                     }
                 }
 
@@ -132,6 +137,7 @@ namespace iGL.Console
         static void gameWnd_Load(object sender, EventArgs e)
         {
             game.Load();
+            
         }
     }
 }
