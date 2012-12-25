@@ -114,7 +114,7 @@
               <w>0</w>
             </Specular>
             <Shininess>0</Shininess>
-            <TextureName>untextured</TextureName>
+            <TextureName>level3</TextureName>
             <NormalTextureName></NormalTextureName>
             <TextureRepeatX>false</TextureRepeatX>
             <TextureRepeatY>false</TextureRepeatY>
@@ -168,14 +168,14 @@
           <w>0</w>
         </Specular>
         <WorldPosition>
-          <x>-72.55536</x>
-          <y>-4.01484</y>
-          <z>9.823996</z>
+          <x>-68.98055</x>
+          <y>-2.128267</y>
+          <z>8.871892</z>
           <w>1</w>
         </WorldPosition>
       </Light>
       <CreationMode>Additional</CreationMode>
-      <Visible>false</Visible>
+      <Visible>true</Visible>
       <Enabled>true</Enabled>
       <Designer>false</Designer>
       <Name>LightObject0</Name>
@@ -185,9 +185,9 @@
       <RenderQueuePriority>0</RenderQueuePriority>
       <Id>64bf6b42-e758-4359-95e1-81159eaa3be8</Id>
       <Position>
-        <x>-72.55536</x>
-        <y>-4.01484</y>
-        <z>9.823996</z>
+        <x>-68.98055</x>
+        <y>-2.128267</y>
+        <z>8.871892</z>
       </Position>
       <Scale>
         <x>1</x>
@@ -204,7 +204,7 @@
           <Rings>16</Rings>
           <Segments>16</Segments>
           <CreationMode>Required</CreationMode>
-          <Visible>false</Visible>
+          <Visible>true</Visible>
           <Enabled>true</Enabled>
           <Designer>false</Designer>
           <Name></Name>
@@ -292,9 +292,9 @@
               <w>0</w>
             </Specular>
             <WorldPosition>
-              <x>-72.55536</x>
-              <y>-4.01484</y>
-              <z>9.823996</z>
+              <x>-68.98055</x>
+              <y>-2.128267</y>
+              <z>8.871892</z>
               <w>1</w>
             </WorldPosition>
           </Light>
@@ -669,54 +669,6 @@
               <BeginMode>Triangles</BeginMode>
               <Id>ca479f1a-f021-4c44-bc17-552a0c37397f</Id>
             </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>56ee6322-c4a4-4d47-a228-377a4281c74f</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>ca6fa6be-7e34-4df2-a271-752e6766e4c9</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>84ca45bc-9f84-43fe-af20-877764d033a2</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>807ad6cd-fb73-4965-9c01-8e01876a61b6</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>9c790ffb-fcae-4964-bb41-2b86c1bf3780</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>55f3d959-6ce1-4dba-9de8-6d14f60cf2e5</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>9e511213-19b3-456c-a89a-976d285bfc54</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>0124d486-1385-42a1-8083-599716387adc</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f8d758cf-7d4b-4037-8dca-ba2dedc0ddae</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>472a4a56-bd28-47ed-8aa4-26af38766ab9</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>1477103d-5dd7-43be-a570-8bfe0d53656c</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>a075cbc1-fa02-493d-9632-42a26972a31b</Id>
-            </GameComponent>
           </Components>
         </GameObject>
         <GameObject Type="iGL.TestGame.GameObjects.Arrow2d, iGL.TestGame, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -903,54 +855,6 @@
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>716ccc71-7dd8-4f90-8d5b-3af7da06b048</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>fe7684b8-1e06-4f97-b626-2427d09dee5b</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e1d695e3-9f7d-46f8-a172-b9bdee13d2ce</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>ebf9610d-4ab6-4286-ae43-ebd1c28808fb</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>c627c585-ea83-4e83-b317-1255f3cf7852</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>95241d8d-0a20-4a6e-83a3-51cb7aca1fed</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>2acd653d-fbcc-41ce-b527-dfe211ea1b89</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>73920515-2a75-405e-98c4-344dd4171925</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>7ed31587-e923-46a7-9207-1bc1ef446518</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>ebda2917-697e-4e69-9269-eefdd3190a90</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>df3e0f10-b3f3-427a-beb4-b5c986fae5ac</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>930710c3-4586-40d2-9980-4f1ee3ae101f</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>2c7f8e57-7b3f-47c4-a17c-b2bb0554226c</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -1139,54 +1043,6 @@
               <BeginMode>Triangles</BeginMode>
               <Id>467991ae-df86-44ed-a8be-8350940795c4</Id>
             </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>7efa24ef-98ec-45a5-a0fe-5492154e8d01</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>90280779-0a1b-49fa-9dd1-72f5f0c728f9</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>2f35c733-c1a5-46a4-922f-2918297aff8c</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e6489ce6-0c23-41f3-b637-0219204fffc3</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>1d99bbdc-04a8-4fb2-b877-74782553f3c6</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f678fe5c-c079-42b4-8b4d-996338bd2bf7</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>66101ed8-bacf-4508-bf4a-a85cd5108ba9</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>741d8483-e67a-4fa9-8c0b-7bca12b5f5c5</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>fb6b9854-4cba-4f45-8055-7aba670a1cbd</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>a7da153c-2983-42bb-8e7a-9ab3a53bf432</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>7859efd3-0369-48f5-b13f-fe4712007129</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>b31f3b6b-68fd-41c4-8d9e-3fdfe1d2956c</Id>
-            </GameComponent>
           </Components>
         </GameObject>
         <GameObject Type="iGL.Engine.Sphere, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -1274,6 +1130,7 @@
           <Id>15da1056-2ff7-443f-aed1-0afd3db7b0bf</Id>
         </GameComponent>
         <GameComponent Type="iGL.Engine.CircleColliderFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Radius>0.5</Radius>
           <Id>10af2307-be79-653b-a8ab-54bad0d51535</Id>
         </GameComponent>
         <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -1284,9 +1141,9 @@
           <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
             <Id></Id>
             <Ambient>
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
+              <x>0.1254902</x>
+              <y>0.1254902</y>
+              <z>0.1254902</z>
               <w>1</w>
             </Ambient>
             <Diffuse>
@@ -1339,9 +1196,9 @@
       <RenderQueuePriority>0</RenderQueuePriority>
       <Id>13e43984-777e-41df-89b8-ddfb60f2808b</Id>
       <Position>
-        <x>-18.446085</x>
-        <y>14.7355423</y>
-        <z>37.656395</z>
+        <x>-52.4752731</x>
+        <y>1.08380163</y>
+        <z>19.6390934</z>
       </Position>
       <Scale>
         <x>1</x>
@@ -1361,9 +1218,9 @@
           <ZNear>1</ZNear>
           <ZFar>1000</ZFar>
           <Target>
-            <x>-18.833643</x>
-            <y>11.5830765</y>
-            <z>27.00379</z>
+            <x>-55.0319138</x>
+            <y>-2.1750946</y>
+            <z>9.4329</z>
           </Target>
           <Up>
             <x>0</x>
@@ -1563,54 +1420,6 @@
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>95fcba3f-c998-435a-9c8b-fd49325c2db5</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>8ae216a6-0d3e-4619-88ac-dbb81ba4d490</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>c7eda046-1508-4cc2-bf7d-b0af5d17e52f</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>22c93c48-652d-4f23-801c-b38d173629cd</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e6b345a9-d9ff-4f3b-b3a4-c36ad78c393b</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>2b8b22f3-28a4-453b-a1c7-307c81ae3210</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>4eaa5d94-ceb4-4620-b5c6-845406560765</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>5dfcc87e-102c-4835-bdf0-53774b9de89d</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>91512a14-65c7-4e14-bb29-6a59ec3d17f2</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>fa60b12c-65fa-4858-ab79-38491b72ba1f</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>a40a63fa-f1e2-463a-8ec3-16c48696b522</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f73b4762-2e6d-49a9-b8bd-499d28f7facd</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>8ae9e53a-5b19-40e4-b288-033c1d1df5a5</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -1875,54 +1684,6 @@
               <BeginMode>Triangles</BeginMode>
               <Id>76875a47-312c-43a9-87d6-46c9f83b969d</Id>
             </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>8b9b7eea-c5e4-4f2c-9369-3baebb115d34</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>4da632b9-82f2-4480-9fdc-afa650a1fc13</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>7e922e51-44e9-4eff-8331-abe96d49b939</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>48f655a9-30fd-45a6-9bd9-5dd2ef4e18d7</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>01044a7f-6408-477e-b319-428c3600ffca</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>41c5c80a-e13a-462e-bf79-7b7d7c319aeb</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>da1441e5-a345-4583-aaf1-bb08960cede3</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e6493323-77db-4b8b-a74c-34d63155a718</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>dfa0fe84-eb05-42e0-b5c6-64f286f613dc</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>d29d3f10-44c2-43f3-9c1d-1678c9352335</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>897c6fa9-20db-496b-a6c4-9f29380500cc</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>acaa6433-5308-4f90-bb5e-49c8e91e3ba0</Id>
-            </GameComponent>
           </Components>
         </GameObject>
       </Children>
@@ -2185,54 +1946,6 @@
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>5b3e9bc8-dfba-4954-a38e-62cfaa2f1fd1</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>66e7e26b-fcd3-4aeb-96db-ca75002f657e</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>db9d562f-a671-4546-8ec4-a45eaac4352e</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>9ade7527-4ebb-4014-9962-b922c8099cab</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>d25d36c9-ab11-4b9e-bcbc-4cea64b0ca7f</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>1a51e5e9-cec3-4af9-aa43-f7f94f4e3779</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>cb0f60e5-ef15-48f3-9d51-c85f84a1a05b</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>6aba0bbd-81f8-4982-a602-39b8bfbf3785</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>6354172b-eccf-46ab-acf9-8fc01860ac3c</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f54ce7fe-c58b-43e2-8e86-483f8f77717e</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>0ba180a6-9b00-4689-90ed-806599437a8b</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>bcf59eec-efb6-4599-8e20-06b5939d2bfe</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>3d4e28be-8378-4c78-8a41-f7f75e0f1344</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -2497,54 +2210,6 @@
               <BeginMode>Triangles</BeginMode>
               <Id>435e3fc0-8363-4b45-8d78-3548ad02a591</Id>
             </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>97d308d4-ef41-498b-932a-4a51965413d7</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>acfa6deb-44d5-40fb-aea9-ce99a764c29e</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>724aab1b-26fd-454b-8582-d86c24e67688</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>2113c4c2-07ea-472f-ada7-95bd306c2ad5</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>61f3fb2c-5f22-49e6-b7df-b65630516e9c</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f7c2f88d-1b4b-42b6-a489-a54efb1bf73e</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>7b961cf9-b4ff-42a5-a059-ec043d63301f</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f5cd1777-e274-4cc5-9c23-f98326d65c55</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>9a64a81c-1bbd-4078-aa7f-9f83a6668010</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>870df3b0-322c-4dbb-8798-b932bff46e9d</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>a0859f21-992c-4e16-8138-49a35bea3b74</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>b80c0cbf-f8ee-462a-a9e3-25c9f329ebca</Id>
-            </GameComponent>
           </Components>
         </GameObject>
       </Children>
@@ -2807,54 +2472,6 @@
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>80c68a01-3b1e-4605-8a50-0bfa5e9b8fb3</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>409208cc-f578-4d3a-88e0-04b1d0360850</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>2c11665e-2036-4fe5-9a53-9dc16a737c97</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>61e78213-6db1-4d40-9816-98b46a2d6f63</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>ffa70aa0-3da0-4ad8-b601-16e12e6dbf60</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>10f80d88-9e83-4c3b-a380-b40687135655</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>eb72d192-1183-4b8b-b618-31742fd91075</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>12b2b6e1-a82e-4225-bec6-89dc9b8198bd</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>dc156e5b-1401-467a-af0d-0b941057e270</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f75a6393-0072-4771-8f47-1b8642cc9307</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>1bccfd17-104f-4aa1-809b-76386bffa420</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>6103dfdf-ef23-4373-8d7a-4f0c7fc35ac3</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>bb396673-55fc-43b7-9154-d2fbd086a906</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -3119,54 +2736,6 @@
               <BeginMode>Triangles</BeginMode>
               <Id>b795fbae-56b4-4ec5-847e-f66eab255a05</Id>
             </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>55037af4-a88d-4633-b1f6-d3b103e5a17e</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>ccfe3230-43ec-48ed-a16e-134896a6a02e</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>15461998-40b7-489f-bcdf-eb75957cfcc8</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>ab997bf0-418d-4ce9-993c-4e7feb537feb</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>647d658a-f13a-4eed-af6a-3e3868ecdfd7</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>59afd093-cf1a-43b8-90fc-9e95b4c424f3</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>4634c99e-5787-42fc-b6ff-713bcac95f68</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f6749e9c-ccb2-45d3-98e5-02f0252a4f79</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>ba80dcd6-9061-4368-b6a1-d201c8ebf3e8</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>44ea0849-bbd9-445f-972a-ad6d6eeb9964</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>37e48578-338f-41b3-91dd-4fe79d956b3e</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>45f984cd-63c5-4e54-92c5-8fa017e883cb</Id>
-            </GameComponent>
           </Components>
         </GameObject>
       </Children>
@@ -3429,54 +2998,6 @@
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>5f528428-c600-4ee4-9149-561d968018b4</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e92fb5a8-43c8-4709-b4c2-ea03f1176ca1</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>97cc3f02-c26a-4a66-a7e8-9c549b5e37b3</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>db742e8a-a2a7-4a8e-ab9a-5085c63ce188</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>90d7f206-22b5-47de-a46f-4274f5f8a455</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>4ae206cc-9522-4d35-824a-2b40960292f9</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>5f710e7e-e5b2-40bf-b3fa-c4c52d772d4b</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>2fc44ba5-b567-4add-846c-9452cc2131f5</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>67a78832-d472-4d73-900b-ac47b95ffb7d</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>1f9dbc3d-a68f-47bb-b952-505802fb6c6f</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>b7806fec-8371-41c8-8718-3667e2cb374b</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>a6dfd013-5539-44c3-96eb-0b52ed19e7ad</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>9328c3f1-6174-47c8-a4a4-c39f73a522f6</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -3741,54 +3262,6 @@
               <BeginMode>Triangles</BeginMode>
               <Id>844c6121-c6e4-4fe5-891a-60fa03c027ca</Id>
             </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>a672b8c7-d05f-461b-9d80-504793c6924b</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e35c75de-cd87-43f8-8bba-067455a18403</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>1691eaa9-21ac-4286-8304-dd954e0969c2</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>8f8ec81f-15c9-4b94-8cb4-d76086eecf42</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>63444c0c-abb9-4dd2-afe5-47846517f261</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>12e9563a-3dca-4b42-8d8f-8d73bfbe9890</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e3f5064d-4306-4fd5-8b7d-b513f4bb856d</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>b3c9babc-ec67-4a62-be03-8e185a5a4af0</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>61163170-fe50-4024-be67-bea82dc6e001</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>ed573b21-8cfa-42e6-a692-a97acaf9948a</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>7bd8927a-dbd0-47a5-8656-446d30b102f6</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>646acee1-8c0d-46f9-a6d3-69e7fb4231fc</Id>
-            </GameComponent>
           </Components>
         </GameObject>
       </Children>
@@ -4051,54 +3524,6 @@
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>7a03a541-348a-4006-bdaf-cb3960d425cd</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>c5280954-2bd3-4ad1-a0b7-a9aa49df0329</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>8bebf3ad-173e-4f67-8ac7-d2c865205cbd</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>ebc6e8bb-6f6e-48cf-b91a-df0f6fe614b6</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>76462376-4362-49b0-87e9-5b0c2e9c24b2</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>eeaf0c22-199f-4d4d-b5a8-c1929aa50af1</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>b9078e52-1d8e-49b1-a3e3-0ec7451f748c</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>026ccfe1-b52e-45eb-b864-b3a4608d680a</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>7e5d765d-752d-4b9b-af02-236f572df3fd</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>c17cdc51-2a88-4295-9fbc-bff6730b0141</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>ab7617bb-e8ad-434e-8e1c-fce4bf8252b7</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>06ec5c5f-45ff-499a-8c05-149f1a995c01</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>7f011e4e-df4e-4192-8ee4-b42746877484</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -4363,54 +3788,6 @@
         <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <BeginMode>Triangles</BeginMode>
           <Id>1cf53262-f450-4f4d-af2f-be5854a1a540</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>602cffb3-7484-4527-aaa1-3cf82d5766d9</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>5217c399-9b48-413f-94a2-474e70f52fab</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>60e2ce50-2049-40d8-918b-be4cb6a07180</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>3730bd38-e8ce-453c-a96a-dad3ff1916b1</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>0ea2655a-5b82-4262-9dbf-42e1fbf95daa</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>4b488d62-784c-4edb-af55-0444f9cb7288</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>dbc129eb-78cf-4d93-95a3-69ffb97f3df7</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>3c6447cb-d658-4e31-aea5-a8a9d248e6ca</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>e5e4c499-2655-42af-9afb-1758a50388b0</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>701262dc-d722-49b1-adb1-6c9bbea68a50</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>0d7e6a32-d907-476c-82f7-c2f8e08008e7</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>57f43ab2-3437-407f-a46b-c2b2b2edc6a2</Id>
         </GameComponent>
       </Components>
     </GameObject>
@@ -4680,8 +4057,8 @@
         <z>-5</z>
       </Position>
       <Scale>
-        <x>33.55017</x>
-        <y>25.1626263</y>
+        <x>16.5632935</x>
+        <y>12.42247</y>
         <z>1</z>
       </Scale>
       <Rotation>
@@ -4694,6 +4071,189 @@
         <GameComponent Type="iGL.Engine.BackgroundComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <BeginMode>Triangles</BeginMode>
           <Id>36af2307-be79-453a-a8bb-54bad0d21525</Id>
+        </GameComponent>
+      </Components>
+    </GameObject>
+    <GameObject Type="iGL.Engine.RigidFarseerCube, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <CreationMode>Additional</CreationMode>
+      <Visible>true</Visible>
+      <Enabled>true</Enabled>
+      <Designer>false</Designer>
+      <Name>Elevator1</Name>
+      <ClearsZBuffer>false</ClearsZBuffer>
+      <DistanceSorting>false</DistanceSorting>
+      <AutoLoad>true</AutoLoad>
+      <RenderQueuePriority>0</RenderQueuePriority>
+      <Id>212e1484-11e2-4c09-870e-37c19c40516c</Id>
+      <Position>
+        <x>-15.3666</x>
+        <y>-7.269424</y>
+        <z>0</z>
+      </Position>
+      <Scale>
+        <x>5</x>
+        <y>1</y>
+        <z>1</z>
+      </Scale>
+      <Rotation>
+        <x>0</x>
+        <y>-0</y>
+        <z>0</z>
+      </Rotation>
+      <Children />
+      <Components>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>f8967a9d-8c90-41fa-9344-dec053def5b0</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.RigidBodyFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Mass>1</Mass>
+          <IsGravitySource>false</IsGravitySource>
+          <GravityRange>5</GravityRange>
+          <IsSensor>false</IsSensor>
+          <IsStatic>false</IsStatic>
+          <IsKinematic>true</IsKinematic>
+          <Restitution>0.2</Restitution>
+          <Friction>0.6</Friction>
+          <Sleeping>false</Sleeping>
+          <AutoReloadBody>true</AutoReloadBody>
+          <Id>e59ebd40-28f0-4d3b-95cf-e9811570f514</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+            <Id></Id>
+            <Ambient>
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+              <w>1</w>
+            </Ambient>
+            <Diffuse>
+              <x>1</x>
+              <y>1</y>
+              <z>1</z>
+              <w>1</w>
+            </Diffuse>
+            <Specular>
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+              <w>0</w>
+            </Specular>
+            <Shininess>0</Shininess>
+            <TextureName>stone</TextureName>
+            <NormalTextureName></NormalTextureName>
+            <TextureRepeatX>true</TextureRepeatX>
+            <TextureRepeatY>false</TextureRepeatY>
+            <TextureTilingX>2</TextureTilingX>
+            <TextureTilingY>1</TextureTilingY>
+            <ShaderProgram>POINTLIGHT</ShaderProgram>
+          </Material>
+          <MeshResourceName>cube</MeshResourceName>
+          <Id>f0bfb81f-fbf1-42e2-a970-02f2eb798df8</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.BoxColliderFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Id>09bbe6d6-0108-48f2-9e83-6fd4760040fd</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.LinearVelocitAnimationComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <EndPointA>
+            <x>-15.61968</x>
+            <y>-7.269424</y>
+            <z>0</z>
+          </EndPointA>
+          <EndPointB>
+            <x>-30.11185</x>
+            <y>-7.269424</y>
+            <z>0</z>
+          </EndPointB>
+          <PlayMode>RepeatInverted</PlayMode>
+          <AutoStart>false</AutoStart>
+          <DurationSeconds>3</DurationSeconds>
+          <IntervalSeconds>3</IntervalSeconds>
+          <Id>791695d0-8114-4123-b182-0a9031400a9a</Id>
+        </GameComponent>
+      </Components>
+    </GameObject>
+    <GameObject Type="iGL.Engine.RigidFarseerCube, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <CreationMode>Additional</CreationMode>
+      <Visible>false</Visible>
+      <Enabled>true</Enabled>
+      <Designer>false</Designer>
+      <Name>Elevator1Sensor</Name>
+      <ClearsZBuffer>false</ClearsZBuffer>
+      <DistanceSorting>false</DistanceSorting>
+      <AutoLoad>true</AutoLoad>
+      <RenderQueuePriority>0</RenderQueuePriority>
+      <Id>1f23c7b2-6e47-4f36-bcf9-59dab4867cde</Id>
+      <Position>
+        <x>-38.81556</x>
+        <y>-8.079927</y>
+        <z>0</z>
+      </Position>
+      <Scale>
+        <x>5</x>
+        <y>10</y>
+        <z>1</z>
+      </Scale>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+      <Children />
+      <Components>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>f8967a9d-8c90-41fa-9344-dec053def5b0</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.RigidBodyFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Mass>1</Mass>
+          <IsGravitySource>false</IsGravitySource>
+          <GravityRange>5</GravityRange>
+          <IsSensor>true</IsSensor>
+          <IsStatic>true</IsStatic>
+          <IsKinematic>false</IsKinematic>
+          <Restitution>0.2</Restitution>
+          <Friction>0.6</Friction>
+          <Sleeping>false</Sleeping>
+          <AutoReloadBody>true</AutoReloadBody>
+          <Id>e59ebd40-28f0-4d3b-95cf-e9811570f514</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+            <Id></Id>
+            <Ambient>
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+              <w>1</w>
+            </Ambient>
+            <Diffuse>
+              <x>0.4</x>
+              <y>0.4</y>
+              <z>0.4</z>
+              <w>1</w>
+            </Diffuse>
+            <Specular>
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+              <w>0</w>
+            </Specular>
+            <Shininess>0</Shininess>
+            <TextureName>stone</TextureName>
+            <NormalTextureName></NormalTextureName>
+            <TextureRepeatX>false</TextureRepeatX>
+            <TextureRepeatY>false</TextureRepeatY>
+            <TextureTilingX>1</TextureTilingX>
+            <TextureTilingY>1</TextureTilingY>
+            <ShaderProgram>POINTLIGHT</ShaderProgram>
+          </Material>
+          <MeshResourceName>cube</MeshResourceName>
+          <Id>f0bfb81f-fbf1-42e2-a970-02f2eb798df8</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.BoxColliderFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Id>09bbe6d6-0108-48f2-9e83-6fd4760040fd</Id>
         </GameComponent>
       </Components>
     </GameObject>
@@ -5091,54 +4651,6 @@
               <BeginMode>Triangles</BeginMode>
               <Id>f552284a-3495-41f3-83b4-2e205a397e65</Id>
             </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>dbbbd23f-cd0b-4f1d-9322-7cf24d2d4805</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f70e07c0-5a78-4921-8032-5043df7e9d6a</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e55bcf42-704c-47c4-905b-e71bb61bc3dd</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>5eccb099-eb2b-4a78-85d6-03413e057be2</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>5d7153ee-5e83-4cc3-955d-e0b72f7bf118</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>9b428128-e848-46aa-a1c3-36edc3d9bee9</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>4bb6cf4e-3cc2-45d2-a2ab-08acea78ea89</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>4fe93625-af7f-4a24-a86f-4506012797a6</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>2bd7afd0-923b-434e-8a38-54be38caf9d6</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>2bc43739-7e8a-43b5-b9a8-17ac62da7e7f</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>205f734e-7977-40e9-a21c-c02e0c52c7ab</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>2d6f9b2e-acc1-4cd4-8cdb-281cd8678fa7</Id>
-            </GameComponent>
           </Components>
         </GameObject>
         <GameObject Type="iGL.Engine.Plane, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -5258,59 +4770,12 @@
               <BeginMode>Triangles</BeginMode>
               <Id>4ee66c7a-6cc4-47f0-a38f-7550570b1e56</Id>
             </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>58b3ae63-2614-4812-acb4-63947a755362</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>37c65554-46f6-42f1-8e4d-4949d77f2c49</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>99439e52-79f4-4cdc-a21f-f0db4d1f92c0</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>5043f1c9-54c4-483b-87d7-fc8d2fac6c58</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>c4d2b137-2361-44d1-9150-681ab2e04fbe</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>896a6eb0-a853-448a-a494-9051d9ff8e3b</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>adda00a2-2656-42ec-83a7-1fcbe91db681</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>147d5833-153a-42b1-a0dc-7be070f32a83</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>8a3dfa2e-d7be-470f-8e48-92aeda77e268</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>7286c671-ddec-4d3c-a99b-7bd7dddad788</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>d5e5a1d4-ba58-40d8-b31e-926c0275108c</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>be79456b-378b-43a9-8051-48380f93cdb6</Id>
-            </GameComponent>
           </Components>
         </GameObject>
       </Children>
       <Components>
         <GameComponent Type="iGL.Engine.CircleColliderFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Radius>0.5</Radius>
           <Id>11af2307-be79-653b-a8ab-54bad0d51535</Id>
         </GameComponent>
         <GameComponent Type="iGL.Engine.RigidBodyFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -5414,54 +4879,6 @@
         <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <BeginMode>Triangles</BeginMode>
           <Id>a4b48fed-95c8-4d0b-ace6-84118da253b2</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>a7fd90e3-faae-4fdc-9467-6ec636e63b3f</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>c33e0605-f1d0-4d41-b9bd-567d753e2f7f</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>dbdce092-655d-484a-9f05-5502f2b77eaf</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>d04197ac-0438-4377-bb3a-479dab4ad0d4</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>ce9fffb0-7893-41db-a952-beeff4d69488</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>76d8d17b-16b4-4337-8d81-f3bfe28a6df0</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>c934fcd5-774a-4be3-a5c8-15f255ea8a1e</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>d7ae7fa6-0be2-48a2-986b-52f9a4e3e93f</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>f6ab0cc8-5fdc-4254-9eb8-4b56cea93b40</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>93d208ef-ae17-4c95-8294-1bb35b1fa1d0</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>9dc85200-a1fd-4b3b-a7c2-c8b28466a4e0</Id>
-        </GameComponent>
-        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <BeginMode>Triangles</BeginMode>
-          <Id>f2747bda-7934-44c5-a56c-043542d849d5</Id>
         </GameComponent>
       </Components>
     </GameObject>
@@ -5648,54 +5065,6 @@
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>9d8d578c-7ccd-46ee-8c17-ccec65231441</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>0cfeead5-2cfb-4d88-9713-38a6e02ff37c</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f49d250f-a8e5-47e4-8c9f-214a26a669c3</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>5090d507-b50c-43c2-8732-256cc4b1edd5</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>a23209e7-72aa-4ee4-9037-9050b0bd6119</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>6529c04f-fe76-4ef4-82fd-7dc7f2cc9f86</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>3f4c4e3c-7fb7-4390-bed1-df72523b2248</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>3e27de75-ce46-4886-a683-5a58ae2bc171</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e00a6f67-be1c-4120-b93a-55be5305f4dd</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>473496ac-6588-4299-959f-49a410c5a134</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>64f48176-0b23-427b-9ad3-c05e320bdc37</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>64ff32ce-dd99-41c3-8e89-c527c39700f6</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>cb762c9f-6c08-4c70-81ae-e93a82710c97</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -5960,54 +5329,6 @@
               <BeginMode>Triangles</BeginMode>
               <Id>b78bef92-0a6e-43e2-9252-815a4766084c</Id>
             </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>8d0770af-f5d6-4b13-8f1c-a7472d0c3da2</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>1e93f91e-73de-494d-8023-8b6ab26f4eda</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>fc82d1c9-8319-4cf1-afd5-924986357b34</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>72b81442-4d04-4afe-9b67-639d2f8da195</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>06cf6b3b-679c-436d-9597-a9a89598baf4</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>eca65bf0-ba62-4494-952f-b480238efb83</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f891bef6-7da2-43a9-a2f3-663f143dd529</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>5660975a-7a21-439e-a5dd-47d8822886d1</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>fb1d8eff-19ee-4a74-8a47-dca3ac36550c</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>1744f760-840b-4818-9d61-12358f17d935</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>90021586-2e1f-4a02-bbf8-9c801ce10950</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>c4034dc5-0e6b-4810-b002-6630b16b2189</Id>
-            </GameComponent>
           </Components>
         </GameObject>
       </Children>
@@ -6271,54 +5592,6 @@
               <BeginMode>Triangles</BeginMode>
               <Id>f3f5f755-1238-4ce7-9248-a2a94e6ae919</Id>
             </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>412c2b6a-37ef-4b7c-b991-f6a995ab0343</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>457ff628-ac09-4d32-9f79-61fa7283f1b9</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>5737bb94-6e44-4b73-a746-c5893e5339e2</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e27e258f-41c0-4afe-be36-e1b80cc4575e</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>3632a531-068c-40a5-b2f9-a244c8978b14</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e90e7436-6949-4819-9714-d41b0a7956db</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f7e3329a-4cfc-43e4-9225-669ae3913748</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>697c9a48-7a0e-456c-9012-2150985e7a48</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>22d3729d-2e0b-41f3-a913-6452b01f8bfd</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>615cf0fe-6da6-4a95-859f-c35db8f0fe62</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>a517810e-4a62-4693-a2c2-81811e44fd47</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>84b96fc6-7689-41b0-91d6-978d5a09a356</Id>
-            </GameComponent>
           </Components>
         </GameObject>
       </Children>
@@ -6581,54 +5854,6 @@
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>b7d1882b-3452-4b15-a3d5-a4bee0e723d6</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f580d599-acda-4df8-aaae-8819c3505f2b</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>ee484727-ffd3-452c-91cf-9fc1c580bd25</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>5a0876fb-fa36-485d-8b10-ce9a1a042434</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>1fca64e8-3bd2-4b94-9a2b-d2f9c3fce868</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>3addb4f6-7ea9-4bac-b244-328301554473</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>8d2669f8-29d1-4d3d-8786-59f9fd050dc2</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>3e2d9693-f1ed-476a-ac20-5523cf45e712</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>c2a94396-e589-4f1a-9bfc-9c8fffe8549d</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>4ac0ff76-e593-4203-8439-0ffe5cfc9ef4</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>b123187e-fb67-4d07-85e9-2bb74921fd07</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>3183076c-c663-47ec-a79d-aa33759d03e4</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>3399dcae-a260-4427-8975-68f734b43cdf</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -7142,54 +6367,6 @@
               <BeginMode>Triangles</BeginMode>
               <Id>034dd21b-2ea2-4b2e-9133-fe475ea3be64</Id>
             </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>3bd1ae52-cc3b-4a32-a06e-faa0c79e6b14</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>09e4007f-a028-44a8-949c-9b409246526d</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>b9bc8cf6-c120-4ab0-abe7-d1864a04893e</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>a8706653-0461-4af0-ba7e-8aded8504fbe</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>d76d12ec-bf02-46de-8b56-77ff5a426687</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>39a4daf6-9555-4e48-9a06-7a2567ebfa44</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>269043f4-187f-4ad9-a87b-279b7808c6d3</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>937fdcd2-cb43-41eb-9b30-7dfacd2e2b82</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>ac97e419-a562-4958-a274-101e10a2e613</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>2732cc6d-678f-41dd-a4c1-43068d5dbc2d</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>9812c8e4-fd3a-44a0-aa9c-0a43a8aabf7b</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>56698c0a-854e-48f0-87a7-f0f8b8c2a350</Id>
-            </GameComponent>
           </Components>
         </GameObject>
       </Children>
@@ -7452,54 +6629,6 @@
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>7f303877-58e1-432f-a90c-a3b8acf1fbe9</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>573fdabc-f8bc-40cf-870e-bb511906a2b1</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>8ba8e4d8-c764-4105-a8ff-3c8d18eb36b0</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>867eee6d-dd29-409e-b6e2-86e2a3a1c6e3</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>2f215f2a-206f-4265-9992-ae01d6d94fe2</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>4dc88841-6562-409d-82fa-1a840734269c</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>cb2f2593-bac3-4ad8-ade7-b47d51cdcaa2</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>5d53c4ef-0ff2-4985-9b3f-e4f99e4b5643</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>0aad116c-d81b-4902-a442-d34595144a44</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>231eeff9-c290-4e47-bbbd-e44f19981ccd</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>d8ca8dce-2efe-4e50-be00-ff74e120ba5d</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>949dfbfa-44d9-43ae-9ed0-1aa17681e5b5</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e4454fc8-c953-4544-a1d1-d92f47e2cc0f</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -7764,54 +6893,6 @@
               <BeginMode>Triangles</BeginMode>
               <Id>74b21732-7e67-42d6-8d5e-db999b77acb8</Id>
             </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>ddb2201f-2edf-41de-97ba-a46606070c19</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>3a0e2a3a-e1b6-4e09-818b-d9ae96175e2d</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>11a2a637-118e-4e70-9258-d3e94d60382e</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>b5b1d05c-71df-4eee-835f-f797f3c994fd</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>3c870055-ebfa-447e-b4a9-b13b8efa9837</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>a66d4ab5-63f0-4faf-987b-228149bc7e33</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>188369b9-e4bf-49ac-8c67-c274d42bce8e</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>b2cab3ff-6afc-416d-8981-38d130e30ca9</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>c8ee733a-259e-4cd4-b2b2-b7f9e1e4850d</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f5ddabd8-9fb4-4805-9afd-6dc3bad975a9</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>24d637c4-8d30-4ece-9fd5-26befe2502b4</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>d1fa3591-7daf-4e22-83cd-691967462f15</Id>
-            </GameComponent>
           </Components>
         </GameObject>
       </Children>
@@ -8074,54 +7155,6 @@
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>c58e5853-33d6-4d3d-93f4-b14986350208</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>968c8792-ad09-4dba-b5ab-d6621183f6b7</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>7eccb974-3de4-4f18-85c2-39af6613b4cc</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e6c70f82-530d-49b8-95f5-555f078e920e</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>0590b456-c75a-4cf1-8514-159613f0239a</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>0fc38e62-a0f1-4af1-a68d-54e2de00802f</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>417bccc1-6a00-44cb-894f-fe5d5f10597e</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>a955a5a0-2ae2-4c74-85a7-970f77009bde</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>64bbf2fb-83cb-4d48-b24e-03b3cd4037d8</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>a16ecd3a-634a-41de-a71b-1b6634184fb1</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>c60b7670-a8f0-44d5-a48a-7c85a5c9739f</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f080c05c-4cc7-4b1e-9af3-50e98a785ac2</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>58922865-a7ac-4796-b619-71e13c45d270</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -8386,54 +7419,6 @@
               <BeginMode>Triangles</BeginMode>
               <Id>9f11b421-acf7-424a-9b29-5f248d879998</Id>
             </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>46929e5f-e16e-43a8-8c94-346b43ddc6cf</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>57df63e4-d11d-4ea0-ad8f-7444bec63d3f</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e4255d1a-eede-4ae8-97f4-dd01325c6765</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>b656224e-65d0-4432-b607-0fd779139dfa</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e7c6f32f-cb07-45db-8dc7-1837c26bfb69</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>1c017ec3-fe4f-4a68-b4c1-f3c6fd2e2ae6</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>28671a7b-bec4-4174-8e4f-0c62dbf18f4d</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>0af84a8b-856c-4218-8fef-0b96146fc3a3</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>a4c6c836-f1f9-4848-8f52-6ab5284d382f</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>bc74b0f7-8d0a-4c7a-98ee-f7d6d30a5544</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>72b6a0d6-8981-4c55-9498-70ff7bf0eb9b</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f575b921-1de7-42f3-93f1-d4536324ff16</Id>
-            </GameComponent>
           </Components>
         </GameObject>
       </Children>
@@ -8696,54 +7681,6 @@
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>b23fe1b8-5044-4079-9e71-98f185f0d194</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>237ad9d0-fb85-4bfe-8c74-dc495afad0d2</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>a2628037-0088-431c-a50d-a667f4fdb6b9</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>82023574-d3eb-4c15-994d-1855117bfd34</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>1d245922-7c21-4d44-ada5-27cf2249ab60</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>a9ddd82d-aa61-4dcd-83e3-ae01b63ac720</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>de9e9acf-ed60-4f58-971a-40d3b98a248f</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>2d04c612-a1b7-45a2-9c8c-8d8d1771e000</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>483f06df-dd3a-4895-9806-08708198f003</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>977d6ef2-1d59-44d3-a15a-14262ef68e30</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>d230f0fc-8e72-4f2b-acee-1e399cec09f9</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>af060b2c-f501-43c4-8a93-9c596dbfe90f</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>6a615951-e76b-4419-afcf-c5226a1c8cab</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -9008,54 +7945,6 @@
               <BeginMode>Triangles</BeginMode>
               <Id>351c5de2-0e34-41b4-b24c-77c2757218f2</Id>
             </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>c7d84a6e-5226-431d-bae4-60d28b0e032e</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>d31e1d89-c447-40bb-8894-fa8c00c69109</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>190065ef-52c5-4887-8fd7-ec3961432945</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e794bdc3-c236-4d89-805f-a6901bc31de2</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>9bbeb684-9cb1-4f43-b8ae-7636217d058b</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>a4d7c8e3-3d71-445a-a6c7-51807f93cbb5</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>a6c08566-f0cb-45b3-9d98-375e2b76eb64</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>39af025b-6b48-4b46-857c-db5df593e43d</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>ee2b16a5-2005-4f9c-90ff-66b55da6dad0</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>cb6859a8-0c71-4f33-b7d6-a3ae1bd320d4</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>87f80950-208f-48ed-8326-6fafb4510799</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>58193268-d5a5-4170-846b-1285893acfde</Id>
-            </GameComponent>
           </Components>
         </GameObject>
       </Children>
@@ -9132,6 +8021,125 @@
           <DurationSeconds>0.5</DurationSeconds>
           <IntervalSeconds>0</IntervalSeconds>
           <Id>1c728731-0f1e-4661-969f-f8b3d4cac27f</Id>
+        </GameComponent>
+      </Components>
+    </GameObject>
+    <GameObject Type="iGL.Engine.Plane, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <CreationMode>Additional</CreationMode>
+      <Visible>true</Visible>
+      <Enabled>true</Enabled>
+      <Designer>false</Designer>
+      <Name>CaveBackground</Name>
+      <ClearsZBuffer>false</ClearsZBuffer>
+      <DistanceSorting>false</DistanceSorting>
+      <AutoLoad>true</AutoLoad>
+      <RenderQueuePriority>0</RenderQueuePriority>
+      <Id>94fb13bd-4c66-4117-b755-4dc5b8830b92</Id>
+      <Position>
+        <x>35.53692</x>
+        <y>10.25</y>
+        <z>-1</z>
+      </Position>
+      <Scale>
+        <x>30</x>
+        <y>15</y>
+        <z>1</z>
+      </Scale>
+      <Rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </Rotation>
+      <Children />
+      <Components>
+        <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+            <Id></Id>
+            <Ambient>
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+              <w>1</w>
+            </Ambient>
+            <Diffuse>
+              <x>0.282352954</x>
+              <y>0.282352954</y>
+              <z>0.282352954</z>
+              <w>1</w>
+            </Diffuse>
+            <Specular>
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+              <w>0</w>
+            </Specular>
+            <Shininess>0</Shininess>
+            <TextureName>stone</TextureName>
+            <NormalTextureName></NormalTextureName>
+            <TextureRepeatX>true</TextureRepeatX>
+            <TextureRepeatY>false</TextureRepeatY>
+            <TextureTilingX>2</TextureTilingX>
+            <TextureTilingY>1</TextureTilingY>
+            <ShaderProgram>POINTLIGHT</ShaderProgram>
+          </Material>
+          <MeshResourceName></MeshResourceName>
+          <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>c35a77c4-4cb6-4468-831a-303ae32e128a</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>e0dd2225-b6eb-4558-8770-a00845f09e74</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>588e4aa3-2b59-421c-a84e-697df2946986</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>19d9b948-4ae5-4ac6-a0cd-f66e024ddb21</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>b3f4c900-fe4b-46c3-a3da-d476621cbeae</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>45a3c113-7562-4fbf-86e4-e7d17f473b62</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>0c1ecc46-cbf0-4d46-ae8a-646baaee7044</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>f24df336-0906-4447-b30f-454de8aab4cc</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>d772c95a-994f-4a16-adf8-240fd84e7b50</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>2ff3f14f-b6a3-4360-9290-a550c74a4956</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>5dad8473-f3d9-4eef-854d-513cb21ca120</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>1c5a398c-7118-4da1-8f1a-15a6a652a9f5</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>3b3fdc84-6194-4c67-a2d4-b8c7f380eabe</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>55c0602a-90df-4520-89b9-0d865eb108c6</Id>
         </GameComponent>
       </Components>
     </GameObject>
@@ -9318,54 +8326,6 @@
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>0bea6506-3195-41b4-a2d6-d2f1fc16addf</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>fbeb30b3-5656-4a0c-b33e-02af00ab837f</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>aaa4e70e-7712-4291-9680-b16452ea8b35</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f4e6d5ac-c335-4f93-8b00-13b2d9507921</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>db493ee1-a1aa-4e9e-97e5-3d1965a08137</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>3a660606-e215-40c8-bca2-442b48496f30</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>0cef6f35-f66b-4ead-a042-c94dc2d04992</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>ecf3d31c-b52b-4d48-86c2-1612586d1ca9</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>5d69e861-baaf-4025-bfae-c5af87281b46</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>573bb060-9fad-4076-b4c8-59ff8faef3a7</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>c7d25c56-13c6-4dfe-a8a2-5ab6d7a5f926</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>8df111ad-b1e8-44e4-894f-5f8002fd51e7</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e8127547-5605-4534-ab92-46340fe915f5</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -9629,54 +8589,6 @@
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>ee330de5-7b63-472b-b246-8c7ba88fc3bc</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>aba7571b-f6a4-4eaa-929c-40abfc2cf066</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>61015060-a754-4e1f-afd5-930fd01c507a</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>b888feb0-8569-42f6-9c0a-e007aa1fd369</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>7ed57837-5003-418b-827b-1bd26bf5574c</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>fdcd2b91-5e41-499e-aa3f-4411d96f51a9</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>7aa97e5a-cace-426f-b749-01005ecc0d8e</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>2c24f1a7-fbf2-41b3-9598-2b2268eb8ce8</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>fa36a01f-3b4d-47d8-b7ef-db56119f7e5b</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>40834bc2-6c1e-49f3-960d-9e8fc47ea831</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e0e951a5-dcd0-44bd-911c-47a99a23814c</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>1ff10d85-86b9-4f89-87e9-bc596e084a1e</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>4e096425-a4ff-4120-9c0b-23df95be2afc</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -10075,54 +8987,6 @@
               <BeginMode>Triangles</BeginMode>
               <Id>f82fa5a2-5c87-4483-a3fc-5842b21b83b5</Id>
             </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>bbb627fd-6461-446c-918a-5b5197bf9cc8</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e95b849a-5345-4cbc-982f-beb0444830c0</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>50be7269-4cca-4c64-9bd7-2d74bcfd1be1</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>1672888c-fbd2-4c3d-b4cc-4d118a081a7e</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>dc349edd-5f3b-47d7-84b6-9cc1576404ed</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>fc3ded84-5f6a-42be-9918-1512f9f9ffe4</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>c59fe545-e5dc-43f2-bfd1-c6f9e3a5e5bf</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>65a04317-f452-4cf4-8be8-95c7369efefd</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e447b25b-41bf-4e6f-bd0f-3ac14714c1d1</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>951d9052-ae5d-4ad3-858d-6ef7cce79339</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>81a95de3-340a-46a8-b0aa-3518a0d07280</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>04de77ed-a0d0-419b-bb9b-f06f739bc0ca</Id>
-            </GameComponent>
           </Components>
         </GameObject>
       </Children>
@@ -10385,54 +9249,6 @@
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>eca6d800-f9fb-4650-ace8-a1ed5cc8d33f</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>705cd430-ffbe-40f4-b9da-d5a84ec85846</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>7397540b-cfc2-4883-b28a-e0cc4fae9688</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>04d71b55-16d0-4498-ad99-a3b8c8472d59</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>6eb063b1-5b0e-4507-8d4b-f33734a0f355</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>ef15236d-1688-4dda-9c30-f5f3d858b61c</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>c2d3dbc0-99d2-4b30-b1eb-7711f5b5a782</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>90251d8e-181e-4c70-9d5e-21eb5182413c</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>fcefca87-8220-432a-96a6-eb0547d20f0a</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>ebc5a62e-feaa-4e30-bb58-f2f4e15c61d2</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>3f3e3bdc-a869-4acc-800c-4ae4aa3634aa</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f6dc8849-86ed-40e2-b185-fef4dec68ebb</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>8dfbfcc1-acd3-4661-a714-14f41bab8af2</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -10697,54 +9513,6 @@
               <BeginMode>Triangles</BeginMode>
               <Id>fd793109-e4f8-40fc-a662-a5de6eae45fe</Id>
             </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>4cf5f2a1-f0d9-4f4d-96e4-779a0de5c131</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>1a022509-3e08-48ba-a690-76cfd2cdded7</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>ee32acd6-caac-46e3-9d40-e2e2817014f6</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>982aa5c2-bf69-4aab-857a-aded2dd760d8</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>d751f7dc-f3a9-4e65-883c-38aceb9e9346</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>1b73baa8-1f0c-442c-8d1a-f3f786b4f333</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e8baaa9c-f3cd-4fdc-bdf7-767389963111</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>0edfcdc5-6324-4d6f-8663-2220a34a3a87</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>520bf3fc-4bcb-43fe-b5a1-d6c52866afdc</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>9dfc8b62-3f89-4322-a6cd-afd158c28086</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f7101b77-3742-4a84-aee9-51e5d6732107</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>6608fddc-191a-48d7-b361-c6f269c5f16c</Id>
-            </GameComponent>
           </Components>
         </GameObject>
       </Children>
@@ -11007,54 +9775,6 @@
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>756018ec-789a-48db-b486-3c15ca40de86</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>18eefae8-a926-4377-a22b-38d1688c8a34</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>0438ccba-76c0-4cad-ac23-d799ec405567</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>a122c559-ffd7-497b-8794-c02293b71096</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>cf9c25c0-b039-48ad-8614-6828409c73f5</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>83d72b64-4866-4c9c-9183-0097c89e942c</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>9d06dad2-d316-4080-9d4c-c0ccef7c2d4e</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e81b7b2a-45bb-4b4e-8ad0-21380ca572f7</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f0966c30-416c-4ddd-8eb2-f09b8c6ec9dd</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>a8940530-976b-4fad-b397-962568c573f9</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>35880387-dea3-4953-8ffe-01fbd84ac7db</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>4a3450bc-da23-4f3c-94f9-45985cd79a2c</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>b1963815-d0d4-4d40-a9d3-078058d9df9d</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -11319,54 +10039,6 @@
               <BeginMode>Triangles</BeginMode>
               <Id>a6fd9d0a-98ca-42bd-a674-cb7747d0208c</Id>
             </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>1fd3062d-d998-4747-8b26-d716a07a1c81</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>04ee19ca-e5b6-468d-ab2c-27d5cb02e8ff</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>fe0e8070-53e8-496e-b328-9595d45d627b</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>aa1b145b-177c-4c6c-83c8-4e189397f2b0</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>8ab365ad-0eda-4e07-98fe-d3c71674ae5f</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>0bc2c9b7-57c1-45e4-96d8-fa9e99bb78e5</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>79ccabf3-435c-4bcc-8965-d49903b2681b</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>5e731e95-2563-4ba9-8a15-017c540aaf15</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>cc7e3133-9671-4fdd-aeae-27b612bddaa3</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f3fb08a7-851e-4a73-909a-71fef9c7d79f</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>71c575b7-fba4-43e5-9706-be339550a4cf</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>2b15b080-9fd8-44d2-9c95-23597f43b3b1</Id>
-            </GameComponent>
           </Components>
         </GameObject>
       </Children>
@@ -11629,54 +10301,6 @@
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>83b6e0d6-b2d1-4ae4-9654-f904b6da9d50</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>ef716e6c-accd-49bc-91f7-0bdefcaf6353</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>6d01d583-0bf5-4c15-9db2-c0955ee51a69</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>0c224fba-73b1-4479-ab9c-4f1700de2086</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>90f7b914-11c0-4a09-903f-f0d2d939e8d0</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>d130e691-c8df-42bc-b5e2-e8abc0e1ef05</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>7dbda512-d181-4f60-a35c-5f1be9fd9f77</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e9315bd2-9881-415d-8174-aae57989e93f</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>bdf86f22-2d3d-4494-b0bd-1fbda217876c</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>3650b26c-ec52-4c33-833d-ecaf733c7bc4</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>b1e32678-ca19-49e0-b56b-aca336265dde</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f0741551-f031-4803-bd83-2cfc72f640bb</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>8cb4cab1-9d00-4e61-9a8b-268f69ece62c</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -11941,54 +10565,6 @@
               <BeginMode>Triangles</BeginMode>
               <Id>a873cae1-7c56-47cd-bf90-20d2ffd088d7</Id>
             </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>4875dd99-a420-48f1-8be6-9f1eeb07e1ab</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>3f9c0775-f714-4733-a5fe-2a4e907e8d54</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>6c237d46-c556-4283-81cf-b811e4cb91ea</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>938beae9-c305-4e2b-9f16-1b3a60b88153</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>741669a4-c942-4475-88c0-8a635cf6f0b2</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>7aea4e5c-d863-45bf-b3f5-8962e12ef4bd</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>c3ca4e5c-f376-4e98-a2a9-1f68a604711a</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>58c4af9f-f14f-4505-b1bf-3340ae4ec17b</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>691b2c93-0961-4782-ab65-0b4c69f3c70c</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>4f85eaf1-31cd-4a26-974c-5b5da67eaa63</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>c121467f-0c47-47c9-a155-ce6e92dc7875</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>76bf3c6f-1245-4ff9-905c-3108db7f3a10</Id>
-            </GameComponent>
           </Components>
         </GameObject>
       </Children>
@@ -12251,54 +10827,6 @@
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>b5aad3ad-b85b-429f-bc17-cc65f9550d85</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>af4fdb75-02d9-4ec7-ae25-d409a8de8957</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>c4e357df-6ba8-4824-ad48-73457a88a356</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>08f6563e-f87b-47aa-ad67-33f4d0fdd730</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>80139d9d-6cfd-4ee3-9658-2dacfeda52b4</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f01de61b-f9bd-46c6-8f23-3b206a8340dc</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>64cec73e-12dd-450f-8057-4a5d9991cb12</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>b01a1a88-63c2-4a7b-a6b1-05066923f03e</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>41f05be4-9b7b-4383-a851-f2ab6232c866</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>22a8ed49-e33d-476f-9775-d2d5fbd4965f</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>7a8b4397-5714-4d6c-9993-bcaeb968d74d</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>b04b3c27-9d0b-49ae-97d7-53b5166a1064</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f9b92a53-123e-4cf9-a88e-b527b4db7fca</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -12563,54 +11091,6 @@
               <BeginMode>Triangles</BeginMode>
               <Id>ab062192-ac04-4b7d-9e49-b8c754050497</Id>
             </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>801adf9c-9923-4133-ac69-798b1c3c49bd</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>fa96d329-4d06-4ee5-8032-94e5a0af5b43</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>cd7e49e0-3c18-41e3-b30d-06a09bbe2bc3</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>bd78bc03-16d8-47c0-9c54-85d572a33ecf</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>74599a18-6a7a-4354-b414-9d451a564993</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f0d88142-afba-41d0-a9a0-f3b1c9ae9ff4</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>038a4a85-4d6a-4d2b-bc18-b5b5cf372105</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>5a2fd090-da2f-41f9-8988-d6a1dcc98e71</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>3b9665a6-8a17-44cc-9bab-6f89896ca112</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e554729a-61b0-4b7e-b8b2-76c1223401c2</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>b574a4a0-4300-450e-9031-40d52c208f52</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>367d23c2-1e22-4825-a21a-d5b6574cc89b</Id>
-            </GameComponent>
           </Components>
         </GameObject>
       </Children>
@@ -12873,54 +11353,6 @@
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>310f1775-3500-4132-a7f3-d51c84f0e94c</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>c1521e70-9eae-4c3a-8cf2-7ec391e3727f</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>81fdd5d1-619e-4691-8805-89dbd5d4fcff</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>a8cd2e23-201c-4db2-9266-85553c218202</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>eb6711d4-a0ec-48fb-9d4e-6738cebcf02f</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>9d03e807-56fc-46a6-83ef-01d5876a88fc</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>7569ddd7-9c35-4601-aadb-4ce3e782ea23</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>1c0e142a-58b4-4ff3-b09c-436d3a8d9a3d</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>fe9ecad8-7b47-4046-88c5-76ea595ad7d9</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>3ca44a6c-a769-4d21-a306-e0659e03bec0</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>194a004e-3891-455a-a635-aadf0cee53cc</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>29bd13de-3259-4f93-9105-c8f1f436ab3e</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e3ac9a14-4a2e-4c1c-b8b9-ab5e93ee72de</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -13185,54 +11617,6 @@
               <BeginMode>Triangles</BeginMode>
               <Id>1b1cc0f1-cadb-493f-b9a2-3170eb3268c0</Id>
             </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>69f22e9f-ad23-4b6d-990e-bd12a0cb2719</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>6a0ad669-a2a6-4240-9b52-a23c5a7785ea</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>5171eee1-ed6e-48f8-bd8e-2f3597e78d92</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>b02b69b7-30e3-4cf9-a24e-eedd662b93d2</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>5d3a34fd-5b9c-4225-805c-96d329b70566</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>2a1b0402-7f35-41df-9a6f-877d694b22f6</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e5502b4d-f00d-41bb-816e-910e7368834a</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>17b858ee-495e-4ab4-a2a8-46393a4d67f0</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>5491f9e7-ec16-49dd-89ec-e9de7f989182</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>33416b95-cba6-411e-82d1-40a786966c1b</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>9657c425-cad5-43e3-aa3c-cc0b325a040d</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>bdda5104-4c44-480f-89be-fe8b390bbbd6</Id>
-            </GameComponent>
           </Components>
         </GameObject>
       </Children>
@@ -13495,54 +11879,6 @@
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>20320fd1-5b65-48bb-b836-facf561de682</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>a86066fa-8812-44af-824b-15c05e8d7f33</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f9c14ecc-e82d-4e01-b365-03612a9ad8c3</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>5dd3bb1f-3bac-4480-b6c9-5ca772d7b796</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>ca6a31ba-317e-4937-8563-4a62d5a9b160</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>c5650df5-1b2c-47c2-a7c4-c7a3e126db6b</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>923f429c-2882-493d-8b99-beb892b009c5</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e978062e-c0e4-40a4-9dc6-8ca0297ee888</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>67049b19-7759-4327-8c86-863e2374275e</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>56ffb830-a717-4297-ba22-548425dbbe9b</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>23697f21-03a0-4197-a401-235403d85700</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>fdb768d3-84eb-4c75-b1d8-2b98bc1ea747</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>d5932232-125a-4775-8c4f-cfbf1304b6be</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -13807,54 +12143,6 @@
               <BeginMode>Triangles</BeginMode>
               <Id>0c067074-6f5e-4980-bc8c-3dc4ea9dde7c</Id>
             </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>f0ad2b3f-704f-4bac-a2d2-69f3b174a0b1</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>d6eaa5ae-100b-467c-9289-1b67c71f9ba5</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>a1278f6c-2076-4e5e-8968-3572b49f6440</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>7fc3eafa-b779-446c-9938-f7bcde270800</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>1bf47d70-7495-455e-866a-bfa633afeef8</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>c137e311-4221-4e75-95d7-20e8bde2708b</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>b0786ca4-c07c-43bb-b4ac-2c6144ca4792</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>19225ff3-7912-47b7-b097-2338aa22a838</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>4a99c906-d009-479c-bd03-a36c36a883ff</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>3a4e6d48-d28d-46b9-bd63-322128ae5330</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>dba6f0b0-46d2-44b6-8b82-fd1ec1c682ba</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>20b5ec95-63d6-4b7d-9d7a-19862f76fa76</Id>
-            </GameComponent>
           </Components>
         </GameObject>
       </Children>
@@ -14117,54 +12405,6 @@
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>14c639ba-63d0-47ca-a60a-1e5a0156a573</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e9e09385-a875-4aaf-be1f-1358d4987ec6</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>41c69008-fa3d-433a-891f-8eebf4aa7378</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>33aa3c7c-ae59-4530-ad69-4ff3b6903d9d</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>b6061f21-248d-4643-a26e-80ac514d3cb1</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>d6da64ff-c819-4441-a174-65347cf5626e</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>8ad29622-fc32-4040-ac4b-9fccf39f14db</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>a49a648b-c05f-4d8a-8781-5037327342b4</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>8d7f9c5e-f710-44aa-a742-d1047c985b71</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>261cf5e5-561c-4029-97f1-46c895d321d0</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>ec56be5c-0cc5-4c6f-8f33-0ee53f6e9e89</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>fc29b259-c74c-4ffb-bd57-65a9908c4061</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>5ce8275b-237c-466e-9a96-f66c2fd77e9d</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -14512,54 +12752,6 @@
               <BeginMode>Triangles</BeginMode>
               <Id>22466f21-77ff-4910-af6b-2da8fe0aaebe</Id>
             </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>1b6517fa-618c-4c19-a181-a8b681f33c80</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>9221c9ed-5875-4cbd-af3f-b37890353a71</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>878f076a-c87d-4033-96d7-e1520ee43bc0</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>0d12a82b-0dc2-438a-9d2b-35a7d94ca96f</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>11badebd-8f05-47b1-aa3c-47a0bb650d5f</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>be2e2f85-4580-4a28-86d6-c6cff53d3464</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>5362d063-bed8-45c1-9db3-53f206d2f824</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>b9b34738-ada2-4948-9321-f5c4c417bda2</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>cddddbf3-84ab-4104-96eb-450ada618d22</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>ceb39223-dbe9-4d80-8221-ce42d0b039f9</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>db691293-d657-4627-a9ee-f1b195608fb8</Id>
-            </GameComponent>
-            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-              <BeginMode>Triangles</BeginMode>
-              <Id>e0a2e3e6-16b4-4b3b-b13b-403a2400e62c</Id>
-            </GameComponent>
           </Components>
         </GameObject>
       </Children>
@@ -14651,13 +12843,13 @@
       <RenderQueuePriority>0</RenderQueuePriority>
       <Id>c42cbb21-c84e-4a53-9397-8e5e602c018a</Id>
       <Position>
-        <x>-22.98787</x>
-        <y>-10.25042</y>
+        <x>-52.30295</x>
+        <y>-0.5661571</y>
         <z>0</z>
       </Position>
       <Scale>
-        <x>5.5</x>
-        <y>5.5</y>
+        <x>3</x>
+        <y>3</y>
         <z>1</z>
       </Scale>
       <Rotation>
@@ -14669,7 +12861,7 @@
       <Components>
         <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-            <Id></Id>
+            <Id />
             <Ambient>
               <x>0</x>
               <y>0</y>
@@ -14677,9 +12869,9 @@
               <w>1</w>
             </Ambient>
             <Diffuse>
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
+              <x>0.4</x>
+              <y>0.4</y>
+              <z>0.4</z>
               <w>1</w>
             </Diffuse>
             <Specular>
@@ -14690,7 +12882,7 @@
             </Specular>
             <Shininess>0</Shininess>
             <TextureName>fabric</TextureName>
-            <NormalTextureName></NormalTextureName>
+            <NormalTextureName />
             <TextureRepeatX>false</TextureRepeatX>
             <TextureRepeatY>false</TextureRepeatY>
             <TextureTilingX>1</TextureTilingX>
@@ -14714,13 +12906,10 @@
           <Id>e59ebd40-28f0-4d3b-95cf-e9811570f514</Id>
         </GameComponent>
         <GameComponent Type="iGL.Engine.CircleColliderFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Radius>0</Radius>
           <Id>b9bbe6d6-0108-48f2-9e83-6fd4760040fd</Id>
         </GameComponent>
         <GameComponent Type="iGL.Engine.FixedRevoluteJointComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <MotorEnabled>true</MotorEnabled>
-          <MotorSpeed>1</MotorSpeed>
-          <MotorTorque>10000</MotorTorque>
-          <MaxMotorTorque>10000</MaxMotorTorque>
           <Id>e8d04b4e-9362-461f-b8d4-c61fcb925c53</Id>
         </GameComponent>
         <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -14831,12 +13020,15 @@
       <ResourceName>iGL.TestGame.Resources.cylinder.dae</ResourceName>
       <Name>cylinder</Name>
     </Resource>
-    <Resource Type="iGL.Engine.Resources.Texture, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <ResourceName>iGL.TestGame.Resources.untextured.text</ResourceName>
-      <Name>untextured</Name>
-    </Resource>
   </Resources>
   <Triggers>
+    <Trigger Type="iGL.Engine.Triggers.Trigger, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <Type>PlayerCollision</Type>
+      <Action>PlayAnimation</Action>
+      <SourceObjectId>1f23c7b2-6e47-4f36-bcf9-59dab4867cde</SourceObjectId>
+      <TargetObjectId>212e1484-11e2-4c09-870e-37c19c40516c</TargetObjectId>
+      <TargetComponentId>791695d0-8114-4123-b182-0a9031400a9a</TargetComponentId>
+    </Trigger>
     <Trigger Type="iGL.Engine.Triggers.Trigger, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <Type>PlayerCollision</Type>
       <Action>PlayAnimation</Action>

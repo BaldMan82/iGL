@@ -25,6 +25,9 @@ namespace iGL.Engine
         private Texture _bgTexture;
         private Vector2 _centerPoint;
 
+        public Vector2 MinBounds { get; private set; }
+        public Vector2 MaxBounds { get; private set; }
+
         public BeginMode BeginMode { get; set; }
 
         public BackgroundComponent(XElement xmlElement) : base(xmlElement) { }
@@ -100,6 +103,46 @@ namespace iGL.Engine
 
             GameObject.Scene.OnLoaded += (a, b) =>
             {
+                /* calculate level bounding box */
+
+                var objs = GameObject.Scene.GameObjects.SelectMany(g => g.AllChildren).ToList();
+                var meshComponents = objs.Select(o => o.Components.FirstOrDefault(c => c is MeshComponent) as MeshComponent).Where(c => c != null);
+                
+                Vector3 vMin = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
+                Vector3 vMax = new Vector3(float.MinValue, float.MinValue, float.MinValue);
+
+                foreach (var meshComponent in meshComponents)
+                {
+                    var meshMin = meshComponent.MinBox;
+                    var meshMax = meshComponent.MaxBox;
+
+                    var transform = meshComponent.GameObject.GetCompositeTransform();
+                    meshMin = Vector3.Transform(meshMin, transform);
+                    meshMax = Vector3.Transform(meshMax, transform);
+
+                    if (meshMin.X < vMin.X) vMin.X = meshMin.X;
+                    if (meshMin.X > vMax.X) vMax.X = meshMin.X;
+
+                    if (meshMin.Y < vMin.Y) vMin.Y = meshMin.Y;
+                    if (meshMin.Y > vMax.Y) vMax.Y = meshMin.Y;
+
+                    if (meshMin.Z < vMin.Z) vMin.Z = meshMin.Z;
+                    if (meshMin.Z > vMax.Z) vMax.Z = meshMin.Z;
+
+                    if (meshMax.X < vMin.X) vMin.X = meshMax.X;
+                    if (meshMax.X > vMax.X) vMax.X = meshMax.X;
+                                                     
+                    if (meshMax.Y < vMin.Y) vMin.Y = meshMax.Y;
+                    if (meshMax.Y > vMax.Y) vMax.Y = meshMax.Y;      
+                                              
+                    if (meshMax.Z < vMin.Z) vMin.Z = meshMax.Z;
+                    if (meshMax.Z > vMax.Z) vMax.Z = meshMax.Z;
+                }
+
+                float margin = 30.0f;
+                MinBounds = new Vector2(vMin.X - margin, vMin.Y - margin);
+                MaxBounds = new Vector2(vMax.X + margin, vMax.Y + margin);
+
                 if (GameObject.Scene.CurrentCamera is PerspectiveCameraComponent)
                 {
                     var cam = GameObject.Scene.CurrentCamera as PerspectiveCameraComponent;
@@ -136,16 +179,23 @@ namespace iGL.Engine
             _shader.SetAmbientColor(ref ambientColor);
 
             _shader.SetModelViewProjectionMatrix(ref modelView);
+            _shader.SetModelViewMatrix(ref transform);
 
             var locationInverse = transform;
 
-            locationInverse.Invert();
-            locationInverse.Transpose();
+            locationInverse.M41 = 0;
+            locationInverse.M42 = 0;
+            locationInverse.M43 = 0;
 
-            _shader.SetTransposeAdjointModelViewMatrix(ref locationInverse);
-            _shader.SetModelViewMatrix(ref transform);
+            var mi = Matrix4.Identity;
+
+            _shader.SetTransposeAdjointModelViewMatrix(ref mi);
+                   
             var eyePos = new Vector4(0, 0, 1, 1);
             _shader.SetEyePos(ref eyePos);
+            
+            _shader.SetMinBounds(MinBounds);
+            _shader.SetMaxBounds(MaxBounds);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, _bufferIds[0]);
 

@@ -31,7 +31,7 @@ namespace iGL.TestGame
                 _starTextComponent.Text = starText;
                 _starTextComponent.Reload();
             }
-        }
+        }        
 
         public override void Load()
         {           
@@ -54,6 +54,19 @@ namespace iGL.TestGame
             _starTextComponent = GameObjects.First(g => g.Name == "StarCount").Components.First(c => c is TextComponent) as TextComponent;
 
             _game = this.Game as TestGame;
+
+            var gameOver = this.GameObjects.First(g => g.Name == "Gameover");
+            gameOver.Visible = false;
+            gameOver.Enabled = false;
+            gameOver.OnMouseDown += (a, b) =>
+            {
+                var overlay = this.GameObjects.Single(g => g.Name == "Overlay");
+                overlay.Visible = false;
+
+                gameOver.Visible = false;
+                gameOver.Enabled = false;
+                ((TestGame)this.Game).ReloadScene();
+            };
         }
 
         void pauseButton_OnMouseUp(object sender, Engine.Events.MouseButtonUpEvent e)
@@ -90,6 +103,16 @@ namespace iGL.TestGame
             animComponent.StopValue = "1.1,1.1,1";
             animComponent.Reload();
             animComponent.Play();
+        }
+
+        public void GameOver()
+        {
+            var overlay = this.GameObjects.Single(g => g.Name == "Overlay");
+            overlay.Visible = true;
+
+            var gameOver = this.GameObjects.First(g => g.Name == "Gameover");
+            gameOver.Visible = true;
+            gameOver.Enabled = true;
         }
 
     }

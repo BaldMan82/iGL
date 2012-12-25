@@ -37,7 +37,7 @@ namespace iGL.Engine
         {
             if (Light is PointLight)
             {
-                ((PointLight)Light).WorldPosition = new Vector4(this.Position);
+                ((PointLight)Light).WorldPosition = new Vector4(this.Position, 1);
             }
 
             base.Tick(timeElapsed);

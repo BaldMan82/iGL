@@ -20,7 +20,22 @@ namespace iGL.Designer.ComponentDialogs
 
         public override void UpdateComponent()
         {
-           
+            var revoluteComponent = this.Component as FixedRevoluteJointComponent;
+            revoluteComponent.MotorEnabled = cbMotorEnabled.Checked;
+            revoluteComponent.MaxMotorTorque = txtMaxTorque.TextToFloat();
+            revoluteComponent.MotorSpeed = txtMotorSpeed.TextToFloat();
+            revoluteComponent.MotorTorque = txtMaxTorque.TextToFloat();
+
+            revoluteComponent.UpdateMotorProperties();
+        }
+
+        private void FixedRevoluteJointComponentDlg_Load(object sender, EventArgs e)
+        {
+            var revoluteComponent = this.Component as FixedRevoluteJointComponent;
+            cbMotorEnabled.Checked = revoluteComponent.MotorEnabled;
+            txtMaxTorque.Text = revoluteComponent.MaxMotorTorque.ToInvariantText();
+            txtMotorSpeed.Text = revoluteComponent.MotorSpeed.ToInvariantText();
+            txtTorque.Text = revoluteComponent.MotorTorque.ToInvariantText();
         }
     }
 }

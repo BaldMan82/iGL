@@ -21,6 +21,7 @@ namespace iGL.TestGame
         private bool _endingGame;
         private SlingshotBallFarseer2D _slingShotBall;
         private string _currentSceneXML;
+        private UIScene _uiScene;
 
         public TestGame(IGL gl) : base(gl) 
         {
@@ -35,8 +36,8 @@ namespace iGL.TestGame
 
             /* load ui scene */
 
-            var uiScene = new UIScene();
-            SetUIScene(uiScene);
+            _uiScene = new UIScene();
+            SetUIScene(_uiScene);
 
             using (var textStreamReader = new StreamReader(this.GetType().Assembly.GetManifestResourceStream("iGL.TestGame.Resources.ui_level.igl")))
             {
@@ -120,6 +121,11 @@ namespace iGL.TestGame
             TotalStarCount = Scene.GameObjects.Where(g => g is Star).Count();
             StarsCollected = 0;
            
+        }
+
+        public void GameOver()
+        {
+            _uiScene.GameOver();
         }
 
         public void EndGame()

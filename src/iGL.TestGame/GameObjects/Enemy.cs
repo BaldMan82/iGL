@@ -35,7 +35,7 @@ namespace iGL.TestGame.GameObjects
             base.Init();
 
             var circleCollider = this.Components.First(c => c is CircleColliderFarseerComponent) as CircleColliderFarseerComponent;
-            circleCollider.Radius = 0.5f;
+            //circleCollider.Radius = 0.5f;
 
             _rigidBody = this.Components.First(c => c is RigidBodyFarseerComponent) as RigidBodyFarseerComponent;
 

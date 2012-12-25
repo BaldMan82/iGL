@@ -21,8 +21,7 @@ uniform Material u_material;
 uniform mediump vec4 u_globalAmbientColor;
 
 // Varyings
-varying mediump vec4 v_ambientColor;
-varying mediump vec4 v_diffuseColor;
+varying mediump vec4 v_color;
 varying mediump vec2 v_uv;
 
 uniform sampler2D s_texture;

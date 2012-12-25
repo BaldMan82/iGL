@@ -25,7 +25,7 @@ uniform highp float u_shortFloatFactor;
 
 uniform lowp vec4 u_globalAmbientColor;
 
-varying lowp vec4 v_ambientColor;
+varying lowp vec4 v_color;
 varying highp vec2 v_uv;
 
 void main() 
@@ -34,7 +34,7 @@ void main()
 
 	v_uv = vec2(a_uv.x / u_shortFloatFactor, a_uv.y / u_shortFloatFactor);
 
-	v_ambientColor = u_material.ambient*u_globalAmbientColor;	
+	v_color = u_material.ambient*u_globalAmbientColor;	
 
 	lowp vec3 v = a_normal;	
 	

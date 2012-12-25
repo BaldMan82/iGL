@@ -12,7 +12,7 @@ struct Material {
 uniform Material u_material;
 
 // Varyings
-varying lowp vec4 v_ambientColor;
+varying lowp vec4 v_color;
 varying highp vec2 v_uv;
 
 uniform sampler2D s_texture;
@@ -26,7 +26,7 @@ void main()
 		gl_FragColor = vec4(0,0,0, textureColor.a);
 	}
 	else {
-		lowp vec4 finalColor = v_ambientColor*textureColor;		
+		lowp vec4 finalColor = v_color*textureColor;		
 				
 		gl_FragColor = finalColor;
 	}

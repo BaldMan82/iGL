@@ -18,6 +18,16 @@ namespace iGL.TestGame.GameObjects
     [RequiredComponent(typeof(RigidBodyFarseerComponent), SlingshotBallFarseer2D.RigidBodyFarseerComponentId)]
     public class SlingshotBallFarseer2D : Plane
     {
+        public enum State
+        {
+            Green,
+            Red,
+            AttachedToJumpRoll,
+            DetachingFromJumpRoll
+        }
+
+        internal State CurrentState { get; set; }
+
         private Sphere _aimSphere;
         private bool _inAimMode;
         private Vector3 _triggerPosition;
@@ -39,6 +49,8 @@ namespace iGL.TestGame.GameObjects
         private Vector3 _previousPosition;
         private DateTime _lastContactTime;
         public LightObject _lightObject;
+        private bool _lightPositionFixed;
+        private Vector4 _fixedLightPosition;
    
         public SlingshotBallFarseer2D(XElement element) : base(element) { }
 
@@ -75,7 +87,7 @@ namespace iGL.TestGame.GameObjects
             _rigidBodyComponent = this.Components.First(c => c is RigidBodyFarseerComponent) as RigidBodyFarseerComponent;
 
             var circleCollider = this.Components.First(c => c is CircleColliderFarseerComponent) as CircleColliderFarseerComponent;
-            circleCollider.Radius = 0.5f;
+            //circleCollider.Radius = 0.5f;
 
             Material.TextureName = "greenball";
 
@@ -111,6 +123,15 @@ namespace iGL.TestGame.GameObjects
 
         }
 
+
+        public override void OverrideLoadedProperties()
+        {
+            base.OverrideLoadedProperties();
+
+            CurrentState = State.Green;
+            _lightPositionFixed = false;
+        }
+    
         void Scene_OnLoaded(object sender, Engine.Events.LoadedEvent e)
         {
             _previousPosition = this.Position;
@@ -156,7 +177,12 @@ namespace iGL.TestGame.GameObjects
         }
 
         public override void Tick(float timeElapsed)
-        {   
+        {
+            if (CurrentState == State.DetachingFromJumpRoll)
+            {
+                CurrentState = State.Green;
+            }
+
             _previousPosition = this.Position;
 
             base.Tick(timeElapsed);          
@@ -212,12 +238,12 @@ namespace iGL.TestGame.GameObjects
             var body = _rigidBodyComponent as RigidBodyFarseerComponent;
             if (_lastAngularVelocity.LengthSquared > body.AngularVelocity.LengthSquared)
             {
-                body.AngularVelocity = body.AngularVelocity * 0.9f;
+                //body.AngularVelocity = body.AngularVelocity * 0.9f;
             }
 
             var texture = Material.TextureName;
 
-            if (body.HasContacts)
+            if (body.HasContacts || CurrentState == State.AttachedToJumpRoll)
             {
                 Material.TextureName = "greenball";         
                 _canFire = true;
@@ -240,8 +266,6 @@ namespace iGL.TestGame.GameObjects
             if (texture != Material.TextureName) _meshComponent.RefreshTexture();
 
             _lastAngularVelocity = body.AngularVelocity;
-        
-           
 
         }
 
@@ -294,14 +318,24 @@ namespace iGL.TestGame.GameObjects
 
         void _aimSphere_OnMouseUp(object sender, Engine.Events.MouseButtonUpEvent e)
         {
-           
+            if (CurrentState == State.AttachedToJumpRoll)
+            {
+                var joint = this.Components.FirstOrDefault(c => c is WeldJointFarseerComponent);
+                if (joint != null)
+                {
+                    this.RemoveComponent(joint);
+                    _followCamera.Follow(this, true);
+                    CurrentState = State.DetachingFromJumpRoll;
+                }
+            }
+
             if (Game.InDesignMode || !_inAimMode) return;
            
             _inAimMode = false;
             _arrow2d.Visible = false;
 
             var rigidBody = Components.Single(c => c is RigidBodyFarseerComponent) as RigidBodyFarseerComponent;
-            if (rigidBody.HasContacts)
+            if (rigidBody.HasContacts || CurrentState == State.DetachingFromJumpRoll)
             {
                 var fireDirection = this.Position - _triggerPosition;
                 rigidBody.ApplyForce(fireDirection * _springConstant);
@@ -313,9 +347,9 @@ namespace iGL.TestGame.GameObjects
         {
             var body = _rigidBodyComponent as RigidBodyFarseerComponent;
 
-            if (Game.InDesignMode || !body.HasContacts) return;
+            if (Game.InDesignMode /*|| !body.HasContacts*/) return;
 
-            if (!_canFire) return;
+            //if (!_canFire) return;
           
             _inAimMode = true;           
 
@@ -332,11 +366,23 @@ namespace iGL.TestGame.GameObjects
             //if (_followCamera != null) _followCamera.FollowingEnabled = false;
         }
 
+        public void FixLightPosition()
+        {
+            _lightPositionFixed = true;
+            _fixedLightPosition = new Vector4(this.WorldPosition + new Vector3(0, 20, 50));
+        }
+
         void Scene_OnPreRender(object sender, Engine.Events.PreRenderEvent e)
         {
             /* override light pos */
-            ((PointLight)_lightObject.Light).WorldPosition = new Vector4(this.WorldPosition + new Vector3(0, 5, 20));
-            //((PointLightShader)Scene.Shader).SetLight(_lightObject.Light);
+            if (_lightPositionFixed)
+            {
+                ((PointLight)_lightObject.Light).WorldPosition = _fixedLightPosition;
+            }
+            else
+            {
+                ((PointLight)_lightObject.Light).WorldPosition = new Vector4(this.WorldPosition + new Vector3(0, 20, 50));
+            }
         }
 
         public override void Render(bool overrideParentTransform = false)

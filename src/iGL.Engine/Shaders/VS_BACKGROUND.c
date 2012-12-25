@@ -19,6 +19,8 @@ uniform mat4 u_modelViewMatrix;
 uniform mat4 u_modelViewProjectionMatrix;
 uniform mat4 u_transposeAdjointModelViewMatrix;
 uniform mediump vec2 u_centerPoint;
+uniform mediump vec2 u_minBounds;
+uniform mediump vec2 u_maxBounds;
 
 //uniform lowp vec4 u_eyePos;
 
@@ -26,8 +28,7 @@ uniform Light u_light;
 
 uniform lowp vec4 u_globalAmbientColor;
 
-varying lowp vec4 v_ambientColor;
-varying lowp vec4 v_diffuseColor;
+varying lowp vec4 v_color;
 varying highp vec2 v_uv;
 
 void calcLightning(mediump vec4 position, mediump vec4 normal);
@@ -38,25 +39,26 @@ void main()
 	
 	gl_Position = u_modelViewProjectionMatrix *position;
 
-	mediump vec4 transformedPosition = u_modelViewMatrix*position;
+	highp float lx = abs(u_maxBounds.x - u_minBounds.x);
+	highp float ly = abs(u_maxBounds.y - u_minBounds.y);
+
+	highp vec4 transformedPosition = u_modelViewMatrix*position;
 	calcLightning(transformedPosition, vec4(a_normal.x, a_normal.y, a_normal.z, 1));
 	
-	v_uv = vec2((transformedPosition.x + 120.0) / 240.0 , (120.0 - transformedPosition.y) / 240.0);
+	v_uv = vec2((transformedPosition.x - u_minBounds.x) / lx , 1.0 - (transformedPosition.y - u_minBounds.y) / ly);
 }
 
-void calcLightning(mediump vec4 position, mediump vec4 normal)
+void calcLightning(highp vec4 position, highp vec4 normal)
 {	
-	vec4 lightDir = u_light.position - position;
-	mediump vec3 transformedNormal =  vec3(u_transposeAdjointModelViewMatrix * normal);
-	vec3 lightVector = vec3(lightDir);
-
-	v_ambientColor = vec4(0.2,0.2,0.2,1);
-
-	mediump vec3 L = normalize(lightVector);
+	highp vec4 lightDir = u_light.position - position;
+	highp vec4 transformedNormal = u_transposeAdjointModelViewMatrix*normal;
+		
+	lightDir = normalize(lightDir);
 	transformedNormal = normalize(transformedNormal);
 
-	highp float lambertTerm = dot(transformedNormal,L);
-	
-	v_diffuseColor = u_light.diffuse * clamp(lambertTerm, 0.0, 1.0);
+	highp float lambertTerm = dot(transformedNormal, lightDir);
+		
+	v_color = u_light.diffuse * clamp(lambertTerm*2, 0.0, 1.0);	
+	v_color.a = 1;
 
 }

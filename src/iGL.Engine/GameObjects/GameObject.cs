@@ -504,6 +504,7 @@ namespace iGL.Engine
         public void RemoveComponent(GameComponent component)
         {
             _components.Remove(component);
+            component.Dispose();
 
             OnComponentRemovedEvent(this, new ComponentRemovedEvent() { Component = component });
 

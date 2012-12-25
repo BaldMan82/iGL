@@ -10,14 +10,14 @@ using FarseerPhysics.Dynamics;
 
 namespace iGL.Engine
 {
-    public class DistanceJointFarseerComponent : JointBaseComponent
+    public class WeldJointFarseerComponent : JointBaseFarseerComponent
     {
         public string OtherObjectId { get; set; }
 
-        private DistanceJoint _joint;
+        private WeldJoint _joint;
 
-        public DistanceJointFarseerComponent(XElement xmlElement) : base(xmlElement) { }
-        public DistanceJointFarseerComponent() { }
+        public WeldJointFarseerComponent(XElement xmlElement) : base(xmlElement) { }
+        public WeldJointFarseerComponent() { }
 
         private bool LoadJoint()
         {
@@ -37,8 +37,8 @@ namespace iGL.Engine
             var world = GameObject.Scene.Physics.GetWorld() as World;
             if (world == null) throw new InvalidOperationException("Not a farseer physics world.");
 
-            _joint = JointFactory.CreateDistanceJoint(world, myRigidBody.RigidBody, otherRigidBody.RigidBody, Vector2.Zero, Vector2.Zero);
-          
+            _joint = JointFactory.CreateWeldJoint(world, myRigidBody.RigidBody, otherRigidBody.RigidBody, Vector2.Zero);
+                          
             //world.AddJoint(_joint);
            
             return true;
@@ -57,6 +57,14 @@ namespace iGL.Engine
             LoadJoint();
         }
 
+
+        public override void Dispose()
+        {
+            base.Dispose();
+
+            var world = GameObject.Scene.Physics.GetWorld() as World;
+            world.RemoveJoint(_joint);
+        }
         public override void Tick(float timeElapsed)
         {
             

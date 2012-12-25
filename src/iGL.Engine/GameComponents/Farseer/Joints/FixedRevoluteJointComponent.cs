@@ -10,12 +10,15 @@ using FarseerPhysics.Dynamics;
 
 namespace iGL.Engine
 {
-    public class FixedRevoluteJointComponent : JointBaseComponent
+    public class FixedRevoluteJointComponent : JointBaseFarseerComponent
     {
         public FixedRevoluteJointComponent(XElement xmlElement) : base(xmlElement) { }
         public FixedRevoluteJointComponent() { }
 
-        private FixedRevoluteJoint _joint;
+        public bool MotorEnabled { get; set; }
+        public float MotorSpeed { get; set; }
+        public float MotorTorque { get; set; }
+        public float MaxMotorTorque { get; set; }
 
         public override bool InternalLoad()
         {
@@ -27,13 +30,22 @@ namespace iGL.Engine
             if (world == null) throw new InvalidOperationException("Not a farseer physics world.");
 
             var worldPos = this.GameObject.WorldPosition;
-            _joint = JointFactory.CreateFixedRevoluteJoint(world, myRigidBody.RigidBody, Vector2.Zero, new Vector2(worldPos.X, worldPos.Y));
-            _joint.MotorEnabled = true;
-            _joint.MotorSpeed = 20.0f;
-            _joint.MotorTorque = 10000.0f;
-            _joint.MaxMotorTorque = 100000.0f;
+            Joint = JointFactory.CreateFixedRevoluteJoint(world, myRigidBody.RigidBody, Vector2.Zero, new Vector2(worldPos.X, worldPos.Y));
+
+            UpdateMotorProperties();
 
             return true;
+        }
+
+        public void UpdateMotorProperties()
+        {           
+            var revoluteJoint = Joint as FixedRevoluteJoint;
+            if (revoluteJoint == null) return;
+
+            revoluteJoint.MotorEnabled = MotorEnabled;
+            revoluteJoint.MotorSpeed = MotorSpeed;
+            revoluteJoint.MotorTorque = MotorTorque;
+            revoluteJoint.MaxMotorTorque = MaxMotorTorque;
         }
 
         public override void Tick(float timeElapsed)

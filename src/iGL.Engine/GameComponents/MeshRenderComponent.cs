@@ -187,13 +187,19 @@ namespace iGL.Engine
 
                 if (shader is PointLightShader)
                 {
+                    shader.SetModelViewMatrix(ref transform);
+
                     var locationInverse = transform;
 
-                    locationInverse.Invert();
-                    locationInverse.Transpose();
+                    locationInverse.M41 = 0;
+                    locationInverse.M42 = 0;
+                    locationInverse.M43 = 0;
+
+                    //locationInverse.Invert();
+                    //locationInverse.Transpose();
 
                     shader.SetTransposeAdjointModelViewMatrix(ref locationInverse);
-                    shader.SetModelViewMatrix(ref transform);
+                    
                   
                     shader.SetEyePos(ref _eyePos);
                 }

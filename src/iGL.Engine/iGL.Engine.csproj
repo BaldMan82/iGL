@@ -67,12 +67,14 @@
     <Compile Include="GameComponents\BackgroundComponent.cs" />
     <Compile Include="GameComponents\CameraComponent.cs" />
     <Compile Include="GameComponents\BackgroundShader.cs" />
+    <Compile Include="GameComponents\Farseer\Joints\JointBaseFarseerComponent.cs" />
+    <Compile Include="GameComponents\Farseer\Joints\WeldJointFarseer.cs" />
     <Compile Include="GameComponents\UIShader.cs" />
     <Compile Include="GameComponents\Farseer\CircleColliderFarseerComponent.cs" />
     <Compile Include="GameComponents\Farseer\BoxColliderFarseerComponent.cs" />
     <Compile Include="GameComponents\Farseer\ColliderFarseerComponent.cs" />
     <Compile Include="GameComponents\Farseer\DistanceJointFarseer.cs" />
-    <Compile Include="GameComponents\Farseer\FixedRevoluteJointComponent.cs" />
+    <Compile Include="GameComponents\Farseer\Joints\FixedRevoluteJointComponent.cs" />
     <Compile Include="GameComponents\Farseer\MeshColliderFarseerComponent.cs" />
     <Compile Include="GameComponents\Farseer\RigidBodyFarseerComponent.cs" />
     <Compile Include="GameComponents\Animations\MeshScaleAnimationComponent.cs" />

@@ -34,9 +34,10 @@ namespace iGL.TestGame.GameObjects
         private const string CameraComponentId = "d7ca3165-4ccb-4ee4-8db3-05dc706efeda";
 
         private GameObject _target;
+        private BackgroundComponent _backGroundComponent;
+        private bool _gameOver;
 
-        private float LimitX;
-        private float LimitY;
+        public Vector3 _adjustment;
 
         private float _distance;
 
@@ -48,8 +49,8 @@ namespace iGL.TestGame.GameObjects
 
             Position = new Vector3(0, 0, 30);
             _distance = 20.0f;
-            
-            LerpFactor = 4.0f;
+
+            LerpFactor = 2.0f;
         }
 
         void Scene_OnLoaded(object sender, Engine.Events.LoadedEvent e)
@@ -64,8 +65,8 @@ namespace iGL.TestGame.GameObjects
 
             //}
 
-            LimitX = 120;
-            LimitY = 120;
+
+            _backGroundComponent = Scene.GameObjects.SelectMany(g => g.Components).FirstOrDefault(c => c is BackgroundComponent) as BackgroundComponent;
         }
 
         public override void Load()
@@ -81,6 +82,11 @@ namespace iGL.TestGame.GameObjects
             }
         }
 
+        public override void OverrideLoadedProperties()
+        {
+            _gameOver = false;
+        }
+
         public override void Tick(float timeElapsed)
         {
             base.Tick(timeElapsed);
@@ -92,34 +98,63 @@ namespace iGL.TestGame.GameObjects
                 var lerp = timeElapsed * LerpFactor;
                 if (lerp > 1) lerp = 1;
                 
-                var target = Vector3.Lerp(CameraComponent.Target, _target.WorldPosition + new Vector3(0, 1, 0), lerp);
+                var target = Vector3.Lerp(CameraComponent.Target, _target.WorldPosition + _adjustment, lerp);
              
                 var position = target + new Vector3(0, 0, _distance);
 
                 var viewBounds = Math.Sin(CameraComponent.FieldOfViewRadians) * _distance;
-                if (Math.Abs(target.X) + viewBounds < LimitX && Math.Abs(target.Y) + viewBounds < LimitY)
+
+                if (_backGroundComponent == null ||
+                    (target.X - viewBounds > _backGroundComponent.MinBounds.X && target.X + viewBounds < _backGroundComponent.MaxBounds.X &&
+                    target.Y - viewBounds > _backGroundComponent.MinBounds.Y && target.Y + viewBounds < _backGroundComponent.MaxBounds.Y))
                 {
                     CameraComponent.Target = target;
                     CameraComponent.GameObject.Position = position;
                 }
-                else
+                else if (!_gameOver)
                 {
-                    if (Scene.Game is TestGame)
-                    {
-                        ((TestGame)Scene.Game).ReloadScene();
-                    }
-                }
+                    (Scene.PlayerObject as SlingshotBallFarseer2D).FixLightPosition();
+
+                    ((TestGame)Scene.Game).GameOver();
+
+                    //Scene.AddTimer(new Timer()
+                    //{
+                    //    Action = () =>
+                    //    {
+                    //        if (Scene.Game is TestGame)
+                    //        {
+                                
+                    //        }
+                    //    },
+                    //    Interval = TimeSpan.FromSeconds(1),
+                    //    Mode = Timer.TimerMode.Once
+                    //});
+
+                    _gameOver = true;
+                }              
             }
         }
 
-        public void Follow(GameObject target)
+        public void Follow(GameObject target, bool smoothFollow = false)
         {
             _target = target;
 
             if (_target == null) return;
 
-            CameraComponent.Target = _target.WorldPosition + new Vector3(0, 2, 0);
-            CameraComponent.GameObject.Position = _target.WorldPosition + new Vector3(0, 0, _distance);
+            if (_target is SlingshotBallFarseer2D)
+            {
+                _adjustment = new Vector3(0, 2, 0);
+            }
+            else
+            {
+                _adjustment = Vector3.Zero;
+            }
+
+            if (!smoothFollow)
+            {
+                CameraComponent.Target = _target.WorldPosition + _adjustment;
+                CameraComponent.GameObject.Position = _target.WorldPosition + new Vector3(0, 0, _distance);
+            }
         }
 
         void Scene_OnMouseZoom(object sender, Engine.Events.MouseZoomEvent e)

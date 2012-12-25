@@ -59,6 +59,8 @@ namespace iGL.Engine
 
         public override void Tick(float timeElapsed)
         {
+            if (GameObject.Scene.IsDisposing) return;
+
             base.Tick(timeElapsed);
 
             if (Game.InDesignMode) return;

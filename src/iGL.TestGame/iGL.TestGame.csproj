@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameObjects\JumpRoll.cs" />
     <Compile Include="UIScene.cs" />
     <Compile Include="GameObjects\Arrow2d.cs" />
     <Compile Include="GameObjects\Enemy.cs" />
@@ -101,10 +102,19 @@
     <EmbeddedResource Include="Resources\cube.dae" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\cylinder.dae" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Resources\enemy.text" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\eye.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\fabric.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\gameover.text" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\greenball.text" />
@@ -138,6 +148,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\level3uv.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\lighting.igl" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\pause.text" />
@@ -174,5 +187,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\ui_level.igl" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\untextured.text" />
   </ItemGroup>
 </Project>
