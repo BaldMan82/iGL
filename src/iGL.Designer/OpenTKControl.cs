@@ -109,6 +109,8 @@ namespace iGL.Designer
             SnapValueRotation = (float)(Math.PI / 8.0);
 
             Instance = this;
+
+            
         }       
 
         protected new bool DesignMode

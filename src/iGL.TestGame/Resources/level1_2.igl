@@ -23,9 +23,9 @@
       <RenderQueuePriority>0</RenderQueuePriority>
       <Id>5c6f1b2a-f4d1-48ae-a3b8-3fca3b13cdc2</Id>
       <Position>
-        <x>-51.36804</x>
-        <y>-9.916079</y>
-        <z>46.36257</z>
+        <x>-7.571086</x>
+        <y>5.421629</y>
+        <z>90.25876</z>
       </Position>
       <Scale>
         <x>1</x>
@@ -45,9 +45,9 @@
           <ZNear>1</ZNear>
           <ZFar>1000</ZFar>
           <Target>
-            <x>-49.0283737</x>
-            <y>-11.7506018</y>
-            <z>35.6991272</z>
+            <x>-7.7996664</x>
+            <y>3.73812914</y>
+            <z>79.35692</z>
           </Target>
           <Up>
             <x>0</x>
@@ -148,7 +148,6 @@
       </Components>
     </GameObject>
     <GameObject Type="iGL.Engine.LightObject, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <UseWorldPosition>true</UseWorldPosition>
       <Light Type="iGL.Engine.PointLight, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
         <Ambient>
           <x>1</x>
@@ -169,14 +168,14 @@
           <w>0</w>
         </Specular>
         <WorldPosition>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-          <w>0</w>
+          <x>-0.3792717</x>
+          <y>-13.268</y>
+          <z>100</z>
+          <w>1</w>
         </WorldPosition>
       </Light>
       <CreationMode>Additional</CreationMode>
-      <Visible>false</Visible>
+      <Visible>true</Visible>
       <Enabled>true</Enabled>
       <Designer>false</Designer>
       <Name>LightObject0</Name>
@@ -186,9 +185,9 @@
       <RenderQueuePriority>0</RenderQueuePriority>
       <Id>64bf6b42-e758-4359-95e1-81159eaa3be8</Id>
       <Position>
-        <x>-40.05861</x>
-        <y>-24.39919</y>
-        <z>13.80455</z>
+        <x>-0.3792717</x>
+        <y>-13.268</y>
+        <z>100</z>
       </Position>
       <Scale>
         <x>1</x>
@@ -205,7 +204,7 @@
           <Rings>16</Rings>
           <Segments>16</Segments>
           <CreationMode>Required</CreationMode>
-          <Visible>false</Visible>
+          <Visible>true</Visible>
           <Enabled>true</Enabled>
           <Designer>false</Designer>
           <Name></Name>
@@ -265,7 +264,7 @@
                 <TextureTilingY>1</TextureTilingY>
                 <ShaderProgram>POINTLIGHT</ShaderProgram>
               </Material>
-              <MeshResourceName></MeshResourceName>
+              <MeshResourceName>cube</MeshResourceName>
               <Id>54d23823-aa44-4aeb-a742-57dbe16883e4</Id>
             </GameComponent>
           </Components>
@@ -293,10 +292,10 @@
               <w>0</w>
             </Specular>
             <WorldPosition>
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-              <w>0</w>
+              <x>-0.3792717</x>
+              <y>-13.268</y>
+              <z>100</z>
+              <w>1</w>
             </WorldPosition>
           </Light>
           <Id>a7a1fffa-f12a-4a52-8e89-c79630bdf223</Id>
@@ -331,7 +330,6 @@
       </Rotation>
       <Children>
         <GameObject Type="iGL.Engine.LightObject, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <UseWorldPosition>true</UseWorldPosition>
           <Light Type="iGL.Engine.PointLight, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
             <Ambient>
               <x>1</x>
@@ -352,10 +350,10 @@
               <w>0</w>
             </Specular>
             <WorldPosition>
-              <x>-54.7373428</x>
-              <y>-8.5</y>
-              <z>20</z>
-              <w>0</w>
+              <x>0</x>
+              <y>0</y>
+              <z>15</z>
+              <w>1</w>
             </WorldPosition>
           </Light>
           <CreationMode>Required</CreationMode>
@@ -476,10 +474,10 @@
                   <w>0</w>
                 </Specular>
                 <WorldPosition>
-                  <x>-54.7373428</x>
-                  <y>-8.5</y>
-                  <z>20</z>
-                  <w>0</w>
+                  <x>0</x>
+                  <y>0</y>
+                  <z>15</z>
+                  <w>1</w>
                 </WorldPosition>
               </Light>
               <Id>a7a1fffa-f12a-4a52-8e89-c79630bdf223</Id>
@@ -611,6 +609,10 @@
               <BeginMode>Triangles</BeginMode>
               <Id>b0b74696-d900-4b90-b13a-5be37d785fa3</Id>
             </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>ce0856d3-4a32-48dd-8d43-a5cd1acb9880</Id>
+            </GameComponent>
           </Components>
         </GameObject>
         <GameObject Type="iGL.TestGame.GameObjects.Arrow2d, iGL.TestGame, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -737,6 +739,10 @@
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>509dcca7-52b8-4cc4-9611-79611f9685b7</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>9be1acb7-8f8b-441d-b2ec-9a6cd73590fc</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -865,6 +871,10 @@
               <BeginMode>Triangles</BeginMode>
               <Id>81fa51db-939e-4268-902f-887fe3560c69</Id>
             </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>3e06b21b-fd29-4f04-b9ff-33d844db688e</Id>
+            </GameComponent>
           </Components>
         </GameObject>
         <GameObject Type="iGL.Engine.Sphere, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -952,7 +962,6 @@
           <Id>15da1056-2ff7-443f-aed1-0afd3db7b0bf</Id>
         </GameComponent>
         <GameComponent Type="iGL.Engine.CircleColliderFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <Radius>0.5</Radius>
           <Id>10af2307-be79-653b-a8ab-54bad0d51535</Id>
         </GameComponent>
         <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -1172,7 +1181,7 @@
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-                <Id />
+                <Id></Id>
                 <Ambient>
                   <x>0</x>
                   <y>0</y>
@@ -1193,19 +1202,23 @@
                 </Specular>
                 <Shininess>0</Shininess>
                 <TextureName>starflare</TextureName>
-                <NormalTextureName />
+                <NormalTextureName></NormalTextureName>
                 <TextureRepeatX>false</TextureRepeatX>
                 <TextureRepeatY>false</TextureRepeatY>
                 <TextureTilingX>1</TextureTilingX>
                 <TextureTilingY>1</TextureTilingY>
                 <ShaderProgram>POINTLIGHT</ShaderProgram>
               </Material>
-              <MeshResourceName />
+              <MeshResourceName></MeshResourceName>
               <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>1038d669-2f97-43eb-9fd7-0ba82f9115ea</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>9c973760-a91c-4230-935e-eec1b1408cfd</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -1399,7 +1412,7 @@
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-                <Id />
+                <Id></Id>
                 <Ambient>
                   <x>0</x>
                   <y>0</y>
@@ -1420,19 +1433,23 @@
                 </Specular>
                 <Shininess>0</Shininess>
                 <TextureName>starflare</TextureName>
-                <NormalTextureName />
+                <NormalTextureName></NormalTextureName>
                 <TextureRepeatX>false</TextureRepeatX>
                 <TextureRepeatY>false</TextureRepeatY>
                 <TextureTilingX>1</TextureTilingX>
                 <TextureTilingY>1</TextureTilingY>
                 <ShaderProgram>POINTLIGHT</ShaderProgram>
               </Material>
-              <MeshResourceName />
+              <MeshResourceName></MeshResourceName>
               <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>1695979a-9179-4fd5-a1a9-48be493c8179</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>0a8a6076-401b-474e-bbc6-c2504484dca8</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -1626,7 +1643,7 @@
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-                <Id />
+                <Id></Id>
                 <Ambient>
                   <x>0</x>
                   <y>0</y>
@@ -1647,19 +1664,23 @@
                 </Specular>
                 <Shininess>0</Shininess>
                 <TextureName>starflare</TextureName>
-                <NormalTextureName />
+                <NormalTextureName></NormalTextureName>
                 <TextureRepeatX>false</TextureRepeatX>
                 <TextureRepeatY>false</TextureRepeatY>
                 <TextureTilingX>1</TextureTilingX>
                 <TextureTilingY>1</TextureTilingY>
                 <ShaderProgram>POINTLIGHT</ShaderProgram>
               </Material>
-              <MeshResourceName />
+              <MeshResourceName></MeshResourceName>
               <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>8acb208a-1b99-468d-9635-7915490fee74</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>0560e4df-c4b2-4418-9b80-13fdb07bc4f6</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -1853,7 +1874,7 @@
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-                <Id />
+                <Id></Id>
                 <Ambient>
                   <x>0</x>
                   <y>0</y>
@@ -1874,19 +1895,23 @@
                 </Specular>
                 <Shininess>0</Shininess>
                 <TextureName>starflare</TextureName>
-                <NormalTextureName />
+                <NormalTextureName></NormalTextureName>
                 <TextureRepeatX>false</TextureRepeatX>
                 <TextureRepeatY>false</TextureRepeatY>
                 <TextureTilingX>1</TextureTilingX>
                 <TextureTilingY>1</TextureTilingY>
                 <ShaderProgram>POINTLIGHT</ShaderProgram>
               </Material>
-              <MeshResourceName />
+              <MeshResourceName></MeshResourceName>
               <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>95909bf8-0d6e-40b6-8016-073449141080</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>ac1dd9eb-ff80-4b1d-92f1-49d31647099d</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -2080,7 +2105,7 @@
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-                <Id />
+                <Id></Id>
                 <Ambient>
                   <x>0</x>
                   <y>0</y>
@@ -2101,19 +2126,23 @@
                 </Specular>
                 <Shininess>0</Shininess>
                 <TextureName>starflare</TextureName>
-                <NormalTextureName />
+                <NormalTextureName></NormalTextureName>
                 <TextureRepeatX>false</TextureRepeatX>
                 <TextureRepeatY>false</TextureRepeatY>
                 <TextureTilingX>1</TextureTilingX>
                 <TextureTilingY>1</TextureTilingY>
                 <ShaderProgram>POINTLIGHT</ShaderProgram>
               </Material>
-              <MeshResourceName />
+              <MeshResourceName></MeshResourceName>
               <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>f7576738-8958-4bbc-8a3d-28a1eb189f50</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>ba54a0a8-4bdd-47ff-acf0-23d2af483fb8</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -2307,7 +2336,7 @@
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-                <Id />
+                <Id></Id>
                 <Ambient>
                   <x>0</x>
                   <y>0</y>
@@ -2328,19 +2357,23 @@
                 </Specular>
                 <Shininess>0</Shininess>
                 <TextureName>starflare</TextureName>
-                <NormalTextureName />
+                <NormalTextureName></NormalTextureName>
                 <TextureRepeatX>false</TextureRepeatX>
                 <TextureRepeatY>false</TextureRepeatY>
                 <TextureTilingX>1</TextureTilingX>
                 <TextureTilingY>1</TextureTilingY>
                 <ShaderProgram>POINTLIGHT</ShaderProgram>
               </Material>
-              <MeshResourceName />
+              <MeshResourceName></MeshResourceName>
               <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>f5683d7e-c3e4-4110-9d6a-17714de0d928</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>a43f3f0e-7bad-459e-ab80-3acbd1146235</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -2534,7 +2567,7 @@
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-                <Id />
+                <Id></Id>
                 <Ambient>
                   <x>0</x>
                   <y>0</y>
@@ -2555,19 +2588,23 @@
                 </Specular>
                 <Shininess>0</Shininess>
                 <TextureName>starflare</TextureName>
-                <NormalTextureName />
+                <NormalTextureName></NormalTextureName>
                 <TextureRepeatX>false</TextureRepeatX>
                 <TextureRepeatY>false</TextureRepeatY>
                 <TextureTilingX>1</TextureTilingX>
                 <TextureTilingY>1</TextureTilingY>
                 <ShaderProgram>POINTLIGHT</ShaderProgram>
               </Material>
-              <MeshResourceName />
+              <MeshResourceName></MeshResourceName>
               <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>2fb21364-ab1e-444d-8836-da4c367b268d</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>366b10a5-e1b6-4625-919f-31a4153fd077</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -2761,7 +2798,7 @@
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-                <Id />
+                <Id></Id>
                 <Ambient>
                   <x>0</x>
                   <y>0</y>
@@ -2782,19 +2819,23 @@
                 </Specular>
                 <Shininess>0</Shininess>
                 <TextureName>starflare</TextureName>
-                <NormalTextureName />
+                <NormalTextureName></NormalTextureName>
                 <TextureRepeatX>false</TextureRepeatX>
                 <TextureRepeatY>false</TextureRepeatY>
                 <TextureTilingX>1</TextureTilingX>
                 <TextureTilingY>1</TextureTilingY>
                 <ShaderProgram>POINTLIGHT</ShaderProgram>
               </Material>
-              <MeshResourceName />
+              <MeshResourceName></MeshResourceName>
               <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>241bada3-47f1-46a6-a625-0e96dca1207c</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>57e0a26f-d22f-44e8-9afc-ba9d9ed0a3dd</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -2988,7 +3029,7 @@
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-                <Id />
+                <Id></Id>
                 <Ambient>
                   <x>0</x>
                   <y>0</y>
@@ -3009,19 +3050,23 @@
                 </Specular>
                 <Shininess>0</Shininess>
                 <TextureName>starflare</TextureName>
-                <NormalTextureName />
+                <NormalTextureName></NormalTextureName>
                 <TextureRepeatX>false</TextureRepeatX>
                 <TextureRepeatY>false</TextureRepeatY>
                 <TextureTilingX>1</TextureTilingX>
                 <TextureTilingY>1</TextureTilingY>
                 <ShaderProgram>POINTLIGHT</ShaderProgram>
               </Material>
-              <MeshResourceName />
+              <MeshResourceName></MeshResourceName>
               <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>bf1bb6b4-8a7b-4a34-a0e1-cd57605eef73</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>d94a58e3-20f9-4185-971e-fe69533cbe2f</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -3226,6 +3271,10 @@
         <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <BeginMode>Triangles</BeginMode>
           <Id>1d4b1a37-fe42-415b-977b-ccb405ab03b6</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>f5aaef82-2c16-476a-8701-68107f3597bf</Id>
         </GameComponent>
       </Components>
     </GameObject>
@@ -3490,8 +3539,8 @@
       <RenderQueuePriority>2147483647</RenderQueuePriority>
       <Id>3b8dd58a-de70-4e60-b467-7ec873f74454</Id>
       <Position>
-        <x>0</x>
-        <y>0</y>
+        <x>-7.571086</x>
+        <y>5.421629</y>
         <z>-5</z>
       </Position>
       <Scale>
@@ -3625,7 +3674,7 @@
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-                <Id />
+                <Id></Id>
                 <Ambient>
                   <x>0</x>
                   <y>0</y>
@@ -3646,19 +3695,23 @@
                 </Specular>
                 <Shininess>0</Shininess>
                 <TextureName>starflare</TextureName>
-                <NormalTextureName />
+                <NormalTextureName></NormalTextureName>
                 <TextureRepeatX>false</TextureRepeatX>
                 <TextureRepeatY>false</TextureRepeatY>
                 <TextureTilingX>1</TextureTilingX>
                 <TextureTilingY>1</TextureTilingY>
                 <ShaderProgram>POINTLIGHT</ShaderProgram>
               </Material>
-              <MeshResourceName />
+              <MeshResourceName></MeshResourceName>
               <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>1f6553a9-0a70-4273-ba10-b918f19e6224</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>dc802f3b-5473-4ac3-9c5f-a6db2c2cdbc2</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -3852,7 +3905,7 @@
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-                <Id />
+                <Id></Id>
                 <Ambient>
                   <x>0</x>
                   <y>0</y>
@@ -3873,19 +3926,23 @@
                 </Specular>
                 <Shininess>0</Shininess>
                 <TextureName>starflare</TextureName>
-                <NormalTextureName />
+                <NormalTextureName></NormalTextureName>
                 <TextureRepeatX>false</TextureRepeatX>
                 <TextureRepeatY>false</TextureRepeatY>
                 <TextureTilingX>1</TextureTilingX>
                 <TextureTilingY>1</TextureTilingY>
                 <ShaderProgram>POINTLIGHT</ShaderProgram>
               </Material>
-              <MeshResourceName />
+              <MeshResourceName></MeshResourceName>
               <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>d38e3b40-86d2-4008-8d57-df100f20bce6</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>6dfcba8d-09e2-42fa-b8ed-49807d09c94d</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -4079,7 +4136,7 @@
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-                <Id />
+                <Id></Id>
                 <Ambient>
                   <x>0</x>
                   <y>0</y>
@@ -4100,19 +4157,23 @@
                 </Specular>
                 <Shininess>0</Shininess>
                 <TextureName>starflare</TextureName>
-                <NormalTextureName />
+                <NormalTextureName></NormalTextureName>
                 <TextureRepeatX>false</TextureRepeatX>
                 <TextureRepeatY>false</TextureRepeatY>
                 <TextureTilingX>1</TextureTilingX>
                 <TextureTilingY>1</TextureTilingY>
                 <ShaderProgram>POINTLIGHT</ShaderProgram>
               </Material>
-              <MeshResourceName />
+              <MeshResourceName></MeshResourceName>
               <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>f4375df9-f8d9-49d8-a91c-f83779c59c51</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>1c0b3ed9-71f3-4050-bfa1-e588988cdc40</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -4306,7 +4367,7 @@
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-                <Id />
+                <Id></Id>
                 <Ambient>
                   <x>0</x>
                   <y>0</y>
@@ -4327,19 +4388,23 @@
                 </Specular>
                 <Shininess>0</Shininess>
                 <TextureName>starflare</TextureName>
-                <NormalTextureName />
+                <NormalTextureName></NormalTextureName>
                 <TextureRepeatX>false</TextureRepeatX>
                 <TextureRepeatY>false</TextureRepeatY>
                 <TextureTilingX>1</TextureTilingX>
                 <TextureTilingY>1</TextureTilingY>
                 <ShaderProgram>POINTLIGHT</ShaderProgram>
               </Material>
-              <MeshResourceName />
+              <MeshResourceName></MeshResourceName>
               <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>9348f150-3943-4e76-a122-523044c5641f</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>1e5e8ada-0292-47ee-a0ff-d1fc20a16026</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -4782,7 +4847,7 @@
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-                <Id />
+                <Id></Id>
                 <Ambient>
                   <x>0</x>
                   <y>0</y>
@@ -4803,19 +4868,23 @@
                 </Specular>
                 <Shininess>0</Shininess>
                 <TextureName>starflare</TextureName>
-                <NormalTextureName />
+                <NormalTextureName></NormalTextureName>
                 <TextureRepeatX>false</TextureRepeatX>
                 <TextureRepeatY>false</TextureRepeatY>
                 <TextureTilingX>1</TextureTilingX>
                 <TextureTilingY>1</TextureTilingY>
                 <ShaderProgram>POINTLIGHT</ShaderProgram>
               </Material>
-              <MeshResourceName />
+              <MeshResourceName></MeshResourceName>
               <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>5f466f0b-77e3-4e20-b233-7fa50469721d</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>14fd1e3e-3498-48cf-a440-5a0c84aa869b</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -5009,7 +5078,7 @@
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-                <Id />
+                <Id></Id>
                 <Ambient>
                   <x>0</x>
                   <y>0</y>
@@ -5030,19 +5099,23 @@
                 </Specular>
                 <Shininess>0</Shininess>
                 <TextureName>starflare</TextureName>
-                <NormalTextureName />
+                <NormalTextureName></NormalTextureName>
                 <TextureRepeatX>false</TextureRepeatX>
                 <TextureRepeatY>false</TextureRepeatY>
                 <TextureTilingX>1</TextureTilingX>
                 <TextureTilingY>1</TextureTilingY>
                 <ShaderProgram>POINTLIGHT</ShaderProgram>
               </Material>
-              <MeshResourceName />
+              <MeshResourceName></MeshResourceName>
               <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
             </GameComponent>
             <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
               <BeginMode>Triangles</BeginMode>
               <Id>6928f389-db35-4d5d-b432-d46eda74a0bf</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>7a6253b9-cf4d-46bf-87b4-0cb71929a8c3</Id>
             </GameComponent>
           </Components>
         </GameObject>
@@ -5146,7 +5219,7 @@
       </Scale>
       <Rotation>
         <x>0</x>
-        <y>0</y>
+        <y>-0</y>
         <z>0</z>
       </Rotation>
       <Children>
@@ -5227,6 +5300,10 @@
               <BeginMode>Triangles</BeginMode>
               <Id>5c9b2c3c-fbe7-4d27-885a-33be96b89cd3</Id>
             </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>9535fa6c-7f84-4d8e-91f9-559791fd2706</Id>
+            </GameComponent>
           </Components>
         </GameObject>
         <GameObject Type="iGL.Engine.Plane, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -5306,12 +5383,132 @@
               <BeginMode>Triangles</BeginMode>
               <Id>eb898688-82b8-47b1-93bd-76fa979d275f</Id>
             </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>33c1af39-8c3f-4683-a0de-7cbde470cb89</Id>
+            </GameComponent>
+          </Components>
+        </GameObject>
+        <GameObject Type="iGL.TestGame.GameObjects.StarFlare, iGL.TestGame, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <StartScale>
+            <x>0.1</x>
+            <y>0.1</y>
+            <z>0.1</z>
+          </StartScale>
+          <StopScale>
+            <x>4</x>
+            <y>4</y>
+            <z>4</z>
+          </StopScale>
+          <StartFlareColor>
+            <x>1</x>
+            <y>1</y>
+            <z>0</z>
+            <w>1</w>
+          </StartFlareColor>
+          <StopFlareColor>
+            <x>1</x>
+            <y>1</y>
+            <z>0</z>
+            <w>0</w>
+          </StopFlareColor>
+          <ScaleDuration>0.2</ScaleDuration>
+          <ColorDuration>0.2</ColorDuration>
+          <FlareColor>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+            <w>1</w>
+          </FlareColor>
+          <CreationMode>Required</CreationMode>
+          <Visible>false</Visible>
+          <Enabled>true</Enabled>
+          <Designer>false</Designer>
+          <Name></Name>
+          <ClearsZBuffer>false</ClearsZBuffer>
+          <DistanceSorting>true</DistanceSorting>
+          <AutoLoad>true</AutoLoad>
+          <RenderQueuePriority>0</RenderQueuePriority>
+          <Id>3b728731-0f1e-4661-969f-f8b3d4cac27f</Id>
+          <Position>
+            <x>49</x>
+            <y>-16.950285</y>
+            <z>0</z>
+          </Position>
+          <Scale>
+            <x>1</x>
+            <y>1</y>
+            <z>1</z>
+          </Scale>
+          <Rotation>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </Rotation>
+          <Children />
+          <Components>
+            <GameComponent Type="iGL.Engine.PropertyAnimationComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <Property>Scale</Property>
+              <StartValue>0.1, 0.1, 0.1</StartValue>
+              <StopValue>4, 4, 4</StopValue>
+              <PlayMode>Play</PlayMode>
+              <AutoStart>false</AutoStart>
+              <DurationSeconds>0.2</DurationSeconds>
+              <IntervalSeconds>0</IntervalSeconds>
+              <Id> 9501d244-0a87-4620-b4f4-41706ad2e0b0</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.PropertyAnimationComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <Property>FlareColor</Property>
+              <StartValue>1, 1, 0, 1</StartValue>
+              <StopValue>1, 1, 0, 0</StopValue>
+              <PlayMode>Play</PlayMode>
+              <AutoStart>false</AutoStart>
+              <DurationSeconds>0.2</DurationSeconds>
+              <IntervalSeconds>0</IntervalSeconds>
+              <Id> 7581d245-0a87-4620-b4f4-91706ad2e0b0</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <Material Type="iGL.Engine.Material, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+                <Id />
+                <Ambient>
+                  <x>0</x>
+                  <y>0</y>
+                  <z>0</z>
+                  <w>1</w>
+                </Ambient>
+                <Diffuse>
+                  <x>0.4</x>
+                  <y>0.4</y>
+                  <z>0.4</z>
+                  <w>1</w>
+                </Diffuse>
+                <Specular>
+                  <x>0</x>
+                  <y>0</y>
+                  <z>0</z>
+                  <w>0</w>
+                </Specular>
+                <Shininess>0</Shininess>
+                <TextureName>starflare</TextureName>
+                <NormalTextureName />
+                <TextureRepeatX>false</TextureRepeatX>
+                <TextureRepeatY>false</TextureRepeatY>
+                <TextureTilingX>1</TextureTilingX>
+                <TextureTilingY>1</TextureTilingY>
+                <ShaderProgram>POINTLIGHT</ShaderProgram>
+              </Material>
+              <MeshResourceName />
+              <Id>e2dae056-2ff7-443f-aed1-0afd3db7b0bf</Id>
+            </GameComponent>
+            <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+              <BeginMode>Triangles</BeginMode>
+              <Id>1e38bcf7-9bd2-4965-b53a-db551ab41183</Id>
+            </GameComponent>
           </Components>
         </GameObject>
       </Children>
       <Components>
         <GameComponent Type="iGL.Engine.CircleColliderFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <Radius>0.5</Radius>
           <Id>11af2307-be79-653b-a8ab-54bad0d51535</Id>
         </GameComponent>
         <GameComponent Type="iGL.Engine.RigidBodyFarseerComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -5375,6 +5572,10 @@
         <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <BeginMode>Triangles</BeginMode>
           <Id>369bc91f-f5cc-4f62-8fd5-70688ddf46ac</Id>
+        </GameComponent>
+        <GameComponent Type="iGL.Engine.MeshRenderComponent, iGL.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <BeginMode>Triangles</BeginMode>
+          <Id>04083e61-d44b-4e52-842c-02241559e18c</Id>
         </GameComponent>
       </Components>
     </GameObject>

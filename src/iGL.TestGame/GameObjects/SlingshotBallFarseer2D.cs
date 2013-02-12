@@ -37,7 +37,7 @@ namespace iGL.TestGame.GameObjects
         private bool _canFire;
         private PanViewFollowCamera3d _followCamera;
         private Vector3 _lastAngularVelocity;
-        private Vector4 _mouseDownPosition;       
+        private Vector4 _mouseDownPosition;
         private DateTime _triggerTime;
         private DateTime _flickerTime;
         private TimeSpan _triggerDuration = TimeSpan.FromSeconds(2);
@@ -51,7 +51,7 @@ namespace iGL.TestGame.GameObjects
         public LightObject _lightObject;
         private bool _lightPositionFixed;
         private Vector4 _fixedLightPosition;
-   
+
         public SlingshotBallFarseer2D(XElement element) : base(element) { }
 
         public SlingshotBallFarseer2D() { }
@@ -63,7 +63,7 @@ namespace iGL.TestGame.GameObjects
         private const string LightObjectId = "70af2307-be79-453b-a8ab-54bad0d51525";
         private const string CircleColliderFarseerComponentId = "10af2307-be79-653b-a8ab-54bad0d51535";
         private const string RigidBodyFarseerComponentId = "15da1056-2ff7-443f-aed1-0afd3db7b0bf";
-        
+
         protected override void Init()
         {
             base.Init();
@@ -131,7 +131,7 @@ namespace iGL.TestGame.GameObjects
             CurrentState = State.Green;
             _lightPositionFixed = false;
         }
-    
+
         void Scene_OnLoaded(object sender, Engine.Events.LoadedEvent e)
         {
             _previousPosition = this.Position;
@@ -139,7 +139,7 @@ namespace iGL.TestGame.GameObjects
             this.Material.ShaderProgram = ShaderProgram.ProgramType.POINTLIGHT;
 
             Material.TextureName = "greenball";
-            DistanceSorting = true;            
+            DistanceSorting = true;
 
             if (!Game.InDesignMode)
             {
@@ -160,7 +160,7 @@ namespace iGL.TestGame.GameObjects
 
             _aimSphere.Enabled = !Game.InDesignMode;
 
-           
+
         }
 
         void SetAsTarget()
@@ -185,7 +185,7 @@ namespace iGL.TestGame.GameObjects
 
             _previousPosition = this.Position;
 
-            base.Tick(timeElapsed);          
+            base.Tick(timeElapsed);
 
             if (_inAimMode)
             {
@@ -201,13 +201,14 @@ namespace iGL.TestGame.GameObjects
                 dir.Normalize();
 
                 var p = Scene.CurrentCamera.GameObject.Position + lookAt;
-                var planeDistance = this.Position.PlaneDistance(p, lookAt);
-          
+                var planeDistance = this.Position.PlaneDistance(p, dir);
+
                 var newWorldPosition = nearPlane + (dir * planeDistance);
 
                 _triggerPosition = newWorldPosition;
 
                 var distance = (_triggerPosition - this.Position).Length;
+
                 if (distance > _slingShotRadius)
                 {
                     var norm = (_triggerPosition - this.Position);
@@ -222,6 +223,7 @@ namespace iGL.TestGame.GameObjects
 
                 SetArrowPosition(distance);
                 SetEyeLookatTarget(_arrow2d.Position);
+
             }
             else
             {
@@ -231,7 +233,7 @@ namespace iGL.TestGame.GameObjects
                 {
                     direction.Normalize();
                     SetEyeLookatTarget(this.Position + direction);
-                }               
+                }
             }
 
             /* damping */
@@ -245,12 +247,12 @@ namespace iGL.TestGame.GameObjects
 
             if (body.HasContacts || CurrentState == State.AttachedToJumpRoll)
             {
-                Material.TextureName = "greenball";         
+                Material.TextureName = "greenball";
                 _canFire = true;
                 _lastContactTime = DateTime.UtcNow;
             }
-            else 
-            {                
+            else
+            {
                 Material.TextureName = "redball";
 
                 if ((DateTime.UtcNow - _lastContactTime).TotalMilliseconds > 500)
@@ -286,12 +288,12 @@ namespace iGL.TestGame.GameObjects
             _arrow2d.Rotation = new Vector3(0, 0, -angle);
             _arrow2d.Scale = new Vector3(1 + direction.Length, 1 + direction.Length, 1);
 
-           
+
             float colorFactor = triggerDistance / _slingShotRadius;
             colorFactor = (float)Math.Pow(colorFactor, 4);
-            
+
             _arrow2d.Material.Ambient = new Vector4(colorFactor, 1 - colorFactor, 0, 1);
-           
+
         }
 
         void SetEyeLookatTarget(Vector3 worldTarget)
@@ -313,7 +315,7 @@ namespace iGL.TestGame.GameObjects
             eyeDirection = eyeDirection * 0.1f;
 
             _leftEye.Position = _eyePosition - eyeDirection + zCorrect;
-            
+
         }
 
         void _aimSphere_OnMouseUp(object sender, Engine.Events.MouseButtonUpEvent e)
@@ -330,7 +332,7 @@ namespace iGL.TestGame.GameObjects
             }
 
             if (Game.InDesignMode || !_inAimMode) return;
-           
+
             _inAimMode = false;
             _arrow2d.Visible = false;
 
@@ -339,7 +341,7 @@ namespace iGL.TestGame.GameObjects
             {
                 var fireDirection = this.Position - _triggerPosition;
                 rigidBody.ApplyForce(fireDirection * _springConstant);
-            }         
+            }
 
         }
 
@@ -350,8 +352,8 @@ namespace iGL.TestGame.GameObjects
             if (Game.InDesignMode /*|| !body.HasContacts*/) return;
 
             //if (!_canFire) return;
-          
-            _inAimMode = true;           
+
+            _inAimMode = true;
 
             _triggerTime = DateTime.UtcNow;
             _flickerTime = _triggerTime;
@@ -390,7 +392,7 @@ namespace iGL.TestGame.GameObjects
             Scene.Shader.SetBlackBorder(true);
 
             base.Render(overrideParentTransform);
-            
+
             Scene.Shader.SetBlackBorder(false);
         }
     }

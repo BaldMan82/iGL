@@ -109,18 +109,10 @@ namespace iGL.TestGame.GameObjects
 
             _alphaAnimationComponent.Play();
             _rotationAnimationComponent.Play();
-
-            //Scene.AddTimer(new Timer() { Action = () => Scene.DisposeGameObject(this), Interval = TimeSpan.FromSeconds(1), Mode = Timer.TimerMode.Once });
-            
-			//if (e.Object is SlingshotBallFarseer3D)
-            {
-                //Scene.DisposeGameObject(this);               
-                _flare.Position = this.WorldPosition;
-                _flare.PlayAnimation();
-
-                //Scene.AddTimer(new Timer() { Action = () => _flare.Visible = false, Interval = TimeSpan.FromSeconds(0.2), Mode = Timer.TimerMode.Once });
-
-            }
+                  
+            _flare.Position = this.WorldPosition;
+            _flare.PlayAnimation();
+             
         }
     }
 }

@@ -13,6 +13,7 @@ namespace iGL.TestGame.GameObjects
     [RequiredComponent(typeof(RigidBodyFarseerComponent), Enemy.RigidBodyFarseerComponentId)]
     [RequiredChild(typeof(Plane), Enemy.LeftEyeId)]
     [RequiredChild(typeof(Plane), Enemy.RightEyeId)]
+    [RequiredChild(typeof(StarFlare), StarFlareId)]
     public class Enemy : Plane
     {
         private RigidBodyFarseerComponent _rigidBody;
@@ -20,6 +21,8 @@ namespace iGL.TestGame.GameObjects
         private Plane _leftEye;
         private Vector3 _eyePosition = new Vector3(0.2f, 0, 0.0f);
         private bool _awakening = false;
+        private StarFlare _flare;
+        private bool _alive = true;
 
         public Enemy(XElement element) : base(element) { }
 
@@ -29,6 +32,7 @@ namespace iGL.TestGame.GameObjects
         private const string RightEyeId = "956a1056-2ff7-443f-aed1-0afd3db7b0bf";
         private const string CircleColliderFarseerComponentId = "11af2307-be79-653b-a8ab-54bad0d51535";
         private const string RigidBodyFarseerComponentId = "55da1056-2ff7-443f-aed1-0afd3db7b0bf";
+        private const string StarFlareId = "3b728731-0f1e-4661-969f-f8b3d4cac27f";
 
         protected override void Init()
         {
@@ -58,6 +62,18 @@ namespace iGL.TestGame.GameObjects
 
             this.OnObjectCollision +=  Enemy_OnObjectCollision;
 
+            _flare = this.Children.Single(c => c.Id == StarFlareId) as StarFlare;
+
+        }
+
+        public override void OverrideLoadedProperties()
+        {
+            base.OverrideLoadedProperties();
+
+            _flare.Position = this.WorldPosition;
+            _flare.Visible = false;
+            _alive = true;
+
         }
 
         public override void Load()
@@ -68,6 +84,8 @@ namespace iGL.TestGame.GameObjects
 
         void Enemy_OnObjectCollision(object sender, Engine.Events.ObjectCollisionEvent e)        
         {
+            if (!_alive) return;
+
             if (e.Object != Scene.PlayerObject) return;
 
             var hitVector = e.Object.WorldPosition - this.WorldPosition;
@@ -79,17 +97,16 @@ namespace iGL.TestGame.GameObjects
             if (angle > -70 && angle < 70)
             {
                 /* should die */
-                var flare = new StarFlare();
+                _flare.Visible = true;
+                _flare.Position = this.WorldPosition;
+                _flare.PlayAnimation();
 
-                flare.Position = this.Position + new Vector3(0, 0, 0.5f);           
+                _alive = false;
+                _rigidBody.IsSensor = true;
+                _leftEye.Visible = false;
+                _rightEye.Visible = false;
 
-                Scene.AddGameObject(flare);
-
-                flare.PlayAnimation();
-
-                Scene.AddTimer(new Timer() { Action = () => Scene.DisposeGameObject(flare), Interval = TimeSpan.FromSeconds(0.2), Mode = Timer.TimerMode.Once });
-
-                Scene.DisposeGameObject(this);
+                //Scene.DisposeGameObject(this);
 
                 var rigidBody = Scene.PlayerObject.Components.First(c => c is RigidBodyFarseerComponent) as RigidBodyFarseerComponent;
                 hitVector.Normalize();
@@ -101,12 +118,14 @@ namespace iGL.TestGame.GameObjects
 
         public override void Tick(float timeElapsed)
         {
+            base.Tick(timeElapsed);
+
+            if (!_alive) return;
+
             _rightEye.Scale = new Vector3(0.12f);
             _leftEye.Scale = new Vector3(0.12f);
 
             if (Game.InDesignMode) return;
-
-            base.Tick(timeElapsed);
 
             var player = Scene.PlayerObject;
             if (player != null)
@@ -199,6 +218,8 @@ namespace iGL.TestGame.GameObjects
 
         public override void Render(bool overrideParentTransform = false)
         {
+            if (!_alive) return;
+
             Scene.Shader.SetBlackBorder(true);
 
             base.Render(overrideParentTransform);

@@ -114,9 +114,11 @@ namespace iGL.TestGame.GameObjects
                 else if (!_gameOver)
                 {
                     (Scene.PlayerObject as SlingshotBallFarseer2D).FixLightPosition();
-
-                    ((TestGame)Scene.Game).GameOver();
-
+                    
+                    if (Scene.Game is TestGame)
+                    {
+                        ((TestGame)Scene.Game).GameOver();
+                    }
                     //Scene.AddTimer(new Timer()
                     //{
                     //    Action = () =>

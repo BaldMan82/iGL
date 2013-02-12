@@ -171,6 +171,12 @@
     <EmbeddedResource Include="Resources\sign.text" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\signboard.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\signboardright.text" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Resources\spike.dae" />
   </ItemGroup>
   <ItemGroup>
