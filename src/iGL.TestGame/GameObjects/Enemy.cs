@@ -13,7 +13,7 @@ namespace iGL.TestGame.GameObjects
     [RequiredComponent(typeof(RigidBodyFarseerComponent), Enemy.RigidBodyFarseerComponentId)]
     [RequiredChild(typeof(Plane), Enemy.LeftEyeId)]
     [RequiredChild(typeof(Plane), Enemy.RightEyeId)]
-    [RequiredChild(typeof(StarFlare), StarFlareId)]
+    [RequiredChild(typeof(StarFlare), StarFlareId)]  
     public class Enemy : Plane
     {
         private RigidBodyFarseerComponent _rigidBody;
@@ -23,6 +23,7 @@ namespace iGL.TestGame.GameObjects
         private bool _awakening = false;
         private StarFlare _flare;
         private bool _alive = true;
+        private TextObject _textObject;
 
         public Enemy(XElement element) : base(element) { }
 
@@ -33,6 +34,7 @@ namespace iGL.TestGame.GameObjects
         private const string CircleColliderFarseerComponentId = "11af2307-be79-653b-a8ab-54bad0d51535";
         private const string RigidBodyFarseerComponentId = "55da1056-2ff7-443f-aed1-0afd3db7b0bf";
         private const string StarFlareId = "3b728731-0f1e-4661-969f-f8b3d4cac27f";
+        private const string TextObjectId = "a2634dd2-44f5-4675-8eaa-2ba0834186ad";
 
         protected override void Init()
         {
@@ -64,6 +66,16 @@ namespace iGL.TestGame.GameObjects
 
             _flare = this.Children.Single(c => c.Id == StarFlareId) as StarFlare;
 
+            _textObject = new TextObject();
+            _textObject.CreationMode = CreationModeEnum.Runtime;
+
+            _textObject.Position = new Vector3(0.25f, 2, 0);
+            _textObject.SetText("Test");
+            _textObject.Material.Ambient = new Vector4(1);
+            _textObject.Material.Diffuse = new Vector4(1);
+
+            _textObject.Scale = new Vector3(5);        
+
         }
 
         public override void OverrideLoadedProperties()
@@ -73,6 +85,7 @@ namespace iGL.TestGame.GameObjects
             _flare.Position = this.WorldPosition;
             _flare.Visible = false;
             _alive = true;
+            _textObject.Visible = false;
 
         }
 
@@ -80,6 +93,13 @@ namespace iGL.TestGame.GameObjects
         {
             SetEyeLookatTarget(this.WorldPosition);
             base.Load();
+
+            Scene.OnTick += (a, b) =>
+            {
+                if (!_textObject.IsLoaded) Scene.AddGameObject(_textObject);
+
+                _textObject.Position = this.WorldPosition + new Vector3(0.25f, 2, 0);
+            };
         }
 
         void Enemy_OnObjectCollision(object sender, Engine.Events.ObjectCollisionEvent e)        
@@ -106,13 +126,15 @@ namespace iGL.TestGame.GameObjects
                 _leftEye.Visible = false;
                 _rightEye.Visible = false;
 
+                _textObject.Visible = false;
+
                 //Scene.DisposeGameObject(this);
 
                 var rigidBody = Scene.PlayerObject.Components.First(c => c is RigidBodyFarseerComponent) as RigidBodyFarseerComponent;
                 hitVector.Normalize();
                 
                 rigidBody.ClearForces();
-                rigidBody.ApplyForce(hitVector*500);
+                rigidBody.ApplyForce(hitVector*1500);
             }
         }
 
@@ -135,20 +157,14 @@ namespace iGL.TestGame.GameObjects
                 if (_rigidBody.Sleeping && playerDistance < 8 && !_awakening)
                 {                    
                     /* should awaken */
-                    _awakening = true;
-
-                    TextObject obj = new TextObject();
-                    Scene.AddGameObject(obj);
-                    obj.Position = this.WorldPosition + new Vector3(0.25f, 2, 0);
-                    obj.SetText("!");
-                    obj.Material.Ambient = new Vector4(1);
-                    obj.Material.Diffuse = new Vector4(1);
-
-                    obj.Scale = new Vector3(5);
+                    _awakening = true;                 
                     
-                    SetEyeLookatTarget(player.WorldPosition);                
+                    SetEyeLookatTarget(player.WorldPosition);
+                    
+                    _textObject.Visible = true;
+                    _textObject.SetText("!");
 
-                    Scene.AddTimer(new Timer() { Action = () => { Scene.DisposeGameObject(obj); _rigidBody.Sleeping = false; }, Interval = TimeSpan.FromSeconds(1.0), Mode = Timer.TimerMode.Once });
+                    Scene.AddTimer(new Timer() { Action = () => { _textObject.Visible = false; _rigidBody.Sleeping = false; }, Interval = TimeSpan.FromSeconds(1.0), Mode = Timer.TimerMode.Once });
                     
                 }
                 else if (playerDistance >= 10 && !_rigidBody.Sleeping)
@@ -160,15 +176,10 @@ namespace iGL.TestGame.GameObjects
 
                     /* gonna sleep now */
 
-                    TextObject obj = new TextObject();
-                    Scene.AddGameObject(obj);
-                    obj.Position = this.WorldPosition + new Vector3(0.25f, 2, 0);
-                    obj.Material.Ambient = new Vector4(1);
-                    obj.Material.Diffuse = new Vector4(1);
-                    obj.Scale = new Vector3(5);
-                    obj.SetText("?");
+                    _textObject.Visible = true;
+                    _textObject.SetText("?");
 
-                    Scene.AddTimer(new Timer() { Action = () => { Scene.DisposeGameObject(obj); }, Interval = TimeSpan.FromSeconds(1.0), Mode = Timer.TimerMode.Once });
+                    Scene.AddTimer(new Timer() { Action = () => { _textObject.Visible = false; }, Interval = TimeSpan.FromSeconds(1.0), Mode = Timer.TimerMode.Once });
                 }
 
                 if (!_rigidBody.Sleeping)
@@ -214,7 +225,7 @@ namespace iGL.TestGame.GameObjects
 
             _leftEye.Position = _eyePosition - eyeDirection + zCorrect;
 
-        }
+        }                
 
         public override void Render(bool overrideParentTransform = false)
         {
